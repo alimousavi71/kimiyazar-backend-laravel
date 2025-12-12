@@ -100,5 +100,8 @@ return [
         'update_failed' => 'Failed to update :item.',
         'create_failed' => 'Failed to create :item.',
     ],
+
+    // Copyright
+    'copyright' => 'All rights reserved.',
 ];
 

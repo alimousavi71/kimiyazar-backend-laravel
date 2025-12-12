@@ -100,5 +100,8 @@ return [
         'update_failed' => 'به‌روزرسانی :item با خطا مواجه شد.',
         'create_failed' => 'ایجاد :item با خطا مواجه شد.',
     ],
+
+    // Copyright
+    'copyright' => 'تمام حقوق محفوظ است.',
 ];
 

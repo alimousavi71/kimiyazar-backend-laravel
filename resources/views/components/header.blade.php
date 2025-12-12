@@ -55,20 +55,40 @@
                 </div>
 
                 <!-- User Menu -->
+                @php
+                    $admin = auth('admin')->user() ?? auth()->user();
+                    $adminName = $admin ? $admin->full_name : 'Admin User';
+                    $adminEmail = $admin ? $admin->email : 'admin@example.com';
+                    $adminInitials = $admin ? strtoupper(substr($admin->first_name, 0, 1) . substr($admin->last_name, 0, 1)) : 'A';
+                @endphp
                 <div x-data="{ open: false }" class="relative">
                     <button @click="open = !open"
                         class="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors p-1.5 rounded-xl hover:bg-gray-100"
                         aria-label="User menu">
                         <div
                             class="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-semibold text-sm shadow-sm">
-                            A
+                            {{ $adminInitials }}
                         </div>
                         <x-icon name="chevron-down" size="sm" class="hidden sm:block" />
                     </button>
 
                     <div x-show="open" @click.away="open = false" x-transition x-cloak
-                        class="absolute end-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 overflow-hidden"
+                        class="absolute end-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 overflow-hidden"
                         style="display: none;">
+                        <!-- User Info Header -->
+                        <div class="px-4 py-3 border-b border-gray-100 bg-gradient-to-r from-blue-50/50 to-indigo-50/50">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-semibold text-sm shadow-sm">
+                                    {{ $adminInitials }}
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-semibold text-gray-900 truncate">{{ $adminName }}</p>
+                                    <p class="text-xs text-gray-600 truncate">{{ $adminEmail }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <a href="#"
                             class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                             <x-icon name="user" size="md" />

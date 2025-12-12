@@ -31,35 +31,39 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="flex-1 overflow-y-auto -mx-2 px-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+    <nav class="flex-1 overflow-y-auto px-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
         <ul class="space-y-1.5">
             <!-- Dashboard -->
             <li>
                 <a href="{{ route('admin.dashboard') ?? route('dashboard') ?? '#' }}"
-                    class="group flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-sm font-medium relative overflow-hidden {{ request()->routeIs('admin.dashboard') || request()->routeIs('dashboard') ? 'bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 shadow-sm shadow-blue-100/50' : 'text-gray-700 hover:bg-gray-50/80 hover:text-gray-900' }}">
+                    class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium relative overflow-hidden cursor-pointer {{ request()->routeIs('admin.dashboard') || request()->routeIs('dashboard') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
                     @if(request()->routeIs('admin.dashboard') || request()->routeIs('dashboard'))
                         <div
-                            class="absolute start-0 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500 to-indigo-600 rounded-e-full">
+                            class="absolute start-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-blue-500 via-indigo-600 to-purple-600 rounded-e-full shadow-lg shadow-blue-500/50">
                         </div>
                     @endif
-                    <x-icon name="home" size="md"
-                        class="relative z-10 transition-transform duration-200 {{ request()->routeIs('admin.dashboard') || request()->routeIs('dashboard') ? 'text-blue-600 scale-110' : 'text-gray-500 group-hover:text-blue-600 group-hover:scale-110' }}" />
-                    <span class="relative z-10">{{ __('admin/components.navigation.dashboard') }}</span>
+                    <div class="relative z-10 p-1.5 rounded-lg {{ request()->routeIs('admin.dashboard') || request()->routeIs('dashboard') ? 'bg-blue-100/50' : 'bg-gray-100/50 group-hover:bg-blue-100/50' }} transition-all duration-300">
+                        <x-icon name="home" size="md"
+                            class="transition-all duration-300 {{ request()->routeIs('admin.dashboard') || request()->routeIs('dashboard') ? 'text-blue-600 scale-110' : 'text-gray-500 group-hover:text-blue-600 group-hover:scale-110' }}" />
+                    </div>
+                    <span class="relative z-10 flex-1">{{ __('admin/components.navigation.dashboard') }}</span>
                 </a>
             </li>
 
             <!-- Admin -->
             <li>
                 <a href="{{ route('admin.admins.index') ?? '#' }}"
-                    class="group flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-sm font-medium relative overflow-hidden {{ request()->routeIs('admin.admins.*') ? 'bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 shadow-sm shadow-blue-100/50' : 'text-gray-700 hover:bg-gray-50/80 hover:text-gray-900' }}">
+                    class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium relative overflow-hidden cursor-pointer {{ request()->routeIs('admin.admins.*') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
                     @if(request()->routeIs('admin.admins.*'))
                         <div
-                            class="absolute start-0 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500 to-indigo-600 rounded-e-full">
+                            class="absolute start-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-blue-500 via-indigo-600 to-purple-600 rounded-e-full shadow-lg shadow-blue-500/50">
                         </div>
                     @endif
-                    <x-icon name="user" size="md"
-                        class="relative z-10 transition-transform duration-200 {{ request()->routeIs('admin.admins.*') ? 'text-blue-600 scale-110' : 'text-gray-500 group-hover:text-blue-600 group-hover:scale-110' }}" />
-                    <span class="relative z-10">{{ __('admin/components.navigation.admins') }}</span>
+                    <div class="relative z-10 p-1.5 rounded-lg {{ request()->routeIs('admin.admins.*') ? 'bg-blue-100/50' : 'bg-gray-100/50 group-hover:bg-blue-100/50' }} transition-all duration-300">
+                        <x-icon name="user" size="md"
+                            class="transition-all duration-300 {{ request()->routeIs('admin.admins.*') ? 'text-blue-600 scale-110' : 'text-gray-500 group-hover:text-blue-600 group-hover:scale-110' }}" />
+                    </div>
+                    <span class="relative z-10 flex-1">{{ __('admin/components.navigation.admins') }}</span>
                 </a>
             </li>
 
@@ -72,11 +76,13 @@
             <li>
                 <div x-data="{ open: openGroups.examples }">
                     <button @click="open = !open; openGroups.examples = open"
-                        class="group w-full flex items-center justify-between gap-2.5 px-3 py-2.5 rounded-xl transition-all duration-200 text-sm font-medium text-gray-700 hover:bg-gray-50/80 hover:text-gray-900 active:scale-[0.98]">
+                        class="group w-full flex items-center justify-between gap-2.5 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 active:scale-[0.98] cursor-pointer">
                         <div class="flex items-center gap-3">
-                            <x-icon name="code-alt" size="md"
-                                class="text-gray-500 group-hover:text-blue-600 transition-colors duration-200" />
-                            <span>{{ __('admin/components.navigation.examples') }}</span>
+                            <div class="p-1.5 rounded-lg bg-gray-100/50 group-hover:bg-blue-100/50 transition-all duration-300">
+                                <x-icon name="code-alt" size="md"
+                                    class="text-gray-500 group-hover:text-blue-600 transition-all duration-300 group-hover:scale-110" />
+                            </div>
+                            <span class="flex-1">{{ __('admin/components.navigation.examples') }}</span>
                         </div>
                         <x-icon name="chevron-down" size="xs"
                             class="transition-all duration-300 text-gray-400 group-hover:text-gray-600"
@@ -91,49 +97,49 @@
                         class="mt-2 ms-3 space-y-1 border-s-2 border-gray-200/60 ps-4">
                         <li>
                             <a href="{{ route('admin.examples.imask-test') ?? '#' }}"
-                                class="group flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg transition-all duration-200 text-sm {{ request()->routeIs('admin.examples.imask-test') ? 'bg-blue-50 text-blue-700 font-medium shadow-sm' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1' }}">
+                                class="group flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300 text-sm cursor-pointer {{ request()->routeIs('admin.examples.imask-test') ? 'bg-blue-50/80 text-blue-700 font-medium shadow-sm border border-blue-200/50' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1 hover:shadow-sm' }}">
                                 <x-icon name="code-alt" size="sm"
-                                    class="{{ request()->routeIs('admin.examples.imask-test') ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-600' }} transition-colors" />
+                                    class="{{ request()->routeIs('admin.examples.imask-test') ? 'text-blue-600 scale-110' : 'text-gray-400 group-hover:text-blue-600 group-hover:scale-110' }} transition-all duration-300" />
                                 <span>{{ __('admin/components.navigation.imask_test') }}</span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('admin.examples.validation-example') ?? '#' }}"
-                                class="group flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg transition-all duration-200 text-sm {{ request()->routeIs('admin.examples.validation-example') ? 'bg-blue-50 text-blue-700 font-medium shadow-sm' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1' }}">
+                                class="group flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300 text-sm cursor-pointer {{ request()->routeIs('admin.examples.validation-example') ? 'bg-blue-50/80 text-blue-700 font-medium shadow-sm border border-blue-200/50' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1 hover:shadow-sm' }}">
                                 <x-icon name="check-circle" size="sm"
-                                    class="{{ request()->routeIs('admin.examples.validation-example') ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-600' }} transition-colors" />
+                                    class="{{ request()->routeIs('admin.examples.validation-example') ? 'text-blue-600 scale-110' : 'text-gray-400 group-hover:text-blue-600 group-hover:scale-110' }} transition-all duration-300" />
                                 <span>{{ __('admin/components.navigation.validation_example') }}</span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('admin.examples.toast-example') ?? '#' }}"
-                                class="group flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg transition-all duration-200 text-sm {{ request()->routeIs('admin.examples.toast-example') ? 'bg-blue-50 text-blue-700 font-medium shadow-sm' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1' }}">
+                                class="group flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300 text-sm cursor-pointer {{ request()->routeIs('admin.examples.toast-example') ? 'bg-blue-50/80 text-blue-700 font-medium shadow-sm border border-blue-200/50' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1 hover:shadow-sm' }}">
                                 <x-icon name="notification" size="sm"
-                                    class="{{ request()->routeIs('admin.examples.toast-example') ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-600' }} transition-colors" />
+                                    class="{{ request()->routeIs('admin.examples.toast-example') ? 'text-blue-600 scale-110' : 'text-gray-400 group-hover:text-blue-600 group-hover:scale-110' }} transition-all duration-300" />
                                 <span>{{ __('admin/components.navigation.toast_examples') }}</span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('admin.examples.axios-example') ?? '#' }}"
-                                class="group flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg transition-all duration-200 text-sm {{ request()->routeIs('admin.examples.axios-example') ? 'bg-blue-50 text-blue-700 font-medium shadow-sm' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1' }}">
+                                class="group flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300 text-sm cursor-pointer {{ request()->routeIs('admin.examples.axios-example') ? 'bg-blue-50/80 text-blue-700 font-medium shadow-sm border border-blue-200/50' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1 hover:shadow-sm' }}">
                                 <x-icon name="code-alt" size="sm"
-                                    class="{{ request()->routeIs('admin.examples.axios-example') ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-600' }} transition-colors" />
+                                    class="{{ request()->routeIs('admin.examples.axios-example') ? 'text-blue-600 scale-110' : 'text-gray-400 group-hover:text-blue-600 group-hover:scale-110' }} transition-all duration-300" />
                                 <span>{{ __('admin/components.navigation.axios_examples') }}</span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('admin.examples.form-example') ?? '#' }}"
-                                class="group flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg transition-all duration-200 text-sm {{ request()->routeIs('admin.examples.form-example') ? 'bg-blue-50 text-blue-700 font-medium shadow-sm' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1' }}">
+                                class="group flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300 text-sm cursor-pointer {{ request()->routeIs('admin.examples.form-example') ? 'bg-blue-50/80 text-blue-700 font-medium shadow-sm border border-blue-200/50' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1 hover:shadow-sm' }}">
                                 <x-icon name="edit" size="sm"
-                                    class="{{ request()->routeIs('admin.examples.form-example') ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-600' }} transition-colors" />
+                                    class="{{ request()->routeIs('admin.examples.form-example') ? 'text-blue-600 scale-110' : 'text-gray-400 group-hover:text-blue-600 group-hover:scale-110' }} transition-all duration-300" />
                                 <span>{{ __('admin/components.navigation.form_example') }}</span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('admin.examples.modal-example') ?? '#' }}"
-                                class="group flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg transition-all duration-200 text-sm {{ request()->routeIs('admin.examples.modal-example') ? 'bg-blue-50 text-blue-700 font-medium shadow-sm' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1' }}">
+                                class="group flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300 text-sm cursor-pointer {{ request()->routeIs('admin.examples.modal-example') ? 'bg-blue-50/80 text-blue-700 font-medium shadow-sm border border-blue-200/50' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1 hover:shadow-sm' }}">
                                 <x-icon name="folder" size="sm"
-                                    class="{{ request()->routeIs('admin.examples.modal-example') ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-600' }} transition-colors" />
+                                    class="{{ request()->routeIs('admin.examples.modal-example') ? 'text-blue-600 scale-110' : 'text-gray-400 group-hover:text-blue-600 group-hover:scale-110' }} transition-all duration-300" />
                                 <span>{{ __('admin/components.navigation.modal_example') }}</span>
                             </a>
                         </li>
@@ -150,11 +156,13 @@
             <li>
                 <div x-data="{ open: openGroups.auth }">
                     <button @click="open = !open; openGroups.auth = open"
-                        class="group w-full flex items-center justify-between gap-2.5 px-3 py-2.5 rounded-xl transition-all duration-200 text-sm font-medium text-gray-700 hover:bg-gray-50/80 hover:text-gray-900 active:scale-[0.98]">
+                        class="group w-full flex items-center justify-between gap-2.5 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 active:scale-[0.98] cursor-pointer">
                         <div class="flex items-center gap-3">
-                            <x-icon name="lock" size="md"
-                                class="text-gray-500 group-hover:text-blue-600 transition-colors duration-200" />
-                            <span>{{ __('admin/components.navigation.authentication') }}</span>
+                            <div class="p-1.5 rounded-lg bg-gray-100/50 group-hover:bg-blue-100/50 transition-all duration-300">
+                                <x-icon name="lock" size="md"
+                                    class="text-gray-500 group-hover:text-blue-600 transition-all duration-300 group-hover:scale-110" />
+                            </div>
+                            <span class="flex-1">{{ __('admin/components.navigation.authentication') }}</span>
                         </div>
                         <x-icon name="chevron-down" size="xs"
                             class="transition-all duration-300 text-gray-400 group-hover:text-gray-600"
@@ -169,25 +177,25 @@
                         class="mt-2 ms-3 space-y-1 border-s-2 border-gray-200/60 ps-4">
                         <li>
                             <a href="{{ route('login') ?? '#' }}"
-                                class="group flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg transition-all duration-200 text-sm {{ request()->routeIs('login') ? 'bg-blue-50 text-blue-700 font-medium shadow-sm' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1' }}">
+                                class="group flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300 text-sm cursor-pointer {{ request()->routeIs('login') ? 'bg-blue-50/80 text-blue-700 font-medium shadow-sm border border-blue-200/50' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1 hover:shadow-sm' }}">
                                 <x-icon name="log-in" size="sm"
-                                    class="{{ request()->routeIs('login') ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-600' }} transition-colors" />
+                                    class="{{ request()->routeIs('login') ? 'text-blue-600 scale-110' : 'text-gray-400 group-hover:text-blue-600 group-hover:scale-110' }} transition-all duration-300" />
                                 <span>{{ __('admin/components.navigation.login') }}</span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('password.request') ?? '#' }}"
-                                class="group flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg transition-all duration-200 text-sm {{ request()->routeIs('password.request') ? 'bg-blue-50 text-blue-700 font-medium shadow-sm' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1' }}">
+                                class="group flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300 text-sm cursor-pointer {{ request()->routeIs('password.request') ? 'bg-blue-50/80 text-blue-700 font-medium shadow-sm border border-blue-200/50' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1 hover:shadow-sm' }}">
                                 <x-icon name="key" size="sm"
-                                    class="{{ request()->routeIs('password.request') ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-600' }} transition-colors" />
+                                    class="{{ request()->routeIs('password.request') ? 'text-blue-600 scale-110' : 'text-gray-400 group-hover:text-blue-600 group-hover:scale-110' }} transition-all duration-300" />
                                 <span>{{ __('admin/components.navigation.forgot_password') }}</span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('two-factor.login') ?? '#' }}"
-                                class="group flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg transition-all duration-200 text-sm {{ request()->routeIs('two-factor.*') ? 'bg-blue-50 text-blue-700 font-medium shadow-sm' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1' }}">
+                                class="group flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300 text-sm cursor-pointer {{ request()->routeIs('two-factor.*') ? 'bg-blue-50/80 text-blue-700 font-medium shadow-sm border border-blue-200/50' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1 hover:shadow-sm' }}">
                                 <x-icon name="shield" size="sm"
-                                    class="{{ request()->routeIs('two-factor.*') ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-600' }} transition-colors" />
+                                    class="{{ request()->routeIs('two-factor.*') ? 'text-blue-600 scale-110' : 'text-gray-400 group-hover:text-blue-600 group-hover:scale-110' }} transition-all duration-300" />
                                 <span>{{ __('admin/components.navigation.two_factor_auth') }}</span>
                             </a>
                         </li>
@@ -197,23 +205,11 @@
         </ul>
     </nav>
 
-    <!-- User Profile Footer -->
-    <div class="mt-auto pt-4 border-t border-gray-200/60">
-        <div
-            class="group flex items-center gap-3 px-3 py-3 rounded-xl bg-gradient-to-br from-gray-50 to-white hover:from-blue-50/50 hover:to-indigo-50/30 transition-all duration-300 cursor-pointer border border-gray-200/40 hover:border-blue-200/60 hover:shadow-md">
-            <div
-                class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-blue-500/30 group-hover:shadow-xl group-hover:shadow-blue-500/40 group-hover:scale-105 transition-all duration-300 ring-2 ring-white/50">
-                A
-            </div>
-            <div class="flex-1 min-w-0">
-                <p class="text-sm font-semibold text-gray-900 truncate group-hover:text-blue-700 transition-colors">
-                    Admin User</p>
-                <p class="text-xs text-gray-500 truncate group-hover:text-gray-600 transition-colors">admin@example.com
-                </p>
-            </div>
-            <x-icon name="chevron-right" size="sm"
-                class="text-gray-400 group-hover:text-blue-600 transition-all duration-200 group-hover:translate-x-1" />
-        </div>
+    <!-- Copyright Footer -->
+    <div class="mt-auto pt-4 pb-4 px-4 border-t border-gray-200/60">
+        <p class="text-xs text-center text-gray-500">
+            &copy; {{ date('Y') }} {{ config('app.name', 'Admin Panel') }}. {{ __('admin/components.copyright') }}
+        </p>
     </div>
 </nav>
 
