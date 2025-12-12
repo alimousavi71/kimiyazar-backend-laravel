@@ -101,11 +101,14 @@
                             <span>Settings</span>
                         </a>
                         <hr class="my-1 border-gray-100">
-                        <a href="#"
-                            class="flex items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
-                            <x-icon name="log-out" size="md" />
-                            <span>Logout</span>
-                        </a>
+                        <form method="POST" action="{{ route('admin.logout') }}" class="w-full">
+                            @csrf
+                            <button type="submit"
+                                class="flex items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors w-full text-start">
+                                <x-icon name="log-out" size="md" />
+                                <span>Logout</span>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

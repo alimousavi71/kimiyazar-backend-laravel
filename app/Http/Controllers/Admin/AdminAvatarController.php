@@ -22,15 +22,21 @@ class AdminAvatarController extends Controller
     }
 
     /**
-     * Upload avatar for the specified admin.
+     * Upload avatar for the specified admin or authenticated admin.
      *
      * @param UploadAvatarRequest $request
-     * @param string $id
+     * @param string|null $id
      * @return JsonResponse
      */
-    public function upload(UploadAvatarRequest $request, string $id): JsonResponse
+    public function upload(UploadAvatarRequest $request, ?string $id = null): JsonResponse
     {
         try {
+            // If no ID provided, use authenticated admin's ID
+            if (!$id) {
+                $admin = auth('admin')->user() ?? auth()->user();
+                $id = $admin->id;
+            }
+
             $avatarPath = $this->service->upload($id, $request->file('avatar'));
             $admin = $this->service->getAdmin($id);
 
@@ -47,14 +53,20 @@ class AdminAvatarController extends Controller
     }
 
     /**
-     * Delete avatar for the specified admin.
+     * Delete avatar for the specified admin or authenticated admin.
      *
-     * @param string $id
+     * @param string|null $id
      * @return JsonResponse
      */
-    public function delete(string $id): JsonResponse
+    public function delete(?string $id = null): JsonResponse
     {
         try {
+            // If no ID provided, use authenticated admin's ID
+            if (!$id) {
+                $admin = auth('admin')->user() ?? auth()->user();
+                $id = $admin->id;
+            }
+
             $this->service->delete($id);
 
             return $this->successResponse(null, 'Avatar deleted successfully.');

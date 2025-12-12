@@ -4,8 +4,7 @@
         open: false,
         isRtl: document.documentElement.dir === 'rtl',
         openGroups: {
-            examples: {{ request()->routeIs('admin.examples.*') ? 'true' : 'false' }},
-            auth: {{ request()->routeIs('login') || request()->routeIs('password.request') || request()->routeIs('two-factor.*') ? 'true' : 'false' }}
+            examples: {{ request()->routeIs('admin.examples.*') ? 'true' : 'false' }}
         }
     }" @toggle-sidebar.window="open = !open"
     class="w-64 bg-gradient-to-b from-white to-gray-50/50 border-e border-gray-200/60 h-screen flex flex-col fixed start-0 top-0 z-40 transition-all duration-300 lg:relative lg:translate-x-0 shadow-lg backdrop-blur-sm"
@@ -155,56 +154,22 @@
                 <div class="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
             </li>
 
-            <!-- Authentication Pages -->
+            <!-- Two-Factor Authentication -->
             <li>
-                <div x-data="{ open: openGroups.auth }">
-                    <button @click="open = !open; openGroups.auth = open"
-                        class="group w-full flex items-center justify-between gap-2.5 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 active:scale-[0.98] cursor-pointer">
-                        <div class="flex items-center gap-3">
-                            <div
-                                class="p-1.5 rounded-lg bg-gray-100/50 group-hover:bg-blue-100/50 transition-all duration-300">
-                                <x-icon name="lock" size="md"
-                                    class="text-gray-500 group-hover:text-blue-600 transition-all duration-300 group-hover:scale-110" />
-                            </div>
-                            <span class="flex-1">{{ __('admin/components.navigation.authentication') }}</span>
+                <a href="{{ route('two-factor.login') ?? '#' }}"
+                    class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium relative overflow-hidden cursor-pointer {{ request()->routeIs('two-factor.*') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
+                    @if(request()->routeIs('two-factor.*'))
+                        <div
+                            class="absolute start-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-blue-500 via-indigo-600 to-purple-600 rounded-e-full shadow-lg shadow-blue-500/50">
                         </div>
-                        <x-icon name="chevron-down" size="xs"
-                            class="transition-all duration-300 text-gray-400 group-hover:text-gray-600"
-                            x-bind:class="open ? 'rotate-180' : ''" />
-                    </button>
-                    <ul x-show="open" x-transition:enter="transition ease-out duration-200"
-                        x-transition:enter-start="opacity-0 -translate-y-2"
-                        x-transition:enter-end="opacity-100 translate-y-0"
-                        x-transition:leave="transition ease-in duration-150"
-                        x-transition:leave-start="opacity-100 translate-y-0"
-                        x-transition:leave-end="opacity-0 -translate-y-2"
-                        class="mt-2 ms-3 space-y-1 border-s-2 border-gray-200/60 ps-4">
-                        <li>
-                            <a href="{{ route('login') ?? '#' }}"
-                                class="group flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300 text-sm cursor-pointer {{ request()->routeIs('login') ? 'bg-blue-50/80 text-blue-700 font-medium shadow-sm border border-blue-200/50' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1 hover:shadow-sm' }}">
-                                <x-icon name="log-in" size="sm"
-                                    class="{{ request()->routeIs('login') ? 'text-blue-600 scale-110' : 'text-gray-400 group-hover:text-blue-600 group-hover:scale-110' }} transition-all duration-300" />
-                                <span>{{ __('admin/components.navigation.login') }}</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('password.request') ?? '#' }}"
-                                class="group flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300 text-sm cursor-pointer {{ request()->routeIs('password.request') ? 'bg-blue-50/80 text-blue-700 font-medium shadow-sm border border-blue-200/50' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1 hover:shadow-sm' }}">
-                                <x-icon name="key" size="sm"
-                                    class="{{ request()->routeIs('password.request') ? 'text-blue-600 scale-110' : 'text-gray-400 group-hover:text-blue-600 group-hover:scale-110' }} transition-all duration-300" />
-                                <span>{{ __('admin/components.navigation.forgot_password') }}</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('two-factor.login') ?? '#' }}"
-                                class="group flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300 text-sm cursor-pointer {{ request()->routeIs('two-factor.*') ? 'bg-blue-50/80 text-blue-700 font-medium shadow-sm border border-blue-200/50' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1 hover:shadow-sm' }}">
-                                <x-icon name="shield" size="sm"
-                                    class="{{ request()->routeIs('two-factor.*') ? 'text-blue-600 scale-110' : 'text-gray-400 group-hover:text-blue-600 group-hover:scale-110' }} transition-all duration-300" />
-                                <span>{{ __('admin/components.navigation.two_factor_auth') }}</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                    @endif
+                    <div
+                        class="relative z-10 p-1.5 rounded-lg {{ request()->routeIs('two-factor.*') ? 'bg-blue-100/50' : 'bg-gray-100/50 group-hover:bg-blue-100/50' }} transition-all duration-300">
+                        <x-icon name="shield" size="md"
+                            class="transition-all duration-300 {{ request()->routeIs('two-factor.*') ? 'text-blue-600 scale-110' : 'text-gray-500 group-hover:text-blue-600 group-hover:scale-110' }}" />
+                    </div>
+                    <span class="relative z-10 flex-1">{{ __('admin/components.navigation.two_factor_auth') }}</span>
+                </a>
             </li>
         </ul>
     </nav>

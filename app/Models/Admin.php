@@ -118,5 +118,16 @@ class Admin extends Authenticatable
     {
         $this->update(['last_login' => now()]);
     }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param string $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token): void
+    {
+        $this->notify(new \App\Notifications\AdminResetPasswordNotification($token));
+    }
 }
 

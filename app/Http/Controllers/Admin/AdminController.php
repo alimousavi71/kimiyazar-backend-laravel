@@ -144,7 +144,7 @@ class AdminController extends Controller
             return redirect()
                 ->route('admin.admins.index')
                 ->with('error', __('admin/admins.messages.not_found'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if ($request->expectsJson() || $request->wantsJson()) {
                 return $this->errorResponse(__('admin/admins.messages.delete_failed') . ': ' . $e->getMessage(), 500);
             }

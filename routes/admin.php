@@ -5,30 +5,28 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminAvatarController;
 use App\Http\Controllers\Admin\AdminPasswordController;
 use App\Http\Controllers\Admin\ProfileController;
-use App\Http\Controllers\Admin\ProfileAvatarController;
-use App\Http\Controllers\Admin\ProfilePasswordController;
 use App\Http\Controllers\Examples\UsersController;
 
-// TODO: Temporarily disabled auth middleware for admin routes
-// To enable: add ->middleware('auth:admin') to the route group below
 Route::group([
     'prefix' => config('admin.prefix'),
     'as' => config('admin.route_name_prefix') . '.',
-    // 'middleware' => ['auth:admin'], // Temporarily disabled
+    'middleware' => ['auth.admin'],
 ], function () {
-    Route::get('/dashboard', function () {
+    // Dashboard
+    Route::get('/', function () {
         return view('pages.dashboard');
     })->name('dashboard');
 
+    // Settings
     Route::get('/settings', function () {
         return view('pages.settings');
     })->name('settings');
 
-    // Users Routes
+    // Users
     Route::get('/users', [UsersController::class, 'index'])->name('users.index');
 
-    // Example Routes Group
-    Route::group(['prefix' => 'examples', 'as' => 'examples.'], function () {
+    // Examples
+    Route::prefix('examples')->name('examples.')->group(function () {
         Route::get('/imask-test', function () {
             return view('pages.imask-test');
         })->name('imask-test');
@@ -54,42 +52,38 @@ Route::group([
         })->name('modal-example');
     });
 
-    // Admin Management Routes Group
-    Route::group(['prefix' => 'admins', 'as' => 'admins.'], function () {
+    // Admin Management
+    Route::prefix('admins')->name('admins.')->group(function () {
         Route::get('/', [AdminController::class, 'index'])->name('index');
         Route::get('/create', [AdminController::class, 'create'])->name('create');
         Route::post('/', [AdminController::class, 'store'])->name('store');
         Route::get('/{id}', [AdminController::class, 'show'])->name('show');
         Route::get('/{id}/edit', [AdminController::class, 'edit'])->name('edit');
-        Route::put('/{id}', [AdminController::class, 'update'])->name('update');
-        Route::patch('/{id}', [AdminController::class, 'update'])->name('update');
+        Route::match(['put', 'patch'], '/{id}', [AdminController::class, 'update'])->name('update');
         Route::delete('/{id}', [AdminController::class, 'destroy'])->name('destroy');
 
-        // Avatar Routes
+        // Avatar
         Route::post('/{id}/avatar', [AdminAvatarController::class, 'upload'])->name('avatar.upload');
         Route::delete('/{id}/avatar', [AdminAvatarController::class, 'delete'])->name('avatar.delete');
 
-        // Password Routes
+        // Password
         Route::get('/{id}/password/edit', [AdminPasswordController::class, 'edit'])->name('password.edit');
-        Route::put('/{id}/password', [AdminPasswordController::class, 'update'])->name('password.update');
-        Route::patch('/{id}/password', [AdminPasswordController::class, 'update'])->name('password.update');
+        Route::match(['put', 'patch'], '/{id}/password', [AdminPasswordController::class, 'update'])->name('password.update');
     });
 
-    // Profile Routes (Authenticated Admin's Own Profile)
-    Route::group(['prefix' => 'profile', 'as' => 'profile.'], function () {
+    // Profile (Authenticated Admin's Own Profile)
+    Route::prefix('profile')->name('profile.')->group(function () {
         Route::get('/', [ProfileController::class, 'show'])->name('show');
         Route::get('/edit', [ProfileController::class, 'edit'])->name('edit');
-        Route::put('/', [ProfileController::class, 'update'])->name('update');
-        Route::patch('/', [ProfileController::class, 'update'])->name('update');
+        Route::match(['put', 'patch'], '/', [ProfileController::class, 'update'])->name('update');
 
-        // Profile Avatar Routes
-        Route::post('/avatar', [ProfileAvatarController::class, 'upload'])->name('avatar.upload');
-        Route::delete('/avatar', [ProfileAvatarController::class, 'delete'])->name('avatar.delete');
+        // Avatar (reuse AdminAvatarController)
+        Route::post('/avatar', [AdminAvatarController::class, 'upload'])->name('avatar.upload');
+        Route::delete('/avatar', [AdminAvatarController::class, 'delete'])->name('avatar.delete');
 
-        // Profile Password Routes
-        Route::get('/password/edit', [ProfilePasswordController::class, 'edit'])->name('password.edit');
-        Route::put('/password', [ProfilePasswordController::class, 'update'])->name('password.update');
-        Route::patch('/password', [ProfilePasswordController::class, 'update'])->name('password.update');
+        // Password (reuse AdminPasswordController)
+        Route::get('/password/edit', [AdminPasswordController::class, 'edit'])->name('password.edit');
+        Route::match(['put', 'patch'], '/password', [AdminPasswordController::class, 'update'])->name('password.update');
     });
 });
 

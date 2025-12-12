@@ -21,33 +21,58 @@ class AdminPasswordController extends Controller
     /**
      * Show the form for changing admin password.
      *
-     * @param string $id
+     * @param string|null $id
      * @return View
      */
-    public function edit(string $id): View
+    public function edit(?string $id = null): View
     {
-        $admin = $this->service->findById($id);
+        // If no ID provided, use authenticated admin's ID
+        if (!$id) {
+            $admin = auth('admin')->user() ?? auth()->user();
+            $id = $admin->id;
+            $view = 'admin.profile.password.edit';
+        } else {
+            $admin = $this->service->findById($id);
+            $view = 'admin.admins.password.edit';
+        }
 
-        return view('admin.admins.password.edit', compact('admin'));
+        return view($view, compact('admin'));
     }
 
     /**
      * Update the admin password.
      *
      * @param UpdatePasswordRequest $request
-     * @param string $id
+     * @param string|null $id
      * @return RedirectResponse
      */
-    public function update(UpdatePasswordRequest $request, string $id): RedirectResponse
+    public function update(UpdatePasswordRequest $request, ?string $id = null): RedirectResponse
     {
         $validated = $request->validated();
+
+        // If no ID provided, use authenticated admin's ID
+        if (!$id) {
+            $admin = auth('admin')->user() ?? auth()->user();
+            $id = $admin->id;
+            $redirectRoute = 'admin.profile.show';
+            $messageKey = 'admin/profile.messages.password_updated';
+        } else {
+            $redirectRoute = 'admin.admins.show';
+            $messageKey = 'admin/admins.messages.password_updated';
+        }
 
         // Use the existing service update method
         $this->service->update($id, $validated);
 
+        if ($id && $redirectRoute === 'admin.admins.show') {
+            return redirect()
+                ->route($redirectRoute, $id)
+                ->with('success', __($messageKey));
+        }
+
         return redirect()
-            ->route('admin.admins.show', $id)
-            ->with('success', __('admin/admins.messages.password_updated'));
+            ->route($redirectRoute)
+            ->with('success', __($messageKey));
     }
 }
 
