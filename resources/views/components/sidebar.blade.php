@@ -48,6 +48,21 @@
                 </a>
             </li>
 
+            <!-- Admin -->
+            <li>
+                <a href="{{ route('admin.admins.index') ?? '#' }}"
+                    class="group flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-sm font-medium relative overflow-hidden {{ request()->routeIs('admin.admins.*') ? 'bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 shadow-sm shadow-blue-100/50' : 'text-gray-700 hover:bg-gray-50/80 hover:text-gray-900' }}">
+                    @if(request()->routeIs('admin.admins.*'))
+                        <div
+                            class="absolute start-0 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500 to-indigo-600 rounded-e-full">
+                        </div>
+                    @endif
+                    <x-icon name="user" size="md"
+                        class="relative z-10 transition-transform duration-200 {{ request()->routeIs('admin.admins.*') ? 'text-blue-600 scale-110' : 'text-gray-500 group-hover:text-blue-600 group-hover:scale-110' }}" />
+                    <span class="relative z-10">{{ __('admin/components.navigation.admins') }}</span>
+                </a>
+            </li>
+
             <!-- Divider -->
             <li class="my-3">
                 <div class="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>

@@ -33,5 +33,70 @@ return [
         'not_found' => 'مدیر یافت نشد.',
         'delete_failed' => 'حذف مدیر با خطا مواجه شد.',
     ],
+
+    'forms' => [
+        'create' => [
+            'title' => 'ایجاد مدیر',
+            'header_title' => 'ایجاد مدیر',
+            'description' => 'افزودن مدیر جدید به سیستم',
+            'card_title' => 'اطلاعات مدیر',
+            'submit' => 'ایجاد مدیر',
+        ],
+        'edit' => [
+            'title' => 'ویرایش مدیر',
+            'header_title' => 'ویرایش مدیر',
+            'description' => 'به‌روزرسانی اطلاعات مدیر',
+            'card_title' => 'اطلاعات مدیر',
+            'avatar_card_title' => 'آواتار',
+            'submit' => 'به‌روزرسانی مدیر',
+            'password_help' => 'برای حفظ رمز عبور فعلی خالی بگذارید',
+        ],
+        'placeholders' => [
+            'first_name' => 'نام را وارد کنید',
+            'last_name' => 'نام خانوادگی را وارد کنید',
+            'email' => 'آدرس ایمیل را وارد کنید',
+            'password' => 'رمز عبور را وارد کنید',
+            'password_confirmation' => 'تأیید رمز عبور',
+            'new_password' => 'رمز عبور جدید را وارد کنید',
+            'confirm_new_password' => 'تأیید رمز عبور جدید',
+        ],
+        'labels' => [
+            'block_admin' => 'مسدود کردن این مدیر',
+            'upload_avatar' => 'آپلود آواتار',
+            'delete_avatar' => 'حذف آواتار',
+            'uploading' => 'در حال آپلود...',
+            'deleting' => 'در حال حذف...',
+        ],
+        'breadcrumbs' => [
+            'dashboard' => 'داشبورد',
+            'admins' => 'مدیران',
+            'create' => 'ایجاد',
+            'edit' => 'ویرایش',
+            'details' => 'جزئیات',
+        ],
+    ],
+
+    'show' => [
+        'title' => 'جزئیات مدیر',
+        'header_title' => 'جزئیات مدیر',
+        'description' => 'مشاهده اطلاعات مدیر',
+        'personal_info' => 'اطلاعات شخصی',
+        'activity_info' => 'اطلاعات فعالیت',
+        'avatar_card_title' => 'آواتار',
+        'buttons' => [
+            'edit' => 'ویرایش مدیر',
+            'back_to_list' => 'بازگشت به لیست',
+        ],
+        'labels' => [
+            'email_verified' => 'ایمیل تأیید شده',
+            'never_logged_in' => 'هرگز وارد نشده',
+            'verified' => 'تأیید شده',
+            'not_verified' => 'تأیید نشده',
+        ],
+        'javascript' => [
+            'select_image' => 'لطفاً یک فایل تصویری انتخاب کنید',
+            'delete_avatar_confirm' => 'آیا مطمئن هستید که می‌خواهید آواتار را حذف کنید؟',
+        ],
+    ],
 ];
 

@@ -1,66 +1,73 @@
-<x-layouts.admin title="Edit Admin" header-title="Edit Admin" :breadcrumbs="[
-        ['label' => 'Dashboard', 'url' => route('admin.dashboard')],
-        ['label' => 'Admins', 'url' => route('admin.admins.index')],
-        ['label' => 'Edit']
+<x-layouts.admin :title="__('admin/admins.forms.edit.title')" :header-title="__('admin/admins.forms.edit.header_title')"
+    :breadcrumbs="[
+        ['label' => __('admin/admins.forms.breadcrumbs.dashboard'), 'url' => route('admin.dashboard')],
+        ['label' => __('admin/admins.forms.breadcrumbs.admins'), 'url' => route('admin.admins.index')],
+        ['label' => __('admin/admins.forms.breadcrumbs.edit')]
     ]">
     <div class="mb-4">
-        <h2 class="text-lg font-semibold text-gray-900">Edit Admin</h2>
-        <p class="text-xs text-gray-600 mt-0.5">Update administrator information</p>
+        <h2 class="text-lg font-semibold text-gray-900">{{ __('admin/admins.forms.edit.title') }}</h2>
+        <p class="text-xs text-gray-600 mt-0.5">{{ __('admin/admins.forms.edit.description') }}</p>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <!-- Main Form -->
         <div class="lg:col-span-2">
             <x-card>
-                <x-slot name="title">Admin Information</x-slot>
+                <x-slot name="title">{{ __('admin/admins.forms.edit.card_title') }}</x-slot>
 
                 <form action="{{ route('admin.admins.update', $admin->id) }}" method="POST" class="space-y-6">
                     @csrf
                     @method('PUT')
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <x-form-group label="First Name" required :error="$errors->first('first_name')">
-                            <x-input type="text" name="first_name" id="first_name" placeholder="Enter first name"
+                        <x-form-group :label="__('admin/admins.fields.first_name')" required
+                            :error="$errors->first('first_name')">
+                            <x-input type="text" name="first_name" id="first_name"
+                                :placeholder="__('admin/admins.forms.placeholders.first_name')"
                                 value="{{ old('first_name', $admin->first_name) }}" required class="w-full" />
                         </x-form-group>
 
-                        <x-form-group label="Last Name" required :error="$errors->first('last_name')">
-                            <x-input type="text" name="last_name" id="last_name" placeholder="Enter last name"
+                        <x-form-group :label="__('admin/admins.fields.last_name')" required
+                            :error="$errors->first('last_name')">
+                            <x-input type="text" name="last_name" id="last_name"
+                                :placeholder="__('admin/admins.forms.placeholders.last_name')"
                                 value="{{ old('last_name', $admin->last_name) }}" required class="w-full" />
                         </x-form-group>
                     </div>
 
-                    <x-form-group label="Email Address" required :error="$errors->first('email')">
-                        <x-input type="email" name="email" id="email" placeholder="Enter email address"
+                    <x-form-group :label="__('admin/admins.fields.email')" required :error="$errors->first('email')">
+                        <x-input type="email" name="email" id="email"
+                            :placeholder="__('admin/admins.forms.placeholders.email')"
                             value="{{ old('email', $admin->email) }}" required class="w-full" />
                     </x-form-group>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <x-form-group label="Password" help="Leave blank to keep current password"
-                            :error="$errors->first('password')">
-                            <x-input type="password" name="password" id="password" placeholder="Enter new password"
-                                class="w-full" />
+                        <x-form-group :label="__('admin/admins.fields.password')"
+                            :help="__('admin/admins.forms.edit.password_help')" :error="$errors->first('password')">
+                            <x-input type="password" name="password" id="password"
+                                :placeholder="__('admin/admins.forms.placeholders.new_password')" class="w-full" />
                         </x-form-group>
 
-                        <x-form-group label="Confirm Password">
+                        <x-form-group :label="__('admin/admins.fields.password_confirmation')">
                             <x-input type="password" name="password_confirmation" id="password_confirmation"
-                                placeholder="Confirm new password" class="w-full" />
+                                :placeholder="__('admin/admins.forms.placeholders.confirm_new_password')"
+                                class="w-full" />
                         </x-form-group>
                     </div>
 
-                    <x-form-group label="Status">
+                    <x-form-group :label="__('admin/admins.fields.is_block')">
                         <x-toggle name="is_block" id="is_block" :checked="old('is_block', $admin->is_block)"
-                            label="Block this admin" />
+                            :label="__('admin/admins.forms.labels.block_admin')" />
                     </x-form-group>
 
                     <div class="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
                         <a href="{{ route('admin.admins.index') }}">
                             <x-button variant="secondary" type="button">
-                                Cancel
+                                {{ __('admin/components.buttons.cancel') }}
                             </x-button>
                         </a>
                         <x-button variant="primary" type="submit">
-                            Update Admin
+                            {{ __('admin/admins.forms.edit.submit') }}
                         </x-button>
                     </div>
                 </form>
@@ -70,7 +77,7 @@
         <!-- Avatar Section -->
         <div class="lg:col-span-1">
             <x-card>
-                <x-slot name="title">Avatar</x-slot>
+                <x-slot name="title">{{ __('admin/admins.forms.edit.avatar_card_title') }}</x-slot>
 
                 <div class="space-y-4">
                     <div class="flex justify-center">
@@ -93,7 +100,7 @@
                                 class="block w-full text-sm text-gray-500 file:me-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer" />
                         </x-form-group>
                         <x-button variant="primary" size="sm" type="submit" class="w-full" id="upload-btn">
-                            Upload Avatar
+                            {{ __('admin/admins.forms.labels.upload_avatar') }}
                         </x-button>
                     </form>
 
@@ -101,7 +108,7 @@
                         <form id="avatar-delete-form" class="mt-2">
                             @csrf
                             <x-button variant="danger" size="sm" type="submit" class="w-full" id="delete-btn">
-                                Delete Avatar
+                                {{ __('admin/admins.forms.labels.delete_avatar') }}
                             </x-button>
                         </form>
                     @endif
@@ -127,13 +134,13 @@
 
                         if (!fileInput.files[0]) {
                             if (window.Toast) {
-                                window.Toast.error('Please select an image file');
+                                window.Toast.error('{{ __('admin/admins.forms.javascript.select_image') }}');
                             }
                             return;
                         }
 
                         uploadBtn.disabled = true;
-                        uploadBtn.textContent = 'Uploading...';
+                        uploadBtn.textContent = '{{ __('admin/admins.forms.labels.uploading') }}';
 
                         try {
                             const response = await window.axios.post('{{ route('admin.admins.avatar.upload', $admin->id) }}', formData, {
@@ -152,7 +159,7 @@
                             console.error('Upload error:', error);
                         } finally {
                             uploadBtn.disabled = false;
-                            uploadBtn.textContent = 'Upload Avatar';
+                            uploadBtn.textContent = '{{ __('admin/admins.forms.labels.upload_avatar') }}';
                         }
                     });
                 }
@@ -161,12 +168,12 @@
                     deleteForm.addEventListener('submit', async function (e) {
                         e.preventDefault();
 
-                        if (!confirm('Are you sure you want to delete the avatar?')) {
+                        if (!confirm('{{ __('admin/admins.forms.javascript.delete_avatar_confirm') }}')) {
                             return;
                         }
 
                         deleteBtn.disabled = true;
-                        deleteBtn.textContent = 'Deleting...';
+                        deleteBtn.textContent = '{{ __('admin/admins.forms.labels.deleting') }}';
 
                         try {
                             const response = await window.axios.delete('{{ route('admin.admins.avatar.delete', $admin->id) }}');
@@ -181,7 +188,7 @@
                             console.error('Delete error:', error);
                         } finally {
                             deleteBtn.disabled = false;
-                            deleteBtn.textContent = 'Delete Avatar';
+                            deleteBtn.textContent = '{{ __('admin/admins.forms.labels.delete_avatar') }}';
                         }
                     });
                 }

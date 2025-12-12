@@ -68,6 +68,7 @@ return [
     // Navigation
     'navigation' => [
         'dashboard' => 'داشبورد',
+        'admins' => 'مدیران',
         'examples' => 'مثال‌ها',
         'imask_test' => 'تست IMask',
         'validation_example' => 'مثال اعتبارسنجی',
