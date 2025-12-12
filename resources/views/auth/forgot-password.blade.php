@@ -1,0 +1,74 @@
+@php
+    $title = 'Forgot Password';
+@endphp
+
+<x-layouts.auth :title="$title">
+    <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+        <!-- Header -->
+        <div class="bg-gradient-to-br from-amber-500 to-orange-600 px-6 py-8 text-center">
+            <div
+                class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm mb-4">
+                <x-icon name="key" size="2xl" class="text-white" />
+            </div>
+            <h1 class="text-2xl font-bold text-white mb-2">Forgot Password?</h1>
+            <p class="text-amber-100 text-sm">No worries, we'll send you reset instructions</p>
+        </div>
+
+        <!-- Form -->
+        <form method="POST" action="{{ route('password.email') }}" class="p-6 space-y-5">
+            @csrf
+
+            <!-- Email -->
+            <x-form-group label="Email Address" required error="{{ $errors->first('email') }}">
+                <x-input type="email" name="email" value="{{ old('email') }}" placeholder="Enter your email" required
+                    autofocus class="w-full" />
+            </x-form-group>
+
+            <!-- Success Message -->
+            @if(session('status'))
+                <div class="bg-green-50 border border-green-200 rounded-xl p-4">
+                    <div class="flex items-start gap-3">
+                        <x-icon name="check-circle" size="md" class="text-green-600 mt-0.5 flex-shrink-0" />
+                        <div class="flex-1">
+                            <p class="text-sm font-medium text-green-900">{{ session('status') }}</p>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            <!-- Error Messages -->
+            @if($errors->any() && !$errors->has('email'))
+                <div class="bg-red-50 border border-red-200 rounded-xl p-4">
+                    <div class="flex items-start gap-3">
+                        <x-icon name="error-circle" size="md" class="text-red-600 mt-0.5 flex-shrink-0" />
+                        <div class="flex-1">
+                            <p class="text-sm font-medium text-red-900 mb-1">Error</p>
+                            <ul class="text-sm text-red-700 space-y-1">
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            <!-- Submit Button -->
+            <x-button type="submit" variant="primary" size="lg" class="w-full">
+                <span class="flex items-center justify-center gap-2">
+                    <x-icon name="mail-send" size="md" />
+                    Send Reset Link
+                </span>
+            </x-button>
+
+            <!-- Back to Login -->
+            <div class="text-center pt-4 border-t border-gray-100">
+                <a href="{{ route('login') }}"
+                    class="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors inline-flex items-center gap-1">
+                    <x-icon name="arrow-back" size="sm" />
+                    Back to login
+                </a>
+            </div>
+        </form>
+    </div>
+</x-layouts.auth>
