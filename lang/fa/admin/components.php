@@ -103,5 +103,16 @@ return [
 
     // Copyright
     'copyright' => 'تمام حقوق محفوظ است.',
+
+    // Header
+    'header' => [
+        'notifications' => 'اعلان‌ها',
+        'close_notifications' => 'بستن اعلان‌ها',
+        'view_all_notifications' => 'مشاهده همه اعلان‌ها',
+        'user_menu' => 'منوی کاربر',
+        'profile' => 'پروفایل',
+        'settings' => 'تنظیمات',
+        'logout' => 'خروج',
+    ],
 ];
 

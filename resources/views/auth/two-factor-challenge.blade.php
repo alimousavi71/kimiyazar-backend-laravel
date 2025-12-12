@@ -15,7 +15,7 @@
         </div>
 
         <!-- Form -->
-        <form method="POST" action="{{ route('two-factor.verify') }}" class="p-6 space-y-5" x-data="{ 
+        <form method="POST" action="{{ route('admin.two-factor.verify') }}" class="p-6 space-y-5" x-data="{ 
                 code: ['', '', '', '', '', ''],
                 handleInput(index, event) {
                     const value = event.target.value.replace(/[^0-9]/g, '');
@@ -142,7 +142,7 @@
 
             <!-- Back to Login -->
             <div class="text-center pt-2">
-                <a href="{{ route('login') }}"
+                <a href="{{ route('admin.login') }}"
                     class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors inline-flex items-center gap-1">
                     <x-icon name="arrow-back" size="sm" />
                     Back to login

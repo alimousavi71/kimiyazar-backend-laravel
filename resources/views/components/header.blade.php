@@ -16,7 +16,7 @@
                 <!-- Notifications Dropdown -->
                 <div x-data="{ open: false }" class="relative">
                     <x-icon-button icon="bell" size="lg" variant="default" :badge="true" badge-color="red"
-                        @click="open = !open" aria-label="Notifications" />
+                        @click="open = !open" aria-label="{{ __('admin/components.header.notifications') }}" />
 
                     <!-- Notifications Dropdown -->
                     <div x-show="open" @click.away="open = false" x-transition x-cloak
@@ -24,9 +24,11 @@
                         style="display: none;">
                         <!-- Header -->
                         <div class="px-4 py-3 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
-                            <h3 class="text-sm font-semibold text-gray-900">Notifications</h3>
+                            <h3 class="text-sm font-semibold text-gray-900">
+                                {{ __('admin/components.header.notifications') }}
+                            </h3>
                             <x-icon-button icon="x" size="sm" variant="secondary" @click="open = false"
-                                aria-label="Close notifications" />
+                                aria-label="{{ __('admin/components.header.close_notifications') }}" />
                         </div>
 
                         <!-- Notifications List -->
@@ -48,7 +50,7 @@
                         <!-- Footer -->
                         <div class="px-4 py-3 border-t border-gray-100 bg-gray-50">
                             <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-700 text-center block">
-                                View all notifications
+                                {{ __('admin/components.header.view_all_notifications') }}
                             </a>
                         </div>
                     </div>
@@ -64,7 +66,7 @@
                 <div x-data="{ open: false }" class="relative">
                     <button @click="open = !open"
                         class="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors p-1.5 rounded-xl hover:bg-gray-100"
-                        aria-label="User menu">
+                        aria-label="{{ __('admin/components.header.user_menu') }}">
                         <div
                             class="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-semibold text-sm shadow-sm">
                             {{ $adminInitials }}
@@ -93,12 +95,12 @@
                         <a href="{{ route('admin.profile.show') }}"
                             class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                             <x-icon name="user" size="md" />
-                            <span>Profile</span>
+                            <span>{{ __('admin/components.header.profile') }}</span>
                         </a>
                         <a href="#"
                             class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                             <x-icon name="cog" size="md" />
-                            <span>Settings</span>
+                            <span>{{ __('admin/components.header.settings') }}</span>
                         </a>
                         <hr class="my-1 border-gray-100">
                         <form method="POST" action="{{ route('admin.logout') }}" class="w-full">
@@ -106,7 +108,7 @@
                             <button type="submit"
                                 class="flex items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors w-full text-start">
                                 <x-icon name="log-out" size="md" />
-                                <span>Logout</span>
+                                <span>{{ __('admin/components.header.logout') }}</span>
                             </button>
                         </form>
                     </div>

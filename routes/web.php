@@ -21,22 +21,22 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('/reset-password/{token}', [AdminPasswordResetController::class, 'showResetForm'])->name('password.reset');
         Route::post('/reset-password', [AdminPasswordResetController::class, 'reset'])->name('password.update');
+
+        // Two-Factor Authentication Routes
+        Route::get('/two-factor-challenge', function () {
+            return view('auth.two-factor-challenge');
+        })->name('two-factor.login');
+
+        Route::post('/two-factor-challenge', function () {
+            // TODO: Implement 2FA verification logic
+            return redirect()->route('admin.dashboard');
+        })->name('two-factor.verify');
     });
 
     Route::middleware('auth:admin')->group(function () {
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
     });
 });
-
-// Two-Factor Authentication Routes
-Route::get('/two-factor-challenge', function () {
-    return view('auth.two-factor-challenge');
-})->name('two-factor.login');
-
-Route::post('/two-factor-challenge', function () {
-    // TODO: Implement 2FA verification logic
-    return redirect()->route('admin.dashboard');
-})->name('two-factor.verify');
 
 
 // API Routes

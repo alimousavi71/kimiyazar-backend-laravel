@@ -103,5 +103,16 @@ return [
 
     // Copyright
     'copyright' => 'All rights reserved.',
+
+    // Header
+    'header' => [
+        'notifications' => 'Notifications',
+        'close_notifications' => 'Close notifications',
+        'view_all_notifications' => 'View all notifications',
+        'user_menu' => 'User menu',
+        'profile' => 'Profile',
+        'settings' => 'Settings',
+        'logout' => 'Logout',
+    ],
 ];
 
