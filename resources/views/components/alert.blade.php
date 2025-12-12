@@ -25,7 +25,7 @@
     @if($dismissible)
         <button @click="show = false"
             class="text-current opacity-70 hover:opacity-100 transition-opacity p-1 rounded-lg hover:bg-black/5 flex-shrink-0">
-            <span class="sr-only">Close</span>
+            <span class="sr-only">{{ __('admin/components.buttons.close') }}</span>
             <x-icon name="x" size="md" />
         </button>
     @endif

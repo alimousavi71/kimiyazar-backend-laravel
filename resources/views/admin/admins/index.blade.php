@@ -15,6 +15,19 @@
             </a>
         </div>
 
+        <!-- Success/Error Messages -->
+        @if(session('success'))
+            <x-alert type="success" dismissible>
+                {{ session('success') }}
+            </x-alert>
+        @endif
+
+        @if(session('error'))
+            <x-alert type="danger" dismissible>
+                {{ session('error') }}
+            </x-alert>
+        @endif
+
         <!-- Admins Table -->
         <x-card>
             <x-table-wrapper :search-placeholder="__('admin/components.buttons.search')"
