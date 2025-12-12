@@ -42,7 +42,8 @@
                             class="absolute start-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-blue-500 via-indigo-600 to-purple-600 rounded-e-full shadow-lg shadow-blue-500/50">
                         </div>
                     @endif
-                    <div class="relative z-10 p-1.5 rounded-lg {{ request()->routeIs('admin.dashboard') || request()->routeIs('dashboard') ? 'bg-blue-100/50' : 'bg-gray-100/50 group-hover:bg-blue-100/50' }} transition-all duration-300">
+                    <div
+                        class="relative z-10 p-1.5 rounded-lg {{ request()->routeIs('admin.dashboard') || request()->routeIs('dashboard') ? 'bg-blue-100/50' : 'bg-gray-100/50 group-hover:bg-blue-100/50' }} transition-all duration-300">
                         <x-icon name="home" size="md"
                             class="transition-all duration-300 {{ request()->routeIs('admin.dashboard') || request()->routeIs('dashboard') ? 'text-blue-600 scale-110' : 'text-gray-500 group-hover:text-blue-600 group-hover:scale-110' }}" />
                     </div>
@@ -59,7 +60,8 @@
                             class="absolute start-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-blue-500 via-indigo-600 to-purple-600 rounded-e-full shadow-lg shadow-blue-500/50">
                         </div>
                     @endif
-                    <div class="relative z-10 p-1.5 rounded-lg {{ request()->routeIs('admin.admins.*') ? 'bg-blue-100/50' : 'bg-gray-100/50 group-hover:bg-blue-100/50' }} transition-all duration-300">
+                    <div
+                        class="relative z-10 p-1.5 rounded-lg {{ request()->routeIs('admin.admins.*') ? 'bg-blue-100/50' : 'bg-gray-100/50 group-hover:bg-blue-100/50' }} transition-all duration-300">
                         <x-icon name="user" size="md"
                             class="transition-all duration-300 {{ request()->routeIs('admin.admins.*') ? 'text-blue-600 scale-110' : 'text-gray-500 group-hover:text-blue-600 group-hover:scale-110' }}" />
                     </div>
@@ -78,7 +80,8 @@
                     <button @click="open = !open; openGroups.examples = open"
                         class="group w-full flex items-center justify-between gap-2.5 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 active:scale-[0.98] cursor-pointer">
                         <div class="flex items-center gap-3">
-                            <div class="p-1.5 rounded-lg bg-gray-100/50 group-hover:bg-blue-100/50 transition-all duration-300">
+                            <div
+                                class="p-1.5 rounded-lg bg-gray-100/50 group-hover:bg-blue-100/50 transition-all duration-300">
                                 <x-icon name="code-alt" size="md"
                                     class="text-gray-500 group-hover:text-blue-600 transition-all duration-300 group-hover:scale-110" />
                             </div>
@@ -158,7 +161,8 @@
                     <button @click="open = !open; openGroups.auth = open"
                         class="group w-full flex items-center justify-between gap-2.5 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 active:scale-[0.98] cursor-pointer">
                         <div class="flex items-center gap-3">
-                            <div class="p-1.5 rounded-lg bg-gray-100/50 group-hover:bg-blue-100/50 transition-all duration-300">
+                            <div
+                                class="p-1.5 rounded-lg bg-gray-100/50 group-hover:bg-blue-100/50 transition-all duration-300">
                                 <x-icon name="lock" size="md"
                                     class="text-gray-500 group-hover:text-blue-600 transition-all duration-300 group-hover:scale-110" />
                             </div>

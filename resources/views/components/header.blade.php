@@ -76,7 +76,8 @@
                         class="absolute end-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 overflow-hidden"
                         style="display: none;">
                         <!-- User Info Header -->
-                        <div class="px-4 py-3 border-b border-gray-100 bg-gradient-to-r from-blue-50/50 to-indigo-50/50">
+                        <div
+                            class="px-4 py-3 border-b border-gray-100 bg-gradient-to-r from-blue-50/50 to-indigo-50/50">
                             <div class="flex items-center gap-3">
                                 <div
                                     class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-semibold text-sm shadow-sm">
@@ -88,8 +89,8 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        <a href="#"
+
+                        <a href="{{ route('admin.profile.show') }}"
                             class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                             <x-icon name="user" size="md" />
                             <span>Profile</span>

@@ -155,7 +155,61 @@ document.addEventListener("DOMContentLoaded", function () {
                 },
             ])
             .onSuccess((event) => {
-                // Allow form to submit normally after validation passes
+                event.target.submit();
+            });
+    }
+
+    // Profile Edit Form Validation
+    const profileEditForm =
+        document.getElementById("profile-edit-form") ||
+        document.querySelector('form[action*="admin.profile.update"]');
+    if (profileEditForm) {
+        const validation = new JustValidate(profileEditForm, validationConfig);
+
+        validation
+            .addField("#first_name", [
+                {
+                    rule: "required",
+                    errorMessage: fieldRequired("First name"),
+                },
+                {
+                    rule: "minLength",
+                    value: 2,
+                    errorMessage: fieldMinLength("First name", 2),
+                },
+                {
+                    rule: "maxLength",
+                    value: 255,
+                    errorMessage: fieldMaxLength("First name", 255),
+                },
+            ])
+            .addField("#last_name", [
+                {
+                    rule: "required",
+                    errorMessage: fieldRequired("Last name"),
+                },
+                {
+                    rule: "minLength",
+                    value: 2,
+                    errorMessage: fieldMinLength("Last name", 2),
+                },
+                {
+                    rule: "maxLength",
+                    value: 255,
+                    errorMessage: fieldMaxLength("Last name", 255),
+                },
+            ])
+            .addField("#email", [
+                {
+                    rule: "required",
+                    errorMessage: fieldRequired("Email"),
+                },
+                {
+                    rule: "email",
+                    errorMessage: fieldInvalid("Email"),
+                },
+            ])
+            .onSuccess((event) => {
                 event.target.submit();
             });
     }

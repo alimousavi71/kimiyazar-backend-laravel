@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminAvatarController;
 use App\Http\Controllers\Admin\AdminPasswordController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\ProfileAvatarController;
+use App\Http\Controllers\Admin\ProfilePasswordController;
 use App\Http\Controllers\Examples\UsersController;
 
 // TODO: Temporarily disabled auth middleware for admin routes
@@ -70,6 +73,23 @@ Route::group([
         Route::get('/{id}/password/edit', [AdminPasswordController::class, 'edit'])->name('password.edit');
         Route::put('/{id}/password', [AdminPasswordController::class, 'update'])->name('password.update');
         Route::patch('/{id}/password', [AdminPasswordController::class, 'update'])->name('password.update');
+    });
+
+    // Profile Routes (Authenticated Admin's Own Profile)
+    Route::group(['prefix' => 'profile', 'as' => 'profile.'], function () {
+        Route::get('/', [ProfileController::class, 'show'])->name('show');
+        Route::get('/edit', [ProfileController::class, 'edit'])->name('edit');
+        Route::put('/', [ProfileController::class, 'update'])->name('update');
+        Route::patch('/', [ProfileController::class, 'update'])->name('update');
+
+        // Profile Avatar Routes
+        Route::post('/avatar', [ProfileAvatarController::class, 'upload'])->name('avatar.upload');
+        Route::delete('/avatar', [ProfileAvatarController::class, 'delete'])->name('avatar.delete');
+
+        // Profile Password Routes
+        Route::get('/password/edit', [ProfilePasswordController::class, 'edit'])->name('password.edit');
+        Route::put('/password', [ProfilePasswordController::class, 'update'])->name('password.update');
+        Route::patch('/password', [ProfilePasswordController::class, 'update'])->name('password.update');
     });
 });
 

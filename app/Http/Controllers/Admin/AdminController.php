@@ -67,9 +67,6 @@ class AdminController extends Controller
     {
         $validated = $request->validated();
 
-        // Remove avatar from validated data if present (handled separately)
-        unset($validated['avatar']);
-
         $this->service->create($validated);
 
         return redirect()
@@ -113,11 +110,6 @@ class AdminController extends Controller
     public function update(UpdateAdminRequest $request, string $id): RedirectResponse
     {
         $validated = $request->validated();
-
-        // Remove avatar from validated data if present (handled separately)
-        unset($validated['avatar']);
-        // Remove password from validated data if present (handled separately)
-        unset($validated['password']);
 
         $this->service->update($id, $validated);
 

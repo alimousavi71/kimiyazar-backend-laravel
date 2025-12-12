@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
         successFieldCssClass: "border-green-500",
     };
 
-    // Password Change Form Validation
+    // Admin Password Change Form Validation
     const passwordForm =
         document.getElementById("admin-password-form") ||
         document.querySelector('form[action*="admin.admins.password.update"]');
@@ -55,7 +55,51 @@ document.addEventListener("DOMContentLoaded", function () {
                 },
             ])
             .onSuccess((event) => {
-                // Allow form to submit normally after validation passes
+                event.target.submit();
+            });
+    }
+
+    // Profile Password Change Form Validation
+    const profilePasswordForm =
+        document.getElementById("profile-password-form") ||
+        document.querySelector('form[action*="admin.profile.password.update"]');
+    if (profilePasswordForm) {
+        const validation = new JustValidate(
+            profilePasswordForm,
+            validationConfig
+        );
+
+        validation
+            .addField("#password", [
+                {
+                    rule: "required",
+                    errorMessage: fieldRequired("Password"),
+                },
+                {
+                    rule: "minLength",
+                    value: 8,
+                    errorMessage: fieldMinLength("Password", 8),
+                },
+            ])
+            .addField("#password_confirmation", [
+                {
+                    rule: "required",
+                    errorMessage: confirmPassword(),
+                },
+                {
+                    rule: "customRegexp",
+                    value: () => {
+                        const password =
+                            document.getElementById("password")?.value || "";
+                        const confirmPasswordValue =
+                            document.getElementById("password_confirmation")
+                                ?.value || "";
+                        return password === confirmPasswordValue;
+                    },
+                    errorMessage: passwordsDoNotMatch(),
+                },
+            ])
+            .onSuccess((event) => {
                 event.target.submit();
             });
     }
