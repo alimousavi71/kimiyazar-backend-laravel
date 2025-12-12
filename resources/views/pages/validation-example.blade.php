@@ -87,6 +87,60 @@
             </form>
         </x-card>
 
+        <!-- Multi-language Validation Example (Persian/English) -->
+        <x-card>
+            <x-slot name="title">Multi-language Validation (Persian/English)</x-slot>
+            <x-slot name="footer">
+                <p class="text-xs text-gray-500">Validation messages automatically switch based on current locale
+                    (fa/en)</p>
+            </x-slot>
+
+            <div class="mb-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                <p class="text-sm text-blue-800">
+                    <strong>Current Locale:</strong> <span id="current-locale-display"
+                        class="font-mono">{{ app()->getLocale() }}</span>
+                </p>
+                <p class="text-xs text-blue-600 mt-1">Validation messages will be displayed in the selected language</p>
+            </div>
+
+            <form id="multilang-validation-form" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <x-input id="multilang-first-name" label="First Name" name="first_name"
+                        placeholder="Enter first name" />
+                    <x-input id="multilang-last-name" label="Last Name" name="last_name"
+                        placeholder="Enter last name" />
+                </div>
+
+                <x-input id="multilang-email" label="Email Address" type="email" name="email"
+                    placeholder="Enter your email address" />
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <x-input id="multilang-password" label="Password" type="password" name="password"
+                        placeholder="Enter password (min 8 characters)" />
+                    <x-input id="multilang-confirm-password" label="Confirm Password" type="password"
+                        name="password_confirmation" placeholder="Confirm your password" />
+                </div>
+
+                <x-input id="multilang-phone" label="Phone Number" name="phone" placeholder="Enter phone number" />
+
+                <x-textarea id="multilang-bio" label="Bio" name="bio" rows="3"
+                    placeholder="Enter your bio (optional, max 200 characters)" />
+
+                <div class="flex items-center gap-2">
+                    <input type="checkbox" id="multilang-terms" name="terms"
+                        class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                    <label for="multilang-terms" class="text-sm text-gray-700">
+                        I agree to the <a href="#" class="text-blue-600 hover:underline">terms and conditions</a>
+                    </label>
+                </div>
+
+                <div class="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
+                    <x-button variant="secondary" type="reset">Reset</x-button>
+                    <x-button variant="primary" type="submit">Submit</x-button>
+                </div>
+            </form>
+        </x-card>
+
         <!-- Validation Rules Reference -->
         <x-card>
             <x-slot name="title">Available Validation Rules</x-slot>

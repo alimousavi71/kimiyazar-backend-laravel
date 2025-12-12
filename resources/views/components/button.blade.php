@@ -15,7 +15,7 @@
         'lg' => 'px-5 py-2.5 text-lg',
     ];
 
-    $base = "inline-flex items-center justify-center rounded-xl font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md";
+    $base = "inline-flex cursor-pointer items-center justify-center rounded-xl font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md";
 
     $classes = "$base {$variants[$variant]} {$sizes[$size]}";
 @endphp

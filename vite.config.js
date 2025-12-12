@@ -10,6 +10,7 @@ export default defineConfig({
                 "resources/js/app.js",
                 "resources/js/imask-test.js",
                 "resources/js/validation-example.js",
+                "resources/js/admin-form-validation.js",
             ],
             refresh: true,
         }),

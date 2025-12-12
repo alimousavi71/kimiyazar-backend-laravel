@@ -15,7 +15,8 @@
             <x-card>
                 <x-slot name="title">{{ __('admin/admins.forms.edit.card_title') }}</x-slot>
 
-                <form action="{{ route('admin.admins.update', $admin->id) }}" method="POST" class="space-y-6">
+                <form id="admin-edit-form" action="{{ route('admin.admins.update', $admin->id) }}" method="POST"
+                    class="space-y-6">
                     @csrf
                     @method('PUT')
 
@@ -118,6 +119,7 @@
     </div>
 
     @push('scripts')
+        @vite('resources/js/admin-form-validation.js')
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const uploadForm = document.getElementById('avatar-upload-form');

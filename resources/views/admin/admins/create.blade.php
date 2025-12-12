@@ -12,7 +12,7 @@
     <x-card>
         <x-slot name="title">{{ __('admin/admins.forms.create.card_title') }}</x-slot>
 
-        <form action="{{ route('admin.admins.store') }}" method="POST" class="space-y-6">
+        <form id="admin-create-form" action="{{ route('admin.admins.store') }}" method="POST" class="space-y-6">
             @csrf
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -66,4 +66,8 @@
             </div>
         </form>
     </x-card>
+
+    @push('scripts')
+        @vite('resources/js/admin-form-validation.js')
+    @endpush
 </x-layouts.admin>
