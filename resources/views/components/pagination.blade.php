@@ -5,20 +5,20 @@
         class="flex flex-col sm:flex-row items-center justify-between gap-4 px-4 py-3 border-t border-gray-200 bg-gray-50 rounded-b-2xl">
         <!-- Status Information -->
         <div class="flex flex-wrap items-center gap-2 text-sm text-gray-700">
-            <span class="font-medium">Total Records:</span>
+            <span class="font-medium">{{ __('admin/components.pagination.total_records') }}:</span>
             <span class="text-gray-900 font-semibold">{{ number_format($paginator->total()) }}</span>
             @if($paginator->hasPages())
                 <span class="text-gray-500">|</span>
-                <span>Showing</span>
+                <span>{{ __('admin/components.pagination.showing') }}</span>
                 <span class="font-medium text-gray-900">{{ number_format($paginator->firstItem()) }}</span>
-                <span>to</span>
+                <span>{{ __('admin/components.pagination.to') }}</span>
                 <span class="font-medium text-gray-900">{{ number_format($paginator->lastItem()) }}</span>
-                <span>of</span>
+                <span>{{ __('admin/components.pagination.of') }}</span>
                 <span class="font-medium text-gray-900">{{ number_format($paginator->total()) }}</span>
                 <span class="text-gray-500">|</span>
-                <span>Page</span>
+                <span>{{ __('admin/components.pagination.page') }}</span>
                 <span class="font-medium text-gray-900">{{ $paginator->currentPage() }}</span>
-                <span>of</span>
+                <span>{{ __('admin/components.pagination.of') }}</span>
                 <span class="font-medium text-gray-900">{{ $paginator->lastPage() }}</span>
             @endif
         </div>
@@ -31,13 +31,13 @@
                     <button type="button" disabled
                         class="inline-flex items-center justify-center px-3 py-2 text-sm font-medium text-gray-400 bg-white border border-gray-300 rounded-xl cursor-not-allowed shadow-sm">
                         <x-icon name="chevron-left" size="sm" />
-                        <span class="ms-1">Previous</span>
+                        <span class="ms-1">{{ __('admin/components.pagination.previous') }}</span>
                     </button>
                 @else
                     <a href="{{ $paginator->previousPageUrl() }}"
                         class="inline-flex items-center justify-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 shadow-sm hover:shadow-md transition-all">
                         <x-icon name="chevron-left" size="sm" />
-                        <span class="ms-1">Previous</span>
+                        <span class="ms-1">{{ __('admin/components.pagination.previous') }}</span>
                     </a>
                 @endif
 
@@ -94,13 +94,13 @@
                 @if($paginator->hasMorePages())
                     <a href="{{ $paginator->nextPageUrl() }}"
                         class="inline-flex items-center justify-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 shadow-sm hover:shadow-md transition-all">
-                        <span class="me-1">Next</span>
+                        <span class="me-1">{{ __('admin/components.pagination.next') }}</span>
                         <x-icon name="chevron-right" size="sm" />
                     </a>
                 @else
                     <button type="button" disabled
                         class="inline-flex items-center justify-center px-3 py-2 text-sm font-medium text-gray-400 bg-white border border-gray-300 rounded-xl cursor-not-allowed shadow-sm">
-                        <span class="me-1">Next</span>
+                        <span class="me-1">{{ __('admin/components.pagination.next') }}</span>
                         <x-icon name="chevron-right" size="sm" />
                     </button>
                 @endif

@@ -1,10 +1,14 @@
 @props([
-    'searchPlaceholder' => 'Search...', 
+    'searchPlaceholder' => null, 
     'searchValue' => '', 
     'filterSidebarId' => 'table-filters',
     'filterBadges' => [],
     'paginator' => null
 ])
+
+@php
+    $searchPlaceholder = $searchPlaceholder ?? __('admin/components.buttons.search');
+@endphp
 
 <div class="space-y-4">
     <!-- Main Form - Wraps Search, Filters, and Table -->
@@ -30,7 +34,7 @@
                 class="flex items-center gap-2"
             >
                 <x-icon name="filter" size="md" />
-                <span>Filters</span>
+                <span>{{ __('admin/components.buttons.filter') }}</span>
             </x-button>
         </div>
 

@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\Admin\UpdateAdminRequest;
 use App\Http\Traits\ApiResponseTrait;
 use App\Services\Admin\AdminService;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -73,7 +74,7 @@ class AdminController extends Controller
 
         return redirect()
             ->route('admin.admins.index')
-            ->with('success', 'Admin created successfully.');
+            ->with('success', __('admin/admins.messages.created'));
     }
 
     /**
@@ -120,7 +121,7 @@ class AdminController extends Controller
 
         return redirect()
             ->route('admin.admins.index')
-            ->with('success', 'Admin updated successfully.');
+            ->with('success', __('admin/admins.messages.updated'));
     }
 
     /**
@@ -136,20 +137,26 @@ class AdminController extends Controller
             $this->service->delete($id);
 
             if ($request->expectsJson() || $request->wantsJson()) {
-                return $this->successResponse(null, 'Admin deleted successfully.');
+                return $this->successResponse(null, __('admin/admins.messages.deleted'));
             }
 
             return redirect()
                 ->route('admin.admins.index')
-                ->with('success', 'Admin deleted successfully.');
-        } catch (Exception $e) {
+                ->with('success', __('admin/admins.messages.deleted'));
+        } catch (ModelNotFoundException $e) {
             if ($request->expectsJson() || $request->wantsJson()) {
-                return $this->errorResponse('Failed to delete admin: ' . $e->getMessage(), 500);
+                return $this->notFoundResponse(__('admin/admins.messages.not_found'));
             }
-
             return redirect()
                 ->route('admin.admins.index')
-                ->with('error', 'Failed to delete admin.');
+                ->with('error', __('admin/admins.messages.not_found'));
+        } catch (\Exception $e) {
+            if ($request->expectsJson() || $request->wantsJson()) {
+                return $this->errorResponse(__('admin/admins.messages.delete_failed') . ': ' . $e->getMessage(), 500);
+            }
+            return redirect()
+                ->route('admin.admins.index')
+                ->with('error', __('admin/admins.messages.delete_failed'));
         }
     }
 }

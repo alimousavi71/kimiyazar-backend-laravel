@@ -1,4 +1,8 @@
-@props(['label' => null, 'error' => null, 'required' => false, 'placeholder' => 'Select an option'])
+@props(['label' => null, 'error' => null, 'required' => false, 'placeholder' => null])
+
+@php
+    $placeholder = $placeholder ?? __('admin/components.form.select_option');
+@endphp
 
 <div class="flex flex-col gap-1">
     @if($label)

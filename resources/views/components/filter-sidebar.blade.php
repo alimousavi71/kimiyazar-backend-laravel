@@ -1,4 +1,8 @@
-@props(['id', 'title' => 'Filters', 'action' => '', 'method' => 'GET'])
+@props(['id', 'title' => null, 'action' => '', 'method' => 'GET'])
+
+@php
+    $title = $title ?? __('admin/components.filter_sidebar.title');
+@endphp
 
 <div x-data="{ open: false }" x-show="open" x-cloak
     @open-filter-sidebar.window="if ($event.detail === '{{ $id }}') { open = true; }"
@@ -24,7 +28,7 @@
             <h2 class="text-lg font-semibold text-gray-900">{{ $title }}</h2>
             <button type="button" @click="open = false"
                 class="text-gray-400 hover:text-gray-600 transition-colors p-2 rounded-xl hover:bg-gray-100"
-                aria-label="Close filters">
+                :aria-label="__('admin/components.filter_sidebar.close')">
                 <x-icon name="x" size="xl" />
             </button>
         </div>
@@ -44,10 +48,10 @@
             <!-- Footer Actions -->
             <div class="px-6 py-4 border-t border-gray-200 bg-gray-50 flex items-center justify-end gap-3">
                 <x-button variant="secondary" size="md" type="button" @click="open = false">
-                    Cancel
+                    {{ __('admin/components.buttons.cancel') }}
                 </x-button>
                 <x-button variant="primary" size="md" type="submit">
-                    Apply Filters
+                    {{ __('admin/components.filter_sidebar.apply') }}
                 </x-button>
             </div>
         </form>

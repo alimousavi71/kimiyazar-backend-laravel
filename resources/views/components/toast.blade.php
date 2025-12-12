@@ -47,7 +47,7 @@ $icons = [
         @endif
     </div>
     <button @click="show = false" class="text-current opacity-70 hover:opacity-100 transition-opacity">
-        <span class="sr-only">Close</span>
+        <span class="sr-only">{{ __('admin/components.buttons.close') }}</span>
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
