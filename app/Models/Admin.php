@@ -61,6 +61,9 @@ class Admin extends Authenticatable
         'is_block',
         'last_login',
         'avatar',
+        'two_factor_secret',
+        'two_factor_enabled',
+        'two_factor_recovery_codes',
     ];
 
     /**
@@ -86,6 +89,9 @@ class Admin extends Authenticatable
             'is_block' => 'boolean',
             'last_login' => 'datetime',
             'deleted_at' => 'datetime',
+            'two_factor_enabled' => 'boolean',
+            'two_factor_secret' => 'encrypted',
+            'two_factor_recovery_codes' => 'encrypted:array',
         ];
     }
 

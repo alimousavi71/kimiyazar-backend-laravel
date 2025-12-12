@@ -1,5 +1,5 @@
 @php
-    $title = 'Two-Factor Authentication';
+    $title = __('admin/auth.two_factor_challenge.title');
 @endphp
 
 <x-layouts.auth :title="$title">
@@ -10,8 +10,8 @@
                 class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm mb-4">
                 <x-icon name="shield" size="2xl" class="text-white" />
             </div>
-            <h1 class="text-2xl font-bold text-white mb-2">Two-Factor Authentication</h1>
-            <p class="text-purple-100 text-sm">Enter the code from your authenticator app</p>
+            <h1 class="text-2xl font-bold text-white mb-2">{{ __('admin/auth.two_factor_challenge.title') }}</h1>
+            <p class="text-purple-100 text-sm">{{ __('admin/auth.two_factor_challenge.subtitle') }}</p>
         </div>
 
         <!-- Form -->
@@ -62,7 +62,7 @@
             <!-- 2FA Code Input -->
             <div>
                 <label class="text-sm font-medium text-gray-700 mb-3 block">
-                    Verification Code
+                    {{ __('admin/auth.two_factor_challenge.verification_code') }}
                     <span class="text-red-500">*</span>
                 </label>
                 <div class="flex items-center justify-center gap-2 mb-2">
@@ -75,7 +75,7 @@
                     @endfor
                 </div>
                 <p class="text-xs text-gray-500 text-center mt-2">
-                    Enter the 6-digit code from your authenticator app
+                    {{ __('admin/auth.two_factor_challenge.enter_code_help') }}
                 </p>
             </div>
 
@@ -85,13 +85,15 @@
                     <summary
                         class="cursor-pointer text-sm text-gray-600 hover:text-gray-900 transition-colors flex items-center gap-2">
                         <x-icon name="help-circle" size="sm" />
-                        <span>Use a recovery code instead</span>
+                        <span>{{ __('admin/auth.two_factor_challenge.use_recovery_code') }}</span>
                         <x-icon name="chevron-down" size="xs"
                             class="ms-auto transition-transform group-open:rotate-180" />
                     </summary>
                     <div class="mt-3 space-y-3">
-                        <x-form-group label="Recovery Code" error="{{ $errors->first('recovery_code') }}">
-                            <x-input type="text" name="recovery_code" placeholder="Enter your recovery code"
+                        <x-form-group :label="__('admin/auth.two_factor_challenge.recovery_code')"
+                            error="{{ $errors->first('recovery_code') }}">
+                            <x-input type="text" name="recovery_code"
+                                :placeholder="__('admin/auth.two_factor_challenge.recovery_code_placeholder')"
                                 class="w-full" />
                         </x-form-group>
                     </div>
@@ -102,9 +104,11 @@
             @if($errors->any())
                 <div class="bg-red-50 border border-red-200 rounded-xl p-4">
                     <div class="flex items-start gap-3">
-                        <x-icon name="error-circle" size="md" class="text-red-600 mt-0.5 flex-shrink-0" />
+                        <x-icon name="error-circle" size="md" class="text-red-600 mt-0.5 shrink-0" />
                         <div class="flex-1">
-                            <p class="text-sm font-medium text-red-900 mb-1">Verification Error</p>
+                            <p class="text-sm font-medium text-red-900 mb-1">
+                                {{ __('admin/auth.two_factor_challenge.verification_error') }}
+                            </p>
                             <ul class="text-sm text-red-700 space-y-1">
                                 @foreach($errors->all() as $error)
                                     <li>{{ $error }}</li>
@@ -122,19 +126,20 @@
             <x-button type="submit" variant="primary" size="lg" class="w-full">
                 <span class="flex items-center justify-center gap-2">
                     <x-icon name="check-circle" size="md" />
-                    Verify Code
+                    {{ __('admin/auth.two_factor_challenge.verify_button') }}
                 </span>
             </x-button>
 
             <!-- Help Text -->
             <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
                 <div class="flex items-start gap-3">
-                    <x-icon name="info-circle" size="md" class="text-blue-600 mt-0.5 flex-shrink-0" />
+                    <x-icon name="info-circle" size="md" class="text-blue-600 mt-0.5 shrink-0" />
                     <div class="flex-1">
-                        <p class="text-sm font-medium text-blue-900 mb-1">Need help?</p>
+                        <p class="text-sm font-medium text-blue-900 mb-1">
+                            {{ __('admin/auth.two_factor_challenge.need_help_title') }}
+                        </p>
                         <p class="text-xs text-blue-700">
-                            If you've lost access to your authenticator app, use a recovery code or contact your
-                            administrator.
+                            {{ __('admin/auth.two_factor_challenge.need_help_text') }}
                         </p>
                     </div>
                 </div>
@@ -145,7 +150,7 @@
                 <a href="{{ route('admin.login') }}"
                     class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors inline-flex items-center gap-1">
                     <x-icon name="arrow-back" size="sm" />
-                    Back to login
+                    {{ __('admin/auth.two_factor_challenge.back_to_login') }}
                 </a>
             </div>
         </form>

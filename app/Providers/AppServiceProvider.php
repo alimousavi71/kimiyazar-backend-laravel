@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Helpers\DirectionHelper;
 use App\Repositories\Admin\AdminRepository;
 use App\Repositories\Admin\AdminRepositoryInterface;
+use App\Repositories\Admin\TwoFactorRepository;
+use App\Repositories\Admin\TwoFactorRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -18,6 +20,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             AdminRepositoryInterface::class,
             AdminRepository::class
+        );
+
+        // Bind TwoFactor Repository
+        $this->app->bind(
+            TwoFactorRepositoryInterface::class,
+            TwoFactorRepository::class
         );
     }
 

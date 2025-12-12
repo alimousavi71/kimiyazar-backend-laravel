@@ -101,6 +101,41 @@
                     </div>
                 </div>
             </x-card>
+
+            <!-- Two-Factor Authentication -->
+            <x-card>
+                <x-slot name="title">{{ __('admin/auth.two_factor.title') }}</x-slot>
+
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-4 rounded-xl bg-gray-50">
+                        <div class="flex items-center gap-3">
+                            <div class="p-2 rounded-lg {{ $twoFactorEnabled ? 'bg-green-100' : 'bg-gray-100' }}">
+                                <x-icon name="{{ $twoFactorEnabled ? 'check-circle' : 'x-circle' }}" size="md"
+                                    class="{{ $twoFactorEnabled ? 'text-green-600' : 'text-gray-400' }}" />
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-900">
+                                    {{ __('admin/auth.two_factor.status') }}
+                                </p>
+                                <p class="text-xs text-gray-600">
+                                    {{ $twoFactorEnabled ? __('admin/auth.two_factor.enabled') : __('admin/auth.two_factor.disabled') }}
+                                </p>
+                            </div>
+                        </div>
+                        <div
+                            class="px-3 py-1 rounded-full text-xs font-medium {{ $twoFactorEnabled ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600' }}">
+                            {{ $twoFactorEnabled ? __('admin/components.status.active') : __('admin/components.status.inactive') }}
+                        </div>
+                    </div>
+
+                    <a href="{{ route('admin.two-factor.status') }}">
+                        <x-button variant="secondary" size="md" class="w-full">
+                            <x-icon name="shield" size="sm" class="me-2" />
+                            {{ __('admin/auth.two_factor.manage_button') }}
+                        </x-button>
+                    </a>
+                </div>
+            </x-card>
         </div>
 
         <!-- Avatar Section -->

@@ -111,6 +111,7 @@ return [
         'view_all_notifications' => 'مشاهده همه اعلان‌ها',
         'user_menu' => 'منوی کاربر',
         'profile' => 'پروفایل',
+        'two_factor_auth' => 'احراز هویت دو مرحله‌ای',
         'settings' => 'تنظیمات',
         'logout' => 'خروج',
     ],

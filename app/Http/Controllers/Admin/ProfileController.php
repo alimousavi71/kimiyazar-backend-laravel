@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Profile\UpdateProfileRequest;
 use App\Services\Admin\AdminService;
+use App\Services\Admin\TwoFactorService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -12,9 +13,11 @@ class ProfileController extends Controller
 {
     /**
      * @param AdminService $service
+     * @param TwoFactorService $twoFactorService
      */
     public function __construct(
-        private readonly AdminService $service
+        private readonly AdminService $service,
+        private readonly TwoFactorService $twoFactorService
     ) {
     }
 
@@ -25,9 +28,11 @@ class ProfileController extends Controller
      */
     public function show(): View
     {
+        /** @var \App\Models\Admin $admin */
         $admin = auth('admin')->user() ?? auth()->user();
+        $twoFactorEnabled = $this->twoFactorService->isEnabled($admin);
 
-        return view('admin.profile.show', compact('admin'));
+        return view('admin.profile.show', compact('admin', 'twoFactorEnabled'));
     }
 
     /**

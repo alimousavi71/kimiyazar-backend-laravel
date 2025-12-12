@@ -111,6 +111,7 @@ return [
         'view_all_notifications' => 'View all notifications',
         'user_menu' => 'User menu',
         'profile' => 'Profile',
+        'two_factor_auth' => 'Two-Factor Auth',
         'settings' => 'Settings',
         'logout' => 'Logout',
     ],
