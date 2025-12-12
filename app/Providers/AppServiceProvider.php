@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Helpers\DirectionHelper;
+use App\Repositories\Admin\AdminRepository;
+use App\Repositories\Admin\AdminRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +14,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Bind Admin Repository
+        $this->app->bind(
+            AdminRepositoryInterface::class,
+            AdminRepository::class
+        );
     }
 
     /**
@@ -20,8 +27,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Share direction with all views
-        view()->share('direction', \App\Helpers\DirectionHelper::getDirection());
-        view()->share('isRtl', \App\Helpers\DirectionHelper::isRtl());
-        view()->share('isLtr', \App\Helpers\DirectionHelper::isLtr());
+        view()->share('direction', DirectionHelper::getDirection());
+        view()->share('isRtl', DirectionHelper::isRtl());
+        view()->share('isLtr', DirectionHelper::isLtr());
     }
 }

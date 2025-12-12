@@ -6,7 +6,7 @@
         openGroups: {
             users: {{ request()->routeIs('admin.users.*') || request()->routeIs('users.*') ? 'true' : 'false' }},
             content: false,
-            tools: {{ request()->routeIs('admin.imask-test') || request()->routeIs('admin.validation-example') || request()->routeIs('admin.toast-example') || request()->routeIs('admin.axios-example') || request()->routeIs('admin.form-example') || request()->routeIs('admin.modal-example') ? 'true' : 'false' }},
+            tools: {{ request()->routeIs('admin.examples.*') ? 'true' : 'false' }},
             auth: {{ request()->routeIs('login') || request()->routeIs('password.request') || request()->routeIs('two-factor.*') ? 'true' : 'false' }}
         }
     }" @toggle-sidebar.window="open = !open"
@@ -196,50 +196,50 @@
                         x-transition:leave-end="opacity-0 -translate-y-2"
                         class="mt-2 ms-3 space-y-1 border-s-2 border-gray-200/60 ps-4">
                         <li>
-                            <a href="{{ route('admin.imask-test') ?? '#' }}"
-                                class="group flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg transition-all duration-200 text-sm {{ request()->routeIs('admin.imask-test') ? 'bg-blue-50 text-blue-700 font-medium shadow-sm' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1' }}">
+                            <a href="{{ route('admin.examples.imask-test') ?? '#' }}"
+                                class="group flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg transition-all duration-200 text-sm {{ request()->routeIs('admin.examples.imask-test') ? 'bg-blue-50 text-blue-700 font-medium shadow-sm' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1' }}">
                                 <x-icon name="code-alt" size="sm"
-                                    class="{{ request()->routeIs('admin.imask-test') ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-600' }} transition-colors" />
+                                    class="{{ request()->routeIs('admin.examples.imask-test') ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-600' }} transition-colors" />
                                 <span>IMask Test</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.validation-example') ?? '#' }}"
-                                class="group flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg transition-all duration-200 text-sm {{ request()->routeIs('admin.validation-example') ? 'bg-blue-50 text-blue-700 font-medium shadow-sm' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1' }}">
+                            <a href="{{ route('admin.examples.validation-example') ?? '#' }}"
+                                class="group flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg transition-all duration-200 text-sm {{ request()->routeIs('admin.examples.validation-example') ? 'bg-blue-50 text-blue-700 font-medium shadow-sm' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1' }}">
                                 <x-icon name="check-circle" size="sm"
-                                    class="{{ request()->routeIs('admin.validation-example') ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-600' }} transition-colors" />
+                                    class="{{ request()->routeIs('admin.examples.validation-example') ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-600' }} transition-colors" />
                                 <span>Validation Example</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.toast-example') ?? '#' }}"
-                                class="group flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg transition-all duration-200 text-sm {{ request()->routeIs('admin.toast-example') ? 'bg-blue-50 text-blue-700 font-medium shadow-sm' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1' }}">
+                            <a href="{{ route('admin.examples.toast-example') ?? '#' }}"
+                                class="group flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg transition-all duration-200 text-sm {{ request()->routeIs('admin.examples.toast-example') ? 'bg-blue-50 text-blue-700 font-medium shadow-sm' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1' }}">
                                 <x-icon name="notification" size="sm"
-                                    class="{{ request()->routeIs('admin.toast-example') ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-600' }} transition-colors" />
+                                    class="{{ request()->routeIs('admin.examples.toast-example') ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-600' }} transition-colors" />
                                 <span>Toast Examples</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.axios-example') ?? '#' }}"
-                                class="group flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg transition-all duration-200 text-sm {{ request()->routeIs('admin.axios-example') ? 'bg-blue-50 text-blue-700 font-medium shadow-sm' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1' }}">
+                            <a href="{{ route('admin.examples.axios-example') ?? '#' }}"
+                                class="group flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg transition-all duration-200 text-sm {{ request()->routeIs('admin.examples.axios-example') ? 'bg-blue-50 text-blue-700 font-medium shadow-sm' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1' }}">
                                 <x-icon name="code-alt" size="sm"
-                                    class="{{ request()->routeIs('admin.axios-example') ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-600' }} transition-colors" />
+                                    class="{{ request()->routeIs('admin.examples.axios-example') ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-600' }} transition-colors" />
                                 <span>Axios Examples</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.form-example') ?? '#' }}"
-                                class="group flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg transition-all duration-200 text-sm {{ request()->routeIs('admin.form-example') ? 'bg-blue-50 text-blue-700 font-medium shadow-sm' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1' }}">
+                            <a href="{{ route('admin.examples.form-example') ?? '#' }}"
+                                class="group flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg transition-all duration-200 text-sm {{ request()->routeIs('admin.examples.form-example') ? 'bg-blue-50 text-blue-700 font-medium shadow-sm' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1' }}">
                                 <x-icon name="edit" size="sm"
-                                    class="{{ request()->routeIs('admin.form-example') ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-600' }} transition-colors" />
+                                    class="{{ request()->routeIs('admin.examples.form-example') ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-600' }} transition-colors" />
                                 <span>Form Example</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.modal-example') ?? '#' }}"
-                                class="group flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg transition-all duration-200 text-sm {{ request()->routeIs('admin.modal-example') ? 'bg-blue-50 text-blue-700 font-medium shadow-sm' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1' }}">
+                            <a href="{{ route('admin.examples.modal-example') ?? '#' }}"
+                                class="group flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg transition-all duration-200 text-sm {{ request()->routeIs('admin.examples.modal-example') ? 'bg-blue-50 text-blue-700 font-medium shadow-sm' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1' }}">
                                 <x-icon name="folder" size="sm"
-                                    class="{{ request()->routeIs('admin.modal-example') ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-600' }} transition-colors" />
+                                    class="{{ request()->routeIs('admin.examples.modal-example') ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-600' }} transition-colors" />
                                 <span>Modal Example</span>
                             </a>
                         </li>

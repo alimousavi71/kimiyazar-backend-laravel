@@ -15,9 +15,9 @@
                 <x-icon name="search" size="md" class="absolute start-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <input 
                     type="text" 
-                    name="search"
+                    name="filter[search]"
                     placeholder="{{ $searchPlaceholder }}" 
-                    value="{{ $searchValue ?: request()->query('search') }}"
+                    value="{{ $searchValue ?: request()->query('filter.search') }}"
                     class="w-full ps-10 pe-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200 bg-white shadow-sm hover:shadow-md focus:shadow-md" 
                 />
             </div>
@@ -35,7 +35,7 @@
         </div>
 
         <!-- Preserve all filter parameters as hidden inputs (including sort) -->
-        @foreach(request()->except(['search', 'page']) as $key => $value)
+        @foreach(request()->except(['filter', 'page', '_token', '_method']) as $key => $value)
             @if(is_array($value))
                 @foreach($value as $subValue)
                     <input type="hidden" name="{{ $key }}[]" value="{{ $subValue }}">

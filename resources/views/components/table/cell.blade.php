@@ -39,10 +39,10 @@
             $queryParams['sort'] = '-' . $sortField;
         } elseif ($isActive && $currentDirection === 'desc') {
             // Remove sort (or toggle to ascending)
-            $queryParams['sort'] = '+' . $sortField;
+            $queryParams['sort'] = $sortField; // No prefix for ascending (Spatie Query Builder format)
         } else {
             // Set to ascending
-            $queryParams['sort'] = '+' . $sortField;
+            $queryParams['sort'] = $sortField; // No prefix for ascending (Spatie Query Builder format)
         }
 
         $sortUrl = request()->url() . '?' . http_build_query($queryParams);

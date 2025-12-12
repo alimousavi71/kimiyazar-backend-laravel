@@ -1,4 +1,4 @@
-@props(['variant' => 'primary', 'size' => 'md'])
+@props(['variant' => 'primary', 'size' => 'md', 'type' => 'button'])
 
 @php
     $variants = [
@@ -17,10 +17,9 @@
 
     $base = "inline-flex items-center justify-center rounded-xl font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md";
 
-    // Get type from attributes, default to 'button'
-    $type = $attributes->get('type', 'button');
+    $classes = "$base {$variants[$variant]} {$sizes[$size]}";
 @endphp
 
-<button type="{{ $type }}" {{ $attributes->except('variant', 'size', 'type')->merge(['class' => "$base {$variants[$variant]} {$sizes[$size]}"]) }}>
+<button type="{{ $type }}" {{ $attributes->except(['variant', 'size'])->merge(['class' => $classes]) }}>
     {{ $slot }}
 </button>
