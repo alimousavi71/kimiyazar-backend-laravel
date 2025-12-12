@@ -86,19 +86,26 @@
                                     </x-table.cell>
                                     <x-table.cell>{{ $admin->created_at->format('Y-m-d') }}</x-table.cell>
                                     <x-table.cell>
-                                        <div class="flex items-center justify-end gap-2">
-                                            <a href="{{ route('admin.admins.show', $admin->id) }}">
-                                                <x-button variant="secondary"
-                                                    size="sm">{{ __('admin/components.buttons.view') }}</x-button>
-                                            </a>
-                                            <a href="{{ route('admin.admins.edit', $admin->id) }}">
-                                                <x-button variant="primary"
-                                                    size="sm">{{ __('admin/components.buttons.edit') }}</x-button>
-                                            </a>
-                                            <x-button variant="danger" size="sm" type="button" x-data
-                                                @click="window.deleteData = { id: {{ $admin->id }}, name: '{{ addslashes($admin->full_name) }}' }; $dispatch('open-modal', 'delete-admin-modal');">
-                                                {{ __('admin/components.buttons.delete') }}
-                                            </x-button>
+                                        <div class="flex items-center justify-end">
+                                            <x-dropdown-menu align="end">
+                                                <x-dropdown-item href="{{ route('admin.admins.show', $admin->id) }}"
+                                                    icon="show">
+                                                    {{ __('admin/components.buttons.view') }}
+                                                </x-dropdown-item>
+                                                <x-dropdown-item href="{{ route('admin.admins.edit', $admin->id) }}"
+                                                    icon="edit">
+                                                    {{ __('admin/components.buttons.edit') }}
+                                                </x-dropdown-item>
+                                                <x-dropdown-item href="{{ route('admin.admins.password.edit', $admin->id) }}"
+                                                    icon="lock" variant="primary">
+                                                    {{ __('admin/admins.forms.password.title') }}
+                                                </x-dropdown-item>
+                                                <div class="border-t border-gray-200 my-1"></div>
+                                                <x-dropdown-item variant="danger" icon="trash" type="button"
+                                                    @click.stop="window.deleteData = { id: {{ $admin->id }}, name: '{{ addslashes($admin->full_name) }}' }; $dispatch('open-modal', 'delete-admin-modal'); $el.closest('[x-data]').__x.$data.open = false;">
+                                                    {{ __('admin/components.buttons.delete') }}
+                                                </x-dropdown-item>
+                                            </x-dropdown-menu>
                                         </div>
                                     </x-table.cell>
                                 </x-table.row>

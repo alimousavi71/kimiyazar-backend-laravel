@@ -42,20 +42,6 @@
                             value="{{ old('email', $admin->email) }}" required class="w-full" />
                     </x-form-group>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <x-form-group :label="__('admin/admins.fields.password')"
-                            :help="__('admin/admins.forms.edit.password_help')" :error="$errors->first('password')">
-                            <x-input type="password" name="password" id="password"
-                                :placeholder="__('admin/admins.forms.placeholders.new_password')" class="w-full" />
-                        </x-form-group>
-
-                        <x-form-group :label="__('admin/admins.fields.password_confirmation')">
-                            <x-input type="password" name="password_confirmation" id="password_confirmation"
-                                :placeholder="__('admin/admins.forms.placeholders.confirm_new_password')"
-                                class="w-full" />
-                        </x-form-group>
-                    </div>
-
                     <x-form-group :label="__('admin/admins.fields.is_block')">
                         <x-toggle name="is_block" id="is_block" :checked="old('is_block', $admin->is_block)"
                             :label="__('admin/admins.forms.labels.block_admin')" />

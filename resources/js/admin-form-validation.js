@@ -22,8 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Create Admin Form Validation
     const createForm =
         document.getElementById("admin-create-form") ||
-        document.querySelector('form[action*="admin.admins.store"]') ||
-        document.querySelector('form[action*="/admin/admins"]');
+        document.querySelector('form[action*="admin.admins.store"]');
     if (createForm) {
         const validation = new JustValidate(createForm, validationConfig);
 
@@ -108,8 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Edit Admin Form Validation
     const editForm =
         document.getElementById("admin-edit-form") ||
-        document.querySelector('form[action*="admin.admins.update"]') ||
-        document.querySelector('form[method="PUT"]');
+        document.querySelector('form[action*="admin.admins.update"]');
     if (editForm) {
         const validation = new JustValidate(editForm, validationConfig);
 
@@ -154,46 +152,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 {
                     rule: "email",
                     errorMessage: fieldInvalid("Email"),
-                },
-            ])
-            .addField("#password", [
-                {
-                    rule: "minLength",
-                    value: 8,
-                    errorMessage: fieldMinLength("Password", 8),
-                },
-            ])
-            .addField("#password_confirmation", [
-                {
-                    rule: "customRegexp",
-                    value: () => {
-                        const password =
-                            document.getElementById("password")?.value || "";
-                        const confirmPassword =
-                            document.getElementById("password_confirmation")
-                                ?.value || "";
-
-                        // If password is empty, confirmation can be empty too (password is optional on edit)
-                        if (!password && !confirmPassword) {
-                            return true;
-                        }
-
-                        // If password is provided, confirmation is required and must match
-                        if (password) {
-                            if (!confirmPassword) {
-                                return false;
-                            }
-                            return password === confirmPassword;
-                        }
-
-                        // If confirmation is provided but password is not, it's invalid
-                        if (confirmPassword && !password) {
-                            return false;
-                        }
-
-                        return true;
-                    },
-                    errorMessage: passwordsDoNotMatch(),
                 },
             ])
             .onSuccess((event) => {

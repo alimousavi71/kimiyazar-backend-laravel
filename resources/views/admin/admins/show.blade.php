@@ -15,6 +15,11 @@
                     {{ __('admin/admins.show.buttons.edit') }}
                 </x-button>
             </a>
+            <a href="{{ route('admin.admins.password.edit', $admin->id) }}">
+                <x-button variant="secondary" size="md">
+                    {{ __('admin/admins.forms.password.title') }}
+                </x-button>
+            </a>
             <a href="{{ route('admin.admins.index') }}">
                 <x-button variant="secondary" size="md">
                     {{ __('admin/admins.show.buttons.back_to_list') }}

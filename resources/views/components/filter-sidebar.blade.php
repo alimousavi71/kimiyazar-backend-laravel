@@ -28,7 +28,7 @@
             <h2 class="text-lg font-semibold text-gray-900">{{ $title }}</h2>
             <button type="button" @click="open = false"
                 class="text-gray-400 hover:text-gray-600 transition-colors p-2 rounded-xl hover:bg-gray-100"
-                :aria-label="__('admin/components.filter_sidebar.close')">
+                aria-label="{{ __('admin/components.filter_sidebar.close') }}">
                 <x-icon name="x" size="xl" />
             </button>
         </div>

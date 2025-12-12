@@ -116,6 +116,8 @@ class AdminController extends Controller
 
         // Remove avatar from validated data if present (handled separately)
         unset($validated['avatar']);
+        // Remove password from validated data if present (handled separately)
+        unset($validated['password']);
 
         $this->service->update($id, $validated);
 

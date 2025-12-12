@@ -32,6 +32,7 @@ return [
         'deleted' => 'Admin deleted successfully.',
         'not_found' => 'Admin not found.',
         'delete_failed' => 'Failed to delete admin.',
+        'password_updated' => 'Password updated successfully.',
     ],
 
     'forms' => [
@@ -49,7 +50,13 @@ return [
             'card_title' => 'Admin Information',
             'avatar_card_title' => 'Avatar',
             'submit' => 'Update Admin',
-            'password_help' => 'Leave blank to keep current password',
+        ],
+        'password' => [
+            'title' => 'Change Password',
+            'header_title' => 'Change Password',
+            'description' => 'Update administrator password',
+            'card_title' => 'Password Information',
+            'submit' => 'Update Password',
         ],
         'placeholders' => [
             'first_name' => 'Enter first name',
@@ -73,6 +80,7 @@ return [
             'create' => 'Create',
             'edit' => 'Edit',
             'details' => 'Details',
+            'password' => 'Change Password',
         ],
     ],
 

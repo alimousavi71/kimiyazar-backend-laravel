@@ -33,23 +33,10 @@ class UpdateAdminRequest extends StoreAdminRequest
             Rule::unique('admins', 'email')->ignore($adminId),
         ];
 
-        // Make password optional for update
-        $rules['password'] = ['sometimes', 'nullable', 'string', 'min:8', 'confirmed'];
+        // Remove password from update (handled separately)
+        unset($rules['password']);
 
         return $rules;
-    }
-
-    /**
-     * Prepare the data for validation.
-     *
-     * @return void
-     */
-    protected function prepareForValidation(): void
-    {
-        // Remove password from validation if it's empty
-        if ($this->has('password') && empty($this->password)) {
-            $this->merge(['password' => null]);
-        }
     }
 }
 

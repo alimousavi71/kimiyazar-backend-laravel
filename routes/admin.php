@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminAvatarController;
+use App\Http\Controllers\Admin\AdminPasswordController;
 use App\Http\Controllers\Examples\UsersController;
 
 // TODO: Temporarily disabled auth middleware for admin routes
@@ -64,6 +65,11 @@ Route::group([
         // Avatar Routes
         Route::post('/{id}/avatar', [AdminAvatarController::class, 'upload'])->name('avatar.upload');
         Route::delete('/{id}/avatar', [AdminAvatarController::class, 'delete'])->name('avatar.delete');
+
+        // Password Routes
+        Route::get('/{id}/password/edit', [AdminPasswordController::class, 'edit'])->name('password.edit');
+        Route::put('/{id}/password', [AdminPasswordController::class, 'update'])->name('password.update');
+        Route::patch('/{id}/password', [AdminPasswordController::class, 'update'])->name('password.update');
     });
 });
 
