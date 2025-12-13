@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminAvatarController;
 use App\Http\Controllers\Admin\AdminPasswordController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\ProfileAvatarController;
+use App\Http\Controllers\Admin\ProfilePasswordController;
 use App\Http\Controllers\Admin\TwoFactorManagementController;
 use App\Http\Controllers\Examples\UsersController;
 
@@ -78,13 +80,13 @@ Route::group([
         Route::get('/edit', [ProfileController::class, 'edit'])->name('edit');
         Route::match(['put', 'patch'], '/', [ProfileController::class, 'update'])->name('update');
 
-        // Avatar (reuse AdminAvatarController)
-        Route::post('/avatar', [AdminAvatarController::class, 'upload'])->name('avatar.upload');
-        Route::delete('/avatar', [AdminAvatarController::class, 'delete'])->name('avatar.delete');
+        // Avatar (dedicated profile controller - secure)
+        Route::post('/avatar', [ProfileAvatarController::class, 'upload'])->name('avatar.upload');
+        Route::delete('/avatar', [ProfileAvatarController::class, 'delete'])->name('avatar.delete');
 
-        // Password (reuse AdminPasswordController)
-        Route::get('/password/edit', [AdminPasswordController::class, 'edit'])->name('password.edit');
-        Route::match(['put', 'patch'], '/password', [AdminPasswordController::class, 'update'])->name('password.update');
+        // Password (dedicated profile controller - secure)
+        Route::get('/password/edit', [ProfilePasswordController::class, 'edit'])->name('password.edit');
+        Route::match(['put', 'patch'], '/password', [ProfilePasswordController::class, 'update'])->name('password.update');
     });
 
     // Two-Factor Authentication Management

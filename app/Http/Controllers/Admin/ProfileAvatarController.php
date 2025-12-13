@@ -9,7 +9,7 @@ use App\Services\Admin\AdminAvatarService;
 use Exception;
 use Illuminate\Http\JsonResponse;
 
-class AdminAvatarController extends Controller
+class ProfileAvatarController extends Controller
 {
     use ApiResponseTrait;
 
@@ -22,17 +22,20 @@ class AdminAvatarController extends Controller
     }
 
     /**
-     * Upload avatar for the specified admin.
+     * Upload avatar for the authenticated admin.
      *
      * @param UploadAvatarRequest $request
-     * @param string $id
      * @return JsonResponse
      */
-    public function upload(UploadAvatarRequest $request, string $id): JsonResponse
+    public function upload(UploadAvatarRequest $request): JsonResponse
     {
         try {
-            $avatarPath = $this->service->upload($id, $request->file('avatar'));
-            $admin = $this->service->getAdmin($id);
+            /** @var \App\Models\Admin $admin */
+            $admin = auth('admin')->user();
+
+            // Explicitly use authenticated admin's ID - no way to bypass
+            $avatarPath = $this->service->upload($admin->id, $request->file('avatar'));
+            $admin = $this->service->getAdmin($admin->id);
 
             return $this->successResponse(
                 [
@@ -47,15 +50,18 @@ class AdminAvatarController extends Controller
     }
 
     /**
-     * Delete avatar for the specified admin.
+     * Delete avatar for the authenticated admin.
      *
-     * @param string $id
      * @return JsonResponse
      */
-    public function delete(string $id): JsonResponse
+    public function delete(): JsonResponse
     {
         try {
-            $this->service->delete($id);
+            /** @var \App\Models\Admin $admin */
+            $admin = auth('admin')->user();
+
+            // Explicitly use authenticated admin's ID - no way to bypass
+            $this->service->delete($admin->id);
 
             return $this->successResponse(null, 'Avatar deleted successfully.');
         } catch (Exception $e) {

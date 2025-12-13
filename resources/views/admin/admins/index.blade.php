@@ -16,17 +16,7 @@
         </div>
 
         <!-- Success/Error Messages -->
-        @if(session('success'))
-            <x-alert type="success" dismissible>
-                {{ session('success') }}
-            </x-alert>
-        @endif
-
-        @if(session('error'))
-            <x-alert type="danger" dismissible>
-                {{ session('error') }}
-            </x-alert>
-        @endif
+        <x-session-messages />
 
         <!-- Admins Table -->
         <x-card>
@@ -63,7 +53,7 @@
                                             @else
                                                 <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
                                                     <span
-                                                        class="text-blue-600 font-semibold text-xs">{{ strtoupper(substr($admin->first_name, 0, 1) . substr($admin->last_name, 0, 1)) }}</span>
+                                                        class="text-blue-600 font-semibold text-xs">{{ mb_substr($admin->first_name, 0, 1, 'UTF-8') . mb_substr($admin->last_name, 0, 1, 'UTF-8') }}</span>
                                                 </div>
                                             @endif
                                             <span class="font-medium text-gray-900">{{ $admin->full_name }}</span>

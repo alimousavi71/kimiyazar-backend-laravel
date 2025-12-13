@@ -132,7 +132,7 @@
                     @else
                         <div class="w-40 h-40 bg-blue-100 rounded-full flex items-center justify-center">
                             <span
-                                class="text-blue-600 font-semibold text-4xl">{{ strtoupper(substr($admin->first_name, 0, 1) . substr($admin->last_name, 0, 1)) }}</span>
+                                class="text-blue-600 font-semibold text-4xl">{{ mb_substr($admin->first_name, 0, 1, 'UTF-8') . mb_substr($admin->last_name, 0, 1, 'UTF-8') }}</span>
                         </div>
                     @endif
                 </div>

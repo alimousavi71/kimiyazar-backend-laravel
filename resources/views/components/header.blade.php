@@ -61,7 +61,8 @@
                     $admin = auth('admin')->user() ?? auth()->user();
                     $adminName = $admin ? $admin->full_name : 'Admin User';
                     $adminEmail = $admin ? $admin->email : 'admin@example.com';
-                    $adminInitials = $admin ? strtoupper(substr($admin->first_name, 0, 1) . substr($admin->last_name, 0, 1)) : 'A';
+                    // Use mb_substr for proper Persian/Arabic character support
+                    $adminInitials = $admin ? mb_substr($admin->first_name, 0, 1, 'UTF-8') . mb_substr($admin->last_name, 0, 1, 'UTF-8') : 'A';
                 @endphp
                 <div x-data="{ open: false }" class="relative">
                     <button @click="open = !open"

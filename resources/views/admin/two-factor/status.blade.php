@@ -9,23 +9,7 @@
     </div>
 
     <!-- Success/Error Messages -->
-    @if(session('success'))
-        <x-alert type="success" dismissible>
-            {{ session('success') }}
-        </x-alert>
-    @endif
-
-    @if(session('info'))
-        <x-alert type="info" dismissible>
-            {{ session('info') }}
-        </x-alert>
-    @endif
-
-    @if(session('error'))
-        <x-alert type="danger" dismissible>
-            {{ session('error') }}
-        </x-alert>
-    @endif
+    <x-session-messages :showInfo="true" />
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <!-- Status Card -->
