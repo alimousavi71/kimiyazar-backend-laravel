@@ -31,18 +31,5 @@ class UpdatePasswordRequest extends FormRequest
         ];
     }
 
-    /**
-     * Get custom messages for validator errors.
-     *
-     * @return array<string, string>
-     */
-    public function messages(): array
-    {
-        return [
-            'password.required' => __('validation.required', ['attribute' => __('admin/admins.fields.password')]),
-            'password.min' => __('validation.min.string', ['attribute' => __('admin/admins.fields.password'), 'min' => 8]),
-            'password.confirmed' => __('validation.confirmed', ['attribute' => __('admin/admins.fields.password')]),
-        ];
-    }
 }
 

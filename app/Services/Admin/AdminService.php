@@ -7,6 +7,7 @@ use App\Repositories\Admin\AdminRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
+use Spatie\QueryBuilder\AllowedFilter;
 
 /**
  * Service class for Admin business logic
@@ -24,13 +25,39 @@ class AdminService
     /**
      * Get all admins with optional filters using QueryBuilder.
      *
-     * @param array $filters
      * @param int $perPage
      * @return LengthAwarePaginator
      */
-    public function getAll(array $filters = [], int $perPage = 15): LengthAwarePaginator
+    public function search(int $perPage = 15): LengthAwarePaginator
     {
-        return $this->repository->getAll($filters, $perPage);
+        $allowedFilters = [
+            AllowedFilter::partial('first_name'),
+            AllowedFilter::partial('last_name'),
+            AllowedFilter::partial('email'),
+            AllowedFilter::exact('is_block'),
+            AllowedFilter::callback('search', function ($query, $value) {
+                $query->where(function ($q) use ($value) {
+                    $q->where('first_name', 'like', "%{$value}%")
+                        ->orWhere('last_name', 'like', "%{$value}%")
+                        ->orWhere('email', 'like', "%{$value}%");
+                });
+            }),
+        ];
+
+        $allowedSorts = [
+            'id',
+            'first_name',
+            'last_name',
+            'email',
+            'is_block',
+            'last_login',
+            'created_at',
+            'updated_at',
+        ];
+
+        $defaultSort = '-created_at';
+
+        return $this->repository->search($allowedFilters, $allowedSorts, $defaultSort, $perPage);
     }
 
     /**

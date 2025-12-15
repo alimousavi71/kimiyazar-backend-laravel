@@ -34,15 +34,7 @@ class AdminController extends Controller
      */
     public function index(Request $request): View
     {
-        // Use QueryBuilder for all filtering, sorting, and pagination
-        // Query parameters:
-        // - filter[first_name]=John
-        // - filter[last_name]=Doe
-        // - filter[email]=example@mail.com
-        // - filter[is_block]=true
-        // - sort=first_name or sort=-created_at (descending)
-        // - page=1
-        $admins = $this->service->getAll();
+        $admins = $this->service->search();
 
         return view('admin.admins.index', compact('admins'));
     }

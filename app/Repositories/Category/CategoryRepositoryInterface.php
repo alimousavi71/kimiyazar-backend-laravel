@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Repositories\Admin;
+namespace App\Repositories\Category;
 
-use App\Models\Admin;
+use App\Models\Category;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 /**
- * Interface for Admin Repository
+ * Interface for Category Repository
  */
-interface AdminRepositoryInterface
+interface CategoryRepositoryInterface
 {
     /**
-     * Get all admins with pagination.
+     * Get all categories with pagination.
      *
      * @param array $allowedFilters
      * @param array $allowedSorts
@@ -29,49 +29,56 @@ interface AdminRepositoryInterface
     ): LengthAwarePaginator;
 
     /**
-     * Find admin by ID.
+     * Find category by ID.
      *
      * @param int|string $id
-     * @return Admin|null
+     * @return Category|null
      */
-    public function findById(int|string $id): ?Admin;
+    public function findById(int|string $id): ?Category;
 
     /**
-     * Find admin by ID or fail.
+     * Find category by ID or fail.
      *
      * @param int|string $id
-     * @return Admin
+     * @return Category
      * @throws ModelNotFoundException
      */
-    public function findByIdOrFail(int|string $id): Admin;
+    public function findByIdOrFail(int|string $id): Category;
 
     /**
-     * Find admin by email.
+     * Get all root categories (no parent).
      *
-     * @param string $email
-     * @return Admin|null
+     * @return Collection
      */
-    public function findByEmail(string $email): ?Admin;
+    public function getRootCategories(): Collection;
 
     /**
-     * Create a new admin.
+     * Get categories by parent ID.
+     *
+     * @param int $parentId
+     * @return Collection
+     */
+    public function getByParentId(int $parentId): Collection;
+
+    /**
+     * Create a new category.
      *
      * @param array $data
-     * @return Admin
+     * @return Category
      */
-    public function create(array $data): Admin;
+    public function create(array $data): Category;
 
     /**
-     * Update an existing admin.
+     * Update an existing category.
      *
      * @param int|string $id
      * @param array $data
-     * @return Admin
+     * @return Category
      */
-    public function update(int|string $id, array $data): Admin;
+    public function update(int|string $id, array $data): Category;
 
     /**
-     * Delete an admin.
+     * Delete a category.
      *
      * @param int|string $id
      * @return bool

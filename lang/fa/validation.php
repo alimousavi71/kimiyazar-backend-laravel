@@ -199,6 +199,11 @@ return [
         'password_confirmation' => 'تأیید رمز عبور',
         'is_block' => 'وضعیت',
         'avatar' => 'آواتار',
+        'name' => 'نام',
+        'slug' => 'نامک',
+        'parent_id' => 'دسته‌بندی والد',
+        'sort_order' => 'ترتیب',
+        'is_active' => 'وضعیت',
     ],
 
 ];

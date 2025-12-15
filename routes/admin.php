@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ProfileAvatarController;
 use App\Http\Controllers\Admin\ProfilePasswordController;
 use App\Http\Controllers\Admin\TwoFactorManagementController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Examples\UsersController;
 
 Route::group([
@@ -96,6 +97,17 @@ Route::group([
         Route::post('/enable', [TwoFactorManagementController::class, 'enable'])->name('enable.store');
         Route::post('/disable', [TwoFactorManagementController::class, 'disable'])->name('disable');
         Route::post('/recovery-codes/regenerate', [TwoFactorManagementController::class, 'regenerateRecoveryCodes'])->name('recovery-codes.regenerate');
+    });
+
+    // Categories Management
+    Route::prefix('categories')->name('categories.')->group(function () {
+        Route::get('/', [CategoryController::class, 'index'])->name('index');
+        Route::get('/create', [CategoryController::class, 'create'])->name('create');
+        Route::post('/', [CategoryController::class, 'store'])->name('store');
+        Route::get('/{id}', [CategoryController::class, 'show'])->name('show');
+        Route::get('/{id}/edit', [CategoryController::class, 'edit'])->name('edit');
+        Route::match(['put', 'patch'], '/{id}', [CategoryController::class, 'update'])->name('update');
+        Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('destroy');
     });
 });
 

@@ -4,9 +4,7 @@ namespace App\Repositories\Admin;
 
 use App\Models\Admin;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
@@ -17,38 +15,33 @@ class AdminRepository implements AdminRepositoryInterface
     /**
      * Get all admins with pagination using QueryBuilder.
      *
-     * @param array $filters
+     * @param array $allowedFilters Allowed filters configuration (Spatie\QueryBuilder\AllowedFilter instances or field names)
+     * @param array $allowedSorts   Allowed sorts configuration (field names)
+     * @param string|null $defaultSort Default sort (e.g. '-created_at'), can be null to skip default sort
      * @param int $perPage
      * @return LengthAwarePaginator
      */
-    public function getAll(array $filters = [], int $perPage = 15): LengthAwarePaginator
-    {
-        return QueryBuilder::for(Admin::class)
-            ->allowedFilters([
-                AllowedFilter::partial('first_name'),
-                AllowedFilter::partial('last_name'),
-                AllowedFilter::partial('email'),
-                AllowedFilter::exact('is_block'),
-                AllowedFilter::callback('search', function ($query, $value) {
-                    $query->where(function ($q) use ($value) {
-                        $q->where('first_name', 'like', "%{$value}%")
-                            ->orWhere('last_name', 'like', "%{$value}%")
-                            ->orWhere('email', 'like', "%{$value}%");
-                    });
-                }),
-            ])
-            ->allowedSorts([
-                'id',
-                'first_name',
-                'last_name',
-                'email',
-                'is_block',
-                'last_login',
-                'created_at',
-                'updated_at',
-            ])
-            ->defaultSort('-created_at')
-            ->paginate($perPage);
+    public function search(
+        array $allowedFilters = [],
+        array $allowedSorts = [],
+        ?string $defaultSort = null,
+        int $perPage = 15
+    ): LengthAwarePaginator {
+        $query = QueryBuilder::for(Admin::class);
+
+        if (!empty($allowedFilters)) {
+            $query->allowedFilters($allowedFilters);
+        }
+
+        if (!empty($allowedSorts)) {
+            $query->allowedSorts($allowedSorts);
+        }
+
+        if ($defaultSort !== null) {
+            $query->defaultSort($defaultSort);
+        }
+
+        return $query->paginate($perPage);
     }
 
     /**
@@ -124,42 +117,5 @@ class AdminRepository implements AdminRepositoryInterface
         return $admin->delete();
     }
 
-    /**
-     * Search admins by query.
-     *
-     * @param string $query
-     * @param array $filters
-     * @param int $perPage
-     * @return LengthAwarePaginator
-     */
-    public function search(string $query, array $filters = [], int $perPage = 15): LengthAwarePaginator
-    {
-        return QueryBuilder::for(Admin::class)
-            ->allowedFilters([
-                AllowedFilter::partial('first_name'),
-                AllowedFilter::partial('last_name'),
-                AllowedFilter::partial('email'),
-                AllowedFilter::exact('is_block'),
-                AllowedFilter::callback('search', function ($query, $value) {
-                    $query->where(function ($q) use ($value) {
-                        $q->where('first_name', 'like', "%{$value}%")
-                            ->orWhere('last_name', 'like', "%{$value}%")
-                            ->orWhere('email', 'like', "%{$value}%");
-                    });
-                }),
-            ])
-            ->allowedSorts([
-                'id',
-                'first_name',
-                'last_name',
-                'email',
-                'is_block',
-                'last_login',
-                'created_at',
-                'updated_at',
-            ])
-            ->defaultSort('-created_at')
-            ->paginate($perPage);
-    }
 }
 

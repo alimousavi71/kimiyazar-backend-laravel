@@ -36,26 +36,5 @@ class StoreAdminRequest extends FormRequest
         ];
     }
 
-    /**
-     * Get custom messages for validator errors.
-     *
-     * @return array<string, string>
-     */
-    public function messages(): array
-    {
-        return [
-            'first_name.required' => 'The first name field is required.',
-            'last_name.required' => 'The last name field is required.',
-            'email.required' => 'The email field is required.',
-            'email.email' => 'The email must be a valid email address.',
-            'email.unique' => 'The email has already been taken.',
-            'password.required' => 'The password field is required.',
-            'password.min' => 'The password must be at least 8 characters.',
-            'password.confirmed' => 'The password confirmation does not match.',
-            'avatar.image' => 'The avatar must be an image.',
-            'avatar.mimes' => 'The avatar must be a file of type: jpeg, png, jpg, gif.',
-            'avatar.max' => 'The avatar may not be greater than 2MB.',
-        ];
-    }
 }
 

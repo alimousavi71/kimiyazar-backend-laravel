@@ -199,6 +199,11 @@ return [
         'password_confirmation' => 'password confirmation',
         'is_block' => 'status',
         'avatar' => 'avatar',
+        'name' => 'name',
+        'slug' => 'slug',
+        'parent_id' => 'parent category',
+        'sort_order' => 'sort order',
+        'is_active' => 'status',
     ],
 
 ];

@@ -28,18 +28,4 @@ class UploadAvatarRequest extends FormRequest
         ];
     }
 
-    /**
-     * Get custom messages for validator errors.
-     *
-     * @return array<string, string>
-     */
-    public function messages(): array
-    {
-        return [
-            'avatar.required' => 'The avatar field is required.',
-            'avatar.image' => 'The avatar must be an image.',
-            'avatar.mimes' => 'The avatar must be a file of type: jpeg, png, jpg, gif.',
-            'avatar.max' => 'The avatar may not be greater than 2MB.',
-        ];
-    }
 }

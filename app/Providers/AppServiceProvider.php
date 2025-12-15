@@ -7,6 +7,8 @@ use App\Repositories\Admin\AdminRepository;
 use App\Repositories\Admin\AdminRepositoryInterface;
 use App\Repositories\Admin\TwoFactorRepository;
 use App\Repositories\Admin\TwoFactorRepositoryInterface;
+use App\Repositories\Category\CategoryRepository;
+use App\Repositories\Category\CategoryRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,6 +28,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             TwoFactorRepositoryInterface::class,
             TwoFactorRepository::class
+        );
+
+        // Bind Category Repository
+        $this->app->bind(
+            CategoryRepositoryInterface::class,
+            CategoryRepository::class
         );
     }
 

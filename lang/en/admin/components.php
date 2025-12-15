@@ -69,6 +69,7 @@ return [
     'navigation' => [
         'dashboard' => 'Dashboard',
         'admins' => 'Admins',
+        'categories' => 'Categories',
         'examples' => 'Examples',
         'imask_test' => 'IMask Test',
         'validation_example' => 'Validation Example',

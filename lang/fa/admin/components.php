@@ -69,6 +69,7 @@ return [
     'navigation' => [
         'dashboard' => 'داشبورد',
         'admins' => 'مدیران',
+        'categories' => 'دسته‌بندی‌ها',
         'examples' => 'مثال‌ها',
         'imask_test' => 'تست IMask',
         'validation_example' => 'مثال اعتبارسنجی',

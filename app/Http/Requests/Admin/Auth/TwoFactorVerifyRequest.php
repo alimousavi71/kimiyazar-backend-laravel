@@ -27,17 +27,4 @@ class TwoFactorVerifyRequest extends FormRequest
         ];
     }
 
-    /**
-     * Get custom messages for validator errors.
-     *
-     * @return array
-     */
-    public function messages(): array
-    {
-        return [
-            'code.required' => __('admin/auth.messages.code_required'),
-            'code.size' => __('admin/auth.messages.code_size'),
-            'code.regex' => __('admin/auth.messages.code_invalid'),
-        ];
-    }
 }
