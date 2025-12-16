@@ -19,6 +19,12 @@ use App\Repositories\Photo\PhotoRepository;
 use App\Repositories\Photo\PhotoRepositoryInterface;
 use App\Repositories\Slider\SliderRepository;
 use App\Repositories\Slider\SliderRepositoryInterface;
+use App\Repositories\User\UserRepository;
+use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\Faq\FaqRepository;
+use App\Repositories\Faq\FaqRepositoryInterface;
+use App\Repositories\Otp\OtpRepository;
+use App\Repositories\Otp\OtpRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -74,6 +80,24 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             SliderRepositoryInterface::class,
             SliderRepository::class
+        );
+
+        // Bind User Repository
+        $this->app->bind(
+            UserRepositoryInterface::class,
+            UserRepository::class
+        );
+
+        // Bind Faq Repository
+        $this->app->bind(
+            FaqRepositoryInterface::class,
+            FaqRepository::class
+        );
+
+        // Bind Otp Repository
+        $this->app->bind(
+            OtpRepositoryInterface::class,
+            OtpRepository::class
         );
     }
 

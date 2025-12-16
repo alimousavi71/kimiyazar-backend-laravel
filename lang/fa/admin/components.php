@@ -68,6 +68,7 @@ return [
     // Navigation
     'navigation' => [
         'dashboard' => 'داشبورد',
+        'users' => 'کاربران',
         'admins' => 'مدیران',
         'categories' => 'دسته‌بندی‌ها',
         'contacts' => 'تماس‌ها',

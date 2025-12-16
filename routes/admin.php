@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\PhotoController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Examples\UsersController;
 
 Route::group([
@@ -33,8 +34,23 @@ Route::group([
         return view('pages.settings');
     })->name('settings');
 
-    // Users
-    Route::get('/users', [UsersController::class, 'index'])->name('users.index');
+    // Users Management
+    Route::prefix('users')->name('users.')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('index');
+        Route::get('/create', [UserController::class, 'create'])->name('create');
+        Route::post('/', [UserController::class, 'store'])->name('store');
+        Route::get('/{id}', [UserController::class, 'show'])->name('show');
+        Route::get('/{id}/edit', [UserController::class, 'edit'])->name('edit');
+        Route::match(['put', 'patch'], '/{id}', [UserController::class, 'update'])->name('update');
+        Route::delete('/{id}', [UserController::class, 'destroy'])->name('destroy');
+
+        // Password Management
+        Route::get('/{id}/password/edit', [UserController::class, 'editPassword'])->name('edit-password');
+        Route::match(['put', 'patch'], '/{id}/password', [UserController::class, 'updatePassword'])->name('update-password');
+
+        // Status Toggle
+        Route::post('/{id}/toggle-status', [UserController::class, 'toggleStatus'])->name('toggle-status');
+    });
 
     // Examples
     Route::prefix('examples')->name('examples.')->group(function () {
