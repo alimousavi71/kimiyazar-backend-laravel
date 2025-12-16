@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ContentController;
+use App\Http\Controllers\Admin\PhotoController;
 use App\Http\Controllers\Examples\UsersController;
 
 Route::group([
@@ -139,6 +140,16 @@ Route::group([
         Route::get('/{id}/edit', [ContentController::class, 'edit'])->name('edit');
         Route::match(['put', 'patch'], '/{id}', [ContentController::class, 'update'])->name('update');
         Route::delete('/{id}', [ContentController::class, 'destroy'])->name('destroy');
+    });
+
+    // Photos Management (API)
+    Route::prefix('photos')->name('photos.')->group(function () {
+        Route::get('/', [PhotoController::class, 'index'])->name('index');
+        Route::post('/', [PhotoController::class, 'store'])->name('store');
+        Route::put('/{id}', [PhotoController::class, 'update'])->name('update');
+        Route::delete('/{id}', [PhotoController::class, 'destroy'])->name('destroy');
+        Route::post('/reorder', [PhotoController::class, 'reorder'])->name('reorder');
+        Route::post('/attach', [PhotoController::class, 'attach'])->name('attach');
     });
 });
 

@@ -15,6 +15,8 @@ use App\Repositories\Contact\ContactRepository;
 use App\Repositories\Contact\ContactRepositoryInterface;
 use App\Repositories\Content\ContentRepository;
 use App\Repositories\Content\ContentRepositoryInterface;
+use App\Repositories\Photo\PhotoRepository;
+use App\Repositories\Photo\PhotoRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -58,6 +60,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             ContentRepositoryInterface::class,
             ContentRepository::class
+        );
+
+        // Bind Photo Repository
+        $this->app->bind(
+            PhotoRepositoryInterface::class,
+            PhotoRepository::class
         );
     }
 
