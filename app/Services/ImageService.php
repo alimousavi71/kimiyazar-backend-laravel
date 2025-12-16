@@ -30,14 +30,14 @@ class ImageService
      * Upload and process image with preset configuration.
      *
      * @param UploadedFile $file
-     * @param string $preset
+     * @param string|array $preset Preset name or custom preset config array
      * @param string $folder
      * @param string|null $filename
      * @return string
      */
-    public function upload(UploadedFile $file, string $preset = 'default', string $folder = 'images', ?string $filename = null): string
+    public function upload(UploadedFile $file, string|array $preset = 'default', string $folder = 'images', ?string $filename = null): string
     {
-        $presetConfig = $this->getPresetConfig($preset);
+        $presetConfig = is_array($preset) ? $preset : $this->getPresetConfig($preset);
 
         // Generate filename if not provided
         if (!$filename) {

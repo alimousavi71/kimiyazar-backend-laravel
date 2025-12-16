@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ProfileAvatarController;
 use App\Http\Controllers\Admin\ProfilePasswordController;
 use App\Http\Controllers\Admin\TwoFactorManagementController;
+use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Examples\UsersController;
@@ -115,6 +116,17 @@ Route::group([
     Route::prefix('contacts')->name('contacts.')->group(function () {
         Route::get('/', [ContactController::class, 'index'])->name('index');
         Route::get('/{id}', [ContactController::class, 'show'])->name('show');
+    });
+
+    // Banners Management
+    Route::prefix('banners')->name('banners.')->group(function () {
+        Route::get('/', [BannerController::class, 'index'])->name('index');
+        Route::get('/create', [BannerController::class, 'create'])->name('create');
+        Route::post('/', [BannerController::class, 'store'])->name('store');
+        Route::get('/{id}', [BannerController::class, 'show'])->name('show');
+        Route::get('/{id}/edit', [BannerController::class, 'edit'])->name('edit');
+        Route::match(['put', 'patch'], '/{id}', [BannerController::class, 'update'])->name('update');
+        Route::delete('/{id}', [BannerController::class, 'destroy'])->name('destroy');
     });
 });
 

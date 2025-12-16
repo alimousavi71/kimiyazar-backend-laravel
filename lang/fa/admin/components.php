@@ -71,6 +71,7 @@ return [
         'admins' => 'مدیران',
         'categories' => 'دسته‌بندی‌ها',
         'contacts' => 'تماس‌ها',
+        'banners' => 'بنرها',
         'examples' => 'مثال‌ها',
         'imask_test' => 'تست IMask',
         'validation_example' => 'مثال اعتبارسنجی',

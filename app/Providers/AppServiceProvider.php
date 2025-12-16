@@ -7,6 +7,8 @@ use App\Repositories\Admin\AdminRepository;
 use App\Repositories\Admin\AdminRepositoryInterface;
 use App\Repositories\Admin\TwoFactorRepository;
 use App\Repositories\Admin\TwoFactorRepositoryInterface;
+use App\Repositories\Banner\BannerRepository;
+use App\Repositories\Banner\BannerRepositoryInterface;
 use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Contact\ContactRepository;
@@ -42,6 +44,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             ContactRepositoryInterface::class,
             ContactRepository::class
+        );
+
+        // Bind Banner Repository
+        $this->app->bind(
+            BannerRepositoryInterface::class,
+            BannerRepository::class
         );
     }
 
