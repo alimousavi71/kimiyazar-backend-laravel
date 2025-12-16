@@ -62,6 +62,11 @@
                     label="{{ __('admin/photos.title') }}" />
             </x-form-group>
 
+            <x-form-group :label="__('admin/tags.title')" :error="$errors->first('tags')">
+                <x-tag-manager tagable-type="{{ \App\Models\Content::class }}" :tagable-id="null"
+                    label="{{ __('admin/tags.title') }}" />
+            </x-form-group>
+
             <div class="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
                 <a href="{{ route('admin.contents.index') }}">
                     <x-button variant="secondary" type="button">
@@ -76,14 +81,26 @@
     </x-card>
 
     @push('scripts')
-        @vite(['resources/js/admin-form-validation.js', 'resources/js/form-with-photos.js'])
+        @vite(['resources/js/admin-form-validation.js', 'resources/js/form-with-photos.js', 'resources/js/form-with-tags.js'])
         <script>
-            initFormWithPhotos({
-                formId: 'content-create-form',
-                photoManagerSelector: '[id^="photo-manager-"]',
-                photoableType: '{{ \App\Models\Content::class }}',
-                redirectUrl: '{{ route('admin.contents.index') }}',
-                successMessage: '{{ __('admin/contents.messages.created') }}'
+            document.addEventListener('DOMContentLoaded', function () {
+                initFormWithPhotos({
+                    formId: 'content-create-form',
+                    photoManagerSelector: '[id^="photo-manager-"]',
+                    photoableType: '{{ \App\Models\Content::class }}',
+                    redirectUrl: '{{ route('admin.contents.index') }}',
+                    successMessage: '{{ __('admin/contents.messages.created') }}'
+                });
+
+                initFormWithTags({
+                    formId: 'content-create-form',
+                    tagManagerSelector: '[id^="tag-manager-"]',
+                    tagableType: '{{ \App\Models\Content::class }}',
+                    tagableId: null,
+                    redirectUrl: '{{ route('admin.contents.index') }}',
+                    successMessage: '{{ __('admin/contents.messages.created') }}',
+                    errorMessage: '{{ __('admin/contents.messages.create_failed') }}',
+                });
             });
         </script>
     @endpush

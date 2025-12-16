@@ -75,11 +75,16 @@
                     <div>
                         <label class="text-sm font-medium text-gray-500">{{ __('admin/photos.title') }}</label>
                         <div class="mt-1">
-                            <x-photo-manager 
-                                photoable-type="{{ \App\Models\Content::class }}"
-                                :photoable-id="$content->id"
-                                :read-only="true"
-                                label="" />
+                            <x-photo-manager photoable-type="{{ \App\Models\Content::class }}"
+                                :photoable-id="$content->id" :read-only="true" label="" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-sm font-medium text-gray-500">{{ __('admin/tags.title') }}</label>
+                        <div class="mt-1">
+                            <x-tag-manager tagable-type="{{ \App\Models\Content::class }}" :tagable-id="$content->id"
+                                :read-only="true" label="" />
                         </div>
                     </div>
                 </div>

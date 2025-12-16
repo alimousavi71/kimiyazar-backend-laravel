@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             ContactSeeder::class,
             ContentSeeder::class,
+            SliderSeeder::class,
         ]);
     }
 }

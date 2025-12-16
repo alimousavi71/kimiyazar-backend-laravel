@@ -1,39 +1,73 @@
 /**
- * Reusable script for handling form submission with photo attachment
+ * Reusable script for handling form submission with tag attachment
  *
  * Usage:
- * <script>
- *     initFormWithPhotos({
- *         formId: 'content-create-form',
- *         photoManagerSelector: '[id^="photo-manager-"]',
- *         photoableType: 'App\\Models\\Content',
- *         redirectUrl: '/admin/contents',
- *         successMessage: 'Content created successfully'
- *     });
- * </script>
+ * initFormWithTags({
+ *     formId: 'content-create-form',
+ *     tagManagerSelector: '[id^="tag-manager-"]',
+ *     tagableType: 'App\\Models\\Content',
+ *     tagableId: null, // For create forms, use null. For edit forms, use the entity ID
+ *     redirectUrl: '/admin/contents', // Optional
+ *     successMessage: 'Content created successfully', // Optional
+ *     onSuccess: function(response, entityId) { // custom logic },
+ *     onError: function(error) { // custom logic }
+ * });
  */
 
-function initFormWithPhotos(config) {
+window.initFormWithTags = function (config) {
     const {
         formId,
-        photoManagerSelector = '[id^="photo-manager-"]',
-        photoableType,
-        redirectUrl,
+        tagManagerSelector = '[id^="tag-manager-"]',
+        tagableType,
+        tagableId = null,
+        redirectUrl = null,
         successMessage = null,
+        errorMessage = null,
         onSuccess = null,
         onError = null,
     } = config;
 
     document.addEventListener("DOMContentLoaded", function () {
         const form = document.getElementById(formId);
-        const photoManagerElement =
-            document.querySelector(photoManagerSelector);
+        const tagManagerElement = document.querySelector(tagManagerSelector);
 
         if (!form) {
             console.warn(`Form with ID "${formId}" not found`);
             return;
         }
 
+        // Check if this is an edit form (PUT/PATCH) - if so, handle submission independently
+        const method =
+            form.querySelector('input[name="_method"]')?.value || "POST";
+        const isUpdate = method === "PUT" || method === "PATCH";
+
+        // For create forms, just set up the attachTagsToEntity function for form-with-photos.js to call
+        if (!isUpdate) {
+            window.attachTagsToEntity = async function (entityId) {
+                if (!entityId || !tagManagerElement || !tagableType) {
+                    return;
+                }
+
+                const tagManager = Alpine.$data(tagManagerElement);
+                if (
+                    tagManager &&
+                    tagManager.tags &&
+                    tagManager.tags.length > 0
+                ) {
+                    try {
+                        await tagManager.attachTags(tagableType, entityId);
+                    } catch (attachError) {
+                        console.warn("Failed to attach tags:", attachError);
+                        if (onError && typeof onError === "function") {
+                            onError(attachError);
+                        }
+                    }
+                }
+            };
+            return;
+        }
+
+        // For edit forms, handle form submission independently
         form.addEventListener("submit", async function (e) {
             e.preventDefault();
 
@@ -50,16 +84,12 @@ function initFormWithPhotos(config) {
             }
 
             try {
-                // Submit form via axios
-                const response = await window.axios.post(
-                    form.action,
-                    formData,
-                    {
-                        headers: {
-                            "Content-Type": "multipart/form-data",
-                        },
-                    }
-                );
+                // Submit form via axios (this is an edit form, so use PUT)
+                const response = await window.axios.put(form.action, formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                });
 
                 if (
                     response.data &&
@@ -67,50 +97,41 @@ function initFormWithPhotos(config) {
                         response.status === 201 ||
                         response.status === 200)
                 ) {
-                    // Get the created entity ID from response
-                    const entityId =
+                    // Get the entity ID from response or use provided tagableId
+                    const finalEntityId =
                         response.data.data?.id ||
                         response.data.id ||
+                        tagableId ||
                         (response.headers?.location
                             ? response.headers.location.split("/").pop()
                             : null);
 
-                    // Attach photos if photo manager exists and has photos
-                    if (entityId && photoManagerElement && photoableType) {
-                        const photoManager = Alpine.$data(photoManagerElement);
+                    // Attach tags if tag manager exists and has tags
+                    if (finalEntityId && tagManagerElement && tagableType) {
+                        const tagManager = Alpine.$data(tagManagerElement);
                         if (
-                            photoManager &&
-                            photoManager.photos &&
-                            photoManager.photos.length > 0
+                            tagManager &&
+                            tagManager.tags &&
+                            tagManager.tags.length > 0
                         ) {
                             try {
-                                await photoManager.attachPhotos(
-                                    photoableType,
-                                    entityId
+                                await tagManager.attachTags(
+                                    tagableType,
+                                    finalEntityId
                                 );
                             } catch (attachError) {
                                 console.warn(
-                                    "Failed to attach photos:",
+                                    "Failed to attach tags:",
                                     attachError
                                 );
-                                // Don't fail the whole operation if photo attachment fails
+                                // Don't fail the whole operation if tag attachment fails
                             }
-                        }
-                    }
-
-                    // Attach tags if tag manager exists (for create forms)
-                    if (typeof window.attachTagsToEntity === "function") {
-                        try {
-                            await window.attachTagsToEntity(entityId);
-                        } catch (attachError) {
-                            console.warn("Failed to attach tags:", attachError);
-                            // Don't fail the whole operation if tag attachment fails
                         }
                     }
 
                     // Call custom success callback if provided
                     if (onSuccess && typeof onSuccess === "function") {
-                        onSuccess(response, entityId);
+                        onSuccess(response, finalEntityId);
                     } else if (redirectUrl) {
                         // Default: redirect to provided URL
                         window.location.href = redirectUrl;
@@ -150,4 +171,4 @@ function initFormWithPhotos(config) {
             }
         });
     });
-}
+};

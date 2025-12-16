@@ -13,6 +13,8 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ContentController;
 use App\Http\Controllers\Admin\PhotoController;
+use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Examples\UsersController;
 
 Route::group([
@@ -150,6 +152,27 @@ Route::group([
         Route::delete('/{id}', [PhotoController::class, 'destroy'])->name('destroy');
         Route::post('/reorder', [PhotoController::class, 'reorder'])->name('reorder');
         Route::post('/attach', [PhotoController::class, 'attach'])->name('attach');
+    });
+
+    // Tags Management (API)
+    Route::prefix('tags')->name('tags.')->group(function () {
+        Route::get('/search', [TagController::class, 'search'])->name('search');
+        Route::get('/', [TagController::class, 'index'])->name('index');
+        Route::post('/', [TagController::class, 'store'])->name('store');
+        Route::post('/attach', [TagController::class, 'attach'])->name('attach');
+        Route::delete('/{id}/detach', [TagController::class, 'detach'])->name('detach');
+        Route::put('/{id}/body', [TagController::class, 'updateBody'])->name('update-body');
+    });
+
+    // Sliders Management
+    Route::prefix('sliders')->name('sliders.')->group(function () {
+        Route::get('/', [SliderController::class, 'index'])->name('index');
+        Route::get('/create', [SliderController::class, 'create'])->name('create');
+        Route::post('/', [SliderController::class, 'store'])->name('store');
+        Route::get('/{id}', [SliderController::class, 'show'])->name('show');
+        Route::get('/{id}/edit', [SliderController::class, 'edit'])->name('edit');
+        Route::match(['put', 'patch'], '/{id}', [SliderController::class, 'update'])->name('update');
+        Route::delete('/{id}', [SliderController::class, 'destroy'])->name('destroy');
     });
 });
 

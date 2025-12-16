@@ -64,6 +64,11 @@
                     :limit="10" label="{{ __('admin/photos.title') }}" />
             </x-form-group>
 
+            <x-form-group :label="__('admin/tags.title')" :error="$errors->first('tags')">
+                <x-tag-manager tagable-type="{{ \App\Models\Content::class }}" :tagable-id="$content->id"
+                    label="{{ __('admin/tags.title') }}" />
+            </x-form-group>
+
             <div class="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
                 <a href="{{ route('admin.contents.index') }}">
                     <x-button variant="secondary" type="button">
@@ -78,6 +83,19 @@
     </x-card>
 
     @push('scripts')
-        @vite('resources/js/admin-form-validation.js')
+        @vite(['resources/js/admin-form-validation.js', 'resources/js/form-with-tags.js'])
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                initFormWithTags({
+                    formId: 'content-edit-form',
+                    tagManagerSelector: '[id^="tag-manager-"]',
+                    tagableType: '{{ \App\Models\Content::class }}',
+                    tagableId: {{ $content->id }},
+                    redirectUrl: '{{ route('admin.contents.index') }}',
+                    successMessage: '{{ __('admin/contents.messages.updated') }}',
+                    errorMessage: '{{ __('admin/contents.messages.update_failed') }}',
+                });
+            });
+        </script>
     @endpush
 </x-layouts.admin>

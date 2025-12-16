@@ -7,6 +7,8 @@ use App\Traits\AppendsRandomStringOnSoftDelete;
 use App\Traits\HasPersianSlug;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -118,5 +120,23 @@ class Content extends Model
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
+    }
+
+    /**
+     * Get all of the photos for the content.
+     */
+    public function photos(): MorphMany
+    {
+        return $this->morphMany(Photo::class, 'photoable')->ordered();
+    }
+
+    /**
+     * Get all of the tags for the content.
+     */
+    public function tags(): MorphToMany
+    {
+        return $this->morphToMany(Tag::class, 'tagable', 'tagables')
+            ->withPivot('body')
+            ->withTimestamps();
     }
 }

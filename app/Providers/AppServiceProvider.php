@@ -17,6 +17,8 @@ use App\Repositories\Content\ContentRepository;
 use App\Repositories\Content\ContentRepositoryInterface;
 use App\Repositories\Photo\PhotoRepository;
 use App\Repositories\Photo\PhotoRepositoryInterface;
+use App\Repositories\Slider\SliderRepository;
+use App\Repositories\Slider\SliderRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -66,6 +68,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             PhotoRepositoryInterface::class,
             PhotoRepository::class
+        );
+
+        // Bind Slider Repository
+        $this->app->bind(
+            SliderRepositoryInterface::class,
+            SliderRepository::class
         );
     }
 

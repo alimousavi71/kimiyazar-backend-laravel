@@ -62,7 +62,7 @@ class ContentController extends Controller
         $content = $this->service->create($validated);
 
         if ($request->expectsJson() || $request->wantsJson()) {
-            return $this->createdResponse(['id' => $content->id], __('admin/contents.messages.created'));
+            return $this->createdResponse($content->toArray(), __('admin/contents.messages.created'));
         }
 
         return redirect()

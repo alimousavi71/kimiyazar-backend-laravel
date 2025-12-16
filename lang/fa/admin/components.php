@@ -73,6 +73,7 @@ return [
         'contacts' => 'تماس‌ها',
         'banners' => 'بنرها',
         'contents' => 'محتوا',
+        'sliders' => 'اسلایدرها',
         'examples' => 'مثال‌ها',
         'imask_test' => 'تست IMask',
         'validation_example' => 'مثال اعتبارسنجی',
