@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Notifications\AdminResetPasswordNotification;
+use App\Traits\AppendsRandomStringOnSoftDelete;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -27,7 +29,14 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class Admin extends Authenticatable
 {
-    use HasFactory, Notifiable, SoftDeletes;
+    use HasFactory, Notifiable, SoftDeletes, AppendsRandomStringOnSoftDelete;
+
+    /**
+     * Unique fields that should be modified when the model is soft-deleted.
+     *
+     * @var array<string>
+     */
+    protected array $uniqueFieldsOnSoftDelete = ['email'];
 
     /**
      * The attributes that are mass assignable.
@@ -114,7 +123,7 @@ class Admin extends Authenticatable
      */
     public function sendPasswordResetNotification($token): void
     {
-        $this->notify(new \App\Notifications\AdminResetPasswordNotification($token));
+        $this->notify(new AdminResetPasswordNotification($token));
     }
 }
 

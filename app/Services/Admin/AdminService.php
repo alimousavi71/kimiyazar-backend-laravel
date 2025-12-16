@@ -115,15 +115,8 @@ class AdminService
      */
     public function delete(int|string $id): bool
     {
-        $admin = $this->repository->findByIdOrFail($id);
-
-        // Append random string to email for safe unique constraint
-        $randomString = '_deleted_' . bin2hex(random_bytes(8));
-        $newEmail = $admin->email . $randomString;
-
-        // Update email before soft delete using repository
-        $this->repository->update($id, ['email' => $newEmail]);
-
+        // The AppendsRandomStringOnSoftDelete trait will automatically
+        // modify unique fields before soft deletion
         return $this->repository->delete($id);
     }
 }

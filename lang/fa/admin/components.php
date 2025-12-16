@@ -70,6 +70,7 @@ return [
         'dashboard' => 'داشبورد',
         'admins' => 'مدیران',
         'categories' => 'دسته‌بندی‌ها',
+        'contacts' => 'تماس‌ها',
         'examples' => 'مثال‌ها',
         'imask_test' => 'تست IMask',
         'validation_example' => 'مثال اعتبارسنجی',
@@ -85,10 +86,12 @@ return [
 
     // Status
     'status' => [
+        'all' => 'همه',
         'active' => 'فعال',
         'inactive' => 'غیرفعال',
         'blocked' => 'مسدود شده',
         'pending' => 'در انتظار',
+        'no_results' => 'نتیجه‌ای یافت نشد',
     ],
 
     // Messages

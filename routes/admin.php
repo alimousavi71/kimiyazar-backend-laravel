@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ProfileAvatarController;
 use App\Http\Controllers\Admin\ProfilePasswordController;
 use App\Http\Controllers\Admin\TwoFactorManagementController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Examples\UsersController;
 
 Route::group([
@@ -108,6 +109,12 @@ Route::group([
         Route::get('/{id}/edit', [CategoryController::class, 'edit'])->name('edit');
         Route::match(['put', 'patch'], '/{id}', [CategoryController::class, 'update'])->name('update');
         Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('destroy');
+    });
+
+    // Contacts Management
+    Route::prefix('contacts')->name('contacts.')->group(function () {
+        Route::get('/', [ContactController::class, 'index'])->name('index');
+        Route::get('/{id}', [ContactController::class, 'show'])->name('show');
     });
 });
 

@@ -9,6 +9,8 @@ use App\Repositories\Admin\TwoFactorRepository;
 use App\Repositories\Admin\TwoFactorRepositoryInterface;
 use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\Contact\ContactRepository;
+use App\Repositories\Contact\ContactRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -34,6 +36,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             CategoryRepositoryInterface::class,
             CategoryRepository::class
+        );
+
+        // Bind Contact Repository
+        $this->app->bind(
+            ContactRepositoryInterface::class,
+            ContactRepository::class
         );
     }
 

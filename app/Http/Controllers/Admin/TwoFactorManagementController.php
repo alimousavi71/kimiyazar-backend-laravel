@@ -8,6 +8,7 @@ use App\Services\Admin\TwoFactorService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use PragmaRX\Google2FA\Google2FA;
 
 class TwoFactorManagementController extends Controller
 {
@@ -64,7 +65,7 @@ class TwoFactorManagementController extends Controller
         $code = $request->input('code');
 
         // Verify the code with the temporary secret
-        $google2fa = new \PragmaRX\Google2FA\Google2FA();
+        $google2fa = new Google2FA();
         $isValid = $google2fa->verifyKey($secret, $code, 1);
 
         // In development, also accept "123456"
