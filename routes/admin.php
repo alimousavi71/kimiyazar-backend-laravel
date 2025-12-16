@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ContentController;
+use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\PhotoController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TagController;
@@ -173,6 +174,17 @@ Route::group([
         Route::get('/{id}/edit', [SliderController::class, 'edit'])->name('edit');
         Route::match(['put', 'patch'], '/{id}', [SliderController::class, 'update'])->name('update');
         Route::delete('/{id}', [SliderController::class, 'destroy'])->name('destroy');
+    });
+
+    // FAQs Management
+    Route::prefix('faqs')->name('faqs.')->group(function () {
+        Route::get('/', [FaqController::class, 'index'])->name('index');
+        Route::get('/create', [FaqController::class, 'create'])->name('create');
+        Route::post('/', [FaqController::class, 'store'])->name('store');
+        Route::get('/{id}', [FaqController::class, 'show'])->name('show');
+        Route::get('/{id}/edit', [FaqController::class, 'edit'])->name('edit');
+        Route::match(['put', 'patch'], '/{id}', [FaqController::class, 'update'])->name('update');
+        Route::delete('/{id}', [FaqController::class, 'destroy'])->name('destroy');
     });
 });
 

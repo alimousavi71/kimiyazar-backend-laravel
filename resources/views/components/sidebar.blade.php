@@ -158,6 +158,24 @@
                 </a>
             </li>
 
+            <!-- FAQs -->
+            <li>
+                <a href="{{ route('admin.faqs.index') ?? '#' }}"
+                    class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium relative overflow-hidden cursor-pointer {{ request()->routeIs('admin.faqs.*') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
+                    @if(request()->routeIs('admin.faqs.*'))
+                        <div
+                            class="absolute start-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-blue-500 via-indigo-600 to-purple-600 rounded-e-full shadow-lg shadow-blue-500/50">
+                        </div>
+                    @endif
+                    <div
+                        class="relative z-10 p-1.5 rounded-lg {{ request()->routeIs('admin.faqs.*') ? 'bg-blue-100/50' : 'bg-gray-100/50 group-hover:bg-blue-100/50' }} transition-all duration-300">
+                        <x-icon name="help-circle" size="md"
+                            class="transition-all duration-300 {{ request()->routeIs('admin.faqs.*') ? 'text-blue-600 scale-110' : 'text-gray-500 group-hover:text-blue-600 group-hover:scale-110' }}" />
+                    </div>
+                    <span class="relative z-10 flex-1">{{ __('admin/components.navigation.faqs') }}</span>
+                </a>
+            </li>
+
             <!-- Divider -->
             <li class="my-3">
                 <div class="h-px bg-linear-to-br from-transparent via-gray-200 to-transparent"></div>

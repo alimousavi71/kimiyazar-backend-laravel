@@ -74,6 +74,7 @@ return [
         'banners' => 'بنرها',
         'contents' => 'محتوا',
         'sliders' => 'اسلایدرها',
+        'faqs' => 'سوالات متداول',
         'examples' => 'مثال‌ها',
         'imask_test' => 'تست IMask',
         'validation_example' => 'مثال اعتبارسنجی',
