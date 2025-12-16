@@ -6,10 +6,12 @@
     'label' => null,
     'required' => false,
     'error' => null,
+    'readOnly' => false,
 ])
 
 @php
     $uniqueId = 'photo-manager-' . uniqid();
+    $translationKey = str_replace('-', '_', $uniqueId);
     $translations = [
         'upload_success' => __('admin/photos.messages.uploaded'),
         'upload_error' => __('admin/photos.messages.upload_failed'),
@@ -31,7 +33,8 @@
     limit: @js($limit),
     accept: @js($accept),
     uniqueId: @js($uniqueId),
-    translations: @js($translations),
+    translationKey: @js($translationKey),
+    readOnly: @js($readOnly),
 })" class="space-y-4" id="{{ $uniqueId }}">
     @if($label)
         <label class="text-sm font-medium text-gray-700">
@@ -43,7 +46,7 @@
     @endif
 
     <!-- Upload Area -->
-    <div x-show="!limit || photos.length < limit" 
+    <div x-show="!readOnly && (!limit || photos.length < limit)" 
          class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors"
          :class="{ 'border-blue-500 bg-blue-50': isDragging }"
          @dragover.prevent="isDragging = true"
@@ -59,15 +62,19 @@
                :disabled="loading || (limit && photos.length >= limit)">
         
         <div class="flex flex-col items-center justify-center space-y-2">
-            <x-icon name="cloud-upload" size="2xl" class="text-gray-400" />
+            <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+            </svg>
             <div class="text-sm text-gray-600">
                 <span class="font-medium text-blue-600 hover:text-blue-700 cursor-pointer">{{ __('admin/photos.forms.labels.click_to_upload') }}</span>
                 <span class="text-gray-500"> {{ __('admin/photos.forms.labels.drag_and_drop') }}</span>
             </div>
             <p class="text-xs text-gray-500">{{ __('admin/photos.forms.labels.supported_formats') }} - {{ __('admin/photos.forms.labels.max_size') }}</p>
-            <p x-show="limit" class="text-xs text-gray-500">
-                {{ str_replace(':limit', '', __('admin/photos.forms.labels.max_photos')) }}<span x-text="limit"></span>
-            </p>
+            @if($limit)
+                <p class="text-xs text-gray-500">
+                    {{ str_replace(':limit', '', __('admin/photos.forms.labels.max_photos')) }}<span x-text="limit"></span>
+                </p>
+            @endif
         </div>
     </div>
 
@@ -83,9 +90,10 @@
             <div class="relative group border border-gray-200 rounded-lg overflow-hidden bg-gray-50">
                 <!-- Image -->
                 <div class="aspect-square relative">
-                    <img :src="photo.url || getPhotoUrl(photo.file_path)" 
+                    <img :src="photo.url || (photo.file_path ? (photo.file_path.startsWith('http') ? photo.file_path : (photo.file_path.startsWith('storage/') ? '/' + photo.file_path : '/storage/' + photo.file_path)) : '')" 
                          :alt="photo.alt || 'Photo'"
-                         class="w-full h-full object-cover">
+                         class="w-full h-full object-cover"                  
+                         loading="lazy">
                     
                     <!-- Overlay on Hover -->
                     <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-opacity flex items-center justify-center space-x-2">
@@ -96,14 +104,16 @@
                         </span>
                         
                         <!-- Actions -->
-                        <div class="opacity-0 group-hover:opacity-100 transition-opacity flex space-x-2">
+                        <div x-show="!readOnly" class="opacity-0 group-hover:opacity-100 transition-opacity flex space-x-2">
                             <!-- Set Primary -->
                             <button type="button"
                                     @click="setPrimary(photo.id)"
                                     x-show="!photo.is_primary"
                                     class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition-colors"
                                     title="Set as primary">
-                                <x-icon name="star" size="sm" />
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                </svg>
                             </button>
                             
                             <!-- Move Up -->
@@ -112,7 +122,9 @@
                                     x-show="index > 0"
                                     class="bg-gray-700 text-white p-2 rounded hover:bg-gray-800 transition-colors"
                                     title="Move up">
-                                <x-icon name="up-arrow" size="sm" />
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd"></path>
+                                </svg>
                             </button>
                             
                             <!-- Move Down -->
@@ -121,7 +133,9 @@
                                     x-show="index < photos.length - 1"
                                     class="bg-gray-700 text-white p-2 rounded hover:bg-gray-800 transition-colors"
                                     title="Move down">
-                                <x-icon name="down-arrow" size="sm" />
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                </svg>
                             </button>
                             
                             <!-- Delete -->
@@ -129,19 +143,26 @@
                                     @click="deletePhoto(photo.id)"
                                     class="bg-red-600 text-white p-2 rounded hover:bg-red-700 transition-colors"
                                     title="Delete">
-                                <x-icon name="trash" size="sm" />
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9zM4 5a2 2 0 012-2v1a1 1 0 002 0V3h4v1a1 1 0 002 0V3a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V5zM8 8a1 1 0 012 0v3a1 1 0 11-2 0V8zm4 0a1 1 0 10-2 0v3a1 1 0 102 0V8z" clip-rule="evenodd"></path>
+                                </svg>
                             </button>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Alt Text Input -->
-                <div class="p-2">
+                <div x-show="!readOnly" class="p-2">
                     <input type="text"
                            :value="photo.alt || ''"
                            @blur="updateAlt(photo.id, $event.target.value)"
                            placeholder="{{ __('admin/photos.forms.placeholders.alt') }}"
                            class="w-full text-xs px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500">
+                </div>
+                
+                <!-- Alt Text Display (Read-Only) -->
+                <div x-show="readOnly && photo.alt" class="p-2">
+                    <p class="text-xs text-gray-600">{{ __('admin/photos.fields.alt') }}: <span x-text="photo.alt"></span></p>
                 </div>
             </div>
         </template>
@@ -149,7 +170,9 @@
 
     <!-- Empty State -->
     <div x-show="photos.length === 0 && !loading" class="text-center py-8 text-gray-500">
-        <x-icon name="image" size="2xl" class="text-gray-300 mb-2" />
+        <svg class="w-16 h-16 text-gray-300 mb-2 mx-auto" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
+        </svg>
         <p class="text-sm">{{ __('admin/photos.forms.messages.no_photos') }}</p>
     </div>
 
@@ -159,12 +182,15 @@
     @endif
 
     <!-- Hidden Input for Form Submission -->
-    <template x-for="photo in photos" :key="photo.id">
+    <template x-show="!readOnly" x-for="photo in photos" :key="photo.id">
         <input type="hidden" :name="'photos[]'" :value="photo.id">
     </template>
 </div>
 
 @push('scripts')
+<script>
+    window.photoManagerTranslations_{{ $translationKey }} = {!! json_encode($translations, JSON_UNESCAPED_UNICODE | JSON_HEX_APOS) !!};
+</script>
 <script>
 function photoManager(config) {
     return {
@@ -176,9 +202,14 @@ function photoManager(config) {
         limit: config.limit,
         accept: config.accept,
         uniqueId: config.uniqueId,
+        translationKey: config.translationKey,
+        readOnly: config.readOnly || false,
+        get translations() {
+            const key = 'photoManagerTranslations_' + this.translationKey;
+            return window[key] || {};
+        },
 
         init() {
-            // Load existing photos if photoable entity exists
             if (this.photoableType && this.photoableId) {
                 this.loadPhotos();
             }
@@ -195,10 +226,11 @@ function photoManager(config) {
                     }
                 });
 
-                if (response.data.success) {
-                    this.photos = response.data.data.map(photo => ({
+                if (response.data && response.data.success !== false) {
+                    const photosData = response.data.data || [];
+                    this.photos = photosData.map(photo => ({
                         ...photo,
-                        url: this.getPhotoUrl(photo.file_path)
+                        url: photo.url || this.getPhotoUrl(photo.file_path)
                     }));
                 }
             } catch (error) {
@@ -207,13 +239,20 @@ function photoManager(config) {
         },
 
         getPhotoUrl(filePath) {
-            return filePath.startsWith('http') ? filePath : `/storage/${filePath}`;
+            if (!filePath) return '';
+            if (filePath.startsWith('http://') || filePath.startsWith('https://')) {
+                return filePath;
+            }
+            if (filePath.startsWith('storage/')) {
+                return `/${filePath}`;
+            }
+            return `/storage/${filePath}`;
         },
 
         handleFileSelect(event) {
             const files = Array.from(event.target.files);
             this.uploadFiles(files);
-            event.target.value = ''; // Reset input
+            event.target.value = '';
         },
 
         handleDrop(event) {
@@ -236,7 +275,6 @@ function photoManager(config) {
 
             for (const file of filesToUpload) {
                 if (this.limit && this.photos.length >= this.limit) break;
-
                 await this.uploadFile(file);
             }
         },
@@ -267,10 +305,11 @@ function photoManager(config) {
                     }
                 });
 
-                if (response.data.success) {
+                if (response.data && response.data.success !== false) {
+                    const photoData = response.data.data || response.data;
                     const photo = {
-                        ...response.data.data,
-                        url: this.getPhotoUrl(response.data.data.file_path)
+                        ...photoData,
+                        url: photoData.url || this.getPhotoUrl(photoData.file_path)
                     };
                     this.photos.push(photo);
 
@@ -294,18 +333,21 @@ function photoManager(config) {
             }
 
             try {
-                const response = await window.axios.delete(`{{ route("admin.photos.destroy", ":id") }}`.replace(':id', photoId));
+                const deleteUrl = `{{ route("admin.photos.destroy", ":id") }}`.replace(':id', photoId);
+                const response = await window.axios.delete(deleteUrl);
 
-                if (response.data.success) {
-                    this.photos = this.photos.filter(p => p.id !== photoId);
+                if (response.data && response.data.success !== false) {
+                    this.photos = this.photos.filter(p => String(p.id) !== String(photoId));
                     if (window.Toast) {
                         window.Toast.success(this.translations.delete_success);
                     }
+                } else {
+                    throw new Error(response.data?.message || 'Delete failed');
                 }
             } catch (error) {
                 console.error('Delete error:', error);
                 if (window.Toast) {
-                    window.Toast.error(error.response?.data?.message || this.translations.delete_error);
+                    window.Toast.error(error.response?.data?.message || error.message || this.translations.delete_error);
                 }
             }
         },
@@ -317,7 +359,6 @@ function photoManager(config) {
                 });
 
                 if (response.data.success) {
-                    // Update local state
                     this.photos = this.photos.map(p => ({
                         ...p,
                         is_primary: p.id === photoId
@@ -354,7 +395,6 @@ function photoManager(config) {
             this.photos[index] = this.photos[newIndex];
             this.photos[newIndex] = temp;
 
-            // Update sort orders
             const photoOrders = this.photos.map((photo, idx) => ({
                 id: photo.id,
                 sort_order: idx
@@ -366,7 +406,6 @@ function photoManager(config) {
                 });
             } catch (error) {
                 console.error('Reorder error:', error);
-                // Revert on error
                 const temp2 = this.photos[index];
                 this.photos[index] = this.photos[newIndex];
                 this.photos[newIndex] = temp2;
@@ -376,7 +415,6 @@ function photoManager(config) {
             }
         },
 
-        // Method to attach photos to entity (call after entity is created)
         async attachPhotos(photoableType, photoableId) {
             if (this.photos.length === 0) return;
 
@@ -402,4 +440,3 @@ function photoManager(config) {
 }
 </script>
 @endpush
-

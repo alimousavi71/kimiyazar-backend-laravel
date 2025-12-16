@@ -53,13 +53,17 @@ class ContentController extends Controller
      * Store a newly created content in storage.
      *
      * @param StoreContentRequest $request
-     * @return RedirectResponse
+     * @return JsonResponse|RedirectResponse
      */
-    public function store(StoreContentRequest $request): RedirectResponse
+    public function store(StoreContentRequest $request): JsonResponse|RedirectResponse
     {
         $validated = $request->validated();
 
-        $this->service->create($validated);
+        $content = $this->service->create($validated);
+
+        if ($request->expectsJson() || $request->wantsJson()) {
+            return $this->createdResponse(['id' => $content->id], __('admin/contents.messages.created'));
+        }
 
         return redirect()
             ->route('admin.contents.index')

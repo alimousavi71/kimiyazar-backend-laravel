@@ -26,7 +26,7 @@ return new class extends Migration {
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index(['photoable_type', 'photoable_id']);
+            // Note: nullableMorphs() already creates an index on ['photoable_type', 'photoable_id']
             $table->index('is_primary');
             $table->index('sort_order');
         });

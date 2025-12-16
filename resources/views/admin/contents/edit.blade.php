@@ -59,6 +59,11 @@
                     :label="__('admin/contents.forms.labels.active_content')" />
             </x-form-group>
 
+            <x-form-group :label="__('admin/photos.title')" :error="$errors->first('photos')">
+                <x-photo-manager photoable-type="{{ \App\Models\Content::class }}" :photoable-id="$content->id"
+                    :limit="10" label="{{ __('admin/photos.title') }}" />
+            </x-form-group>
+
             <div class="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
                 <a href="{{ route('admin.contents.index') }}">
                     <x-button variant="secondary" type="button">

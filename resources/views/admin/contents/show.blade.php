@@ -71,6 +71,17 @@
                             </p>
                         </div>
                     </div>
+
+                    <div>
+                        <label class="text-sm font-medium text-gray-500">{{ __('admin/photos.title') }}</label>
+                        <div class="mt-1">
+                            <x-photo-manager 
+                                photoable-type="{{ \App\Models\Content::class }}"
+                                :photoable-id="$content->id"
+                                :read-only="true"
+                                label="" />
+                        </div>
+                    </div>
                 </div>
             </x-card>
         </div>

@@ -57,6 +57,11 @@
                     :label="__('admin/contents.forms.labels.active_content')" />
             </x-form-group>
 
+            <x-form-group :label="__('admin/photos.title')" :error="$errors->first('photos')">
+                <x-photo-manager photoable-type="{{ \App\Models\Content::class }}" :photoable-id="null" :limit="10"
+                    label="{{ __('admin/photos.title') }}" />
+            </x-form-group>
+
             <div class="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
                 <a href="{{ route('admin.contents.index') }}">
                     <x-button variant="secondary" type="button">
@@ -71,6 +76,15 @@
     </x-card>
 
     @push('scripts')
-        @vite('resources/js/admin-form-validation.js')
+        @vite(['resources/js/admin-form-validation.js', 'resources/js/form-with-photos.js'])
+        <script>
+            initFormWithPhotos({
+                formId: 'content-create-form',
+                photoManagerSelector: '[id^="photo-manager-"]',
+                photoableType: '{{ \App\Models\Content::class }}',
+                redirectUrl: '{{ route('admin.contents.index') }}',
+                successMessage: '{{ __('admin/contents.messages.created') }}'
+            });
+        </script>
     @endpush
 </x-layouts.admin>
