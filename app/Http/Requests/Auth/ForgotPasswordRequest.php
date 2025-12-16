@@ -3,9 +3,8 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class RegisterRequest extends FormRequest
+class ForgotPasswordRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -26,15 +25,14 @@ class RegisterRequest extends FormRequest
                         $fail(__('auth.validation.email_or_phone_format'));
                     }
 
-                    // Check if already exists
-                    if ($isEmail) {
-                        if (\App\Models\User::where('email', $value)->exists()) {
-                            $fail(__('auth.messages.user_already_exists'));
-                        }
-                    } elseif ($isPhone) {
-                        if (\App\Models\User::where('phone_number', $value)->exists()) {
-                            $fail(__('auth.messages.user_already_exists'));
-                        }
+                    // Check if user exists
+                    $userExists = \App\Models\User::where('email', $value)
+                        ->orWhere('phone_number', $value)
+                        ->exists();
+
+                    if (!$userExists) {
+                        // For security, don't reveal if user exists or not
+                        // Still pass validation
                     }
                 },
             ],
@@ -45,7 +43,6 @@ class RegisterRequest extends FormRequest
     {
         return [
             'email_or_phone.required' => __('auth.validation.email_or_phone_required'),
-            'email_or_phone.string' => __('auth.validation.email_or_phone_format'),
         ];
     }
 }

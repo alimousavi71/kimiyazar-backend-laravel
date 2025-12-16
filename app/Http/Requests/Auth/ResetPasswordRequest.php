@@ -4,7 +4,7 @@ namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+class ResetPasswordRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -14,17 +14,17 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email_or_phone' => ['required', 'string'],
-            'password' => ['required', 'string'],
-            'remember' => ['sometimes', 'boolean'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password_confirmation' => ['required'],
         ];
     }
 
     public function messages(): array
     {
         return [
-            'email_or_phone.required' => __('auth.validation.email_or_phone_required'),
             'password.required' => __('auth.validation.password_required'),
+            'password.min' => __('auth.validation.password_min'),
+            'password.confirmed' => __('auth.validation.password_confirmed'),
         ];
     }
 }

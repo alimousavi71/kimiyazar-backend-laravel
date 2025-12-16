@@ -1,81 +1,135 @@
-@php
-    $title = 'Login';
-@endphp
-
-<x-layouts.auth :title="$title">
-    <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+<x-layouts.auth :title="__('auth.login.title')">
+    <div class="w-full max-w-md" x-data="loginForm()">
         <!-- Header -->
-        <div class="bg-gradient-to-br from-blue-600 to-indigo-600 px-6 py-8 text-center">
-            <div
-                class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm mb-4">
-                <x-icon name="lock" size="2xl" class="text-white" />
+        <div class="mb-8 text-center">
+            <div class="inline-flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600">
+                <x-icon name="login" size="lg" class="text-white" />
             </div>
-            <h1 class="text-2xl font-bold text-white mb-2">Welcome Back</h1>
-            <p class="text-blue-100 text-sm">Sign in to your account to continue</p>
+            <h1 class="text-2xl font-bold text-gray-900">{{ __('auth.login.title') }}</h1>
+            <p class="mt-1 text-sm text-gray-600">{{ __('auth.login.welcome') }}</p>
+            <p class="text-gray-600">{{ __('auth.login.subtitle') }}</p>
         </div>
 
-        <!-- Form -->
-        <form method="POST" action="{{ route('login') }}" class="p-6 space-y-5">
+        <!-- Error Alert -->
+        @if ($errors->any())
+            <div class="mb-4">
+                @foreach ($errors->all() as $error)
+                    <x-alert type="danger" dismissible>
+                        {{ $error }}
+                    </x-alert>
+                @endforeach
+            </div>
+        @endif
+
+        <!-- Session Error -->
+        @if (session('error'))
+            <div class="mb-4">
+                <x-alert type="danger" dismissible>
+                    {{ session('error') }}
+                </x-alert>
+            </div>
+        @endif
+
+        <!-- Login Form -->
+        <form action="{{ route('auth.login') }}" method="POST" class="space-y-6">
             @csrf
 
-            <!-- Email -->
-            <x-form-group label="Email Address" required error="{{ $errors->first('email') }}">
-                <x-input type="email" name="email" value="{{ old('email') }}" placeholder="Enter your email" required
-                    autofocus class="w-full" />
-            </x-form-group>
-
-            <!-- Password -->
-            <x-form-group label="Password" required error="{{ $errors->first('password') }}">
-                <div x-data="{ showPassword: false }" class="relative">
-                    <input x-bind:type="showPassword ? 'text' : 'password'" name="password"
-                        placeholder="Enter your password" required
-                        class="w-full pe-10 px-3 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200 disabled:bg-gray-50 disabled:cursor-not-allowed bg-white shadow-sm hover:shadow-md focus:shadow-md" />
-                    <button type="button" @click="showPassword = !showPassword"
-                        class="absolute end-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
-                        aria-label="Toggle password visibility">
-                        <x-icon name="hide" size="md" x-show="showPassword" />
-                        <x-icon name="show-alt" size="md" x-show="!showPassword" />
-                    </button>
-                </div>
-            </x-form-group>
-
-            <!-- Remember Me & Forgot Password -->
-            <div class="flex items-center justify-between">
-                <label class="flex items-center gap-2 cursor-pointer group">
-                    <input type="checkbox" name="remember"
-                        class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 cursor-pointer">
-                    <span class="text-sm text-gray-700 group-hover:text-gray-900 transition-colors">Remember me</span>
-                </label>
-                <a href="{{ route('password.request') }}"
-                    class="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors">
-                    Forgot password?
-                </a>
+            <!-- Email or Phone -->
+            <div>
+                <x-form-group :label="__('auth.fields.email_or_phone')" :error="$errors->first('email_or_phone')" required>
+                    <x-input
+                        type="text"
+                        name="email_or_phone"
+                        :placeholder="__('auth.placeholders.email_or_phone')"
+                        value="{{ old('email_or_phone') }}"
+                        autocomplete="off"
+                        autofocus
+                        class="w-full"
+                    />
+                </x-form-group>
             </div>
 
-            <!-- Error Messages -->
-            @if($errors->any())
-                <div class="bg-red-50 border border-red-200 rounded-xl p-4">
-                    <div class="flex items-start gap-3">
-                        <x-icon name="error-circle" size="md" class="text-red-600 mt-0.5 flex-shrink-0" />
-                        <div class="flex-1">
-                            <p class="text-sm font-medium text-red-900 mb-1">Authentication Error</p>
-                            <ul class="text-sm text-red-700 space-y-1">
-                                @foreach($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
+            <!-- Password -->
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <label for="password" class="block text-sm font-medium text-gray-700">
+                        {{ __('auth.fields.password') }}
+                    </label>
+                    <a href="{{ route('auth.password.request') }}" class="text-xs text-blue-600 hover:text-blue-700 font-semibold">
+                        {{ __('auth.login.forgot_password') }}
+                    </a>
                 </div>
-            @endif
+                <x-form-group :error="$errors->first('password')">
+                    <div class="relative">
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="{{ __('auth.placeholders.password') }}"
+                            autocomplete="current-password"
+                            x-ref="passwordInput"
+                            x-bind:type="showPassword ? 'text' : 'password'"
+                            class="w-full px-4 py-2.5 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                        />
+                        <button
+                            type="button"
+                            @click="togglePasswordVisibility"
+                            class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                        >
+                            <x-icon x-show="!showPassword" name="eye" size="sm" />
+                            <x-icon x-show="showPassword" name="eye-off" size="sm" />
+                        </button>
+                    </div>
+                </x-form-group>
+            </div>
+
+            <!-- Remember Me -->
+            <div class="flex items-center">
+                <x-toggle name="remember" :checked="old('remember')" class="h-5 w-9">
+                    <span class="text-sm text-gray-700">{{ __('auth.login.remember_me') }}</span>
+                </x-toggle>
+            </div>
 
             <!-- Submit Button -->
-            <x-button type="submit" variant="primary" size="lg" class="w-full">
-                <span class="flex items-center justify-center gap-2">
-                    <x-icon name="log-in" size="md" />
-                    Sign In
-                </span>
-            </x-button>
+            <div>
+                <x-button type="submit" class="w-full">
+                    {{ __('auth.login.submit') }}
+                </x-button>
+            </div>
         </form>
+
+        <!-- Divider -->
+        <div class="relative my-6">
+            <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-gray-300"></div>
+            </div>
+            <div class="relative flex justify-center text-sm">
+                <span class="px-2 bg-white text-gray-500"></span>
+            </div>
+        </div>
+
+        <!-- Register Link -->
+        <div class="text-center">
+            <p class="text-gray-600">
+                {{ __('auth.login.no_account') }}
+                <a href="{{ route('auth.register') }}" class="font-semibold text-blue-600 hover:text-blue-700 transition-colors">
+                    {{ __('auth.login.register_link') }}
+                </a>
+            </p>
+        </div>
     </div>
+
+    <script>
+        function loginForm() {
+            return {
+                showPassword: false,
+
+                togglePasswordVisibility() {
+                    this.showPassword = !this.showPassword;
+                    this.$nextTick(() => {
+                        this.$refs.passwordInput.focus();
+                    });
+                },
+            };
+        }
+    </script>
 </x-layouts.auth>

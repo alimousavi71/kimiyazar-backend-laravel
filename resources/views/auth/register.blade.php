@@ -1,12 +1,11 @@
-<x-layouts.auth :title="__('auth.forgot_password.title')">
-    <div class="w-full max-w-md">
+<x-layouts.auth :title="__('auth.register.title')">
         <!-- Header -->
         <div class="mb-8 text-center">
-            <div class="inline-flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-gradient-to-br from-amber-500 to-orange-600">
-                <x-icon name="key" size="lg" class="text-white" />
+            <div class="inline-flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-gradient-to-br from-blue-500 to-purple-600">
+                <x-icon name="user-add" size="lg" class="text-white" />
             </div>
-            <h1 class="text-2xl font-bold text-gray-900">{{ __('auth.forgot_password.title') }}</h1>
-            <p class="mt-2 text-gray-600">{{ __('auth.forgot_password.subtitle') }}</p>
+            <h1 class="text-2xl font-bold text-gray-900">{{ __('auth.register.title') }}</h1>
+            <p class="mt-2 text-gray-600">{{ __('auth.register.subtitle') }}</p>
         </div>
 
         <!-- Error Alert -->
@@ -29,8 +28,8 @@
             </div>
         @endif
 
-        <!-- Forgot Password Form -->
-        <form action="{{ route('auth.password.email') }}" method="POST" class="space-y-6">
+        <!-- Registration Form -->
+        <form action="{{ route('auth.register') }}" method="POST" class="space-y-6">
             @csrf
 
             <div>
@@ -50,7 +49,7 @@
             <!-- Submit Button -->
             <div>
                 <x-button type="submit" class="w-full">
-                    {{ __('auth.forgot_password.submit') }}
+                    {{ __('auth.register.submit') }}
                 </x-button>
             </div>
         </form>
@@ -65,11 +64,13 @@
             </div>
         </div>
 
-        <!-- Back to Login Link -->
+        <!-- Login Link -->
         <div class="text-center">
-            <a href="{{ route('auth.login') }}" class="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors">
-                {{ __('auth.forgot_password.back_to_login') }}
-            </a>
+            <p class="text-gray-600">
+                {{ __('auth.register.have_account') }}
+                <a href="{{ route('auth.login') }}" class="font-semibold text-blue-600 hover:text-blue-700 transition-colors">
+                    {{ __('auth.register.login_link') }}
+                </a>
+            </p>
         </div>
-    </div>
 </x-layouts.auth>
