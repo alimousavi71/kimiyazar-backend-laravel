@@ -72,6 +72,7 @@ return [
         'categories' => 'دسته‌بندی‌ها',
         'contacts' => 'تماس‌ها',
         'banners' => 'بنرها',
+        'contents' => 'محتوا',
         'examples' => 'مثال‌ها',
         'imask_test' => 'تست IMask',
         'validation_example' => 'مثال اعتبارسنجی',

@@ -13,6 +13,8 @@ use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Contact\ContactRepository;
 use App\Repositories\Contact\ContactRepositoryInterface;
+use App\Repositories\Content\ContentRepository;
+use App\Repositories\Content\ContentRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -50,6 +52,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             BannerRepositoryInterface::class,
             BannerRepository::class
+        );
+
+        // Bind Content Repository
+        $this->app->bind(
+            ContentRepositoryInterface::class,
+            ContentRepository::class
         );
     }
 

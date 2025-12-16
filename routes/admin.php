@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\TwoFactorManagementController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Admin\ContentController;
 use App\Http\Controllers\Examples\UsersController;
 
 Route::group([
@@ -127,6 +128,17 @@ Route::group([
         Route::get('/{id}/edit', [BannerController::class, 'edit'])->name('edit');
         Route::match(['put', 'patch'], '/{id}', [BannerController::class, 'update'])->name('update');
         Route::delete('/{id}', [BannerController::class, 'destroy'])->name('destroy');
+    });
+
+    // Contents Management
+    Route::prefix('contents')->name('contents.')->group(function () {
+        Route::get('/', [ContentController::class, 'index'])->name('index');
+        Route::get('/create', [ContentController::class, 'create'])->name('create');
+        Route::post('/', [ContentController::class, 'store'])->name('store');
+        Route::get('/{id}', [ContentController::class, 'show'])->name('show');
+        Route::get('/{id}/edit', [ContentController::class, 'edit'])->name('edit');
+        Route::match(['put', 'patch'], '/{id}', [ContentController::class, 'update'])->name('update');
+        Route::delete('/{id}', [ContentController::class, 'destroy'])->name('destroy');
     });
 });
 

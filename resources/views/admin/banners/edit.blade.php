@@ -31,7 +31,7 @@
                     selectedPosition: '{{ old('position', $banner->position->value) }}',
                     dimensions: {{ json_encode($bannerDimensions) }}
                 }">
-                    <x-select name="position" id="position" class="w-full" required 
+                    <x-select name="position" id="position" class="w-full" required
                         x-on:change="selectedPosition = $event.target.value">
                         <option value="">{{ __('admin/banners.forms.placeholders.select_position') }}</option>
                         @foreach($bannerPositions as $position)
@@ -46,7 +46,8 @@
                     </x-select>
                     <div x-show="selectedPosition" x-transition class="mt-3">
                         <x-alert type="info" x-show="selectedPosition && dimensions[selectedPosition]">
-                            <span x-text="selectedPosition && dimensions[selectedPosition] ? 
+                            <span
+                                x-text="selectedPosition && dimensions[selectedPosition] ? 
                                 '{{ __('admin/banners.forms.messages.dimensions_info') }}'.replace(':width', dimensions[selectedPosition].width).replace(':height', dimensions[selectedPosition].height) : ''">
                             </span>
                         </x-alert>
