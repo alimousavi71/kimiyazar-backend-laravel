@@ -30,8 +30,9 @@ class TagController extends Controller
     public function search(Request $request): JsonResponse
     {
         try {
-            $query = $request->input('query', '');
-            $limit = (int) $request->input('limit', 20);
+            // Ensure query is always a string (ConvertEmptyStringsToNull middleware converts empty strings to null)
+            $query = (string) ($request->input('query') ?? '');
+            $limit = (int) $request->input('limit', 50);
 
             $tags = $this->service->search($query, $limit);
 

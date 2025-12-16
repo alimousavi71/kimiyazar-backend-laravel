@@ -13,7 +13,7 @@
  * </script>
  */
 
-function initFormWithPhotos(config) {
+window.initFormWithPhotos = function (config) {
     const {
         formId,
         photoManagerSelector = '[id^="photo-manager-"]',
@@ -150,4 +150,4 @@ function initFormWithPhotos(config) {
             }
         });
     });
-}
+};
