@@ -4,6 +4,7 @@ namespace App\Services\Auth;
 
 use App\Models\Otp;
 use App\Models\User;
+use App\Services\Otp\OtpNotificationService;
 use App\Services\Otp\OtpService;
 use App\Services\User\UserService;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +15,7 @@ class AuthService
     public function __construct(
         private readonly UserService $userService,
         private readonly OtpService $otpService,
+        private readonly OtpNotificationService $notificationService,
     ) {
     }
 
@@ -383,7 +385,6 @@ class AuthService
 
     /**
      * Send OTP code via email or SMS.
-     * TODO: Implement actual email/SMS sending.
      *
      * @param Otp $otp
      * @param string $type
@@ -392,15 +393,6 @@ class AuthService
      */
     public function sendOtp(Otp $otp, string $type, string $destination): void
     {
-        // TODO: Implement email sending
-        // TODO: Use Laravel Mail facade to send email
-        // Mail::to($destination)->send(new OtpCodeMail($otp->code));
-
-        // TODO: Implement SMS sending
-        // TODO: Use SMS service (Kavenegar, Twilio, etc.)
-        // \Log::info("SMS sent to {$destination}: {$otp->code}");
-
-        // For development, log the OTP
-        \Log::info("OTP Generated - Type: {$type}, Code: {$otp->code}, Destination: {$destination}");
+        $this->notificationService->send($otp->code, $type, $destination);
     }
 }

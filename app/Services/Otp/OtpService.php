@@ -47,9 +47,13 @@ class OtpService
         return $this->repository->findByIdOrFail($id);
     }
 
-    public function create(int|User $user, string $type = 'sms', int $expirationMinutes = 10): Otp
+    public function create(int|User|null $user = null, string $type = 'sms', int $expirationMinutes = 10): Otp
     {
-        $userId = $user instanceof User ? $user->id : $user;
+        $userId = null;
+
+        if ($user !== null) {
+            $userId = $user instanceof User ? $user->id : $user;
+        }
 
         $data = [
             'user_id' => $userId,
@@ -66,6 +70,11 @@ class OtpService
 
     public function generateOtpCode(int $length = 6): string
     {
+        // For local development, always return 12345
+        if (app()->environment('local')) {
+            return '12345';
+        }
+
         $code = '';
         for ($i = 0; $i < $length; $i++) {
             $code .= random_int(0, 9);

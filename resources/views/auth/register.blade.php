@@ -1,76 +1,70 @@
-<x-layouts.auth :title="__('auth.register.title')">
+@php
+    $title = __('auth.register.title');
+@endphp
+
+<x-layouts.auth :title="$title">
+    <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden w-full max-w-md">
         <!-- Header -->
-        <div class="mb-8 text-center">
-            <div class="inline-flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-gradient-to-br from-blue-500 to-purple-600">
-                <x-icon name="user-add" size="lg" class="text-white" />
+        <div class="bg-gradient-to-br from-blue-600 to-indigo-600 px-6 py-8 text-center">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm mb-4">
+                <x-icon name="user-add" size="2xl" class="text-white" />
             </div>
-            <h1 class="text-2xl font-bold text-gray-900">{{ __('auth.register.title') }}</h1>
-            <p class="mt-2 text-gray-600">{{ __('auth.register.subtitle') }}</p>
+            <h1 class="text-2xl font-bold text-white mb-2">{{ __('auth.register.title') }}</h1>
+            <p class="text-blue-100 text-sm">{{ __('auth.register.subtitle') }}</p>
         </div>
 
-        <!-- Error Alert -->
-        @if ($errors->any())
-            <div class="mb-4">
-                @foreach ($errors->all() as $error)
-                    <x-alert type="danger" dismissible>
-                        {{ $error }}
-                    </x-alert>
-                @endforeach
-            </div>
-        @endif
+        <!-- Form -->
+        <form method="POST" action="{{ route('auth.register') }}" class="p-6 space-y-5">
+            @csrf
 
-        <!-- Success Alert -->
-        @if (session('success'))
-            <div class="mb-4">
+            <!-- Email or Phone -->
+            <x-form-group :label="__('auth.fields.email_or_phone')" required :error="$errors->first('email_or_phone')">
+                <x-input
+                    type="text"
+                    name="email_or_phone"
+                    :placeholder="__('auth.placeholders.email_or_phone')"
+                    value="{{ old('email_or_phone') }}"
+                    autocomplete="off"
+                    autofocus
+                    class="w-full"
+                />
+            </x-form-group>
+
+            <!-- Error Messages -->
+            @if($errors->any())
+                <x-alert type="danger" dismissible>
+                    <ul class="space-y-1">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </x-alert>
+            @endif
+
+            <!-- Success Message -->
+            @if(session('success'))
                 <x-alert type="success" dismissible>
                     {{ session('success') }}
                 </x-alert>
-            </div>
-        @endif
-
-        <!-- Registration Form -->
-        <form action="{{ route('auth.register') }}" method="POST" class="space-y-6">
-            @csrf
-
-            <div>
-                <x-form-group :label="__('auth.fields.email_or_phone')" :error="$errors->first('email_or_phone')" required>
-                    <x-input
-                        type="text"
-                        name="email_or_phone"
-                        :placeholder="__('auth.placeholders.email_or_phone')"
-                        value="{{ old('email_or_phone') }}"
-                        autocomplete="off"
-                        autofocus
-                        class="w-full"
-                    />
-                </x-form-group>
-            </div>
+            @endif
 
             <!-- Submit Button -->
-            <div>
-                <x-button type="submit" class="w-full">
+            <x-button type="submit" variant="primary" size="lg" class="w-full">
+                <span class="flex items-center justify-center gap-2">
+                    <x-icon name="arrow-right" size="md" />
                     {{ __('auth.register.submit') }}
-                </x-button>
+                </span>
+            </x-button>
+
+            <!-- Login Link -->
+            <div class="text-center pt-4 border-t border-gray-200">
+                <p class="text-sm text-gray-600">
+                    {{ __('auth.register.have_account') }}
+                    <a href="{{ route('auth.login') }}" class="font-semibold text-blue-600 hover:text-blue-700 transition-colors">
+                        {{ __('auth.register.login_link') }}
+                    </a>
+                </p>
             </div>
         </form>
-
-        <!-- Divider -->
-        <div class="relative my-6">
-            <div class="absolute inset-0 flex items-center">
-                <div class="w-full border-t border-gray-300"></div>
-            </div>
-            <div class="relative flex justify-center text-sm">
-                <span class="px-2 bg-white text-gray-500"></span>
-            </div>
-        </div>
-
-        <!-- Login Link -->
-        <div class="text-center">
-            <p class="text-gray-600">
-                {{ __('auth.register.have_account') }}
-                <a href="{{ route('auth.login') }}" class="font-semibold text-blue-600 hover:text-blue-700 transition-colors">
-                    {{ __('auth.register.login_link') }}
-                </a>
-            </p>
-        </div>
+    </div>
 </x-layouts.auth>

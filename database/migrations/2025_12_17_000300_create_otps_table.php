@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('otps', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->string('code', 10)->index();
             $table->enum('type', ['sms', 'email', 'authenticator'])->default('sms');
             $table->integer('attempts')->default(0);

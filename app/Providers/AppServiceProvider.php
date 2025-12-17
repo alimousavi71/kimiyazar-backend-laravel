@@ -26,6 +26,7 @@ use App\Repositories\Faq\FaqRepositoryInterface;
 use App\Repositories\Otp\OtpRepository;
 use App\Repositories\Otp\OtpRepositoryInterface;
 use App\Services\Auth\AuthService;
+use App\Services\Otp\OtpNotificationService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -105,7 +106,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(AuthService::class, function ($app) {
             return new AuthService(
                 $app->make(\App\Services\User\UserService::class),
-                $app->make(\App\Services\Otp\OtpService::class)
+                $app->make(\App\Services\Otp\OtpService::class),
+                $app->make(OtpNotificationService::class)
             );
         });
     }

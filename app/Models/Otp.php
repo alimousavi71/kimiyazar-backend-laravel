@@ -11,7 +11,7 @@ use Illuminate\Support\Carbon;
  * App\Models\Otp
  *
  * @property int $id
- * @property int $user_id
+ * @property int|null $user_id
  * @property string $code
  * @property string $type
  * @property int $attempts
@@ -21,7 +21,7 @@ use Illuminate\Support\Carbon;
  * @property bool $is_used
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read User $user
+ * @property-read User|null $user
  */
 class Otp extends Model
 {
