@@ -45,7 +45,7 @@ class RegisterController extends Controller
             );
 
             if (!$result['success']) {
-                return $this->respondError(
+                return $this->validationErrorResponse(
                     ['email_or_phone' => $result['message']],
                     $result['message']
                 );
@@ -71,8 +71,7 @@ class RegisterController extends Controller
         } catch (Exception $e) {
             \Log::error('Registration error: ' . $e->getMessage());
 
-            return $this->respondError(
-                ['error' => 'Registration failed'],
+            return $this->errorResponse(
                 'An error occurred during registration',
                 500
             );
@@ -108,9 +107,9 @@ class RegisterController extends Controller
             $emailOrPhone = session('registration.email_or_phone');
 
             if (!$emailOrPhone) {
-                return $this->respondError(
-                    ['error' => __('auth.messages.session_expired')],
-                    __('auth.messages.session_expired')
+                return $this->errorResponse(
+                    __('auth.messages.session_expired'),
+                    422
                 );
             }
 
@@ -148,8 +147,7 @@ class RegisterController extends Controller
         } catch (Exception $e) {
             \Log::error('OTP verification error: ' . $e->getMessage());
 
-            return $this->respondError(
-                ['error' => 'Verification failed'],
+            return $this->errorResponse(
                 'An error occurred during verification',
                 500
             );
@@ -180,9 +178,9 @@ class RegisterController extends Controller
     {
         try {
             if (!session('registration.otp_verified')) {
-                return $this->respondError(
-                    ['error' => __('auth.messages.session_expired')],
-                    __('auth.messages.session_expired')
+                return $this->errorResponse(
+                    __('auth.messages.session_expired'),
+                    422
                 );
             }
 
@@ -195,8 +193,7 @@ class RegisterController extends Controller
             );
 
             if (!$user) {
-                return $this->respondError(
-                    ['error' => 'Failed to create account'],
+                return $this->errorResponse(
                     'Failed to create account',
                     500
                 );
@@ -221,8 +218,7 @@ class RegisterController extends Controller
         } catch (Exception $e) {
             \Log::error('Registration completion error: ' . $e->getMessage());
 
-            return $this->respondError(
-                ['error' => 'Registration failed'],
+            return $this->errorResponse(
                 'An error occurred during registration',
                 500
             );
