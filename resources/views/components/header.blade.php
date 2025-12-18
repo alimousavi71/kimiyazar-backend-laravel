@@ -102,7 +102,7 @@
                             <x-icon name="shield" size="md" />
                             <span>{{ __('admin/components.header.two_factor_auth') }}</span>
                         </a>
-                        <a href="#"
+                        <a href="{{ route('admin.settings.edit') }}"
                             class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                             <x-icon name="cog" size="md" />
                             <span>{{ __('admin/components.header.settings') }}</span>

@@ -76,6 +76,8 @@ return [
         'contents' => 'محتوا',
         'sliders' => 'اسلایدرها',
         'faqs' => 'سوالات متداول',
+        'modals' => 'مودال‌ها',
+        'settings' => 'تنظیمات',
         'examples' => 'مثال‌ها',
         'imask_test' => 'تست IMask',
         'validation_example' => 'مثال اعتبارسنجی',

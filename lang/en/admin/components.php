@@ -70,6 +70,8 @@ return [
         'dashboard' => 'Dashboard',
         'admins' => 'Admins',
         'categories' => 'Categories',
+        'modals' => 'Modals',
+        'settings' => 'Settings',
         'examples' => 'Examples',
         'imask_test' => 'IMask Test',
         'validation_example' => 'Validation Example',
