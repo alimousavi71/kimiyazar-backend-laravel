@@ -43,4 +43,51 @@ enum SettingKey: string
             self::KEYWORDS => __('admin/settings.keys.keywords'),
         };
     }
+
+    /**
+     * Get the field type for this setting.
+     * 
+     * @return string 'text'|'email'|'url'|'tel'|'textarea'
+     */
+    public function fieldType(): string
+    {
+        return match ($this) {
+            self::EMAIL => 'email',
+            self::TELEGRAM, self::INSTAGRAM => 'url',
+            self::TEL, self::MOBILE => 'tel',
+            self::ADDRESS, self::DESCRIPTION => 'textarea',
+            default => 'text',
+        };
+    }
+
+    /**
+     * Get validation rules for this setting.
+     *
+     * @return array<string, string|array>
+     */
+    public function validationRules(): array
+    {
+        return match ($this) {
+            self::EMAIL => ['nullable', 'string', 'max:255', 'email'],
+            self::TELEGRAM, self::INSTAGRAM => ['nullable', 'string', 'max:255', 'url'],
+            self::TEL, self::MOBILE => ['nullable', 'string', 'max:50'],
+            self::TITLE => ['nullable', 'string', 'max:255'],
+            self::KEYWORDS => ['nullable', 'string', 'max:500'],
+            self::ADDRESS, self::DESCRIPTION => ['nullable', 'string', 'max:1000'],
+        };
+    }
+
+    /**
+     * Get the number of rows for textarea fields.
+     *
+     * @return int
+     */
+    public function textareaRows(): int
+    {
+        return match ($this) {
+            self::ADDRESS => 3,
+            self::DESCRIPTION => 5,
+            default => 3,
+        };
+    }
 }

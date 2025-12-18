@@ -9,6 +9,9 @@
         <p class="text-xs text-gray-600 mt-0.5">{{ __('admin/settings.forms.edit.description') }}</p>
     </div>
 
+    <!-- Success/Error Messages -->
+    <x-session-messages />
+
     <x-card>
         <x-slot name="title">{{ __('admin/settings.forms.edit.card_title') }}</x-slot>
 
@@ -16,13 +19,24 @@
             @csrf
             @method('PATCH')
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-6">
                 @foreach(\App\Enums\Database\SettingKey::cases() as $settingKey)
+                    @php
+                        $fieldType = $settingKey->fieldType();
+                        $fieldName = "settings[{$settingKey->value}]";
+                        $fieldId = "setting_{$settingKey->value}";
+                        $fieldValue = old('settings.' . $settingKey->value, $settings[$settingKey->value] ?? '');
+                        $placeholder = __('admin/settings.forms.placeholders.value');
+                    @endphp
                     <x-form-group :label="$availableKeys[$settingKey->value] ?? $settingKey->value"
                         :error="$errors->first('settings.' . $settingKey->value)">
-                        <x-textarea name="settings[{{ $settingKey->value }}]" id="setting_{{ $settingKey->value }}" rows="3"
-                            :placeholder="__('admin/settings.forms.placeholders.value')"
-                            class="w-full">{{ old('settings.' . $settingKey->value, $settings[$settingKey->value] ?? '') }}</x-textarea>
+                        @if($fieldType === 'textarea')
+                            <x-textarea name="{{ $fieldName }}" id="{{ $fieldId }}" :rows="$settingKey->textareaRows()"
+                                :placeholder="$placeholder" class="w-full">{{ $fieldValue }}</x-textarea>
+                        @else
+                            <x-input type="{{ $fieldType }}" name="{{ $fieldName }}" id="{{ $fieldId }}"
+                                :placeholder="$placeholder" value="{{ $fieldValue }}" class="w-full" />
+                        @endif
                     </x-form-group>
                 @endforeach
             </div>

@@ -28,10 +28,16 @@ class UpdateSettingRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'settings' => ['required', 'array'],
-            'settings.*' => ['nullable', 'string', 'max:65535'],
         ];
+
+        // Add validation rules for each setting key based on enum definition
+        foreach (SettingKey::cases() as $key) {
+            $rules["settings.{$key->value}"] = $key->validationRules();
+        }
+
+        return $rules;
     }
 
     /**
