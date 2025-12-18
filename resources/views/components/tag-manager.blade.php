@@ -25,8 +25,6 @@
         'tag_removed' => __('admin/tags.forms.messages.tag_removed'),
         'tag_exists' => __('admin/tags.forms.messages.tag_exists'),
         'no_results' => __('admin/tags.forms.messages.no_results'),
-        'search_placeholder' => __('admin/tags.forms.placeholders.search'),
-        'body_placeholder' => __('admin/tags.forms.placeholders.body'),
     ];
 @endphp
 
@@ -56,7 +54,7 @@
                        @input.debounce.500ms="searchTags()"
                        @keydown.enter.prevent="handleEnterKey()"
                        @input="if (searchQuery.length === 0) loadRecentTags()"
-                       :placeholder="translations.search_placeholder"
+                       :placeholder="__('admin/tags.forms.placeholders.search')"
                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                 
                 <!-- Search Results Dropdown -->
@@ -99,7 +97,7 @@
                     <input type="text"
                            :value="tag.body || ''"
                            @blur="updateTagBody(tag.tagable_id, tag.id, $event.target.value)"
-                           :placeholder="translations.body_placeholder"
+                           :placeholder="__('admin/tags.forms.placeholders.body')"
                            class="text-xs px-2 py-1 w-32 border border-blue-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500">
                 </div>
                 

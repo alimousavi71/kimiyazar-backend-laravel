@@ -25,6 +25,8 @@ use App\Repositories\Faq\FaqRepository;
 use App\Repositories\Faq\FaqRepositoryInterface;
 use App\Repositories\Otp\OtpRepository;
 use App\Repositories\Otp\OtpRepositoryInterface;
+use App\Repositories\Modal\ModalRepository;
+use App\Repositories\Modal\ModalRepositoryInterface;
 use App\Services\Auth\AuthService;
 use App\Services\Otp\OtpNotificationService;
 use Illuminate\Support\ServiceProvider;
@@ -100,6 +102,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             OtpRepositoryInterface::class,
             OtpRepository::class
+        );
+
+        // Bind Modal Repository
+        $this->app->bind(
+            ModalRepositoryInterface::class,
+            ModalRepository::class
         );
 
         // Bind Auth Service

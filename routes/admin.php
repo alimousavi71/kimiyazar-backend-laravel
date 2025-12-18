@@ -17,6 +17,8 @@ use App\Http\Controllers\Admin\PhotoController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ModalController;
+use App\Http\Controllers\Admin\MorphableController;
 use App\Http\Controllers\Examples\UsersController;
 
 Route::group([
@@ -192,6 +194,17 @@ Route::group([
         Route::delete('/{id}', [SliderController::class, 'destroy'])->name('destroy');
     });
 
+    // Modals Management
+    Route::prefix('modals')->name('modals.')->group(function () {
+        Route::get('/', [ModalController::class, 'index'])->name('index');
+        Route::get('/create', [ModalController::class, 'create'])->name('create');
+        Route::post('/', [ModalController::class, 'store'])->name('store');
+        Route::get('/{id}', [ModalController::class, 'show'])->name('show');
+        Route::get('/{id}/edit', [ModalController::class, 'edit'])->name('edit');
+        Route::match(['put', 'patch'], '/{id}', [ModalController::class, 'update'])->name('update');
+        Route::delete('/{id}', [ModalController::class, 'destroy'])->name('destroy');
+    });
+
     // FAQs Management
     Route::prefix('faqs')->name('faqs.')->group(function () {
         Route::get('/', [FaqController::class, 'index'])->name('index');
@@ -202,5 +215,8 @@ Route::group([
         Route::match(['put', 'patch'], '/{id}', [FaqController::class, 'update'])->name('update');
         Route::delete('/{id}', [FaqController::class, 'destroy'])->name('destroy');
     });
+
+    // Morphable relationship search endpoint
+    Route::get('/morphable/search', [MorphableController::class, 'search'])->name('morphable.search');
 });
 

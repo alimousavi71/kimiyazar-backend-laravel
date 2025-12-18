@@ -13,7 +13,7 @@
  * </script>
  */
 
-window.initFormWithPhotos = function (config) {
+function initFormWithPhotos(config) {
     const {
         formId,
         photoManagerSelector = '[id^="photo-manager-"]',
@@ -108,6 +108,11 @@ window.initFormWithPhotos = function (config) {
                         }
                     }
 
+                    // Show success message
+                    if (window.Toast && successMessage) {
+                        window.Toast.success(successMessage);
+                    }
+
                     // Call custom success callback if provided
                     if (onSuccess && typeof onSuccess === "function") {
                         onSuccess(response, entityId);
@@ -150,4 +155,4 @@ window.initFormWithPhotos = function (config) {
             }
         });
     });
-};
+}
