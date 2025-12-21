@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\MorphableController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductPriceController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Examples\UsersController;
 
 Route::group([
@@ -245,6 +246,18 @@ Route::group([
     Route::prefix('settings')->name('settings.')->group(function () {
         Route::get('/edit', [SettingController::class, 'edit'])->name('edit');
         Route::match(['put', 'patch'], '/', [SettingController::class, 'update'])->name('update');
+    });
+
+    // Menus Management
+    Route::prefix('menus')->name('menus.')->group(function () {
+        Route::get('/', [MenuController::class, 'index'])->name('index');
+        Route::get('/create', [MenuController::class, 'create'])->name('create');
+        Route::post('/', [MenuController::class, 'store'])->name('store');
+        Route::get('/{id}', [MenuController::class, 'show'])->name('show');
+        Route::get('/{id}/edit', [MenuController::class, 'edit'])->name('edit');
+        Route::match(['put', 'patch'], '/{id}', [MenuController::class, 'update'])->name('update');
+        Route::post('/{id}/links', [MenuController::class, 'updateLinks'])->name('links.update');
+        Route::delete('/{id}', [MenuController::class, 'destroy'])->name('destroy');
     });
 });
 

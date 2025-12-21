@@ -35,6 +35,8 @@ use App\Repositories\Setting\SettingRepository;
 use App\Repositories\Setting\SettingRepositoryInterface;
 use App\Repositories\Tag\TagRepository;
 use App\Repositories\Tag\TagRepositoryInterface;
+use App\Repositories\Menu\MenuRepository;
+use App\Repositories\Menu\MenuRepositoryInterface;
 use App\Services\Auth\AuthService;
 use App\Services\Otp\OtpNotificationService;
 use App\Services\Otp\OtpService;
@@ -144,6 +146,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             TagRepositoryInterface::class,
             TagRepository::class
+        );
+
+        // Bind Menu Repository
+        $this->app->bind(
+            MenuRepositoryInterface::class,
+            MenuRepository::class
         );
 
         // Bind Auth Service

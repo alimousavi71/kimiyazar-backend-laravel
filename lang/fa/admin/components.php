@@ -17,6 +17,8 @@ return [
         'filter' => 'فیلتر',
         'reset' => 'بازنشانی',
         'apply' => 'اعمال',
+        'save_links' => 'ذخیره لینک‌ها',
+        'saving' => 'در حال ذخیره...',
     ],
 
     // Delete Confirmation Modal
@@ -81,6 +83,7 @@ return [
         'sliders' => 'اسلایدرها',
         'faqs' => 'سوالات متداول',
         'modals' => 'مودال‌ها',
+        'menus' => 'منوها',
         'settings' => 'تنظیمات',
         'examples' => 'مثال‌ها',
         'imask_test' => 'تست IMask',

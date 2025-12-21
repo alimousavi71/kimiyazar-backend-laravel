@@ -17,6 +17,8 @@ return [
         'filter' => 'Filter',
         'reset' => 'Reset',
         'apply' => 'Apply',
+        'save_links' => 'Save Links',
+        'saving' => 'Saving...',
     ],
 
     // Delete Confirmation Modal
@@ -75,6 +77,7 @@ return [
         'products' => 'Products',
         'product_prices' => 'Product Prices',
         'modals' => 'Modals',
+        'menus' => 'Menus',
         'settings' => 'Settings',
         'examples' => 'Examples',
         'imask_test' => 'IMask Test',

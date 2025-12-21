@@ -248,6 +248,24 @@
                 </a>
             </li>
 
+            <!-- Menus -->
+            <li>
+                <a href="{{ route('admin.menus.index') ?? '#' }}"
+                    class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium relative overflow-hidden cursor-pointer {{ request()->routeIs('admin.menus.*') ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
+                    @if(request()->routeIs('admin.menus.*'))
+                        <div
+                            class="absolute start-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-green-500 via-emerald-500 to-green-600 rounded-e-full shadow-lg shadow-green-500/50">
+                        </div>
+                    @endif
+                    <div
+                        class="relative z-10 p-1.5 rounded-lg {{ request()->routeIs('admin.menus.*') ? 'bg-green-100/50' : 'bg-gray-100/50 group-hover:bg-green-100/50' }} transition-all duration-300">
+                        <x-icon name="menu" size="md"
+                            class="transition-all duration-300 {{ request()->routeIs('admin.menus.*') ? 'text-green-600 scale-110' : 'text-gray-500 group-hover:text-green-600 group-hover:scale-110' }}" />
+                    </div>
+                    <span class="relative z-10 flex-1">{{ __('admin/components.navigation.menus') }}</span>
+                </a>
+            </li>
+
             <!-- Settings -->
             <li>
                 <a href="{{ route('admin.settings.edit') ?? '#' }}"

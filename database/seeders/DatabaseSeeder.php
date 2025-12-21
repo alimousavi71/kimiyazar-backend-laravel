@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             BannerSeeder::class,
             ModalSeeder::class,
             SettingSeeder::class,
+            MenuSeeder::class,
         ]);
     }
 }
