@@ -10,6 +10,11 @@
 
     <title>{{ $title ?? 'Admin Panel' }} - {{ config('app.name', 'Laravel') }}</title>
 
+    <!-- Admin Config for JavaScript -->
+    <script>
+        window.adminPrefix = @js(config('admin.prefix'));
+    </script>
+
     <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>

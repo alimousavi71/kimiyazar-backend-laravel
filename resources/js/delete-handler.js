@@ -35,6 +35,7 @@
  * @param {Object} config - Configuration object
  * @param {string} config.storeName - Name of the Alpine store (e.g., 'deleteAdmin')
  * @param {string} config.routeUrl - Full route URL with __ID__ placeholder (e.g., '/admin/admins/__ID__')
+ *                                     Should use route() helper in blade template to respect admin prefix config
  * @param {string} config.modalId - Modal ID for opening/closing
  * @param {Function} config.rowSelector - Function that returns CSS selector for the row element
  * @param {Function} [config.onSuccess] - Optional callback after successful deletion

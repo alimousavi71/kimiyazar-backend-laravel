@@ -45,7 +45,7 @@ Route::get('/tags/{slug}', [TagController::class, 'index'])->name('tags.index');
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 
 // Admin Authentication Routes
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix(config('admin.prefix'))->name(config('admin.route_name_prefix') . '.')->group(function () {
     Route::middleware('guest:admin')->group(function () {
         Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('login');
         Route::post('/login', [AdminAuthController::class, 'login'])->name('login');

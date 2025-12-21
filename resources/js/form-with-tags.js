@@ -7,7 +7,7 @@
  *     tagManagerSelector: '[id^="tag-manager-"]',
  *     tagableType: 'App\\Models\\Content',
  *     tagableId: null, // For create forms, use null. For edit forms, use the entity ID
- *     redirectUrl: '/admin/contents', // Optional
+ *     redirectUrl: '/admin/contents', // Optional - should use route() helper in blade template to respect admin prefix config
  *     successMessage: 'Content created successfully', // Optional
  *     onSuccess: function(response, entityId) { // custom logic },
  *     onError: function(error) { // custom logic }

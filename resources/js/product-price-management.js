@@ -8,11 +8,19 @@ document.addEventListener("DOMContentLoaded", function () {
     const bulkSaveBtn = document.getElementById("bulk-save-btn");
     const syncTodayBtn = document.getElementById("sync-today-btn");
 
-    // Get routes from window object (set in blade template)
+    // Get routes from window object (set in blade template using route() helpers)
+    // Routes should be passed from blade template using route() helpers to respect admin prefix config
+    // Fallback routes use window.adminPrefix which is set in the admin layout
     const routes = window.productPriceRoutes || {
-        updateTemplate: "/admin/product-prices/__PRODUCT_ID__",
-        bulkUpdate: "/admin/product-prices/bulk-update",
-        syncToday: "/admin/product-prices/sync-today",
+        updateTemplate: `/${
+            window.adminPrefix || "admin"
+        }/product-prices/__PRODUCT_ID__`,
+        bulkUpdate: `/${
+            window.adminPrefix || "admin"
+        }/product-prices/bulk-update`,
+        syncToday: `/${
+            window.adminPrefix || "admin"
+        }/product-prices/sync-today`,
     };
 
     function getUpdateRoute(productId) {

@@ -7,7 +7,7 @@
  *         formId: 'content-create-form',
  *         photoManagerSelector: '[id^="photo-manager-"]',
  *         photoableType: 'App\\Models\\Content',
- *         redirectUrl: '/admin/contents',
+ *         redirectUrl: '/admin/contents', // Should use route() helper in blade template to respect admin prefix config
  *         successMessage: 'Content created successfully'
  *     });
  * </script>
