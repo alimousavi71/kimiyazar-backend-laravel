@@ -29,8 +29,20 @@ function initCategorySelector(wrapper) {
     // Set initial selected value
     const selectedOption = hiddenSelect.querySelector("option:checked");
     if (selectedOption && selectedOption.value) {
+        const selectedValue = selectedOption.value;
         const selectedText = selectedOption.textContent.trim();
-        textSpan.textContent = selectedText;
+
+        // Find the option element to get full path
+        const selectedOptionElement = Array.from(options).find(
+            (opt) => opt.getAttribute("data-value") === selectedValue
+        );
+
+        const displayText = selectedOptionElement
+            ? selectedOptionElement.getAttribute("data-full-path") ||
+              selectedText
+            : selectedText;
+
+        textSpan.textContent = displayText;
         textSpan.classList.remove("text-gray-500");
         textSpan.classList.add("text-gray-900");
     } else {
@@ -75,13 +87,15 @@ function initCategorySelector(wrapper) {
         option.addEventListener("click", function () {
             const value = this.getAttribute("data-value");
             const text = this.getAttribute("data-text");
+            const fullPath = this.getAttribute("data-full-path") || text;
 
             // Update hidden select
             hiddenSelect.value = value;
             hiddenSelect.dispatchEvent(new Event("change", { bubbles: true }));
 
-            // Update button text
-            textSpan.textContent = text;
+            // Update button text - show full path for child categories
+            const displayText = value && fullPath !== text ? fullPath : text;
+            textSpan.textContent = displayText;
             if (value) {
                 textSpan.classList.remove("text-gray-500");
                 textSpan.classList.add("text-gray-900");
@@ -114,7 +128,13 @@ function initCategorySelector(wrapper) {
                 option
                     .querySelector(".category-name")
                     ?.textContent.toLowerCase() || "";
-            const matches = !searchTerm || categoryName.includes(searchTerm);
+            const fullPath =
+                option.getAttribute("data-full-path")?.toLowerCase() ||
+                categoryName;
+            const matches =
+                !searchTerm ||
+                categoryName.includes(searchTerm) ||
+                fullPath.includes(searchTerm);
 
             if (matches) {
                 option.classList.remove("hidden");

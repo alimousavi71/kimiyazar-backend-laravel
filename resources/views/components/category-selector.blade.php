@@ -57,12 +57,28 @@
                     {{ $placeholder }}
                 </div>
                 @foreach($categories as $category)
-                    <div class="category-selector-option p-2 px-3 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer transition-colors {{ $value == $category->id ? 'bg-blue-50 text-blue-700' : '' }}"
+                    @php
+                        $depth = $category->depth ?? 0;
+                        $isParent = $depth === 0;
+                        $isChild = $depth > 0;
+                    @endphp
+                    <div class="category-selector-option p-2 px-3 text-sm cursor-pointer transition-colors {{ $value == $category->id ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50' }} {{ $isParent ? 'font-semibold' : '' }}"
                         data-value="{{ $category->id }}"
                         data-text="{{ $category->name }}"
-                        data-depth="{{ $category->depth ?? 0 }}"
-                        style="padding-left: {{ ($category->depth ?? 0) * 20 + 12 }}px;">
-                        <span class="category-name">{{ $category->name }}</span>
+                        data-full-path="{{ $category->full_path ?? $category->name }}"
+                        data-depth="{{ $depth }}"
+                        style="padding-left: {{ $depth * 24 + 12 }}px;">
+                        <div class="flex items-center gap-2">
+                            @if($isChild)
+                                <span class="text-gray-400 text-xs">›</span>
+                            @endif
+                            <span class="category-name flex-1">{{ $category->name }}</span>
+                            @if($isChild && isset($category->full_path) && $category->full_path !== $category->name)
+                                <span class="text-xs text-gray-400 truncate max-w-[200px] ml-2" title="{{ $category->full_path }}">
+                                    ({{ $category->full_path }})
+                                </span>
+                            @endif
+                        </div>
                     </div>
                 @endforeach
             </div>

@@ -142,21 +142,28 @@ class CategoryService
     }
 
     /**
-     * Flatten category tree with depth information.
+     * Flatten category tree with depth information and full path.
      *
      * @param EloquentCollection $tree
      * @param EloquentCollection $result
      * @param int $depth
+     * @param array $path
      * @return void
      */
-    private function flattenCategoryTree(EloquentCollection $tree, EloquentCollection $result, int $depth): void
+    private function flattenCategoryTree(EloquentCollection $tree, EloquentCollection $result, int $depth, array $path = []): void
     {
         foreach ($tree as $category) {
             $category->depth = $depth;
+
+            // Build full path for this category
+            $currentPath = array_merge($path, [$category->name]);
+            $category->full_path = implode(' › ', $currentPath);
+            $category->path_names = $currentPath;
+
             $result->push($category);
 
             if ($category->children && $category->children->isNotEmpty()) {
-                $this->flattenCategoryTree($category->children, $result, $depth + 1);
+                $this->flattenCategoryTree($category->children, $result, $depth + 1, $currentPath);
             }
         }
     }
