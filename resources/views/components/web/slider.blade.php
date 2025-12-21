@@ -39,7 +39,7 @@
                                     @endif
                                     
                                     <div class="flex flex-wrap gap-3">
-                                        <a href="#" class="inline-flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-3 bg-gradient-to-r from-green-500 to-emerald-400 text-white rounded-full text-sm md:text-base font-semibold transition-all duration-300 hover:shadow-[0_6px_20px_rgba(40,167,69,0.6)] hover:-translate-y-1 hover:scale-105">
+                                        <a href="{{ route('products.index') }}" class="inline-flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-3 bg-gradient-to-r from-green-500 to-emerald-400 text-white rounded-full text-sm md:text-base font-semibold transition-all duration-300 hover:shadow-[0_6px_20px_rgba(40,167,69,0.6)] hover:-translate-y-1 hover:scale-105">
                                             <span>اطلاعات بیشتر</span>
                                             <i class="fas fa-arrow-left text-xs"></i>
                                         </a>

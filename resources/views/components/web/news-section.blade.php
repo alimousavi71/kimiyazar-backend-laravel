@@ -15,7 +15,7 @@
                 @endforeach
             </div>
             <div class="text-center mt-8">
-                <a href="#"
+                <a href="{{ route('news.index') }}"
                     class="inline-flex items-center gap-2.5 px-7 py-3 bg-white text-green-500 no-underline rounded-lg border border-green-200 font-semibold text-sm transition-all duration-300 shadow-sm hover:bg-green-500 hover:text-white hover:border-green-500 hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(40,167,69,0.2)]">
                     <span>مشاهده همه اخبار</span>
                     <i class="fas fa-arrow-left text-xs transition-transform duration-300 group-hover:-translate-x-1"></i>

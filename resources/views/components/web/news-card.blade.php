@@ -2,7 +2,8 @@
 
 <div
     class="bg-white rounded-xl border border-gray-200 overflow-hidden transition-all duration-300 shadow-sm hover:-translate-y-1 hover:shadow-[0_4px_12px_rgba(40,167,69,0.08)] hover:border-green-200 group">
-    <a href="#" class="flex flex-col h-full no-underline text-inherit hover:no-underline">
+    <a href="{{ $item->type->value === 'news' ? route('news.show', $item->slug) : route('articles.show', $item->slug) }}"
+        class="flex flex-col h-full no-underline text-inherit hover:no-underline">
         <div class="relative w-full pt-[65%] overflow-hidden bg-gray-100">
             @if($item->photos->first())
                 <img src="{{ $item->photos->first()->url }}" alt="{{ $item->title }}"

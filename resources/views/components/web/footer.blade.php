@@ -73,7 +73,7 @@
                                 </a>
                             </li>
                             <li class="mb-3">
-                                <a href="#"
+                                <a href="{{ route('products.index') }}"
                                     class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
                                     <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
                                     <span>محصولات</span>
@@ -87,14 +87,14 @@
                                 </a>
                             </li>
                             <li class="mb-3">
-                                <a href="#"
+                                <a href="{{ route('news.index') }}"
                                     class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
                                     <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
                                     <span>اخبار</span>
                                 </a>
                             </li>
                             <li class="mb-3">
-                                <a href="#"
+                                <a href="{{ route('articles.index') }}"
                                     class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
                                     <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
                                     <span>مقالات</span>

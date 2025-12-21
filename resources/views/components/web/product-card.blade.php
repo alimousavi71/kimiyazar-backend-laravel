@@ -2,7 +2,8 @@
 
 <div
     class="modern-product-card bg-white rounded-xl border border-gray-200 transition-all duration-300 h-full overflow-hidden shadow-sm hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(40,167,69,0.12)] hover:border-green-200">
-    <a href="#" class="product-link-wrapper flex flex-col h-full no-underline text-inherit hover:no-underline">
+    <a href="{{ route('products.index') }}"
+        class="product-link-wrapper flex flex-col h-full no-underline text-inherit hover:no-underline">
         <!-- Header Section -->
         <div class="product-header flex items-center gap-2.5 p-3.5 pb-2.5 border-b border-gray-100">
             <div

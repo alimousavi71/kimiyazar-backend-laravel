@@ -216,6 +216,13 @@
                         </a>
                     </li>
                     <li class="w-full">
+                        <a href="{{ route('articles.index') }}"
+                            class="py-3 px-4 flex items-center gap-2 text-sm text-slate-700 no-underline hover:text-green-500 hover:bg-green-50 transition-colors duration-200 rounded">
+                            <i class="fas fa-file-text text-green-500"></i>
+                            <span>مقالات</span>
+                        </a>
+                    </li>
+                    <li class="w-full">
                         <a href="{{ route('about.index') }}"
                             class="py-3 px-4 flex items-center gap-2 text-sm text-slate-700 no-underline hover:text-green-500 hover:bg-green-50 transition-colors duration-200 rounded">
                             <i class="fas fa-info-circle text-green-500"></i>
