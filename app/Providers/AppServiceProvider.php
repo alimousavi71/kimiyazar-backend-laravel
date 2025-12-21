@@ -35,6 +35,8 @@ use App\Repositories\Setting\SettingRepository;
 use App\Repositories\Setting\SettingRepositoryInterface;
 use App\Services\Auth\AuthService;
 use App\Services\Otp\OtpNotificationService;
+use App\View\Composers\SettingComposer;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -153,5 +155,8 @@ class AppServiceProvider extends ServiceProvider
         view()->share('direction', DirectionHelper::getDirection());
         view()->share('isRtl', DirectionHelper::isRtl());
         view()->share('isLtr', DirectionHelper::isLtr());
+
+        // Share settings with frontend views only (not admin)
+        View::composer('*', SettingComposer::class);
     }
 }

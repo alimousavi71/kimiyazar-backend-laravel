@@ -36,12 +36,12 @@ class HomeController extends Controller
             ->limit(5)
             ->get();
 
-        // Get published products (limit for homepage)
+        // Get last 20 published products
         $products = Product::where('is_published', true)
             ->where('status', \App\Enums\Database\ProductStatus::ACTIVE)
             ->with(['category', 'photos', 'prices'])
-            ->orderBy('sort_order')
-            ->limit(12)
+            ->orderBy('created_at', 'desc')
+            ->limit(20)
             ->get();
 
         // Get latest news (3 items)
@@ -54,9 +54,20 @@ class HomeController extends Controller
         // Get all categories for filter
         $categories = $this->categoryService->getAllCategoriesTree();
 
+        // Get root categories with first-level children for homepage
+        $rootCategories = \App\Models\Category::whereNull('parent_id')
+            ->where('is_active', true)
+            ->with([
+                'children' => function ($query) {
+                    $query->where('is_active', true)->orderBy('sort_order');
+                }
+            ])
+            ->orderBy('sort_order')
+            ->get();
+
         // Get settings
         $settings = Setting::getAllAsArray();
 
-        return view('home', compact('sliders', 'products', 'news', 'categories', 'settings'));
+        return view('home', compact('sliders', 'products', 'news', 'categories', 'rootCategories', 'settings'));
     }
 }
