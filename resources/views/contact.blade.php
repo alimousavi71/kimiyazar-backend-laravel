@@ -169,8 +169,11 @@
                                     <label for="title"
                                         class="form-label-modern block text-sm font-semibold text-slate-700 mb-2">عنوان</label>
                                     <input type="text" name="title" value="{{ old('title') }}"
-                                        class="form-input-modern w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-300 outline-none"
+                                        class="form-input-modern w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-300 outline-none @error('title') border-red-500 @enderror"
                                         id="title" placeholder="عنوان تماس را وارد کنید" />
+                                    @error('title')
+                                        <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <!-- Mobile & Email Row -->
@@ -180,16 +183,22 @@
                                             class="form-label-modern block text-sm font-semibold text-slate-700 mb-2">شماره
                                             موبایل</label>
                                         <input type="text" name="mobile" value="{{ old('mobile') }}"
-                                            class="form-input-modern w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-300 outline-none"
+                                            class="form-input-modern w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-300 outline-none @error('mobile') border-red-500 @enderror"
                                             maxlength="11" id="mobile" placeholder="09121234567" />
+                                        @error('mobile')
+                                            <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                     <div class="form-group-modern">
                                         <label for="email"
                                             class="form-label-modern block text-sm font-semibold text-slate-700 mb-2">پست
                                             الکترونیکی</label>
                                         <input type="email" name="email" value="{{ old('email') }}"
-                                            class="form-input-modern w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-300 outline-none"
+                                            class="form-input-modern w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-300 outline-none @error('email') border-red-500 @enderror"
                                             id="email" placeholder="example@email.com" />
+                                        @error('email')
+                                            <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -199,9 +208,12 @@
                                         class="form-label-modern block text-sm font-semibold text-slate-700 mb-2">متن
                                         پیام</label>
                                     <textarea name="text" rows="5"
-                                        class="form-textarea-modern w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-300 outline-none resize-none"
+                                        class="form-textarea-modern w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-300 outline-none resize-none @error('text') border-red-500 @enderror"
                                         id="text"
                                         placeholder="متن پیام خود را اینجا بنویسید...">{{ old('text') }}</textarea>
+                                    @error('text')
+                                        <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <!-- Submit Button -->
@@ -219,4 +231,8 @@
             </div>
         </div>
     </section>
+
+    @push('scripts')
+        @vite(['resources/js/contact-form-validation.js'])
+    @endpush
 </x-layouts.app>

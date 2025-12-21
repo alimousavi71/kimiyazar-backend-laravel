@@ -22,10 +22,32 @@ class StoreContactRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['nullable', 'string', 'max:255'],
-            'mobile' => ['nullable', 'string', 'max:11'],
-            'email' => ['nullable', 'email', 'max:255'],
-            'text' => ['nullable', 'string'],
+            'title' => ['required', 'string', 'max:255'],
+            'mobile' => ['required', 'string', 'max:11', 'regex:/^09\d{9}$/'],
+            'email' => ['required', 'email', 'max:255'],
+            'text' => ['required', 'string', 'min:10', 'max:2000'],
+        ];
+    }
+
+    /**
+     * Get custom validation messages.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'title.required' => 'عنوان الزامی است.',
+            'title.max' => 'عنوان نباید بیشتر از 255 کاراکتر باشد.',
+            'mobile.required' => 'شماره موبایل الزامی است.',
+            'mobile.regex' => 'شماره موبایل باید با 09 شروع شود و 11 رقم باشد.',
+            'mobile.max' => 'شماره موبایل نباید بیشتر از 11 رقم باشد.',
+            'email.required' => 'ایمیل الزامی است.',
+            'email.email' => 'فرمت ایمیل نامعتبر است.',
+            'email.max' => 'ایمیل نباید بیشتر از 255 کاراکتر باشد.',
+            'text.required' => 'متن پیام الزامی است.',
+            'text.min' => 'متن پیام باید حداقل 10 کاراکتر باشد.',
+            'text.max' => 'متن پیام نباید بیشتر از 2000 کاراکتر باشد.',
         ];
     }
 }
