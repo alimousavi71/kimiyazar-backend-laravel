@@ -37,9 +37,10 @@
                                         <div class="flex flex-wrap items-center gap-2">
                                             <i class="fa fa-tags text-green-500 text-sm"></i>
                                             @foreach($article->tags->take(3) as $tag)
-                                                <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">
+                                                <a href="{{ route('tags.index', $tag->slug) }}"
+                                                    class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded hover:bg-green-500 hover:text-white transition-all duration-300 no-underline">
                                                     {{ $tag->title }}
-                                                </span>
+                                                </a>
                                             @endforeach
                                         </div>
                                     @endif

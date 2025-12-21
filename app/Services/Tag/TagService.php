@@ -143,5 +143,42 @@ class TagService
     {
         return $this->repository->getTagsByContentType($contentType, $limit);
     }
+
+    /**
+     * Find tag by slug.
+     *
+     * @param string $slug
+     * @return Tag|null
+     */
+    public function findBySlug(string $slug): ?Tag
+    {
+        return $this->repository->findBySlug($slug);
+    }
+
+    /**
+     * Get paginated entities (contents) by tag slug with search.
+     *
+     * @param string $tagSlug
+     * @param int $perPage
+     * @param string|null $search
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getPaginatedEntitiesByTagSlug(string $tagSlug, int $perPage = 50, ?string $search = null): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    {
+        return $this->repository->getPaginatedEntitiesByTagSlug($tagSlug, $perPage, $search);
+    }
+
+    /**
+     * Get related tags that are used with the same contents as the given tag.
+     *
+     * @param int $tagId
+     * @param array $contentIds
+     * @param int $limit
+     * @return Collection
+     */
+    public function getRelatedTags(int $tagId, array $contentIds, int $limit = 10): Collection
+    {
+        return $this->repository->getRelatedTags($tagId, $contentIds, $limit);
+    }
 }
 

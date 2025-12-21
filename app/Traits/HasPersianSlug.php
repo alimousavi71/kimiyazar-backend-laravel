@@ -24,17 +24,58 @@ trait HasPersianSlug
     public static function bootHasPersianSlug(): void
     {
         static::creating(function ($model) {
-            if (empty($model->slug)) {
-                $model->slug = $model->makePersianSlug($model->getSlugSourceValue());
-            }
+            $model->ensureSlugIsSet();
         });
 
         static::updating(function ($model) {
             // Only regenerate when source changed and slug not manually set
             if ($model->isDirty($model->getSlugSourceField()) && !$model->isDirty('slug')) {
-                $model->slug = $model->makePersianSlug($model->getSlugSourceValue());
+                $model->ensureSlugIsSet();
             }
         });
+
+    }
+
+    /**
+     * Ensure slug is set if empty.
+     * This works even when model events are disabled (e.g., in seeders with WithoutModelEvents).
+     *
+     * @return void
+     */
+    protected function ensureSlugIsSet(): void
+    {
+        if (empty($this->slug)) {
+            $this->slug = $this->makePersianSlug($this->getSlugSourceValue());
+        }
+    }
+
+    /**
+     * Perform the actual insert query.
+     * Override to ensure slug is set even when events are disabled.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return bool
+     */
+    protected function performInsert(\Illuminate\Database\Eloquent\Builder $query): bool
+    {
+        $this->ensureSlugIsSet();
+        return parent::performInsert($query);
+    }
+
+    /**
+     * Perform the actual update query.
+     * Override to ensure slug is set even when events are disabled.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return int
+     */
+    protected function performUpdate(\Illuminate\Database\Eloquent\Builder $query): int
+    {
+        // Only regenerate when source changed and slug not manually set
+        if ($this->isDirty($this->getSlugSourceField()) && !$this->isDirty('slug')) {
+            $this->ensureSlugIsSet();
+        }
+        return parent::performUpdate($query);
     }
 
     /**

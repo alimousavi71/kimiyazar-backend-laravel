@@ -90,4 +90,32 @@ interface TagRepositoryInterface
      * @return \App\Models\Tagable|null
      */
     public function findTagableByIdAndTagId(int|string $tagableId, int|string $tagId): ?\App\Models\Tagable;
+
+    /**
+     * Find tag by slug.
+     *
+     * @param string $slug
+     * @return Tag|null
+     */
+    public function findBySlug(string $slug): ?Tag;
+
+    /**
+     * Get paginated entities (contents) by tag slug with search.
+     *
+     * @param string $tagSlug
+     * @param int $perPage
+     * @param string|null $search
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getPaginatedEntitiesByTagSlug(string $tagSlug, int $perPage = 50, ?string $search = null): \Illuminate\Contracts\Pagination\LengthAwarePaginator;
+
+    /**
+     * Get related tags that are used with the same contents as the given tag.
+     *
+     * @param int $tagId
+     * @param array $contentIds
+     * @param int $limit
+     * @return Collection
+     */
+    public function getRelatedTags(int $tagId, array $contentIds, int $limit = 10): Collection;
 }

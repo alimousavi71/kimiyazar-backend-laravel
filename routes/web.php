@@ -3,32 +3,42 @@
 use App\Http\Controllers\Admin\Auth\AdminAuthController;
 use App\Http\Controllers\Admin\Auth\AdminPasswordResetController;
 use App\Http\Controllers\Admin\Auth\TwoFactorController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Examples\ApiExampleController;
 use App\Http\Controllers\Examples\FormExampleController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Contact Routes
-Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'index'])->name('contact.index');
-Route::post('/contact', [\App\Http\Controllers\ContactController::class, 'store'])->name('contact.store');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 // About Route
-Route::get('/about', [\App\Http\Controllers\AboutController::class, 'index'])->name('about.index');
+Route::get('/about', [AboutController::class, 'index'])->name('about.index');
 
 // News Routes
-Route::get('/news', [\App\Http\Controllers\NewsController::class, 'index'])->name('news.index');
-Route::get('/news/{slug}', [\App\Http\Controllers\NewsController::class, 'show'])->name('news.show');
+Route::get('/news', [NewsController::class, 'index'])->name('news.index');
+Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.show');
 
 // Articles Routes
-Route::get('/articles', [\App\Http\Controllers\ArticleController::class, 'index'])->name('articles.index');
-Route::get('/articles/{slug}', [\App\Http\Controllers\ArticleController::class, 'show'])->name('articles.show');
+Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
+Route::get('/articles/{slug}', [ArticleController::class, 'show'])->name('articles.show');
 
 // Products Routes
-Route::get('/products', [\App\Http\Controllers\ProductController::class, 'index'])->name('products.index');
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+
+// Tags Routes
+Route::get('/tags/{slug}', [TagController::class, 'index'])->name('tags.index');
 
 // Admin Authentication Routes
 Route::prefix('admin')->name('admin.')->group(function () {

@@ -143,4 +143,73 @@ class TagRepository implements TagRepositoryInterface
             ->where('tag_id', $tagId)
             ->first();
     }
+
+    /**
+     * Find tag by slug.
+     *
+     * @param string $slug
+     * @return Tag|null
+     */
+    public function findBySlug(string $slug): ?Tag
+    {
+        return Tag::where('slug', $slug)->first();
+    }
+
+    /**
+     * Get paginated entities (contents) by tag slug with search.
+     *
+     * @param string $tagSlug
+     * @param int $perPage
+     * @param string|null $search
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getPaginatedEntitiesByTagSlug(string $tagSlug, int $perPage = 50, ?string $search = null): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    {
+        $tag = $this->findBySlug($tagSlug);
+
+        if (!$tag) {
+            return \App\Models\Content::where('id', 0)->paginate($perPage);
+        }
+
+        $query = \App\Models\Content::whereHas('tags', function ($q) use ($tag) {
+            $q->where('tags.id', $tag->id);
+        })
+            ->where('is_active', true)
+            ->with(['photos', 'tags']);
+
+        // Apply search filter
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('body', 'like', "%{$search}%")
+                    ->orWhere('slug', 'like', "%{$search}%");
+            });
+        }
+
+        return $query->orderBy('created_at', 'desc')->paginate($perPage);
+    }
+
+    /**
+     * Get related tags that are used with the same contents as the given tag.
+     *
+     * @param int $tagId
+     * @param array $contentIds
+     * @param int $limit
+     * @return Collection
+     */
+    public function getRelatedTags(int $tagId, array $contentIds, int $limit = 10): Collection
+    {
+        if (empty($contentIds)) {
+            return Tag::where('id', 0)->get();
+        }
+
+        return Tag::whereHas('contents', function ($query) use ($contentIds) {
+            $query->whereIn('contents.id', $contentIds)
+                ->where('contents.is_active', true);
+        })
+            ->where('tags.id', '!=', $tagId)
+            ->distinct()
+            ->limit($limit)
+            ->get();
+    }
 }

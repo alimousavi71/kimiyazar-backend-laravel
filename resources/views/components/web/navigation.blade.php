@@ -152,9 +152,9 @@
                         </button>
                         <div class="search-form-wrapper absolute top-[120%] left-1/2 transform -translate-x-1/2 w-80 opacity-0 invisible transition-opacity duration-300 z-50 pointer-events-none"
                             id="search-form-wrapper">
-                            <form method="get" action="#"
+                            <form method="get" action="{{ route('products.index') }}"
                                 class="modern-search-form flex bg-white rounded-3xl shadow-[0_8px_25px_rgba(0,0,0,0.15)] overflow-hidden border-2 border-green-500">
-                                <input type="text" name="find" placeholder="جستجو در محصولات..."
+                                <input type="text" name="search" placeholder="جستجو در محصولات..."
                                     class="modern-search-input flex-1 px-5 py-3 border-none outline-none text-sm rtl"
                                     dir="rtl" id="search-input">
                                 <button type="submit"
@@ -231,10 +231,10 @@
                     </li>
                 </ul>
                 <div class="flex flex-col w-full gap-2 mt-3 pt-3 border-t border-gray-200">
-                    <form class="w-full" method="get" action="#">
+                    <form class="w-full" method="get" action="{{ route('products.index') }}">
                         <div
                             class="flex gap-0 border border-gray-200 rounded-lg overflow-hidden transition-all duration-300 focus-within:border-green-500 focus-within:shadow-[0_0_0_3px_rgba(40,167,69,0.1)]">
-                            <input type="text" name="find"
+                            <input type="text" name="search"
                                 class="flex-1 px-4 py-2.5 border-none outline-none text-sm rtl"
                                 placeholder="جستجو در محصولات..." dir="rtl">
                             <button type="submit"

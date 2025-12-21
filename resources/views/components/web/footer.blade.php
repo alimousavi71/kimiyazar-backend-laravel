@@ -210,7 +210,7 @@
                         </h4>
                         <div class="footer-tags-modern flex flex-wrap gap-2">
                             @forelse($tags as $tag)
-                                <a href="#"
+                                <a href="{{ route('tags.index', $tag->slug) }}"
                                     class="footer-tag-item inline-block px-3 py-1.5 text-xs text-gray-300 bg-white/10 rounded-lg border border-white/20 transition-all duration-300 hover:bg-green-500 hover:text-white hover:border-green-500 hover:-translate-y-0.5 hover:shadow-[0_2px_8px_rgba(40,167,69,0.3)] no-underline">
                                     {{ $tag->title }}
                                 </a>

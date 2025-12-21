@@ -71,7 +71,7 @@
                 </h3>
                 <div class="tags-widget flex flex-wrap gap-2">
                     @foreach($tags as $tag)
-                        <a href="#"
+                        <a href="{{ route('tags.index', $tag->slug) }}"
                             class="tag-item inline-block px-3 py-1.5 bg-gray-100 text-gray-700 text-sm rounded-lg hover:bg-green-500 hover:text-white transition-all duration-300 no-underline">
                             {{ $tag->title }}
                         </a>
