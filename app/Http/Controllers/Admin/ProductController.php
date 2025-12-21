@@ -50,7 +50,7 @@ class ProductController extends Controller
      */
     public function create(): View
     {
-        $categories = $this->categoryService->getRootCategories();
+        $categories = $this->categoryService->getAllCategoriesTree();
 
         return view('admin.products.create', compact('categories'));
     }
@@ -94,7 +94,7 @@ class ProductController extends Controller
     public function edit(string $id): View
     {
         $product = $this->service->findById($id);
-        $categories = $this->categoryService->getRootCategories();
+        $categories = $this->categoryService->getAllCategoriesTree();
 
         return view('admin.products.edit', compact('product', 'categories'));
     }

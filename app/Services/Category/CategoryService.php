@@ -5,8 +5,9 @@ namespace App\Services\Category;
 use App\Models\Category;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Collection;
 use Spatie\QueryBuilder\AllowedFilter;
 
 /**
@@ -96,6 +97,68 @@ class CategoryService
     public function getByParentId(int $parentId): Collection
     {
         return $this->repository->getByParentId($parentId);
+    }
+
+    /**
+     * Get all categories in a flat tree structure with depth information.
+     * This method builds a hierarchical tree and flattens it for display.
+     *
+     * @return EloquentCollection
+     */
+    public function getAllCategoriesTree(): EloquentCollection
+    {
+        $allCategories = Category::orderBy('sort_order')->get();
+
+        // Build tree structure
+        $tree = $this->buildCategoryTree($allCategories);
+
+        // Flatten tree with depth information
+        $flattened = new EloquentCollection();
+        $this->flattenCategoryTree($tree, $flattened, 0);
+
+        return $flattened;
+    }
+
+    /**
+     * Build category tree from flat collection.
+     *
+     * @param EloquentCollection $categories
+     * @return EloquentCollection
+     */
+    private function buildCategoryTree(EloquentCollection $categories): EloquentCollection
+    {
+        $grouped = $categories->groupBy('parent_id');
+
+        $buildTree = function ($parentId = null) use (&$buildTree, $grouped) {
+            $children = $grouped->get($parentId, new EloquentCollection());
+
+            return $children->map(function ($category) use (&$buildTree, $grouped) {
+                $category->children = $buildTree($category->id);
+                return $category;
+            });
+        };
+
+        return $buildTree();
+    }
+
+    /**
+     * Flatten category tree with depth information.
+     *
+     * @param EloquentCollection $tree
+     * @param EloquentCollection $result
+     * @param int $depth
+     * @return void
+     */
+    private function flattenCategoryTree(EloquentCollection $tree, EloquentCollection $result, int $depth): void
+    {
+        foreach ($tree as $category) {
+            $category->depth = $depth;
+            $result->push($category);
+
+            if ($category->children && $category->children->isNotEmpty()) {
+                $this->flattenCategoryTree($category->children, $result, $depth + 1);
+            }
+        }
     }
 
     /**

@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ModalController;
 use App\Http\Controllers\Admin\MorphableController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProductPriceController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Examples\UsersController;
 
@@ -230,6 +231,14 @@ Route::group([
         Route::get('/{id}/edit', [ProductController::class, 'edit'])->name('edit');
         Route::match(['put', 'patch'], '/{id}', [ProductController::class, 'update'])->name('update');
         Route::delete('/{id}', [ProductController::class, 'destroy'])->name('destroy');
+    });
+
+    // Product Prices Management
+    Route::prefix('product-prices')->name('product-prices.')->group(function () {
+        Route::get('/', [ProductPriceController::class, 'index'])->name('index');
+        Route::post('/sync-today', [ProductPriceController::class, 'syncTodayPrices'])->name('sync-today');
+        Route::post('/{productId}', [ProductPriceController::class, 'updatePrice'])->name('update');
+        Route::post('/bulk-update', [ProductPriceController::class, 'bulkUpdate'])->name('bulk-update');
     });
 
     // Settings Management

@@ -10,6 +10,7 @@ use App\Traits\HasPersianSlug;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
@@ -123,6 +124,16 @@ class Product extends Model
     public function photos(): MorphMany
     {
         return $this->morphMany(Photo::class, 'photoable')->ordered();
+    }
+
+    /**
+     * Get all prices for the product.
+     *
+     * @return HasMany
+     */
+    public function prices(): HasMany
+    {
+        return $this->hasMany(ProductPrice::class, 'product_id')->orderBy('created_at', 'desc');
     }
 
     /**

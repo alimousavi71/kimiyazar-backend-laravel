@@ -31,14 +31,9 @@
                 </x-form-group>
 
                 <x-form-group :label="__('admin/products.fields.category')" :error="$errors->first('category_id')">
-                    <x-select name="category_id" id="category_id" class="w-full">
-                        <option value="">{{ __('admin/products.forms.placeholders.no_category') }}</option>
-                        @foreach($categories as $category)
-                            <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                                {{ $category->name }}
-                            </option>
-                        @endforeach
-                    </x-select>
+                    <x-category-selector name="category_id" id="category_id" :value="old('category_id')"
+                        :categories="$categories" :placeholder="__('admin/products.forms.placeholders.no_category')"
+                        class="w-full" />
                 </x-form-group>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -184,7 +179,7 @@
     </form>
 
     @push('scripts')
-        @vite(['resources/js/admin-form-validation.js', 'resources/js/form-with-photos.js'])
+        @vite(['resources/js/admin-form-validation.js', 'resources/js/form-with-photos.js', 'resources/js/category-selector.js'])
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 initFormWithPhotos({

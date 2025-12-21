@@ -50,6 +50,7 @@ return [
         'page' => 'Page',
         'previous' => 'Previous',
         'next' => 'Next',
+        'per_page' => 'Per Page',
     ],
 
     // Filter Badges
@@ -71,6 +72,7 @@ return [
         'admins' => 'Admins',
         'categories' => 'Categories',
         'products' => 'Products',
+        'product_prices' => 'Product Prices',
         'modals' => 'Modals',
         'settings' => 'Settings',
         'examples' => 'Examples',

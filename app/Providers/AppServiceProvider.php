@@ -29,6 +29,8 @@ use App\Repositories\Modal\ModalRepository;
 use App\Repositories\Modal\ModalRepositoryInterface;
 use App\Repositories\Product\ProductRepository;
 use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\ProductPrice\ProductPriceRepository;
+use App\Repositories\ProductPrice\ProductPriceRepositoryInterface;
 use App\Repositories\Setting\SettingRepository;
 use App\Repositories\Setting\SettingRepositoryInterface;
 use App\Services\Auth\AuthService;
@@ -124,6 +126,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             ProductRepositoryInterface::class,
             ProductRepository::class
+        );
+
+        // Bind ProductPrice Repository
+        $this->app->bind(
+            ProductPriceRepositoryInterface::class,
+            ProductPriceRepository::class
         );
 
         // Bind Auth Service

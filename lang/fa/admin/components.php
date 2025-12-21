@@ -50,6 +50,7 @@ return [
         'page' => 'صفحه',
         'previous' => 'قبلی',
         'next' => 'بعدی',
+        'per_page' => 'در هر صفحه',
     ],
 
     // Filter Badges
@@ -72,6 +73,7 @@ return [
         'admins' => 'مدیران',
         'categories' => 'دسته‌بندی‌ها',
         'products' => 'محصولات',
+        'product_prices' => 'قیمت محصولات',
         'contacts' => 'تماس‌ها',
         'banners' => 'بنرها',
         'contents' => 'محتوا',
