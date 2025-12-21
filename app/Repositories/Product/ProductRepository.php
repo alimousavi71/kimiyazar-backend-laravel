@@ -7,6 +7,7 @@ use App\Models\Product;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
@@ -169,36 +170,70 @@ class ProductRepository implements ProductRepositoryInterface
         ?string $sort = null,
         ?array $categoryIds = null
     ): LengthAwarePaginator {
-        $query = Product::where('is_published', true)
+        $baseQuery = Product::where('is_published', true)
             ->where('status', ProductStatus::ACTIVE)
             ->with(['category', 'photos']);
 
-        // Filter by category - use categoryIds if provided, otherwise use categoryId
-        if ($categoryIds !== null && !empty($categoryIds)) {
-            $query->whereIn('category_id', $categoryIds);
-        } elseif ($categoryId !== null) {
-            $query->where('category_id', $categoryId);
-        }
+        $allowedFilters = [
+            AllowedFilter::callback('category_id', function ($query, $value) use ($categoryIds, $categoryId) {
+                if ($categoryIds !== null && !empty($categoryIds)) {
+                    $query->whereIn('category_id', $categoryIds);
+                } elseif ($categoryId !== null) {
+                    $query->where('category_id', $categoryId);
+                } elseif ($value !== null) {
+                    $query->where('category_id', $value);
+                }
+            }),
+            AllowedFilter::callback('search', function ($query, $value) use ($search) {
+                $searchValue = $search ?? $value;
+                if ($searchValue) {
+                    $query->where(function ($q) use ($searchValue) {
+                        $q->where('name', 'like', "%{$searchValue}%")
+                            ->orWhere('slug', 'like', "%{$searchValue}%")
+                            ->orWhere('sale_description', 'like', "%{$searchValue}%");
+                    });
+                }
+            }),
+        ];
 
-        // Search filter
-        if ($search) {
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('slug', 'like', "%{$search}%")
-                    ->orWhere('sale_description', 'like', "%{$search}%");
-            });
-        }
+        $allowedSorts = [
+            'current_price',
+            'price_updated_at',
+            'created_at',
+        ];
 
-        // Sort
+        // Map sort parameter to actual sort field
+        $defaultSort = '-created_at';
         if ($sort === 'product_price') {
-            $query->orderBy('current_price', 'asc');
+            $defaultSort = 'current_price';
         } elseif ($sort === 'price_date') {
-            $query->orderBy('price_updated_at', 'desc');
-        } else {
-            $query->orderBy('created_at', 'desc');
+            $defaultSort = '-price_updated_at';
         }
 
-        return $query->paginate($perPage);
+        $queryBuilder = QueryBuilder::for($baseQuery)
+            ->allowedFilters($allowedFilters)
+            ->allowedSorts($allowedSorts)
+            ->defaultSort($defaultSort);
+
+        // Apply filters programmatically by temporarily modifying request
+        $originalRequest = request()->all();
+        $filters = [];
+        if ($categoryIds !== null || $categoryId !== null) {
+            $filters['category_id'] = $categoryIds ?? $categoryId;
+        }
+        if ($search !== null) {
+            $filters['search'] = $search;
+        }
+        if (!empty($filters)) {
+            request()->merge(['filter' => $filters]);
+        }
+
+        $result = $queryBuilder->paginate($perPage);
+
+        // Restore original request
+        request()->merge($originalRequest);
+
+        return $result;
     }
 
     /**
@@ -234,20 +269,55 @@ class ProductRepository implements ProductRepositoryInterface
      */
     public function getProductsForPriceManagement(?string $search = null, ?array $categoryIds = null, int $perPage = 15): LengthAwarePaginator
     {
-        $query = Product::query();
+        $baseQuery = Product::query();
 
-        if ($search) {
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('slug', 'like', "%{$search}%");
-            });
+        $allowedFilters = [
+            AllowedFilter::callback('search', function ($query, $value) use ($search) {
+                $searchValue = $search ?? $value;
+                if ($searchValue) {
+                    $query->where(function ($q) use ($searchValue) {
+                        $q->where('name', 'like', "%{$searchValue}%")
+                            ->orWhere('slug', 'like', "%{$searchValue}%");
+                    });
+                }
+            }),
+            AllowedFilter::callback('category_id', function ($query, $value) use ($categoryIds) {
+                if ($categoryIds !== null && !empty($categoryIds)) {
+                    $query->whereIn('category_id', $categoryIds);
+                } elseif ($value !== null) {
+                    $query->whereIn('category_id', is_array($value) ? $value : [$value]);
+                }
+            }),
+        ];
+
+        $allowedSorts = [
+            'sort_order',
+            'name',
+        ];
+
+        $queryBuilder = QueryBuilder::for($baseQuery)
+            ->allowedFilters($allowedFilters)
+            ->allowedSorts($allowedSorts)
+            ->defaultSort('sort_order');
+
+        // Apply filters programmatically
+        $originalRequest = request()->all();
+        $filters = [];
+        if ($search !== null) {
+            $filters['search'] = $search;
         }
-
-        // Filter by category (including all subcategories)
         if ($categoryIds !== null && !empty($categoryIds)) {
-            $query->whereIn('category_id', $categoryIds);
+            $filters['category_id'] = $categoryIds;
+        }
+        if (!empty($filters)) {
+            request()->merge(['filter' => $filters]);
         }
 
-        return $query->orderBy('sort_order')->orderBy('name')->paginate($perPage);
+        $result = $queryBuilder->paginate($perPage);
+
+        // Restore original request
+        request()->merge($originalRequest);
+
+        return $result;
     }
 }

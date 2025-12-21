@@ -6,6 +6,7 @@ use App\Enums\Database\ContentType;
 use App\Models\Content;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
@@ -152,20 +153,46 @@ class ContentRepository implements ContentRepositoryInterface
      */
     public function getPaginatedActiveContentByType(ContentType $type, int $perPage = 10, ?string $search = null): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
-        $query = Content::where('type', $type)
+        $baseQuery = Content::where('type', $type)
             ->where('is_active', true)
-            ->with(['photos', 'tags'])
-            ->orderBy('created_at', 'desc');
+            ->with(['photos', 'tags']);
 
-        if ($search) {
-            $query->where(function ($q) use ($search) {
-                $q->where('title', 'like', "%{$search}%")
-                    ->orWhere('body', 'like', "%{$search}%")
-                    ->orWhere('slug', 'like', "%{$search}%");
-            });
+        $allowedFilters = [
+            AllowedFilter::callback('search', function ($query, $value) use ($search) {
+                $searchValue = $search ?? $value;
+                if ($searchValue) {
+                    $query->where(function ($q) use ($searchValue) {
+                        $q->where('title', 'like', "%{$searchValue}%")
+                            ->orWhere('body', 'like', "%{$searchValue}%")
+                            ->orWhere('slug', 'like', "%{$searchValue}%");
+                    });
+                }
+            }),
+        ];
+
+        $allowedSorts = [
+            'created_at',
+            'updated_at',
+            'visit_count',
+        ];
+
+        $queryBuilder = QueryBuilder::for($baseQuery)
+            ->allowedFilters($allowedFilters)
+            ->allowedSorts($allowedSorts)
+            ->defaultSort('-created_at');
+
+        // Apply search filter programmatically if provided
+        $originalRequest = request()->all();
+        if ($search !== null) {
+            request()->merge(['filter' => ['search' => $search]]);
         }
 
-        return $query->paginate($perPage);
+        $result = $queryBuilder->paginate($perPage);
+
+        // Restore original request
+        request()->merge($originalRequest);
+
+        return $result;
     }
 }
 
