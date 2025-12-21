@@ -23,7 +23,7 @@
     ];
     
     $colors = [
-        'blue' => ['checked' => 'bg-blue-600', 'ring' => 'ring-blue-300'],
+        'blue' => ['checked' => 'bg-green-600', 'ring' => 'ring-green-300'],
         'green' => ['checked' => 'bg-green-600', 'ring' => 'ring-green-300'],
         'red' => ['checked' => 'bg-red-600', 'ring' => 'ring-red-300'],
         'purple' => ['checked' => 'bg-purple-600', 'ring' => 'ring-purple-300'],

@@ -49,7 +49,8 @@
 
                         <!-- Footer -->
                         <div class="px-4 py-3 border-t border-gray-100 bg-gray-50">
-                            <a href="#" class="text-sm font-medium text-green-600 hover:text-green-700 text-center block">
+                            <a href="#"
+                                class="text-sm font-medium text-green-600 hover:text-green-700 text-center block">
                                 {{ __('admin/components.header.view_all_notifications') }}
                             </a>
                         </div>
@@ -79,7 +80,8 @@
                         class="absolute end-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 overflow-hidden"
                         style="display: none;">
                         <!-- User Info Header -->
-                        <div class="px-4 py-3 border-b border-gray-100 bg-linear-to-br from-green-50/50 to-emerald-50/50">
+                        <div
+                            class="px-4 py-3 border-b border-gray-100 bg-linear-to-br from-green-50/50 to-emerald-50/50">
                             <div class="flex items-center gap-3">
                                 <div
                                     class="w-10 h-10 rounded-xl bg-linear-to-br from-green-500 to-emerald-400 flex items-center justify-center text-white font-semibold text-sm shadow-sm">

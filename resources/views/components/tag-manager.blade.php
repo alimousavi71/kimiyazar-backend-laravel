@@ -55,7 +55,7 @@
                        @keydown.enter.prevent="handleEnterKey()"
                        @input="if (searchQuery.length === 0) loadRecentTags()"
                        :placeholder="__('admin/tags.forms.placeholders.search')"
-                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
                 
                 <!-- Search Results Dropdown -->
                 <div x-show="searchResults.length > 0"
@@ -68,7 +68,7 @@
                                 :class="{ 'bg-gray-50': isTagSelected(tag.id) }">
                             <div class="flex items-center justify-between">
                                 <span x-text="tag.title" class="font-medium"></span>
-                                <span x-show="isTagSelected(tag.id)" class="text-xs text-blue-600">✓ انتخاب شده</span>
+                                <span x-show="isTagSelected(tag.id)" class="text-xs text-green-600">✓ انتخاب شده</span>
                             </div>
                         </button>
                     </template>
@@ -77,7 +77,7 @@
             <button type="button"
                     @click="createNewTag()"
                     x-show="searchQuery.length > 0 && !isTagInResults(searchQuery)"
-                    class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                    class="px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-400 text-white rounded-lg hover:from-green-600 hover:to-emerald-500 transition-colors">
                 {{ __('admin/tags.forms.buttons.create') }}
             </button>
         </div>
@@ -86,8 +86,8 @@
     <!-- Selected Tags -->
     <div x-show="tags.length > 0" class="flex flex-wrap gap-2">
         <template x-for="(tag, index) in tags" :key="tag.id">
-            <div class="group relative inline-flex items-center gap-2 px-3 py-1.5 bg-blue-50 border border-blue-200 rounded-lg">
-                <span x-text="tag.title" class="text-sm font-medium text-blue-900"></span>
+            <div class="group relative inline-flex items-center gap-2 px-3 py-1.5 bg-green-50 border border-green-200 rounded-lg">
+                <span x-text="tag.title" class="text-sm font-medium text-green-900"></span>
                 
                 <!-- Body Display (Read-Only) -->
                 <span x-show="readOnly && tag.body" class="text-xs text-gray-600" x-text="'(' + tag.body + ')'"></span>
@@ -98,14 +98,14 @@
                            :value="tag.body || ''"
                            @blur="updateTagBody(tag.tagable_id, tag.id, $event.target.value)"
                            :placeholder="__('admin/tags.forms.placeholders.body')"
-                           class="text-xs px-2 py-1 w-32 border border-blue-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500">
+                           class="text-xs px-2 py-1 w-32 border border-green-300 rounded focus:outline-none focus:ring-1 focus:ring-green-500">
                 </div>
                 
                 <!-- Remove Button -->
                 <button type="button"
                         x-show="!readOnly"
                         @click="removeTag(tag.id, tag.tagable_id)"
-                        class="text-blue-600 hover:text-red-600 transition-colors">
+                        class="text-green-600 hover:text-red-600 transition-colors">
                     <x-icon name="x" size="xs" />
                 </button>
             </div>

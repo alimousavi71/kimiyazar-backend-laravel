@@ -27,7 +27,7 @@
 
         <!-- Custom dropdown button -->
         <button type="button" 
-            class="category-selector-button w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200 bg-white disabled:bg-gray-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md focus:shadow-md text-left flex items-center justify-between {{ $class }}"
+            class="category-selector-button w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all duration-200 bg-white disabled:bg-gray-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md focus:shadow-md text-left flex items-center justify-between {{ $class }}"
             data-target="{{ $uniqueId }}">
             <span class="category-selector-text">
                 {{ $placeholder }}
@@ -43,7 +43,7 @@
                 <div class="relative">
                     <x-icon name="search" size="sm" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                     <input type="text" 
-                        class="category-selector-search w-full pl-9 pr-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm"
+                        class="category-selector-search w-full pl-9 pr-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none text-sm"
                         placeholder="{{ __('admin/components.buttons.search') }}"
                         data-search="{{ $uniqueId }}">
                 </div>
@@ -62,7 +62,7 @@
                         $isParent = $depth === 0;
                         $isChild = $depth > 0;
                     @endphp
-                    <div class="category-selector-option p-2 px-3 text-sm cursor-pointer transition-colors {{ $value == $category->id ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50' }} {{ $isParent ? 'font-semibold' : '' }}"
+                    <div class="category-selector-option p-2 px-3 text-sm cursor-pointer transition-colors {{ $value == $category->id ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50' }} {{ $isParent ? 'font-semibold' : '' }}"
                         data-value="{{ $category->id }}"
                         data-text="{{ $category->name }}"
                         data-full-path="{{ $category->full_path ?? $category->name }}"

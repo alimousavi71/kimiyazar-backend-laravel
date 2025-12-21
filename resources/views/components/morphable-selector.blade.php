@@ -27,7 +27,7 @@
             x-model="selectedType" 
             @change="onTypeChange()" 
             name="{{ $typeFieldName }}" 
-            class="px-3 py-2.5 rounded-xl border focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200 bg-white disabled:bg-gray-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md focus:shadow-md {{ $typeError ? 'border-red-500' : 'border-gray-200' }}"
+            class="px-3 py-2.5 rounded-xl border focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all duration-200 bg-white disabled:bg-gray-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md focus:shadow-md {{ $typeError ? 'border-red-500' : 'border-gray-200' }}"
         >
             <option value="">{{ __('morphable.choose_type') }}</option>
             @foreach($typeOptions as $option)

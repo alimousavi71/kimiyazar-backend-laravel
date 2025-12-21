@@ -297,7 +297,7 @@
                         class="mt-2 ms-3 space-y-1 border-s-2 border-gray-200/60 ps-4">
                         <li>
                             <a href="{{ route('admin.examples.imask-test') ?? '#' }}"
-                                class="group flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300 text-sm cursor-pointer {{ request()->routeIs('admin.examples.imask-test') ? 'bg-blue-50/80 text-blue-700 font-medium shadow-sm border border-green-200/50' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1 hover:shadow-sm' }}">
+                                class="group flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300 text-sm cursor-pointer {{ request()->routeIs('admin.examples.imask-test') ? 'bg-green-50/80 text-green-700 font-medium shadow-sm border border-green-200/50' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1 hover:shadow-sm' }}">
                                 <x-icon name="code-alt" size="sm"
                                     class="{{ request()->routeIs('admin.examples.imask-test') ? 'text-green-600 scale-110' : 'text-gray-400 group-hover:text-green-600 group-hover:scale-110' }} transition-all duration-300" />
                                 <span>{{ __('admin/components.navigation.imask_test') }}</span>
@@ -305,7 +305,7 @@
                         </li>
                         <li>
                             <a href="{{ route('admin.examples.validation-example') ?? '#' }}"
-                                class="group flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300 text-sm cursor-pointer {{ request()->routeIs('admin.examples.validation-example') ? 'bg-blue-50/80 text-blue-700 font-medium shadow-sm border border-green-200/50' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1 hover:shadow-sm' }}">
+                                class="group flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300 text-sm cursor-pointer {{ request()->routeIs('admin.examples.validation-example') ? 'bg-green-50/80 text-green-700 font-medium shadow-sm border border-green-200/50' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1 hover:shadow-sm' }}">
                                 <x-icon name="check-circle" size="sm"
                                     class="{{ request()->routeIs('admin.examples.validation-example') ? 'text-green-600 scale-110' : 'text-gray-400 group-hover:text-green-600 group-hover:scale-110' }} transition-all duration-300" />
                                 <span>{{ __('admin/components.navigation.validation_example') }}</span>
@@ -313,7 +313,7 @@
                         </li>
                         <li>
                             <a href="{{ route('admin.examples.toast-example') ?? '#' }}"
-                                class="group flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300 text-sm cursor-pointer {{ request()->routeIs('admin.examples.toast-example') ? 'bg-blue-50/80 text-blue-700 font-medium shadow-sm border border-green-200/50' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1 hover:shadow-sm' }}">
+                                class="group flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300 text-sm cursor-pointer {{ request()->routeIs('admin.examples.toast-example') ? 'bg-green-50/80 text-green-700 font-medium shadow-sm border border-green-200/50' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1 hover:shadow-sm' }}">
                                 <x-icon name="notification" size="sm"
                                     class="{{ request()->routeIs('admin.examples.toast-example') ? 'text-green-600 scale-110' : 'text-gray-400 group-hover:text-green-600 group-hover:scale-110' }} transition-all duration-300" />
                                 <span>{{ __('admin/components.navigation.toast_examples') }}</span>
@@ -321,7 +321,7 @@
                         </li>
                         <li>
                             <a href="{{ route('admin.examples.axios-example') ?? '#' }}"
-                                class="group flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300 text-sm cursor-pointer {{ request()->routeIs('admin.examples.axios-example') ? 'bg-blue-50/80 text-blue-700 font-medium shadow-sm border border-green-200/50' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1 hover:shadow-sm' }}">
+                                class="group flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300 text-sm cursor-pointer {{ request()->routeIs('admin.examples.axios-example') ? 'bg-green-50/80 text-green-700 font-medium shadow-sm border border-green-200/50' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1 hover:shadow-sm' }}">
                                 <x-icon name="code-alt" size="sm"
                                     class="{{ request()->routeIs('admin.examples.axios-example') ? 'text-green-600 scale-110' : 'text-gray-400 group-hover:text-green-600 group-hover:scale-110' }} transition-all duration-300" />
                                 <span>{{ __('admin/components.navigation.axios_examples') }}</span>
@@ -329,7 +329,7 @@
                         </li>
                         <li>
                             <a href="{{ route('admin.examples.form-example') ?? '#' }}"
-                                class="group flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300 text-sm cursor-pointer {{ request()->routeIs('admin.examples.form-example') ? 'bg-blue-50/80 text-blue-700 font-medium shadow-sm border border-green-200/50' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1 hover:shadow-sm' }}">
+                                class="group flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300 text-sm cursor-pointer {{ request()->routeIs('admin.examples.form-example') ? 'bg-green-50/80 text-green-700 font-medium shadow-sm border border-green-200/50' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1 hover:shadow-sm' }}">
                                 <x-icon name="edit" size="sm"
                                     class="{{ request()->routeIs('admin.examples.form-example') ? 'text-green-600 scale-110' : 'text-gray-400 group-hover:text-green-600 group-hover:scale-110' }} transition-all duration-300" />
                                 <span>{{ __('admin/components.navigation.form_example') }}</span>
@@ -337,7 +337,7 @@
                         </li>
                         <li>
                             <a href="{{ route('admin.examples.modal-example') ?? '#' }}"
-                                class="group flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300 text-sm cursor-pointer {{ request()->routeIs('admin.examples.modal-example') ? 'bg-blue-50/80 text-blue-700 font-medium shadow-sm border border-green-200/50' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1 hover:shadow-sm' }}">
+                                class="group flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300 text-sm cursor-pointer {{ request()->routeIs('admin.examples.modal-example') ? 'bg-green-50/80 text-green-700 font-medium shadow-sm border border-green-200/50' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900 hover:translate-x-1 hover:shadow-sm' }}">
                                 <x-icon name="folder" size="sm"
                                     class="{{ request()->routeIs('admin.examples.modal-example') ? 'text-green-600 scale-110' : 'text-gray-400 group-hover:text-green-600 group-hover:scale-110' }} transition-all duration-300" />
                                 <span>{{ __('admin/components.navigation.modal_example') }}</span>

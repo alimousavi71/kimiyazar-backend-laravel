@@ -131,14 +131,14 @@
             </x-button>
 
             <!-- Help Text -->
-            <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
+            <div class="bg-green-50 border border-green-200 rounded-xl p-4">
                 <div class="flex items-start gap-3">
-                    <x-icon name="info-circle" size="md" class="text-blue-600 mt-0.5 shrink-0" />
+                    <x-icon name="info-circle" size="md" class="text-green-600 mt-0.5 shrink-0" />
                     <div class="flex-1">
-                        <p class="text-sm font-medium text-blue-900 mb-1">
+                        <p class="text-sm font-medium text-green-900 mb-1">
                             {{ __('admin/auth.two_factor_challenge.need_help_title') }}
                         </p>
-                        <p class="text-xs text-blue-700">
+                        <p class="text-xs text-green-700">
                             {{ __('admin/auth.two_factor_challenge.need_help_text') }}
                         </p>
                     </div>

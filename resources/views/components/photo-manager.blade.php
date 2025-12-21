@@ -47,8 +47,8 @@
 
     <!-- Upload Area -->
     <div x-show="!readOnly && (!limit || photos.length < limit)" 
-         class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors"
-         :class="{ 'border-blue-500 bg-blue-50': isDragging }"
+         class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-green-400 transition-colors"
+         :class="{ 'border-green-500 bg-green-50': isDragging }"
          @dragover.prevent="isDragging = true"
          @dragleave.prevent="isDragging = false"
          @drop.prevent="handleDrop($event)"
@@ -66,7 +66,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
             </svg>
             <div class="text-sm text-gray-600">
-                <span class="font-medium text-blue-600 hover:text-blue-700 cursor-pointer">{{ __('admin/photos.forms.labels.click_to_upload') }}</span>
+                <span class="font-medium text-green-600 hover:text-green-700 cursor-pointer">{{ __('admin/photos.forms.labels.click_to_upload') }}</span>
                 <span class="text-gray-500"> {{ __('admin/photos.forms.labels.drag_and_drop') }}</span>
             </div>
             <p class="text-xs text-gray-500">{{ __('admin/photos.forms.labels.supported_formats') }} - {{ __('admin/photos.forms.labels.max_size') }}</p>
@@ -80,7 +80,7 @@
 
     <!-- Loading Indicator -->
     <div x-show="loading" class="flex items-center justify-center py-4">
-        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
         <span class="ml-2 text-sm text-gray-600">{{ __('admin/photos.forms.messages.uploading') }}</span>
     </div>
 
@@ -99,7 +99,7 @@
                     <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-opacity flex items-center justify-center space-x-2">
                         <!-- Primary Badge -->
                         <span x-show="photo.is_primary" 
-                              class="absolute top-2 left-2 bg-blue-600 text-white text-xs px-2 py-1 rounded">
+                              class="absolute top-2 left-2 bg-gradient-to-r from-green-500 to-emerald-400 text-white text-xs px-2 py-1 rounded">
                             Primary
                         </span>
                         
@@ -109,7 +109,7 @@
                             <button type="button"
                                     @click="setPrimary(photo.id)"
                                     x-show="!photo.is_primary"
-                                    class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition-colors"
+                                    class="bg-gradient-to-r from-green-500 to-emerald-400 text-white p-2 rounded hover:from-green-600 hover:to-emerald-500 transition-colors"
                                     title="Set as primary">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
@@ -157,7 +157,7 @@
                            :value="photo.alt || ''"
                            @blur="updateAlt(photo.id, $event.target.value)"
                            placeholder="{{ __('admin/photos.forms.placeholders.alt') }}"
-                           class="w-full text-xs px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500">
+                           class="w-full text-xs px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-green-500">
                 </div>
                 
                 <!-- Alt Text Display (Read-Only) -->

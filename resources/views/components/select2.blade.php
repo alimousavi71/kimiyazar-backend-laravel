@@ -69,10 +69,10 @@
             <button 
                 type="button"
                 @click="toggleDropdown()"
-                class="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200 disabled:bg-gray-50 disabled:cursor-not-allowed bg-white shadow-sm hover:shadow-md focus:shadow-md text-start flex items-center justify-between min-h-[42px]"
+                class="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all duration-200 disabled:bg-gray-50 disabled:cursor-not-allowed bg-white shadow-sm hover:shadow-md focus:shadow-md text-start flex items-center justify-between min-h-[42px]"
                 :class="{
                     'border-red-500': error,
-                    'ring-2 ring-blue-500 border-blue-500 shadow-md': isOpen
+                    'ring-2 ring-green-500 border-green-500 shadow-md': isOpen
                 }"
             >
                 <span class="flex-1 truncate text-gray-900" x-show="selectedOptions.length > 0">
@@ -126,14 +126,14 @@
                         @input.debounce.300ms="handleSearch()"
                         @keydown.escape="closeDropdown()"
                         placeholder="Type to search..."
-                        class="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200 bg-white shadow-sm hover:shadow-md focus:shadow-md text-sm"
+                        class="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all duration-200 bg-white shadow-sm hover:shadow-md focus:shadow-md text-sm"
                     />
                 </div>
 
                 <!-- Loading State -->
                 <div x-show="isLoading" class="p-4 text-center text-gray-500 text-sm">
                     <div class="inline-flex items-center gap-2">
-                        <div class="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                        <div class="w-4 h-4 border-2 border-green-500 border-t-transparent rounded-full animate-spin"></div>
                         <span>Loading...</span>
                     </div>
                 </div>
@@ -162,12 +162,12 @@
                             @click="selectOption(option)"
                             :class="[
                                 'px-3 py-2.5 cursor-pointer hover:bg-gray-50 transition-colors flex items-center justify-between text-sm',
-                                isSelected(option) ? 'bg-blue-50 text-blue-700 font-medium' : 'text-gray-900'
+                                isSelected(option) ? 'bg-green-50 text-green-700 font-medium' : 'text-gray-900'
                             ]"
                         >
                             <span x-text="option.text" class="flex-1"></span>
                             <template x-if="isSelected(option)">
-                                <x-icon name="check" size="sm" class="text-blue-600 ms-2 flex-shrink-0" />
+                                <x-icon name="check" size="sm" class="text-green-600 ms-2 flex-shrink-0" />
                             </template>
                         </div>
                     </template>

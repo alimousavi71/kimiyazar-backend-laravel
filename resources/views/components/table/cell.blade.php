@@ -56,9 +56,9 @@
                 <span>{{ $slot }}</span>
                 <span class="inline-flex items-center">
                     @if($displayDirection === 'asc')
-                        <x-icon name="chevron-up" size="xs" class="text-blue-600" />
+                        <x-icon name="chevron-up" size="xs" class="text-green-600" />
                     @elseif($displayDirection === 'desc')
-                        <x-icon name="chevron-down" size="xs" class="text-blue-600" />
+                        <x-icon name="chevron-down" size="xs" class="text-green-600" />
                     @else
                         <x-icon name="sort" size="xs" class="text-gray-400 group-hover:text-gray-600 transition-colors" />
                     @endif
@@ -72,9 +72,9 @@
                 @if($sortable)
                     <span class="inline-flex items-center">
                         @if($sortDirection === 'asc')
-                            <x-icon name="chevron-up" size="xs" class="text-blue-600" />
+                            <x-icon name="chevron-up" size="xs" class="text-green-600" />
                         @elseif($sortDirection === 'desc')
-                            <x-icon name="chevron-down" size="xs" class="text-blue-600" />
+                            <x-icon name="chevron-down" size="xs" class="text-green-600" />
                         @else
                             <x-icon name="sort" size="xs" class="text-gray-400" />
                         @endif

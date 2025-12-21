@@ -36,7 +36,7 @@
         <span class="text-xs font-medium text-gray-600">{{ __('admin/components.filter_badges.active_filters') }}:</span>
         @foreach($activeFilters as $key => $filter)
             <a href="{{ request()->fullUrlWithQuery([$key => null]) }}"
-                class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 hover:bg-blue-200 transition-colors">
+                class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 hover:bg-green-200 transition-colors">
                 <span>{{ $filter['label'] }}: {{ $filter['value'] }}</span>
                 <x-icon name="x" size="xs" class="cursor-pointer" />
             </a>

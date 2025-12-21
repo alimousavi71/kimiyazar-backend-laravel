@@ -4,7 +4,7 @@
     $variants = [
         'default' => 'text-gray-700 hover:bg-gray-50',
         'danger' => 'text-red-600 hover:bg-red-50',
-        'primary' => 'text-blue-600 hover:bg-blue-50',
+        'primary' => 'text-green-600 hover:bg-green-50',
     ];
 @endphp
 
