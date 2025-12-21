@@ -29,6 +29,8 @@
                     <x-table.head>
                         <x-table.row>
                             <x-table.cell header sortable
+                                sort-field="id">{{ __('admin/components.table.id') }}</x-table.cell>
+                            <x-table.cell header sortable
                                 sort-field="name">{{ __('admin/banners.fields.name') }}</x-table.cell>
                             <x-table.cell header sortable
                                 sort-field="position">{{ __('admin/banners.fields.position') }}</x-table.cell>
@@ -45,6 +47,9 @@
                         @if(isset($banners) && $banners->count() > 0)
                             @foreach($banners as $banner)
                                 <x-table.row data-banner-id="{{ $banner->id }}">
+                                    <x-table.cell>
+                                        <span class="text-gray-600">{{ $banner->id }}</span>
+                                    </x-table.cell>
                                     <x-table.cell>
                                         <span class="font-medium text-gray-900">{{ $banner->name }}</span>
                                     </x-table.cell>
@@ -90,7 +95,7 @@
                             @endforeach
                         @else
                             <x-table.row>
-                                <x-table.cell colspan="6" class="text-center py-8 text-gray-500">
+                                <x-table.cell colspan="7" class="text-center py-8 text-gray-500">
                                     {{ __('admin/components.table.no_results') }}
                                 </x-table.cell>
                             </x-table.row>

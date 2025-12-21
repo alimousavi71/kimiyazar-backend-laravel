@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\ProductPrice\BulkUpdateProductPriceRequest;
 use App\Http\Requests\Admin\ProductPrice\SyncTodayPricesRequest;
 use App\Http\Requests\Admin\ProductPrice\UpdateProductPriceRequest;
 use App\Http\Traits\ApiResponseTrait;
+use App\Services\Category\CategoryService;
 use App\Services\ProductPrice\ProductPriceService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -18,9 +19,11 @@ class ProductPriceController extends Controller
 
     /**
      * @param ProductPriceService $service
+     * @param CategoryService $categoryService
      */
     public function __construct(
-        private readonly ProductPriceService $service
+        private readonly ProductPriceService $service,
+        private readonly CategoryService $categoryService
     ) {
     }
 
@@ -33,12 +36,14 @@ class ProductPriceController extends Controller
     public function index(Request $request): View
     {
         $search = $request->query('search');
+        $categoryId = $request->query('category_id') ? (int) $request->query('category_id') : null;
         $perPage = (int) $request->query('per_page', 15);
         $perPage = in_array($perPage, [10, 25, 50, 100]) ? $perPage : 15;
 
-        $products = $this->service->getProductsWithLatestPrices($search, $perPage);
+        $products = $this->service->getProductsWithLatestPrices($search, $categoryId, $perPage);
+        $categories = $this->categoryService->getAllCategoriesTree();
 
-        return view('admin.product-prices.index', compact('products', 'search', 'perPage'));
+        return view('admin.product-prices.index', compact('products', 'search', 'categoryId', 'perPage', 'categories'));
     }
 
     /**

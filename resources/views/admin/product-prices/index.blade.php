@@ -26,42 +26,60 @@
 
         <!-- Search and Actions -->
         <x-card class="mb-6">
-            <div class="flex flex-col sm:flex-row gap-4 items-center">
-                <div class="flex-1 w-full">
-                    <form method="GET" action="{{ route('admin.product-prices.index') }}" class="flex gap-2">
-                        @if($perPage)
-                            <input type="hidden" name="per_page" value="{{ $perPage }}">
-                        @endif
-                        <input type="text" name="search" id="search-input"
-                            value="{{ $search ?? '' }}"
-                            placeholder="{{ __('admin/product-prices.placeholders.search') }}"
-                            class="flex-1 px-3 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200 bg-white shadow-sm hover:shadow-md focus:shadow-md">
-                        <button type="submit"
-                            class="px-4 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors text-sm font-medium">
-                            {{ __('admin/components.buttons.search') }}
-                        </button>
-                        @if($search)
-                            <a href="{{ route('admin.product-prices.index', ['per_page' => $perPage]) }}"
-                                class="px-4 py-2.5 bg-gray-200 text-gray-700 rounded-xl hover:bg-gray-300 transition-colors text-sm font-medium">
-                                {{ __('admin/components.buttons.reset') }}
-                            </a>
-                        @endif
-                    </form>
+            <form method="GET" action="{{ route('admin.product-prices.index') }}" id="filter-form">
+                @if($perPage)
+                    <input type="hidden" name="per_page" value="{{ $perPage }}">
+                @endif
+                <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                    <div class="flex-1 w-full grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <!-- Search Input -->
+                        <div class="flex gap-2">
+                            <input type="text" name="search" id="search-input"
+                                value="{{ $search ?? '' }}"
+                                placeholder="{{ __('admin/product-prices.placeholders.search') }}"
+                                class="flex-1 px-3 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200 bg-white shadow-sm hover:shadow-md focus:shadow-md">
+                            <button type="submit"
+                                class="px-4 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors text-sm font-medium">
+                                {{ __('admin/components.buttons.search') }}
+                            </button>
+                        </div>
+                        
+                        <!-- Category Filter -->
+                        <div>
+                            <x-category-selector 
+                                name="category_id" 
+                                id="category-filter"
+                                :value="$categoryId"
+                                :categories="$categories"
+                                :placeholder="__('admin/products.forms.placeholders.all_categories')"
+                                class="w-full" />
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                        <label for="per-page-select" class="text-sm text-gray-700 whitespace-nowrap">
+                            {{ __('admin/components.pagination.per_page') }}:
+                        </label>
+                        <select name="per_page" id="per-page-select"
+                            onchange="document.getElementById('filter-form').submit()"
+                            class="px-3 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200 bg-white shadow-sm hover:shadow-md focus:shadow-md">
+                            <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10</option>
+                            <option value="25" {{ $perPage == 25 ? 'selected' : '' }}>25</option>
+                            <option value="50" {{ $perPage == 50 ? 'selected' : '' }}>50</option>
+                            <option value="100" {{ $perPage == 100 ? 'selected' : '' }}>100</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="flex items-center gap-2">
-                    <label for="per-page-select" class="text-sm text-gray-700 whitespace-nowrap">
-                        {{ __('admin/components.pagination.per_page') }}:
-                    </label>
-                    <select name="per_page" id="per-page-select"
-                        onchange="window.location.href = '{{ route('admin.product-prices.index', ['search' => $search]) }}&per_page=' + this.value"
-                        class="px-3 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200 bg-white shadow-sm hover:shadow-md focus:shadow-md">
-                        <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10</option>
-                        <option value="25" {{ $perPage == 25 ? 'selected' : '' }}>25</option>
-                        <option value="50" {{ $perPage == 50 ? 'selected' : '' }}>50</option>
-                        <option value="100" {{ $perPage == 100 ? 'selected' : '' }}>100</option>
-                    </select>
-                </div>
-            </div>
+                
+                @if($search || $categoryId)
+                    <div class="mt-3 flex gap-2">
+                        <a href="{{ route('admin.product-prices.index', ['per_page' => $perPage]) }}"
+                            class="px-4 py-2 bg-gray-200 text-gray-700 rounded-xl hover:bg-gray-300 transition-colors text-sm font-medium">
+                            {{ __('admin/components.buttons.reset') }}
+                        </a>
+                    </div>
+                @endif
+            </form>
         </x-card>
 
         <!-- Products Price Table -->
@@ -70,6 +88,10 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
+                            <th scope="col"
+                                class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                {{ __('admin/components.table.id') }}
+                            </th>
                             <th scope="col"
                                 class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 {{ __('admin/products.fields.name') }}
@@ -95,6 +117,9 @@
                     <tbody class="bg-white divide-y divide-gray-200" id="products-table-body">
                         @forelse($products as $product)
                             <tr data-product-id="{{ $product->id }}" class="hover:bg-gray-50 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="text-sm text-gray-600">{{ $product->id }}</span>
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm font-medium text-gray-900">{{ $product->name }}</div>
                                     @if($product->category)
@@ -145,7 +170,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="px-6 py-8 text-center text-gray-500">
+                                <td colspan="6" class="px-6 py-8 text-center text-gray-500">
                                     {{ __('admin/components.table.no_results') }}
                                 </td>
                             </tr>
@@ -170,6 +195,23 @@
                 syncToday: '{{ route('admin.product-prices.sync-today') }}'
             };
         </script>
-        @vite('resources/js/product-price-management.js')
+        @vite(['resources/js/product-price-management.js', 'resources/js/category-selector.js'])
+        <script>
+            // Auto-submit form when category changes
+            document.addEventListener('DOMContentLoaded', function() {
+                // Wait for category selector to initialize
+                setTimeout(function() {
+                    const categoryFilter = document.getElementById('category-filter');
+                    if (categoryFilter) {
+                        const hiddenSelect = categoryFilter.closest('.category-selector-wrapper')?.querySelector('select');
+                        if (hiddenSelect) {
+                            hiddenSelect.addEventListener('change', function() {
+                                document.getElementById('filter-form').submit();
+                            });
+                        }
+                    }
+                }, 100);
+            });
+        </script>
     @endpush
 </x-layouts.admin>

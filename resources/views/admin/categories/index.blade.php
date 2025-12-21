@@ -33,6 +33,8 @@
                     <x-table.head>
                         <x-table.row>
                             <x-table.cell header sortable
+                                sort-field="id">{{ __('admin/components.table.id') }}</x-table.cell>
+                            <x-table.cell header sortable
                                 sort-field="name">{{ __('admin/categories.fields.name') }}</x-table.cell>
                             <x-table.cell header sortable
                                 sort-field="slug">{{ __('admin/categories.fields.slug') }}</x-table.cell>
@@ -52,6 +54,9 @@
                         @if(isset($categories) && $categories->count() > 0)
                             @foreach($categories as $category)
                                 <x-table.row data-category-id="{{ $category->id }}">
+                                    <x-table.cell>
+                                        <span class="text-gray-600">{{ $category->id }}</span>
+                                    </x-table.cell>
                                     <x-table.cell>
                                         <span class="font-medium text-gray-900">{{ $category->name }}</span>
                                     </x-table.cell>
@@ -99,7 +104,7 @@
                             @endforeach
                         @else
                             <x-table.row>
-                                <x-table.cell colspan="6" class="text-center py-8 text-gray-500">
+                                <x-table.cell colspan="7" class="text-center py-8 text-gray-500">
                                     {{ __('admin/components.table.no_results') }}
                                 </x-table.cell>
                             </x-table.row>

@@ -28,6 +28,8 @@
                     <x-table.head>
                         <x-table.row>
                             <x-table.cell header sortable
+                                sort-field="id">{{ __('admin/components.table.id') }}</x-table.cell>
+                            <x-table.cell header sortable
                                 sort-field="first_name">{{ __('admin/admins.fields.full_name') }}</x-table.cell>
                             <x-table.cell header sortable
                                 sort-field="email">{{ __('admin/admins.fields.email') }}</x-table.cell>
@@ -45,6 +47,9 @@
                         @if(isset($admins) && $admins->count() > 0)
                             @foreach($admins as $admin)
                                 <x-table.row data-admin-id="{{ $admin->id }}">
+                                    <x-table.cell>
+                                        <span class="text-gray-600">{{ $admin->id }}</span>
+                                    </x-table.cell>
                                     <x-table.cell>
                                         <div class="flex items-center gap-3">
                                             @if($admin->avatar)
@@ -102,7 +107,7 @@
                             @endforeach
                         @else
                             <x-table.row>
-                                <x-table.cell colspan="6" class="text-center py-8 text-gray-500">
+                                <x-table.cell colspan="7" class="text-center py-8 text-gray-500">
                                     {{ __('admin/components.table.no_results') }}
                                 </x-table.cell>
                             </x-table.row>

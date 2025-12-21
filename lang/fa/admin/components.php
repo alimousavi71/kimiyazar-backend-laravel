@@ -32,6 +32,7 @@ return [
         'no_results' => 'نتیجه‌ای یافت نشد',
         'loading' => 'در حال بارگذاری...',
         'actions' => 'عملیات',
+        'id' => 'شناسه',
     ],
 
     // Filter Sidebar

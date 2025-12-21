@@ -28,6 +28,8 @@
                     <x-table.head>
                         <x-table.row>
                             <x-table.cell header sortable
+                                sort-field="id">{{ __('admin/components.table.id') }}</x-table.cell>
+                            <x-table.cell header sortable
                                 sort-field="title">{{ __('admin/modals.fields.title') }}</x-table.cell>
                             <x-table.cell header>{{ __('admin/modals.fields.content') }}</x-table.cell>
                             <x-table.cell header sortable
@@ -49,13 +51,18 @@
                             @foreach($modals as $modal)
                                 <x-table.row data-modal-id="{{ $modal->id }}">
                                     <x-table.cell>
+                                        <span class="text-gray-600">{{ $modal->id }}</span>
+                                    </x-table.cell>
+                                    <x-table.cell>
                                         <span class="font-medium text-gray-900">{{ $modal->title }}</span>
                                     </x-table.cell>
                                     <x-table.cell>
-                                        <span class="text-gray-600 truncate max-w-xs">{{ Str::limit($modal->content, 50) }}</span>
+                                        <span
+                                            class="text-gray-600 truncate max-w-xs">{{ Str::limit($modal->content, 50) }}</span>
                                     </x-table.cell>
                                     <x-table.cell>
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                                             {{ $modal->priority }}
                                         </span>
                                     </x-table.cell>
@@ -96,7 +103,7 @@
                             @endforeach
                         @else
                             <x-table.row>
-                                <x-table.cell colspan="8" class="text-center py-8 text-gray-500">
+                                <x-table.cell colspan="9" class="text-center py-8 text-gray-500">
                                     {{ __('admin/components.table.no_results') }}
                                 </x-table.cell>
                             </x-table.row>
@@ -113,7 +120,8 @@
                     <div>
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin/modals.fields.is_published') }}</label>
-                        <x-select name="filter[is_published]" class="w-full" :value="request()->query('filter.is_published')">
+                        <x-select name="filter[is_published]" class="w-full"
+                            :value="request()->query('filter.is_published')">
                             <option value="">{{ __('admin/components.status.all') }}</option>
                             <option value="1" {{ request()->query('filter.is_published') === '1' ? 'selected' : '' }}>
                                 {{ __('admin/modals.status.active') }}

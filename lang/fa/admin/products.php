@@ -95,6 +95,7 @@ return [
             'current_price' => 'قیمت فعلی را وارد کنید',
             'currency_code' => 'کد ارز را وارد کنید (مثلاً USD, EUR)',
             'no_category' => 'بدون دسته‌بندی',
+            'all_categories' => 'همه دسته‌بندی‌ها',
         ],
         'labels' => [
             'published_product' => 'محصول منتشر شده',

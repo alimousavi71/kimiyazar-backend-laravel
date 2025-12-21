@@ -23,6 +23,8 @@
                     <x-table.head>
                         <x-table.row>
                             <x-table.cell header sortable
+                                sort-field="id">{{ __('admin/components.table.id') }}</x-table.cell>
+                            <x-table.cell header sortable
                                 sort-field="title">{{ __('admin/contacts.fields.title') }}</x-table.cell>
                             <x-table.cell header sortable
                                 sort-field="email">{{ __('admin/contacts.fields.email') }}</x-table.cell>
@@ -40,6 +42,9 @@
                         @if(isset($contacts) && $contacts->count() > 0)
                             @foreach($contacts as $contact)
                                 <x-table.row data-contact-id="{{ $contact->id }}">
+                                    <x-table.cell>
+                                        <span class="text-gray-600">{{ $contact->id }}</span>
+                                    </x-table.cell>
                                     <x-table.cell>
                                         <span
                                             class="font-medium text-gray-900">{{ $contact->title ?: __('admin/contacts.no_title') }}</span>
@@ -72,7 +77,7 @@
                             @endforeach
                         @else
                             <x-table.row>
-                                <x-table.cell colspan="6" class="text-center py-8 text-gray-500">
+                                <x-table.cell colspan="7" class="text-center py-8 text-gray-500">
                                     {{ __('admin/components.table.no_results') }}
                                 </x-table.cell>
                             </x-table.row>

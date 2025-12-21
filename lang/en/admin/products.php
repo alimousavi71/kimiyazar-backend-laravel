@@ -95,6 +95,7 @@ return [
             'current_price' => 'Enter current price',
             'currency_code' => 'Enter currency code (e.g., USD, EUR)',
             'no_category' => 'No category',
+            'all_categories' => 'All Categories',
         ],
         'labels' => [
             'published_product' => 'Published product',

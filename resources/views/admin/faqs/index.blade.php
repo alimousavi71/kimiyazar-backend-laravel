@@ -28,6 +28,8 @@
                     <x-table.head>
                         <x-table.row>
                             <x-table.cell header sortable
+                                sort-field="id">{{ __('admin/components.table.id') }}</x-table.cell>
+                            <x-table.cell header sortable
                                 sort-field="question">{{ __('admin/faqs.fields.question') }}</x-table.cell>
                             <x-table.cell header>{{ __('admin/faqs.fields.answer') }}</x-table.cell>
                             <x-table.cell header sortable
@@ -59,12 +61,10 @@
                                     <x-table.cell>
                                         <div class="flex items-center justify-end">
                                             <x-dropdown-menu align="end">
-                                                <x-dropdown-item href="{{ route('admin.faqs.show', $faq->id) }}"
-                                                    icon="show">
+                                                <x-dropdown-item href="{{ route('admin.faqs.show', $faq->id) }}" icon="show">
                                                     {{ __('admin/components.buttons.view') }}
                                                 </x-dropdown-item>
-                                                <x-dropdown-item href="{{ route('admin.faqs.edit', $faq->id) }}"
-                                                    icon="edit">
+                                                <x-dropdown-item href="{{ route('admin.faqs.edit', $faq->id) }}" icon="edit">
                                                     {{ __('admin/components.buttons.edit') }}
                                                 </x-dropdown-item>
                                                 <div class="border-t border-gray-200 my-1"></div>
@@ -79,7 +79,7 @@
                             @endforeach
                         @else
                             <x-table.row>
-                                <x-table.cell colspan="5" class="text-center py-8 text-gray-500">
+                                <x-table.cell colspan="6" class="text-center py-8 text-gray-500">
                                     {{ __('admin/faqs.table.empty') }}
                                 </x-table.cell>
                             </x-table.row>
@@ -96,7 +96,8 @@
                     <div>
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin/faqs.fields.is_published') }}</label>
-                        <x-select name="filter[is_published]" class="w-full" :value="request()->query('filter.is_published')">
+                        <x-select name="filter[is_published]" class="w-full"
+                            :value="request()->query('filter.is_published')">
                             <option value="">{{ __('admin/components.status.all') }}</option>
                             <option value="1" {{ request()->query('filter.is_published') === '1' ? 'selected' : '' }}>
                                 {{ __('admin/faqs.status.published') }}

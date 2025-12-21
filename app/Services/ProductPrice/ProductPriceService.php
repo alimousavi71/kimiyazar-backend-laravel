@@ -58,10 +58,11 @@ class ProductPriceService
      * Get products with their latest prices for price management page.
      *
      * @param string|null $search
+     * @param int|null $categoryId
      * @param int $perPage
      * @return LengthAwarePaginator
      */
-    public function getProductsWithLatestPrices(?string $search = null, int $perPage = 15): LengthAwarePaginator
+    public function getProductsWithLatestPrices(?string $search = null, ?int $categoryId = null, int $perPage = 15): LengthAwarePaginator
     {
         $query = Product::query();
 
@@ -70,6 +71,12 @@ class ProductPriceService
                 $q->where('name', 'like', "%{$search}%")
                     ->orWhere('slug', 'like', "%{$search}%");
             });
+        }
+
+        // Filter by category (including all subcategories)
+        if ($categoryId) {
+            $categoryIds = $this->getCategoryIdsIncludingChildren($categoryId);
+            $query->whereIn('category_id', $categoryIds);
         }
 
         $products = $query->orderBy('sort_order')->orderBy('name')->paginate($perPage);
@@ -85,6 +92,29 @@ class ProductPriceService
         });
 
         return $products;
+    }
+
+    /**
+     * Get all category IDs including the category itself and all its children recursively.
+     *
+     * @param int $categoryId
+     * @return array
+     */
+    private function getCategoryIdsIncludingChildren(int $categoryId): array
+    {
+        $categoryIds = [$categoryId];
+
+        $getChildren = function ($parentId) use (&$getChildren, &$categoryIds) {
+            $children = \App\Models\Category::where('parent_id', $parentId)->pluck('id')->toArray();
+            foreach ($children as $childId) {
+                $categoryIds[] = $childId;
+                $getChildren($childId);
+            }
+        };
+
+        $getChildren($categoryId);
+
+        return $categoryIds;
     }
 
     /**

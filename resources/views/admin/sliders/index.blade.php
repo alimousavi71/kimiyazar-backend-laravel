@@ -28,6 +28,8 @@
                     <x-table.head>
                         <x-table.row>
                             <x-table.cell header sortable
+                                sort-field="id">{{ __('admin/components.table.id') }}</x-table.cell>
+                            <x-table.cell header sortable
                                 sort-field="title">{{ __('admin/sliders.fields.title') }}</x-table.cell>
                             <x-table.cell header>{{ __('admin/sliders.fields.heading') }}</x-table.cell>
                             <x-table.cell header>{{ __('admin/photos.title') }}</x-table.cell>
@@ -45,6 +47,9 @@
                         @if(isset($sliders) && $sliders->count() > 0)
                             @foreach($sliders as $slider)
                                 <x-table.row data-slider-id="{{ $slider->id }}">
+                                    <x-table.cell>
+                                        <span class="text-gray-600">{{ $slider->id }}</span>
+                                    </x-table.cell>
                                     <x-table.cell>
                                         <span class="font-medium text-gray-900">{{ $slider->title }}</span>
                                     </x-table.cell>
@@ -96,7 +101,7 @@
                             @endforeach
                         @else
                             <x-table.row>
-                                <x-table.cell colspan="7" class="text-center py-8 text-gray-500">
+                                <x-table.cell colspan="8" class="text-center py-8 text-gray-500">
                                     {{ __('admin/components.table.no_results') }}
                                 </x-table.cell>
                             </x-table.row>
@@ -133,4 +138,3 @@
     </div>
 
 </x-layouts.admin>
-

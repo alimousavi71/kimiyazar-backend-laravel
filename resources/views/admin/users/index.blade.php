@@ -28,6 +28,8 @@
                     <x-table.head>
                         <x-table.row>
                             <x-table.cell header sortable
+                                sort-field="id">{{ __('admin/components.table.id') }}</x-table.cell>
+                            <x-table.cell header sortable
                                 sort-field="first_name">{{ __('admin/users.fields.full_name') }}</x-table.cell>
                             <x-table.cell header sortable
                                 sort-field="email">{{ __('admin/users.fields.email') }}</x-table.cell>
@@ -44,6 +46,9 @@
                         @if(isset($users) && $users->count() > 0)
                             @foreach($users as $user)
                                 <x-table.row data-user-id="{{ $user->id }}">
+                                    <x-table.cell>
+                                        <span class="text-gray-600">{{ $user->id }}</span>
+                                    </x-table.cell>
                                     <x-table.cell>
                                         <span class="font-medium text-gray-900">{{ $user->getFullName() }}</span>
                                     </x-table.cell>
@@ -64,12 +69,10 @@
                                     <x-table.cell>
                                         <div class="flex items-center justify-end">
                                             <x-dropdown-menu align="end">
-                                                <x-dropdown-item href="{{ route('admin.users.show', $user->id) }}"
-                                                    icon="show">
+                                                <x-dropdown-item href="{{ route('admin.users.show', $user->id) }}" icon="show">
                                                     {{ __('admin/components.buttons.view') }}
                                                 </x-dropdown-item>
-                                                <x-dropdown-item href="{{ route('admin.users.edit', $user->id) }}"
-                                                    icon="edit">
+                                                <x-dropdown-item href="{{ route('admin.users.edit', $user->id) }}" icon="edit">
                                                     {{ __('admin/components.buttons.edit') }}
                                                 </x-dropdown-item>
                                                 <x-dropdown-item href="{{ route('admin.users.edit-password', $user->id) }}"
@@ -88,7 +91,7 @@
                             @endforeach
                         @else
                             <x-table.row>
-                                <x-table.cell colspan="6" class="text-center py-8 text-gray-500">
+                                <x-table.cell colspan="7" class="text-center py-8 text-gray-500">
                                     {{ __('admin/users.table.empty') }}
                                 </x-table.cell>
                             </x-table.row>

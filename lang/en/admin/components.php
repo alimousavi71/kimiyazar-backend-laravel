@@ -32,6 +32,7 @@ return [
         'no_results' => 'No results found',
         'loading' => 'Loading...',
         'actions' => 'Actions',
+        'id' => 'ID',
     ],
 
     // Filter Sidebar
