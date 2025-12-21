@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Enums\Database\ContentType;
 use App\Services\Content\ContentService;
-use App\Services\Setting\SettingService;
 use App\Services\Tag\TagService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,7 +13,6 @@ class NewsController extends Controller
 {
     public function __construct(
         private readonly ContentService $contentService,
-        private readonly SettingService $settingService,
         private readonly TagService $tagService
     ) {
     }
@@ -27,7 +25,6 @@ class NewsController extends Controller
      */
     public function index(Request $request): View
     {
-        $settings = $this->settingService->getAllAsArray();
         $search = $request->get('finder');
 
         // Get paginated news
@@ -43,7 +40,7 @@ class NewsController extends Controller
         // Get all tags from news (for sidebar)
         $tags = $this->tagService->getTagsByContentType(ContentType::NEWS, 20);
 
-        return view('news.index', compact('news', 'recentNews', 'tags', 'settings', 'search'));
+        return view('news.index', compact('news', 'recentNews', 'tags', 'search'));
     }
 
     /**
@@ -54,8 +51,6 @@ class NewsController extends Controller
      */
     public function show(string $slug): View|RedirectResponse
     {
-        $settings = $this->settingService->getAllAsArray();
-
         // Get news by slug
         $news = $this->contentService->getActiveContentByTypeAndSlug(ContentType::NEWS, $slug);
 
@@ -71,6 +66,6 @@ class NewsController extends Controller
         // Get all tags from news (for sidebar)
         $tags = $this->tagService->getTagsByContentType(ContentType::NEWS, 20);
 
-        return view('news.show', compact('news', 'recentNews', 'tags', 'settings'));
+        return view('news.show', compact('news', 'recentNews', 'tags'));
     }
 }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Enums\Database\ContentType;
 use App\Services\Content\ContentService;
-use App\Services\Setting\SettingService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -12,8 +11,7 @@ use Illuminate\View\View;
 class AboutController extends Controller
 {
     public function __construct(
-        private readonly ContentService $contentService,
-        private readonly SettingService $settingService
+        private readonly ContentService $contentService
     ) {
     }
 
@@ -24,8 +22,6 @@ class AboutController extends Controller
      */
     public function index(): View|RedirectResponse
     {
-        $settings = $this->settingService->getAllAsArray();
-
         // Get about content (PAGE type with slug 'درباره-ما' or 'about')
         // The slug is generated from Persian title "درباره ما" using Str::slug()
         $aboutSlug = Str::slug('درباره ما');
@@ -36,6 +32,6 @@ class AboutController extends Controller
             return redirect()->route('home')->with('error', 'صفحه مورد نظر یافت نشد.');
         }
 
-        return view('about', compact('content', 'settings'));
+        return view('about', compact('content'));
     }
 }

@@ -4,15 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Contact\StoreContactRequest;
 use App\Services\Contact\ContactService;
-use App\Services\Setting\SettingService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class ContactController extends Controller
 {
     public function __construct(
-        private readonly ContactService $contactService,
-        private readonly SettingService $settingService
+        private readonly ContactService $contactService
     ) {
     }
 
@@ -23,9 +21,7 @@ class ContactController extends Controller
      */
     public function index(): View
     {
-        $settings = $this->settingService->getAllAsArray();
-
-        return view('contact', compact('settings'));
+        return view('contact');
     }
 
     /**

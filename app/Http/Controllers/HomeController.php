@@ -8,7 +8,6 @@ use App\Services\Banner\BannerService;
 use App\Services\Category\CategoryService;
 use App\Services\Content\ContentService;
 use App\Services\Product\ProductService;
-use App\Services\Setting\SettingService;
 use App\Services\Slider\SliderService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -20,8 +19,7 @@ class HomeController extends Controller
         private readonly SliderService $sliderService,
         private readonly ContentService $contentService,
         private readonly CategoryService $categoryService,
-        private readonly BannerService $bannerService,
-        private readonly SettingService $settingService
+        private readonly BannerService $bannerService
     ) {
     }
 
@@ -47,9 +45,6 @@ class HomeController extends Controller
 
         // Get root categories with first-level children for homepage
         $rootCategories = $this->categoryService->getRootCategoriesWithChildren();
-
-        // Get settings
-        $settings = $this->settingService->getAllAsArray();
 
         // Get banners by position
         $bannersA = $this->bannerService->getActiveBannersByPositions([BannerPosition::A1, BannerPosition::A2], 2);
@@ -96,6 +91,6 @@ class HomeController extends Controller
             ],
         ];
 
-        return view('home', compact('sliders', 'products', 'news', 'categories', 'rootCategories', 'services', 'settings', 'bannersA', 'bannersB', 'bannersC'));
+        return view('home', compact('sliders', 'products', 'news', 'categories', 'rootCategories', 'services', 'bannersA', 'bannersB', 'bannersC'));
     }
 }
