@@ -1,0 +1,128 @@
+<?php
+
+return [
+    'title' => 'Products',
+    'management' => 'Product Management',
+    'description' => 'Manage all products',
+    'add_new' => 'Add New Product',
+
+    'fields' => [
+        'name' => 'Name',
+        'slug' => 'Slug',
+        'sale_description' => 'Sale Description',
+        'unit' => 'Unit',
+        'category' => 'Category',
+        'category_id' => 'Category',
+        'is_published' => 'Published',
+        'body' => 'Description',
+        'price_label' => 'Price Label',
+        'meta_title' => 'Meta Title',
+        'meta_description' => 'Meta Description',
+        'meta_keywords' => 'Meta Keywords',
+        'status' => 'Status',
+        'sort_order' => 'Sort Order',
+        'current_price' => 'Current Price',
+        'currency_code' => 'Currency Code',
+        'price_updated_at' => 'Price Updated At',
+        'price_effective_date' => 'Price Effective Date',
+        'created_at' => 'Created At',
+        'updated_at' => 'Updated At',
+    ],
+
+    'units' => [
+        'piece' => 'Piece',
+        'kilogram' => 'Kilogram',
+        'gram' => 'Gram',
+        'liter' => 'Liter',
+        'milliliter' => 'Milliliter',
+        'meter' => 'Meter',
+        'centimeter' => 'Centimeter',
+        'box' => 'Box',
+        'pack' => 'Pack',
+    ],
+
+    'statuses' => [
+        'draft' => 'Draft',
+        'active' => 'Active',
+        'inactive' => 'Inactive',
+        'archived' => 'Archived',
+    ],
+
+    'currencies' => [
+        'irr' => 'IRR (Iranian Rial)',
+        'usd' => 'USD (US Dollar)',
+        'eur' => 'EUR (Euro)',
+        'gbp' => 'GBP (British Pound)',
+        'aed' => 'AED (UAE Dirham)',
+        'try' => 'TRY (Turkish Lira)',
+    ],
+
+    'messages' => [
+        'created' => 'Product created successfully.',
+        'updated' => 'Product updated successfully.',
+        'deleted' => 'Product deleted successfully.',
+        'not_found' => 'Product not found.',
+        'delete_failed' => 'Failed to delete product.',
+        'create_failed' => 'Failed to create product.',
+        'update_failed' => 'Failed to update product.',
+    ],
+
+    'forms' => [
+        'create' => [
+            'title' => 'Create Product',
+            'header_title' => 'Create Product',
+            'description' => 'Add a new product',
+            'card_title' => 'Product Information',
+            'submit' => 'Create Product',
+        ],
+        'edit' => [
+            'title' => 'Edit Product',
+            'header_title' => 'Edit Product',
+            'description' => 'Update product information',
+            'card_title' => 'Product Information',
+            'submit' => 'Update Product',
+        ],
+        'placeholders' => [
+            'name' => 'Enter product name',
+            'slug' => 'Enter product slug (auto-generated if empty)',
+            'sale_description' => 'Enter sale description',
+            'body' => 'Enter product description',
+            'price_label' => 'Enter price label',
+            'meta_title' => 'Enter meta title',
+            'meta_description' => 'Enter meta description',
+            'meta_keywords' => 'Enter meta keywords',
+            'sort_order' => 'Enter sort order',
+            'current_price' => 'Enter current price',
+            'currency_code' => 'Enter currency code (e.g., USD, EUR)',
+            'no_category' => 'No category',
+        ],
+        'labels' => [
+            'published_product' => 'Published product',
+            'basic_info' => 'Basic Information',
+            'seo_info' => 'SEO Information',
+            'pricing_info' => 'Pricing Information',
+        ],
+        'breadcrumbs' => [
+            'dashboard' => 'Dashboard',
+            'products' => 'Products',
+            'create' => 'Create',
+            'edit' => 'Edit',
+            'details' => 'Details',
+        ],
+    ],
+
+    'show' => [
+        'title' => 'Product Details',
+        'header_title' => 'Product Details',
+        'description' => 'View product information',
+        'basic_info' => 'Basic Information',
+        'seo_info' => 'SEO Information',
+        'pricing_info' => 'Pricing Information',
+        'timestamps' => 'Timestamps',
+        'quick_actions' => 'Quick Actions',
+        'buttons' => [
+            'edit' => 'Edit Product',
+            'back_to_list' => 'Back to List',
+        ],
+    ],
+];

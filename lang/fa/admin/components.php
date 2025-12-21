@@ -71,6 +71,7 @@ return [
         'users' => 'کاربران',
         'admins' => 'مدیران',
         'categories' => 'دسته‌بندی‌ها',
+        'products' => 'محصولات',
         'contacts' => 'تماس‌ها',
         'banners' => 'بنرها',
         'contents' => 'محتوا',
@@ -99,6 +100,7 @@ return [
         'blocked' => 'مسدود شده',
         'pending' => 'در انتظار',
         'no_results' => 'نتیجه‌ای یافت نشد',
+        'select' => 'یک گزینه انتخاب کنید',
     ],
 
     // Messages

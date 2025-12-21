@@ -27,6 +27,8 @@ use App\Repositories\Otp\OtpRepository;
 use App\Repositories\Otp\OtpRepositoryInterface;
 use App\Repositories\Modal\ModalRepository;
 use App\Repositories\Modal\ModalRepositoryInterface;
+use App\Repositories\Product\ProductRepository;
+use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Setting\SettingRepository;
 use App\Repositories\Setting\SettingRepositoryInterface;
 use App\Services\Auth\AuthService;
@@ -116,6 +118,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             SettingRepositoryInterface::class,
             SettingRepository::class
+        );
+
+        // Bind Product Repository
+        $this->app->bind(
+            ProductRepositoryInterface::class,
+            ProductRepository::class
         );
 
         // Bind Auth Service

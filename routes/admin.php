@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ModalController;
 use App\Http\Controllers\Admin\MorphableController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Examples\UsersController;
 
@@ -219,6 +220,17 @@ Route::group([
 
     // Morphable relationship search endpoint
     Route::get('/morphable/search', [MorphableController::class, 'search'])->name('morphable.search');
+
+    // Products Management
+    Route::prefix('products')->name('products.')->group(function () {
+        Route::get('/', [ProductController::class, 'index'])->name('index');
+        Route::get('/create', [ProductController::class, 'create'])->name('create');
+        Route::post('/', [ProductController::class, 'store'])->name('store');
+        Route::get('/{id}', [ProductController::class, 'show'])->name('show');
+        Route::get('/{id}/edit', [ProductController::class, 'edit'])->name('edit');
+        Route::match(['put', 'patch'], '/{id}', [ProductController::class, 'update'])->name('update');
+        Route::delete('/{id}', [ProductController::class, 'destroy'])->name('destroy');
+    });
 
     // Settings Management
     Route::prefix('settings')->name('settings.')->group(function () {

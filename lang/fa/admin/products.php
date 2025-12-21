@@ -1,0 +1,128 @@
+<?php
+
+return [
+    'title' => 'محصولات',
+    'management' => 'مدیریت محصولات',
+    'description' => 'مدیریت تمام محصولات',
+    'add_new' => 'افزودن محصول جدید',
+
+    'fields' => [
+        'name' => 'نام',
+        'slug' => 'نامک',
+        'sale_description' => 'توضیحات فروش',
+        'unit' => 'واحد',
+        'category' => 'دسته‌بندی',
+        'category_id' => 'دسته‌بندی',
+        'is_published' => 'منتشر شده',
+        'body' => 'توضیحات',
+        'price_label' => 'برچسب قیمت',
+        'meta_title' => 'عنوان متا',
+        'meta_description' => 'توضیحات متا',
+        'meta_keywords' => 'کلمات کلیدی متا',
+        'status' => 'وضعیت',
+        'sort_order' => 'ترتیب',
+        'current_price' => 'قیمت فعلی',
+        'currency_code' => 'کد ارز',
+        'price_updated_at' => 'تاریخ به‌روزرسانی قیمت',
+        'price_effective_date' => 'تاریخ اعمال قیمت',
+        'created_at' => 'تاریخ ایجاد',
+        'updated_at' => 'تاریخ به‌روزرسانی',
+    ],
+
+    'units' => [
+        'piece' => 'عدد',
+        'kilogram' => 'کیلوگرم',
+        'gram' => 'گرم',
+        'liter' => 'لیتر',
+        'milliliter' => 'میلی‌لیتر',
+        'meter' => 'متر',
+        'centimeter' => 'سانتی‌متر',
+        'box' => 'جعبه',
+        'pack' => 'بسته',
+    ],
+
+    'statuses' => [
+        'draft' => 'پیش‌نویس',
+        'active' => 'فعال',
+        'inactive' => 'غیرفعال',
+        'archived' => 'بایگانی شده',
+    ],
+
+    'currencies' => [
+        'irr' => 'ریال ایران',
+        'usd' => 'دلار آمریکا',
+        'eur' => 'یورو',
+        'gbp' => 'پوند انگلیس',
+        'aed' => 'درهم امارات',
+        'try' => 'لیر ترکیه',
+    ],
+
+    'messages' => [
+        'created' => 'محصول با موفقیت ایجاد شد.',
+        'updated' => 'محصول با موفقیت به‌روزرسانی شد.',
+        'deleted' => 'محصول با موفقیت حذف شد.',
+        'not_found' => 'محصول یافت نشد.',
+        'delete_failed' => 'حذف محصول با خطا مواجه شد.',
+        'create_failed' => 'ایجاد محصول با خطا مواجه شد.',
+        'update_failed' => 'به‌روزرسانی محصول با خطا مواجه شد.',
+    ],
+
+    'forms' => [
+        'create' => [
+            'title' => 'ایجاد محصول',
+            'header_title' => 'ایجاد محصول',
+            'description' => 'افزودن یک محصول جدید',
+            'card_title' => 'اطلاعات محصول',
+            'submit' => 'ایجاد محصول',
+        ],
+        'edit' => [
+            'title' => 'ویرایش محصول',
+            'header_title' => 'ویرایش محصول',
+            'description' => 'به‌روزرسانی اطلاعات محصول',
+            'card_title' => 'اطلاعات محصول',
+            'submit' => 'به‌روزرسانی محصول',
+        ],
+        'placeholders' => [
+            'name' => 'نام محصول را وارد کنید',
+            'slug' => 'نامک محصول را وارد کنید (در صورت خالی بودن به صورت خودکار تولید می‌شود)',
+            'sale_description' => 'توضیحات فروش را وارد کنید',
+            'body' => 'توضیحات محصول را وارد کنید',
+            'price_label' => 'برچسب قیمت را وارد کنید',
+            'meta_title' => 'عنوان متا را وارد کنید',
+            'meta_description' => 'توضیحات متا را وارد کنید',
+            'meta_keywords' => 'کلمات کلیدی متا را وارد کنید',
+            'sort_order' => 'ترتیب را وارد کنید',
+            'current_price' => 'قیمت فعلی را وارد کنید',
+            'currency_code' => 'کد ارز را وارد کنید (مثلاً USD, EUR)',
+            'no_category' => 'بدون دسته‌بندی',
+        ],
+        'labels' => [
+            'published_product' => 'محصول منتشر شده',
+            'basic_info' => 'اطلاعات پایه',
+            'seo_info' => 'اطلاعات SEO',
+            'pricing_info' => 'اطلاعات قیمت',
+        ],
+        'breadcrumbs' => [
+            'dashboard' => 'داشبورد',
+            'products' => 'محصولات',
+            'create' => 'ایجاد',
+            'edit' => 'ویرایش',
+            'details' => 'جزئیات',
+        ],
+    ],
+
+    'show' => [
+        'title' => 'جزئیات محصول',
+        'header_title' => 'جزئیات محصول',
+        'description' => 'نمایش اطلاعات محصول',
+        'basic_info' => 'اطلاعات پایه',
+        'seo_info' => 'اطلاعات SEO',
+        'pricing_info' => 'اطلاعات قیمت',
+        'timestamps' => 'زمان‌بندی‌ها',
+        'quick_actions' => 'اقدامات سریع',
+        'buttons' => [
+            'edit' => 'ویرایش محصول',
+            'back_to_list' => 'بازگشت به فهرست',
+        ],
+    ],
+];

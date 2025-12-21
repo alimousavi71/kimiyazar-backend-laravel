@@ -70,6 +70,7 @@ return [
         'dashboard' => 'Dashboard',
         'admins' => 'Admins',
         'categories' => 'Categories',
+        'products' => 'Products',
         'modals' => 'Modals',
         'settings' => 'Settings',
         'examples' => 'Examples',
@@ -87,10 +88,13 @@ return [
 
     // Status
     'status' => [
+        'all' => 'All',
         'active' => 'Active',
         'inactive' => 'Inactive',
         'blocked' => 'Blocked',
         'pending' => 'Pending',
+        'no_results' => 'No results found',
+        'select' => 'Select an option',
     ],
 
     // Messages
