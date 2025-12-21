@@ -5,13 +5,13 @@
 <x-layouts.auth :title="$title">
     <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
         <!-- Header -->
-        <div class="bg-gradient-to-br from-amber-500 to-orange-600 px-6 py-8 text-center">
+        <div class="bg-gradient-to-br from-green-500 to-emerald-400 px-6 py-8 text-center">
             <div
                 class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm mb-4">
                 <x-icon name="key" size="2xl" class="text-white" />
             </div>
             <h1 class="text-2xl font-bold text-white mb-2">{{ __('admin/auth.forgot_password.title') }}</h1>
-            <p class="text-amber-100 text-sm">{{ __('admin/auth.forgot_password.subtitle') }}</p>
+            <p class="text-green-100 text-sm">{{ __('admin/auth.forgot_password.subtitle') }}</p>
         </div>
 
         <!-- Form -->
@@ -66,7 +66,7 @@
             <!-- Back to Login -->
             <div class="text-center pt-4 border-t border-gray-100">
                 <a href="{{ route('admin.login') }}"
-                    class="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors inline-flex items-center gap-1">
+                    class="text-sm font-medium text-green-600 hover:text-green-700 transition-colors inline-flex items-center gap-1">
                     <x-icon name="arrow-back" size="sm" />
                     {{ __('admin/auth.forgot_password.back_to_login') }}
                 </a>

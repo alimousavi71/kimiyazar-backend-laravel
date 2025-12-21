@@ -5,7 +5,7 @@
 <x-layouts.auth :title="$title">
     <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
         <!-- Header -->
-        <div class="bg-gradient-to-br from-green-500 to-emerald-600 px-6 py-8 text-center">
+        <div class="bg-gradient-to-br from-green-500 to-emerald-400 px-6 py-8 text-center">
             <div
                 class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm mb-4">
                 <x-icon name="lock-open" size="2xl" class="text-white" />
@@ -86,7 +86,7 @@
             <!-- Back to Login -->
             <div class="text-center pt-4 border-t border-gray-100">
                 <a href="{{ route('admin.login') }}"
-                    class="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors inline-flex items-center gap-1">
+                    class="text-sm font-medium text-green-600 hover:text-green-700 transition-colors inline-flex items-center gap-1">
                     <x-icon name="arrow-back" size="sm" />
                     {{ __('admin/auth.reset_password.back_to_login') }}
                 </a>

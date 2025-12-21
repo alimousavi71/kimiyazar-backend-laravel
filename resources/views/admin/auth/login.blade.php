@@ -5,13 +5,13 @@
 <x-layouts.auth :title="$title">
     <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
         <!-- Header -->
-        <div class="bg-gradient-to-br from-blue-600 to-indigo-600 px-6 py-8 text-center">
+        <div class="bg-gradient-to-br from-green-500 to-emerald-400 px-6 py-8 text-center">
             <div
                 class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm mb-4">
                 <x-icon name="lock" size="2xl" class="text-white" />
             </div>
             <h1 class="text-2xl font-bold text-white mb-2">{{ __('admin/auth.login.welcome') }}</h1>
-            <p class="text-blue-100 text-sm">{{ __('admin/auth.login.subtitle') }}</p>
+            <p class="text-green-100 text-sm">{{ __('admin/auth.login.subtitle') }}</p>
         </div>
 
         <!-- Form -->
@@ -29,7 +29,7 @@
                 <div x-data="{ showPassword: false }" class="relative">
                     <input x-bind:type="showPassword ? 'text' : 'password'" name="password"
                         :placeholder="__('admin/auth.placeholders.password')" required
-                        class="w-full pe-10 px-3 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200 disabled:bg-gray-50 disabled:cursor-not-allowed bg-white shadow-sm hover:shadow-md focus:shadow-md" />
+                        class="w-full pe-10 px-3 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all duration-200 disabled:bg-gray-50 disabled:cursor-not-allowed bg-white shadow-sm hover:shadow-md focus:shadow-md" />
                     <button type="button" @click="showPassword = !showPassword"
                         class="absolute end-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
                         aria-label="Toggle password visibility">
@@ -43,12 +43,12 @@
             <div class="flex items-center justify-between">
                 <label class="flex items-center gap-2 cursor-pointer group">
                     <input type="checkbox" name="remember"
-                        class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 cursor-pointer">
+                        class="w-4 h-4 rounded border-gray-300 text-green-600 focus:ring-2 focus:ring-green-500 focus:ring-offset-0 cursor-pointer">
                     <span
                         class="text-sm text-gray-700 group-hover:text-gray-900 transition-colors">{{ __('admin/auth.login.remember_me') }}</span>
                 </label>
                 <a href="{{ route('admin.password.request') }}"
-                    class="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors">
+                    class="text-sm font-medium text-green-600 hover:text-green-700 transition-colors">
                     {{ __('admin/auth.login.forgot_password') }}
                 </a>
             </div>
