@@ -30,6 +30,16 @@ class SettingService
     }
 
     /**
+     * Get all settings as a flat array.
+     *
+     * @return array<string, string|null>
+     */
+    public function getAllAsArray(): array
+    {
+        return $this->repository->getAllAsArray();
+    }
+
+    /**
      * Get all settings grouped by category or as flat array.
      *
      * @return array<string, array<string, string|null>>

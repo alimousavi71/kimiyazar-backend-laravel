@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Database\BannerPosition;
 use App\Enums\Database\ContentType;
-use App\Models\Product;
-use App\Models\Setting;
+use App\Services\Banner\BannerService;
 use App\Services\Category\CategoryService;
 use App\Services\Content\ContentService;
 use App\Services\Product\ProductService;
+use App\Services\Setting\SettingService;
 use App\Services\Slider\SliderService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -18,7 +19,9 @@ class HomeController extends Controller
         private readonly ProductService $productService,
         private readonly SliderService $sliderService,
         private readonly ContentService $contentService,
-        private readonly CategoryService $categoryService
+        private readonly CategoryService $categoryService,
+        private readonly BannerService $bannerService,
+        private readonly SettingService $settingService
     ) {
     }
 
@@ -31,42 +34,27 @@ class HomeController extends Controller
     public function index(Request $request): View
     {
         // Get active sliders
-        $sliders = \App\Models\Slider::where('is_active', true)
-            ->orderBy('sort_order')
-            ->limit(5)
-            ->get();
+        $sliders = $this->sliderService->getActiveSliders(5);
 
         // Get last 20 published products
-        $products = Product::where('is_published', true)
-            ->where('status', \App\Enums\Database\ProductStatus::ACTIVE)
-            ->with(['category', 'photos', 'prices'])
-            ->orderBy('created_at', 'desc')
-            ->limit(20)
-            ->get();
+        $products = $this->productService->getActivePublishedProducts(20);
 
         // Get latest news (3 items)
-        $news = \App\Models\Content::where('type', ContentType::NEWS)
-            ->where('is_active', true)
-            ->orderBy('created_at', 'desc')
-            ->limit(3)
-            ->get();
+        $news = $this->contentService->getActiveContentByType(ContentType::NEWS, 3);
 
         // Get all categories for filter
         $categories = $this->categoryService->getAllCategoriesTree();
 
         // Get root categories with first-level children for homepage
-        $rootCategories = \App\Models\Category::whereNull('parent_id')
-            ->where('is_active', true)
-            ->with([
-                'children' => function ($query) {
-                    $query->where('is_active', true)->orderBy('sort_order');
-                }
-            ])
-            ->orderBy('sort_order')
-            ->get();
+        $rootCategories = $this->categoryService->getRootCategoriesWithChildren();
 
         // Get settings
-        $settings = Setting::getAllAsArray();
+        $settings = $this->settingService->getAllAsArray();
+
+        // Get banners by position
+        $bannersA = $this->bannerService->getActiveBannersByPositions([BannerPosition::A1, BannerPosition::A2], 2);
+        $bannersB = $this->bannerService->getActiveBannersByPositions([BannerPosition::B1, BannerPosition::B2], 2);
+        $bannersC = $this->bannerService->getActiveBannersByPositions([BannerPosition::C1, BannerPosition::C2], 1);
 
         // Services data
         $services = [
@@ -108,6 +96,6 @@ class HomeController extends Controller
             ],
         ];
 
-        return view('home', compact('sliders', 'products', 'news', 'categories', 'rootCategories', 'services', 'settings'));
+        return view('home', compact('sliders', 'products', 'news', 'categories', 'rootCategories', 'services', 'settings', 'bannersA', 'bannersB', 'bannersC'));
     }
 }

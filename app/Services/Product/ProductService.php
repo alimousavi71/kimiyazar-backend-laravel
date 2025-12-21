@@ -154,4 +154,24 @@ class ProductService
     {
         return $this->repository->delete($id);
     }
+
+    /**
+     * Get active published products.
+     *
+     * @param int|null $limit
+     * @return Collection
+     */
+    public function getActivePublishedProducts(?int $limit = null): Collection
+    {
+        $query = Product::where('is_published', true)
+            ->where('status', \App\Enums\Database\ProductStatus::ACTIVE)
+            ->with(['category', 'photos', 'prices'])
+            ->orderBy('created_at', 'desc');
+
+        if ($limit !== null) {
+            $query->limit($limit);
+        }
+
+        return $query->get();
+    }
 }

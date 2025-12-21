@@ -137,5 +137,25 @@ class ContentService
 
         return $this->repository->delete($id);
     }
+
+    /**
+     * Get active content by type.
+     *
+     * @param ContentType $type
+     * @param int|null $limit
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getActiveContentByType(ContentType $type, ?int $limit = null): \Illuminate\Database\Eloquent\Collection
+    {
+        $query = Content::where('type', $type)
+            ->where('is_active', true)
+            ->orderBy('created_at', 'desc');
+
+        if ($limit !== null) {
+            $query->limit($limit);
+        }
+
+        return $query->get();
+    }
 }
 

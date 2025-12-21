@@ -119,5 +119,23 @@ class SliderService
     {
         return $this->repository->delete($id);
     }
+
+    /**
+     * Get active sliders ordered by sort_order.
+     *
+     * @param int|null $limit
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getActiveSliders(?int $limit = null): \Illuminate\Database\Eloquent\Collection
+    {
+        $query = Slider::where('is_active', true)
+            ->orderBy('sort_order');
+
+        if ($limit !== null) {
+            $query->limit($limit);
+        }
+
+        return $query->get();
+    }
 }
 

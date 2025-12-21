@@ -205,5 +205,25 @@ class BannerService
             'height' => $preset['height'],
         ];
     }
+
+    /**
+     * Get active banners by positions.
+     *
+     * @param array<BannerPosition> $positions
+     * @param int|null $limit
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getActiveBannersByPositions(array $positions, ?int $limit = null): \Illuminate\Database\Eloquent\Collection
+    {
+        $query = Banner::whereIn('position', array_map(fn($p) => $p->value, $positions))
+            ->where('is_active', true)
+            ->orderBy('created_at', 'desc');
+
+        if ($limit !== null) {
+            $query->limit($limit);
+        }
+
+        return $query->get();
+    }
 }
 

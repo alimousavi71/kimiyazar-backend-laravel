@@ -1,9 +1,9 @@
-@props(['position' => 'A'])
+@props(['position' => 'A', 'banners' => collect()])
 
 @php
     use App\Enums\Database\BannerPosition;
 
-    // Map position letter to banner position enum values
+    // Map position letter to banner position enum values for config lookup
     $positionMap = [
         'A' => [BannerPosition::A1, BannerPosition::A2],
         'B' => [BannerPosition::B1, BannerPosition::B2],
@@ -13,24 +13,10 @@
     // Get banner positions for this section
     $positions = $positionMap[$position] ?? [];
 
-    // Fetch active banners for these positions
-    $allBanners = \App\Models\Banner::whereIn('position', array_map(fn($p) => $p->value, $positions))
-        ->where('is_active', true)
-        ->orderBy('created_at', 'desc')
-        ->get();
-
     // Get config dimensions for styling
     $config = config('banner.positions', []);
     $firstPosition = $positions[0] ?? null;
     $dimensions = $firstPosition ? ($config[$firstPosition->value] ?? ['width' => 1200, 'height' => 300]) : ['width' => 1200, 'height' => 300];
-
-    // For A and B: limit to 2 banners (side by side)
-    // For C: limit to 1 banner (full width)
-    if ($position === 'C') {
-        $banners = $allBanners->take(1);
-    } else {
-        $banners = $allBanners->take(2);
-    }
 
     // Standard height from config
     $standardHeight = $dimensions['height'];

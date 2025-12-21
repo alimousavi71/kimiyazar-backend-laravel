@@ -249,5 +249,23 @@ class CategoryService
     {
         return $this->repository->delete($id);
     }
+
+    /**
+     * Get root categories with first-level children for homepage.
+     *
+     * @return EloquentCollection
+     */
+    public function getRootCategoriesWithChildren(): EloquentCollection
+    {
+        return Category::whereNull('parent_id')
+            ->where('is_active', true)
+            ->with([
+                'children' => function ($query) {
+                    $query->where('is_active', true)->orderBy('sort_order');
+                }
+            ])
+            ->orderBy('sort_order')
+            ->get();
+    }
 }
 
