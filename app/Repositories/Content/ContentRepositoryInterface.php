@@ -68,5 +68,14 @@ interface ContentRepositoryInterface
      * @return bool
      */
     public function delete(int|string $id): bool;
+
+    /**
+     * Find active content by type and slug.
+     *
+     * @param \App\Enums\Database\ContentType $type
+     * @param string $slug
+     * @return Content|null
+     */
+    public function findActiveByTypeAndSlug(\App\Enums\Database\ContentType $type, string $slug): ?Content;
 }
 

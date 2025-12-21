@@ -105,5 +105,20 @@ class ContentRepository implements ContentRepositoryInterface
 
         return $content->delete();
     }
+
+    /**
+     * Find active content by type and slug.
+     *
+     * @param \App\Enums\Database\ContentType $type
+     * @param string $slug
+     * @return Content|null
+     */
+    public function findActiveByTypeAndSlug(\App\Enums\Database\ContentType $type, string $slug): ?Content
+    {
+        return Content::where('type', $type)
+            ->where('slug', $slug)
+            ->where('is_active', true)
+            ->first();
+    }
 }
 

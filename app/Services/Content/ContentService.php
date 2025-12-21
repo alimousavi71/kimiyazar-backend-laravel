@@ -157,5 +157,24 @@ class ContentService
 
         return $query->get();
     }
+
+    /**
+     * Get active content by type and slug.
+     *
+     * @param ContentType $type
+     * @param string $slug
+     * @return Content|null
+     */
+    public function getActiveContentByTypeAndSlug(ContentType $type, string $slug): ?Content
+    {
+        $content = $this->repository->findActiveByTypeAndSlug($type, $slug);
+
+        if ($content) {
+            // Increment visit count
+            $content->incrementVisitCount();
+        }
+
+        return $content;
+    }
 }
 

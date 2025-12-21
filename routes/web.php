@@ -16,6 +16,9 @@ Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('h
 Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'index'])->name('contact.index');
 Route::post('/contact', [\App\Http\Controllers\ContactController::class, 'store'])->name('contact.store');
 
+// About Route
+Route::get('/about', [\App\Http\Controllers\AboutController::class, 'index'])->name('about.index');
+
 // Admin Authentication Routes
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware('guest:admin')->group(function () {
