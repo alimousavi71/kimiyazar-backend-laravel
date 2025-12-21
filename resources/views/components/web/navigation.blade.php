@@ -112,12 +112,12 @@
                         <div class="dropdown-menu modern-dropdown-menu absolute top-full right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg min-w-[200px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 py-2"
                             aria-labelledby="navbarDropdown3">
                             <a class="dropdown-item flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 no-underline hover:bg-green-50 hover:text-green-500 transition-colors duration-200"
-                                href="#">
+                                href="{{ route('news.index') }}">
                                 <i class="fas fa-bullhorn text-green-500 text-sm"></i>
                                 <span>اخبار</span>
                             </a>
                             <a class="dropdown-item flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 no-underline hover:bg-green-50 hover:text-green-500 transition-colors duration-200"
-                                href="#">
+                                href="{{ route('articles.index') }}">
                                 <i class="fas fa-file-text text-green-500 text-sm"></i>
                                 <span>مقالات</span>
                             </a>
@@ -209,7 +209,7 @@
                         </a>
                     </li>
                     <li class="w-full">
-                        <a href="#"
+                        <a href="{{ route('news.index') }}"
                             class="py-3 px-4 flex items-center gap-2 text-sm text-slate-700 no-underline hover:text-green-500 hover:bg-green-50 transition-colors duration-200 rounded">
                             <i class="fas fa-newspaper-o text-green-500"></i>
                             <span>اخبار</span>

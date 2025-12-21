@@ -176,5 +176,31 @@ class ContentService
 
         return $content;
     }
+
+    /**
+     * Get paginated active content by type with optional search.
+     *
+     * @param ContentType $type
+     * @param int $perPage
+     * @param string|null $search
+     * @return LengthAwarePaginator
+     */
+    public function getPaginatedActiveContentByType(ContentType $type, int $perPage = 10, ?string $search = null): LengthAwarePaginator
+    {
+        $query = Content::where('type', $type)
+            ->where('is_active', true)
+            ->with(['photos', 'tags'])
+            ->orderBy('created_at', 'desc');
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('body', 'like', "%{$search}%")
+                    ->orWhere('slug', 'like', "%{$search}%");
+            });
+        }
+
+        return $query->paginate($perPage);
+    }
 }
 

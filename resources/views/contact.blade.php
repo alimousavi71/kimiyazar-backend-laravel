@@ -3,19 +3,7 @@
 @endphp
 
 <x-layouts.app title="تماس با ما - {{ $siteTitle }}" dir="rtl">
-    <!-- Page Banner Section -->
-    <div class="bg-gradient-to-b from-slate-800 to-slate-900 text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="text-center">
-                <h1 class="text-3xl md:text-4xl font-bold mb-4">تماس با ما</h1>
-                <div class="flex items-center justify-center gap-2 text-sm md:text-base text-gray-300">
-                    <a href="{{ route('home') }}" class="hover:text-green-400 transition-colors duration-300">خانه</a>
-                    <i class="fa fa-angle-left text-xs"></i>
-                    <span class="text-green-400">تماس با ما</span>
-                </div>
-            </div>
-        </div>
-    </div>
+    <x-web.page-banner title="تماس با ما" />
 
     <!-- Map Section -->
     <section class="modern-map-section w-full">

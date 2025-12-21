@@ -19,6 +19,12 @@ Route::post('/contact', [\App\Http\Controllers\ContactController::class, 'store'
 // About Route
 Route::get('/about', [\App\Http\Controllers\AboutController::class, 'index'])->name('about.index');
 
+// News Routes
+Route::get('/news', [\App\Http\Controllers\NewsController::class, 'index'])->name('news.index');
+
+// Articles Routes
+Route::get('/articles', [\App\Http\Controllers\ArticleController::class, 'index'])->name('articles.index');
+
 // Admin Authentication Routes
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware('guest:admin')->group(function () {
