@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->string('button_url', 500)->nullable();
             $table->string('close_text', 100)->default('بستن');
             $table->boolean('is_rememberable')->default(true);
-            $table->morphs('modalable');
+            $table->nullableMorphs('modalable');
             $table->boolean('is_published')->default(false);
             $table->dateTime('start_at')->nullable();
             $table->dateTime('end_at')->nullable();

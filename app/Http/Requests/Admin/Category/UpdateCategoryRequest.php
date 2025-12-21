@@ -71,5 +71,10 @@ class UpdateCategoryRequest extends FormRequest
         if (!$this->has('is_active')) {
             $this->merge(['is_active' => false]);
         }
+
+        // Convert empty string to null for parent_id
+        if ($this->has('parent_id') && ($this->parent_id === '' || $this->parent_id === '0')) {
+            $this->merge(['parent_id' => null]);
+        }
     }
 }

@@ -24,6 +24,10 @@ class DatabaseSeeder extends Seeder
             ContactSeeder::class,
             ContentSeeder::class,
             SliderSeeder::class,
+            FaqSeeder::class,
+            BannerSeeder::class,
+            ModalSeeder::class,
+            SettingSeeder::class,
         ]);
     }
 }

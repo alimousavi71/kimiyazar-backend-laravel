@@ -21,14 +21,9 @@
             </x-form-group>
 
             <x-form-group :label="__('admin/categories.fields.parent')" :error="$errors->first('parent_id')">
-                <x-select name="parent_id" id="parent_id" class="w-full">
-                    <option value="0">{{ __('admin/categories.forms.placeholders.no_parent') }}</option>
-                    @foreach($rootCategories as $rootCategory)
-                        <option value="{{ $rootCategory->id }}" {{ old('parent_id') == $rootCategory->id ? 'selected' : '' }}>
-                            {{ $rootCategory->name }}
-                        </option>
-                    @endforeach
-                </x-select>
+                <x-category-selector name="parent_id" id="parent_id" :value="old('parent_id') ?: ''"
+                    :categories="$categories" :placeholder="__('admin/categories.forms.placeholders.no_parent')"
+                    class="w-full" />
             </x-form-group>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -58,6 +53,6 @@
     </x-card>
 
     @push('scripts')
-        @vite('resources/js/admin-form-validation.js')
+        @vite(['resources/js/admin-form-validation.js', 'resources/js/category-selector.js'])
     @endpush
 </x-layouts.admin>

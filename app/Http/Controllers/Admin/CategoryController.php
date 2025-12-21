@@ -47,9 +47,9 @@ class CategoryController extends Controller
      */
     public function create(): View
     {
-        $rootCategories = $this->service->getRootCategories();
+        $categories = $this->service->getAllCategoriesTree();
 
-        return view('admin.categories.create', compact('rootCategories'));
+        return view('admin.categories.create', compact('categories'));
     }
 
     /**
@@ -91,9 +91,10 @@ class CategoryController extends Controller
     public function edit(string $id): View
     {
         $category = $this->service->findById($id);
-        $rootCategories = $this->service->getRootCategories();
+        // Exclude current category and all its descendants to prevent circular references
+        $categories = $this->service->getAllCategoriesTree($category->id);
 
-        return view('admin.categories.edit', compact('category', 'rootCategories'));
+        return view('admin.categories.edit', compact('category', 'categories'));
     }
 
     /**

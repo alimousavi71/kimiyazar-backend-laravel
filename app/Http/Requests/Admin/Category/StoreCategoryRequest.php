@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin\Category;
 
+use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -33,9 +34,16 @@ class StoreCategoryRequest extends FormRequest
             'parent_id' => [
                 'nullable',
                 'integer',
-                Rule::exists('categories', 'id')->where(function ($query) {
-                    $query->whereNull('deleted_at');
-                }),
+                // Allow 0, null, or empty string (no parent). Validate existence only when > 0.
+                function ($attribute, $value, $fail) {
+                    if ($value === null || $value === '' || (int) $value === 0) {
+                        return;
+                    }
+                    $exists = Category::where('id', $value)->whereNull('deleted_at')->exists();
+                    if (!$exists) {
+                        $fail(__('admin/categories.messages.parent_not_found'));
+                    }
+                },
             ],
             'sort_order' => ['nullable', 'integer', 'min:0'],
         ];
@@ -55,6 +63,11 @@ class StoreCategoryRequest extends FormRequest
 
         if (!$this->has('is_active')) {
             $this->merge(['is_active' => false]);
+        }
+
+        // Convert empty string to null for parent_id
+        if ($this->has('parent_id') && ($this->parent_id === '' || $this->parent_id === '0')) {
+            $this->merge(['parent_id' => null]);
         }
     }
 }

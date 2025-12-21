@@ -103,11 +103,20 @@ class CategoryService
      * Get all categories in a flat tree structure with depth information.
      * This method builds a hierarchical tree and flattens it for display.
      *
+     * @param int|null $excludeCategoryId Category ID to exclude along with all its descendants
      * @return EloquentCollection
      */
-    public function getAllCategoriesTree(): EloquentCollection
+    public function getAllCategoriesTree(?int $excludeCategoryId = null): EloquentCollection
     {
         $allCategories = Category::orderBy('sort_order')->get();
+
+        // If excluding a category, remove it and all its descendants
+        if ($excludeCategoryId !== null) {
+            $excludeIds = $this->getCategoryAndDescendantIds($excludeCategoryId);
+            $allCategories = $allCategories->reject(function ($category) use ($excludeIds) {
+                return in_array($category->id, $excludeIds);
+            });
+        }
 
         // Build tree structure
         $tree = $this->buildCategoryTree($allCategories);
@@ -117,6 +126,29 @@ class CategoryService
         $this->flattenCategoryTree($tree, $flattened, 0);
 
         return $flattened;
+    }
+
+    /**
+     * Get category ID and all its descendant IDs recursively.
+     *
+     * @param int $categoryId
+     * @return array
+     */
+    private function getCategoryAndDescendantIds(int $categoryId): array
+    {
+        $ids = [$categoryId];
+
+        $getChildren = function ($parentId) use (&$getChildren, &$ids) {
+            $children = Category::where('parent_id', $parentId)->pluck('id')->toArray();
+            foreach ($children as $childId) {
+                $ids[] = $childId;
+                $getChildren($childId);
+            }
+        };
+
+        $getChildren($categoryId);
+
+        return $ids;
     }
 
     /**

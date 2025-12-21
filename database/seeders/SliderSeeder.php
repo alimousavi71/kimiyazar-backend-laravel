@@ -12,16 +12,26 @@ class SliderSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create active sliders
-        Slider::factory()
-            ->count(10)
-            ->active()
-            ->create();
+        $sliders = [
+            [
+                'title' => 'بهترین محصولات با بهترین قیمت',
+                'heading' => 'فروش ویژه',
+                'description' => 'از مجموعه جدید محصولات ما دیدن کنید و از تخفیف‌های ویژه بهره‌مند شوید.',
+                'is_active' => true,
+                'sort_order' => 1,
+            ],
+            [
+                'title' => 'ارسال رایگان برای خریدهای بالای 5 میلیون',
+                'heading' => 'ارسال رایگان',
+                'description' => 'برای خریدهای بالای 5 میلیون تومان، ارسال کاملا رایگان است.',
+                'is_active' => true,
+                'sort_order' => 2,
+            ],
+        ];
 
-        // Create inactive sliders
-        Slider::factory()
-            ->count(3)
-            ->inactive()
-            ->create();
+        foreach ($sliders as $slider) {
+            Slider::create($slider);
+        }
     }
 }
+
