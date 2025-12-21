@@ -10,9 +10,7 @@ use App\Http\Controllers\Examples\ApiExampleController;
 use App\Http\Controllers\Examples\FormExampleController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Admin Authentication Routes
 Route::prefix('admin')->name('admin.')->group(function () {
