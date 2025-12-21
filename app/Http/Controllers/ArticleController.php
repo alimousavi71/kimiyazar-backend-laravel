@@ -45,4 +45,35 @@ class ArticleController extends Controller
 
         return view('articles.index', compact('articles', 'recentArticles', 'tags', 'settings', 'search'));
     }
+
+    /**
+     * Display a single article item.
+     *
+     * @param string $slug
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
+    public function show(string $slug): \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+    {
+        $settings = $this->settingService->getAllAsArray();
+
+        // Get article by slug
+        $article = $this->contentService->getActiveContentByTypeAndSlug(ContentType::ARTICLE, $slug);
+
+        if (!$article) {
+            return redirect()->route('articles.index')->with('error', 'مقاله مورد نظر یافت نشد.');
+        }
+
+        // Get recent articles for sidebar (latest 3, excluding current)
+        $recentArticles = $this->contentService->getActiveContentByType(ContentType::ARTICLE, 4)
+            ->filter(fn($item) => $item->id !== $article->id)
+            ->take(3);
+
+        // Get all tags from articles (for sidebar)
+        $tags = \App\Models\Tag::whereHas('contents', function ($query) {
+            $query->where('type', ContentType::ARTICLE)
+                ->where('is_active', true);
+        })->limit(20)->get();
+
+        return view('articles.show', compact('article', 'recentArticles', 'tags', 'settings'));
+    }
 }

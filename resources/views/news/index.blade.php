@@ -20,7 +20,8 @@
                                         <!-- News Image -->
                                         <div
                                             class="news-item-image md:w-80 flex-shrink-0 relative overflow-hidden bg-gray-100">
-                                            <a href="#" class="block relative h-48 md:h-full">
+                                            <a href="{{ route('news.show', $item->slug) }}"
+                                                class="block relative h-48 md:h-full">
                                                 @if($item->photos->first())
                                                     <img src="{{ $item->photos->first()->url }}" alt="{{ $item->title }}"
                                                         class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
@@ -49,7 +50,8 @@
                                             </div>
                                             <h2
                                                 class="news-item-title text-xl md:text-2xl font-bold text-slate-800 mb-3 hover:text-green-500 transition-colors duration-300">
-                                                <a href="#" class="no-underline text-inherit hover:text-green-500">
+                                                <a href="{{ route('news.show', $item->slug) }}"
+                                                    class="no-underline text-inherit hover:text-green-500">
                                                     {{ $item->title }}
                                                 </a>
                                             </h2>
@@ -58,7 +60,7 @@
                                                 {{ Str::limit(strip_tags($item->body ?? ''), 200) }}
                                             </p>
                                             <a class="news-item-read-more inline-flex items-center gap-2 text-green-500 font-semibold text-sm hover:text-emerald-600 transition-colors duration-300 no-underline"
-                                                href="#">
+                                                href="{{ route('news.show', $item->slug) }}">
                                                 ادامه مطلب
                                                 <i class="fa fa-arrow-left text-xs"></i>
                                             </a>
@@ -82,81 +84,9 @@
                     </div>
 
                     <!-- Sidebar -->
-                    <div class="lg:col-span-3">
-                        <div class="space-y-6">
-                            <!-- Search Widget -->
-                            <div class="bg-white rounded-xl shadow-md p-6">
-                                <form method="get" action="{{ route('news.index') }}" class="modern-search-box">
-                                    <div class="flex gap-2">
-                                        <input type="text" name="finder" value="{{ $search }}"
-                                            class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all duration-300"
-                                            placeholder="جستجو در اخبار...">
-                                        <button type="submit"
-                                            class="px-6 py-2 bg-gradient-to-r from-green-500 to-emerald-400 text-white rounded-lg hover:from-green-600 hover:to-emerald-500 transition-all duration-300 shadow-md hover:shadow-lg">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-
-                            <!-- Recent News Widget -->
-                            <div class="bg-white rounded-xl shadow-md p-6">
-                                <h3
-                                    class="widget-title text-xl font-bold text-slate-800 mb-4 pb-3 border-b border-gray-200">
-                                    آخرین اخبار</h3>
-                                <div class="recent-news-list space-y-4">
-                                    @forelse($recentNews as $recentItem)
-                                        <a href="#"
-                                            class="recent-news-item flex gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors duration-300 no-underline group">
-                                            <div
-                                                class="recent-news-thumb w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
-                                                @if($recentItem->photos->first())
-                                                    <img src="{{ $recentItem->photos->first()->url }}"
-                                                        alt="{{ $recentItem->title }}"
-                                                        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
-                                                @else
-                                                    <div
-                                                        class="w-full h-full bg-gradient-to-br from-green-100 to-emerald-100 flex items-center justify-center">
-                                                        <i class="fas fa-newspaper text-green-400"></i>
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="recent-news-info flex-1 min-w-0">
-                                                <h5
-                                                    class="text-sm font-semibold text-slate-800 mb-1 line-clamp-2 group-hover:text-green-500 transition-colors duration-300">
-                                                    {{ $recentItem->title }}
-                                                </h5>
-                                                <span
-                                                    class="recent-date inline-flex items-center gap-1 text-xs text-gray-500">
-                                                    <i class="fa fa-clock-o"></i>
-                                                    {{ $recentItem->created_at->format('Y/m/d') }}
-                                                </span>
-                                            </div>
-                                        </a>
-                                    @empty
-                                        <p class="text-gray-500 text-sm">هیچ خبری وجود ندارد.</p>
-                                    @endforelse
-                                </div>
-                            </div>
-
-                            <!-- Tags Widget -->
-                            @if($tags->count() > 0)
-                                <div class="bg-white rounded-xl shadow-md p-6">
-                                    <h3
-                                        class="widget-title text-xl font-bold text-slate-800 mb-4 pb-3 border-b border-gray-200">
-                                        برچسب‌ها</h3>
-                                    <div class="tags-widget flex flex-wrap gap-2">
-                                        @foreach($tags as $tag)
-                                            <a href="#"
-                                                class="tag-item inline-block px-3 py-1.5 bg-gray-100 text-gray-700 text-sm rounded-lg hover:bg-green-500 hover:text-white transition-all duration-300 no-underline">
-                                                {{ $tag->title }}
-                                            </a>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
+                    <x-web.content-sidebar :searchRoute="route('news.index')" searchPlaceholder="جستجو در اخبار..."
+                        :searchValue="$search" :recentItems="$recentNews" recentTitle="آخرین اخبار"
+                        emptyMessage="هیچ خبری وجود ندارد." :tags="$tags" icon="fas fa-newspaper" />
                 </div>
             </div>
         </section>

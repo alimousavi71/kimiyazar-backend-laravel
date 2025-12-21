@@ -21,9 +21,11 @@ Route::get('/about', [\App\Http\Controllers\AboutController::class, 'index'])->n
 
 // News Routes
 Route::get('/news', [\App\Http\Controllers\NewsController::class, 'index'])->name('news.index');
+Route::get('/news/{slug}', [\App\Http\Controllers\NewsController::class, 'show'])->name('news.show');
 
 // Articles Routes
 Route::get('/articles', [\App\Http\Controllers\ArticleController::class, 'index'])->name('articles.index');
+Route::get('/articles/{slug}', [\App\Http\Controllers\ArticleController::class, 'show'])->name('articles.show');
 
 // Admin Authentication Routes
 Route::prefix('admin')->name('admin.')->group(function () {
