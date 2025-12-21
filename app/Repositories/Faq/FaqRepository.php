@@ -105,4 +105,16 @@ class FaqRepository implements FaqRepositoryInterface
 
         return $faq->delete();
     }
+
+    /**
+     * Get all published FAQs.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getPublishedFaqs(): \Illuminate\Database\Eloquent\Collection
+    {
+        return Faq::where('is_published', true)
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
 }

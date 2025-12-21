@@ -3,10 +3,12 @@
 @endphp
 
 <x-layouts.auth :title="$title">
-    <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden w-full max-w-md" x-data="otpVerification()" x-init="startCountdown()">
+    <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden w-full max-w-md"
+        x-data="otpVerification()" x-init="startCountdown()">
         <!-- Header -->
-        <div class="bg-gradient-to-br from-green-600 to-teal-600 px-6 py-8 text-center">
-            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm mb-4">
+        <div class="bg-gradient-to-br from-green-500 to-emerald-400 px-6 py-8 text-center">
+            <div
+                class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm mb-4">
                 <x-icon name="shield-check" size="2xl" class="text-white" />
             </div>
             <h1 class="text-2xl font-bold text-white mb-2">{{ __('auth.verify_otp.title') }}</h1>
@@ -24,7 +26,7 @@
             @csrf
 
             <!-- Contact Display -->
-            <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
+            <div class="bg-green-50 border border-green-200 rounded-xl p-4">
                 <div class="flex items-center justify-between">
                     <div class="text-sm text-gray-600">
                         <span>{{ __('auth.verify_otp.sent_to') }}:</span>
@@ -38,21 +40,12 @@
                 <label for="code" class="block text-sm font-medium text-gray-700 mb-2">
                     {{ __('auth.verify_otp.code_label') }}
                 </label>
-                <input
-                    type="text"
-                    id="code"
-                    name="code"
-                    maxlength="6"
-                    inputmode="numeric"
-                    placeholder="000000"
+                <input type="text" id="code" name="code" maxlength="6" inputmode="numeric" placeholder="000000"
                     value="{{ old('code') }}"
-                    class="w-full px-4 py-3 text-center text-2xl tracking-widest rounded-xl border transition-all duration-200"
+                    class="w-full px-4 py-3 text-center text-2xl tracking-widest rounded-xl border transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                     :class="$el.classList.contains('border-red-500') ? 'border-red-500' : 'border-gray-200'"
-                    style="@error('code') border-color: rgb(239, 68, 68); @enderror"
-                    autofocus
-                    x-ref="codeInput"
-                    @input="handleCodeInput"
-                />
+                    style="@error('code') border-color: rgb(239, 68, 68); @enderror" autofocus x-ref="codeInput"
+                    @input="handleCodeInput" />
                 @error('code')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
@@ -86,13 +79,8 @@
                 <div x-show="countdown > 0" class="text-sm text-gray-600">
                     <span x-text="`{{ __('auth.verify_otp.resend_timer') }}`.replace(':seconds', countdown)"></span>
                 </div>
-                <button
-                    type="button"
-                    x-show="countdown === 0"
-                    @click="resendOtp"
-                    :disabled="isResending"
-                    class="w-full py-2.5 px-4 rounded-xl border-2 border-blue-600 text-blue-600 hover:bg-blue-50 disabled:opacity-50 disabled:cursor-not-allowed font-medium transition-colors"
-                >
+                <button type="button" x-show="countdown === 0" @click="resendOtp" :disabled="isResending"
+                    class="w-full py-2.5 px-4 rounded-xl border-2 border-green-500 text-green-600 hover:bg-green-50 disabled:opacity-50 disabled:cursor-not-allowed font-medium transition-colors">
                     <span x-show="!isResending" class="flex items-center justify-center gap-2">
                         <x-icon name="send" size="md" />
                         {{ __('auth.verify_otp.resend') }}

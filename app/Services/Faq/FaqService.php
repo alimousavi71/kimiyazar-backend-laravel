@@ -107,4 +107,14 @@ class FaqService
     {
         return $this->repository->delete($id);
     }
+
+    /**
+     * Get all published FAQs.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getPublishedFaqs(): \Illuminate\Database\Eloquent\Collection
+    {
+        return $this->repository->getPublishedFaqs();
+    }
 }

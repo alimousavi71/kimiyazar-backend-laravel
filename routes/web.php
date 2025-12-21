@@ -14,6 +14,7 @@ use App\Http\Controllers\Examples\FormExampleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +40,9 @@ Route::get('/products', [ProductController::class, 'index'])->name('products.ind
 
 // Tags Routes
 Route::get('/tags/{slug}', [TagController::class, 'index'])->name('tags.index');
+
+// FAQ Routes
+Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 
 // Admin Authentication Routes
 Route::prefix('admin')->name('admin.')->group(function () {

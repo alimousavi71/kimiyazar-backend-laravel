@@ -68,4 +68,11 @@ interface FaqRepositoryInterface
      * @return bool
      */
     public function delete(int|string $id): bool;
+
+    /**
+     * Get all published FAQs.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getPublishedFaqs(): \Illuminate\Database\Eloquent\Collection;
 }
