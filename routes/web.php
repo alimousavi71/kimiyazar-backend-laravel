@@ -27,6 +27,9 @@ Route::get('/news/{slug}', [\App\Http\Controllers\NewsController::class, 'show']
 Route::get('/articles', [\App\Http\Controllers\ArticleController::class, 'index'])->name('articles.index');
 Route::get('/articles/{slug}', [\App\Http\Controllers\ArticleController::class, 'show'])->name('articles.show');
 
+// Products Routes
+Route::get('/products', [\App\Http\Controllers\ProductController::class, 'index'])->name('products.index');
+
 // Admin Authentication Routes
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware('guest:admin')->group(function () {

@@ -174,4 +174,49 @@ class ProductService
 
         return $query->get();
     }
+
+    /**
+     * Get paginated active published products with filters.
+     *
+     * @param int $perPage
+     * @param int|null $categoryId
+     * @param string|null $search
+     * @param string|null $sort
+     * @return LengthAwarePaginator
+     */
+    public function getPaginatedActivePublishedProducts(
+        int $perPage = 50,
+        ?int $categoryId = null,
+        ?string $search = null,
+        ?string $sort = null
+    ): LengthAwarePaginator {
+        $query = Product::where('is_published', true)
+            ->where('status', \App\Enums\Database\ProductStatus::ACTIVE)
+            ->with(['category', 'photos']);
+
+        // Filter by category
+        if ($categoryId !== null) {
+            $query->where('category_id', $categoryId);
+        }
+
+        // Search filter
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('slug', 'like', "%{$search}%")
+                    ->orWhere('sale_description', 'like', "%{$search}%");
+            });
+        }
+
+        // Sort
+        if ($sort === 'product_price') {
+            $query->orderBy('current_price', 'asc');
+        } elseif ($sort === 'price_date') {
+            $query->orderBy('price_updated_at', 'desc');
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        return $query->paginate($perPage);
+    }
 }

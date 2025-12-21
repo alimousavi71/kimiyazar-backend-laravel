@@ -67,7 +67,7 @@
 
                     <li class="nav-item">
                         <a class="nav-link flex items-center gap-2 py-5 px-4 text-slate-700 no-underline text-sm font-medium transition-all duration-300 hover:text-green-500"
-                            href="#">
+                            href="{{ route('products.index') }}">
                             <i class="fas fa-shopping-bag text-green-500 text-base"></i>
                             <span>محصولات</span>
                         </a>
@@ -195,7 +195,7 @@
                         </a>
                     </li>
                     <li class="w-full">
-                        <a href="#"
+                        <a href="{{ route('products.index') }}"
                             class="py-3 px-4 flex items-center gap-2 text-sm text-slate-700 no-underline hover:text-green-500 hover:bg-green-50 transition-colors duration-200 rounded">
                             <i class="fas fa-shopping-bag text-green-500"></i>
                             <span>محصولات</span>
