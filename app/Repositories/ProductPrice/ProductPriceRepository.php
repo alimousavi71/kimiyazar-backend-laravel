@@ -153,4 +153,18 @@ class ProductPriceRepository implements ProductPriceRepositoryInterface
 
         return $productPrice->delete();
     }
+
+    /**
+     * Find product price by product ID and date.
+     *
+     * @param int $productId
+     * @param \Carbon\Carbon $date
+     * @return ProductPrice|null
+     */
+    public function findByProductIdAndDate(int $productId, \Carbon\Carbon $date): ?ProductPrice
+    {
+        return ProductPrice::where('product_id', $productId)
+            ->whereDate('created_at', $date)
+            ->first();
+    }
 }

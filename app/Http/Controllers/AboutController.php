@@ -6,6 +6,7 @@ use App\Enums\Database\ContentType;
 use App\Services\Content\ContentService;
 use App\Services\Setting\SettingService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class AboutController extends Controller
@@ -27,7 +28,7 @@ class AboutController extends Controller
 
         // Get about content (PAGE type with slug 'درباره-ما' or 'about')
         // The slug is generated from Persian title "درباره ما" using Str::slug()
-        $aboutSlug = \Illuminate\Support\Str::slug('درباره ما');
+        $aboutSlug = Str::slug('درباره ما');
         $content = $this->contentService->getActiveContentByTypeAndSlug(ContentType::PAGE, $aboutSlug);
 
         // If content not found, redirect to home

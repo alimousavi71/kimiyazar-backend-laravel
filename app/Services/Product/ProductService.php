@@ -163,16 +163,7 @@ class ProductService
      */
     public function getActivePublishedProducts(?int $limit = null): Collection
     {
-        $query = Product::where('is_published', true)
-            ->where('status', \App\Enums\Database\ProductStatus::ACTIVE)
-            ->with(['category', 'photos', 'prices'])
-            ->orderBy('created_at', 'desc');
-
-        if ($limit !== null) {
-            $query->limit($limit);
-        }
-
-        return $query->get();
+        return $this->repository->getActivePublishedProducts($limit);
     }
 
     /**
@@ -182,41 +173,26 @@ class ProductService
      * @param int|null $categoryId
      * @param string|null $search
      * @param string|null $sort
+     * @param array|null $categoryIds Optional array of category IDs to filter by (includes descendants)
      * @return LengthAwarePaginator
      */
     public function getPaginatedActivePublishedProducts(
         int $perPage = 50,
         ?int $categoryId = null,
         ?string $search = null,
-        ?string $sort = null
+        ?string $sort = null,
+        ?array $categoryIds = null
     ): LengthAwarePaginator {
-        $query = Product::where('is_published', true)
-            ->where('status', \App\Enums\Database\ProductStatus::ACTIVE)
-            ->with(['category', 'photos']);
+        return $this->repository->getPaginatedActivePublishedProducts($perPage, $categoryId, $search, $sort, $categoryIds);
+    }
 
-        // Filter by category
-        if ($categoryId !== null) {
-            $query->where('category_id', $categoryId);
-        }
-
-        // Search filter
-        if ($search) {
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('slug', 'like', "%{$search}%")
-                    ->orWhere('sale_description', 'like', "%{$search}%");
-            });
-        }
-
-        // Sort
-        if ($sort === 'product_price') {
-            $query->orderBy('current_price', 'asc');
-        } elseif ($sort === 'price_date') {
-            $query->orderBy('price_updated_at', 'desc');
-        } else {
-            $query->orderBy('created_at', 'desc');
-        }
-
-        return $query->paginate($perPage);
+    /**
+     * Get latest price update date from active published products.
+     *
+     * @return string|null
+     */
+    public function getLatestPriceUpdateDate(): ?string
+    {
+        return $this->repository->getLatestPriceUpdateDate();
     }
 }

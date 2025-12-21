@@ -108,7 +108,7 @@ class CategoryService
      */
     public function getAllCategoriesTree(?int $excludeCategoryId = null): EloquentCollection
     {
-        $allCategories = Category::orderBy('sort_order')->get();
+        $allCategories = $this->repository->getAllOrdered();
 
         // If excluding a category, remove it and all its descendants
         if ($excludeCategoryId !== null) {
@@ -130,6 +130,7 @@ class CategoryService
 
     /**
      * Get category ID and all its descendant IDs recursively.
+     * Used internally for exclusion logic.
      *
      * @param int $categoryId
      * @return array
@@ -139,7 +140,31 @@ class CategoryService
         $ids = [$categoryId];
 
         $getChildren = function ($parentId) use (&$getChildren, &$ids) {
-            $children = Category::where('parent_id', $parentId)->pluck('id')->toArray();
+            $children = $this->repository->getCategoryIdsByParentId($parentId, false);
+            foreach ($children as $childId) {
+                $ids[] = $childId;
+                $getChildren($childId);
+            }
+        };
+
+        $getChildren($categoryId);
+
+        return $ids;
+    }
+
+    /**
+     * Get category ID and all its active descendant IDs recursively.
+     * Public method to get all descendant category IDs including the category itself.
+     *
+     * @param int $categoryId
+     * @return array
+     */
+    public function getCategoryAndActiveDescendantIds(int $categoryId): array
+    {
+        $ids = [$categoryId];
+
+        $getChildren = function ($parentId) use (&$getChildren, &$ids) {
+            $children = $this->repository->getCategoryIdsByParentId($parentId, true);
             foreach ($children as $childId) {
                 $ids[] = $childId;
                 $getChildren($childId);
@@ -257,15 +282,47 @@ class CategoryService
      */
     public function getRootCategoriesWithChildren(): EloquentCollection
     {
-        return Category::whereNull('parent_id')
+        return $this->repository->getRootCategoriesWithChildren(true);
+    }
+
+    /**
+     * Get breadcrumb path from a category up to root.
+     * Returns array of categories from root to the given category.
+     *
+     * @param Category $category
+     * @return Collection
+     */
+    public function getBreadcrumbPath(Category $category): Collection
+    {
+        $path = collect([$category]);
+        $current = $category;
+
+        while ($current->parent_id !== null) {
+            $current = $current->parent;
+            $path->prepend($current);
+        }
+
+        return $path;
+    }
+
+    /**
+     * Get active children categories of a given category.
+     * If category is null, returns root categories.
+     *
+     * @param Category|null $category
+     * @return Collection
+     */
+    public function getActiveChildren(?Category $category = null): Collection
+    {
+        if ($category === null) {
+            return $this->repository->getRootCategories()
+                ->where('is_active', true)
+                ->sortBy('sort_order');
+        }
+
+        return $this->repository->getByParentId($category->id)
             ->where('is_active', true)
-            ->with([
-                'children' => function ($query) {
-                    $query->where('is_active', true)->orderBy('sort_order');
-                }
-            ])
-            ->orderBy('sort_order')
-            ->get();
+            ->sortBy('sort_order');
     }
 }
 

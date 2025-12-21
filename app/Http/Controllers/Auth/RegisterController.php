@@ -8,6 +8,7 @@ use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\ResendOtpRequest;
 use App\Http\Requests\Auth\VerifyRegistrationOtpRequest;
 use App\Http\Traits\ApiResponseTrait;
+use App\Models\Otp;
 use App\Services\Auth\AuthService;
 use App\Services\Otp\OtpService;
 use Exception;
@@ -233,7 +234,7 @@ class RegisterController extends Controller
         try {
             $otpId = $request->input('otp_id');
 
-            $otp = \App\Models\Otp::find($otpId);
+            $otp = Otp::find($otpId);
 
             if (!$otp) {
                 return $this->errorResponse(

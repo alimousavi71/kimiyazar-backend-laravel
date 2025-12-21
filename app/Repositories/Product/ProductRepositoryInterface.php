@@ -85,4 +85,54 @@ interface ProductRepositoryInterface
      * @return bool
      */
     public function delete(int|string $id): bool;
+
+    /**
+     * Get active published products.
+     *
+     * @param int|null $limit
+     * @return Collection
+     */
+    public function getActivePublishedProducts(?int $limit = null): Collection;
+
+    /**
+     * Get paginated active published products with filters.
+     *
+     * @param int $perPage
+     * @param int|null $categoryId
+     * @param string|null $search
+     * @param string|null $sort
+     * @param array|null $categoryIds
+     * @return LengthAwarePaginator
+     */
+    public function getPaginatedActivePublishedProducts(
+        int $perPage = 50,
+        ?int $categoryId = null,
+        ?string $search = null,
+        ?string $sort = null,
+        ?array $categoryIds = null
+    ): LengthAwarePaginator;
+
+    /**
+     * Get latest price update date from active published products.
+     *
+     * @return string|null
+     */
+    public function getLatestPriceUpdateDate(): ?string;
+
+    /**
+     * Get all products.
+     *
+     * @return Collection
+     */
+    public function all(): Collection;
+
+    /**
+     * Get products with search and category filters for price management.
+     *
+     * @param string|null $search
+     * @param array|null $categoryIds
+     * @param int $perPage
+     * @return LengthAwarePaginator
+     */
+    public function getProductsForPriceManagement(?string $search = null, ?array $categoryIds = null, int $perPage = 15): LengthAwarePaginator;
 }

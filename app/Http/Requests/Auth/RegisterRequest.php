@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -28,11 +29,11 @@ class RegisterRequest extends FormRequest
 
                     // Check if already exists
                     if ($isEmail) {
-                        if (\App\Models\User::where('email', $value)->exists()) {
+                        if (User::where('email', $value)->exists()) {
                             $fail(__('auth.messages.user_already_exists'));
                         }
                     } elseif ($isPhone) {
-                        if (\App\Models\User::where('phone_number', $value)->exists()) {
+                        if (User::where('phone_number', $value)->exists()) {
                             $fail(__('auth.messages.user_already_exists'));
                         }
                     }

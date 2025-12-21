@@ -2,8 +2,9 @@
 
 namespace App\Services\ProductPrice;
 
-use App\Models\Product;
 use App\Models\ProductPrice;
+use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\ProductPrice\ProductPriceRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
@@ -16,9 +17,13 @@ class ProductPriceService
 {
     /**
      * @param ProductPriceRepositoryInterface $repository
+     * @param ProductRepositoryInterface $productRepository
+     * @param CategoryRepositoryInterface $categoryRepository
      */
     public function __construct(
-        private readonly ProductPriceRepositoryInterface $repository
+        private readonly ProductPriceRepositoryInterface $repository,
+        private readonly ProductRepositoryInterface $productRepository,
+        private readonly CategoryRepositoryInterface $categoryRepository
     ) {
     }
 
@@ -64,29 +69,21 @@ class ProductPriceService
      */
     public function getProductsWithLatestPrices(?string $search = null, ?int $categoryId = null, int $perPage = 15): LengthAwarePaginator
     {
-        $query = Product::query();
-
-        if ($search) {
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('slug', 'like', "%{$search}%");
-            });
-        }
-
-        // Filter by category (including all subcategories)
+        // Get category IDs including children if category is specified
+        $categoryIds = null;
         if ($categoryId) {
             $categoryIds = $this->getCategoryIdsIncludingChildren($categoryId);
-            $query->whereIn('category_id', $categoryIds);
         }
 
-        $products = $query->orderBy('sort_order')->orderBy('name')->paginate($perPage);
+        // Get products using repository
+        $products = $this->productRepository->getProductsForPriceManagement($search, $categoryIds, $perPage);
 
         // Get latest prices for products on current page
-        $productIds = $products->pluck('id')->toArray();
+        $productIds = $products->items() ? collect($products->items())->pluck('id')->toArray() : [];
         $latestPrices = $this->repository->getLatestByProductIds($productIds);
 
         // Attach latest prices to products
-        $products->getCollection()->each(function ($product) use ($latestPrices) {
+        collect($products->items())->each(function ($product) use ($latestPrices) {
             $latestPrice = $latestPrices->firstWhere('product_id', $product->id);
             $product->latest_price = $latestPrice;
         });
@@ -105,7 +102,7 @@ class ProductPriceService
         $categoryIds = [$categoryId];
 
         $getChildren = function ($parentId) use (&$getChildren, &$categoryIds) {
-            $children = \App\Models\Category::where('parent_id', $parentId)->pluck('id')->toArray();
+            $children = $this->categoryRepository->getCategoryIdsByParentId($parentId, false);
             foreach ($children as $childId) {
                 $categoryIds[] = $childId;
                 $getChildren($childId);
@@ -193,7 +190,7 @@ class ProductPriceService
         $updated = 0;
 
         // Get all products
-        $products = Product::all();
+        $products = $this->productRepository->all();
 
         foreach ($products as $product) {
             // Get the latest price for this product
@@ -201,9 +198,7 @@ class ProductPriceService
 
             if ($latestPrice) {
                 // Check if a price already exists for today
-                $todayPrice = ProductPrice::where('product_id', $product->id)
-                    ->whereDate('created_at', $today)
-                    ->first();
+                $todayPrice = $this->repository->findByProductIdAndDate($product->id, $today);
 
                 if ($todayPrice) {
                     // Update existing today's price

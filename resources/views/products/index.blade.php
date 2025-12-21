@@ -37,20 +37,36 @@
                             <div class="p-0">
                                 <div class="category-filter">
                                     <!-- Navigation Breadcrumb -->
-                                    <div class="category-breadcrumb px-4 py-3 border-b border-gray-200">
-                                        <div
-                                            class="flex items-center gap-2 text-gray-700 {{ !$categoryId ? 'text-green-600 font-semibold' : '' }}">
-                                            <i class="fa fa-home"></i>
+                                    <div class="category-breadcrumb px-4 py-3 border-b border-gray-200 bg-gray-50">
+                                        <div class="flex items-center gap-2 text-sm flex-wrap">
                                             <a href="{{ route('products.index') }}"
-                                                class="no-underline text-inherit hover:text-green-600 transition-colors">
-                                                همه دسته‌بندی‌ها
+                                                class="flex items-center gap-1 text-gray-700 hover:text-green-600 transition-colors no-underline {{ !$categoryId ? 'text-green-600 font-semibold' : '' }}">
+                                                <i class="fa fa-home"></i>
+                                                <span>خانه</span>
                                             </a>
+                                            @if($breadcrumbPath->isNotEmpty())
+                                                @foreach($breadcrumbPath as $index => $breadcrumbCategory)
+                                                    <i class="fa fa-angle-left text-gray-400 text-xs"></i>
+                                                    @if($index === $breadcrumbPath->count() - 1)
+                                                        <span
+                                                            class="text-green-600 font-semibold">{{ $breadcrumbCategory->name }}</span>
+                                                    @else
+                                                        <a href="{{ route('products.index', ['category' => $breadcrumbCategory->id]) }}"
+                                                            class="text-gray-700 hover:text-green-600 transition-colors no-underline">
+                                                            {{ $breadcrumbCategory->name }}
+                                                        </a>
+                                                    @endif
+                                                @endforeach
+                                            @else
+                                                <i class="fa fa-angle-left text-gray-400 text-xs"></i>
+                                                <span class="text-green-600 font-semibold">همه دسته‌بندی‌ها</span>
+                                            @endif
                                         </div>
                                     </div>
 
                                     <!-- Category List -->
-                                    <div class="category-list-seo">
-                                        @foreach($rootCategories as $category)
+                                    <div class="category-list-seo max-h-[600px] overflow-y-auto">
+                                        @forelse($categoriesToShow as $category)
                                             <a href="{{ route('products.index', ['category' => $category->id]) }}"
                                                 class="category-item-seo flex items-center justify-between px-4 py-3 border-b border-gray-100 hover:bg-gray-50 transition-colors duration-200 no-underline {{ $categoryId == $category->id ? 'bg-green-50 border-green-200' : '' }}">
                                                 <div class="category-content flex items-center gap-3 flex-1 min-w-0">
@@ -67,7 +83,16 @@
                                                 </div>
                                                 <i class="fa fa-chevron-left text-gray-400 text-xs"></i>
                                             </a>
-                                        @endforeach
+                                        @empty
+                                            <div class="px-4 py-8 text-center text-gray-500 text-sm">
+                                                <i class="fa fa-folder-open text-3xl mb-2 text-gray-300"></i>
+                                                <p>زیردسته‌ای وجود ندارد</p>
+                                                @if($currentCategory)
+                                                    <p class="text-xs mt-1 text-gray-400">محصولات این دسته‌بندی در زیر نمایش
+                                                        داده می‌شوند</p>
+                                                @endif
+                                            </div>
+                                        @endforelse
                                     </div>
                                 </div>
                             </div>

@@ -132,5 +132,59 @@ class CategoryRepository implements CategoryRepositoryInterface
         return $category->delete();
     }
 
+    /**
+     * Get all categories ordered by sort_order.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getAllOrdered(): \Illuminate\Database\Eloquent\Collection
+    {
+        return Category::orderBy('sort_order')->get();
+    }
+
+    /**
+     * Get category IDs by parent ID with active filter.
+     *
+     * @param int $parentId
+     * @param bool $activeOnly
+     * @return array
+     */
+    public function getCategoryIdsByParentId(int $parentId, bool $activeOnly = false): array
+    {
+        $query = Category::where('parent_id', $parentId);
+
+        if ($activeOnly) {
+            $query->where('is_active', true);
+        }
+
+        return $query->pluck('id')->toArray();
+    }
+
+    /**
+     * Get root categories with active filter and children relation.
+     *
+     * @param bool $activeOnly
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getRootCategoriesWithChildren(bool $activeOnly = true): \Illuminate\Database\Eloquent\Collection
+    {
+        $query = Category::whereNull('parent_id');
+
+        if ($activeOnly) {
+            $query->where('is_active', true);
+        }
+
+        return $query->with([
+            'children' => function ($query) use ($activeOnly) {
+                if ($activeOnly) {
+                    $query->where('is_active', true)->orderBy('sort_order');
+                } else {
+                    $query->orderBy('sort_order');
+                }
+            }
+        ])
+            ->orderBy('sort_order')
+            ->get();
+    }
 }
 

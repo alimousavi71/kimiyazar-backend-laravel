@@ -2,8 +2,9 @@
 
 namespace App\Services\Tag;
 
+use App\Enums\Database\ContentType;
 use App\Models\Tag;
-use App\Models\Tagable;
+use App\Repositories\Tag\TagRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
@@ -11,6 +12,13 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class TagService
 {
+    /**
+     * @param TagRepositoryInterface $repository
+     */
+    public function __construct(
+        private readonly TagRepositoryInterface $repository
+    ) {
+    }
     /**
      * Search tags by query string.
      *
@@ -20,19 +28,7 @@ class TagService
      */
     public function search(string $query = '', int $limit = 20): Collection
     {
-        $tags = Tag::query();
-
-        if (!empty($query)) {
-            $tags->where('title', 'like', "%{$query}%")
-                ->orWhere('slug', 'like', "%{$query}%");
-        }
-
-        // Order by latest when no query
-        if (empty($query)) {
-            $tags->orderBy('created_at', 'desc');
-        }
-
-        return $tags->limit($limit)->get();
+        return $this->repository->search($query, $limit);
     }
 
     /**
@@ -44,10 +40,7 @@ class TagService
      */
     public function getByTagable(string $tagableType, int|string $tagableId): Collection
     {
-        return Tagable::where('tagable_type', $tagableType)
-            ->where('tagable_id', $tagableId)
-            ->with('tag')
-            ->get()
+        return $this->repository->getTagablesByTagable($tagableType, $tagableId)
             ->map(function ($tagable) {
                 return [
                     'id' => $tagable->tag->id,
@@ -71,14 +64,14 @@ class TagService
         $title = trim($title);
 
         // Try to find by title (case-insensitive)
-        $tag = Tag::whereRaw('LOWER(title) = ?', [mb_strtolower($title, 'UTF-8')])->first();
+        $tag = $this->repository->findByTitle($title);
 
         if ($tag) {
             return $tag;
         }
 
         // Create new tag - HasPersianSlug trait will auto-generate slug
-        return Tag::create(['title' => $title]);
+        return $this->repository->create(['title' => $title]);
     }
 
     /**
@@ -92,13 +85,11 @@ class TagService
     public function attachToTagable(string $tagableType, int|string $tagableId, array $tagData): void
     {
         // First, detach all existing tags
-        Tagable::where('tagable_type', $tagableType)
-            ->where('tagable_id', $tagableId)
-            ->delete();
+        $this->repository->deleteTagablesByTagable($tagableType, $tagableId);
 
         // Then attach new tags
         foreach ($tagData as $data) {
-            Tagable::create([
+            $this->repository->createTagable([
                 'tag_id' => $data['tag_id'],
                 'tagable_type' => $tagableType,
                 'tagable_id' => $tagableId,
@@ -117,10 +108,7 @@ class TagService
      */
     public function detachFromTagable(string $tagableType, int|string $tagableId, int|string $tagId): bool
     {
-        return Tagable::where('tagable_type', $tagableType)
-            ->where('tagable_id', $tagableId)
-            ->where('tag_id', $tagId)
-            ->delete() > 0;
+        return $this->repository->deleteTagableByTagableAndTag($tagableType, $tagableId, $tagId);
     }
 
     /**
@@ -133,9 +121,7 @@ class TagService
      */
     public function updateTagBody(int|string $tagableId, int|string $tagId, ?string $body): bool
     {
-        $tagable = Tagable::where('id', $tagableId)
-            ->where('tag_id', $tagId)
-            ->first();
+        $tagable = $this->repository->findTagableByIdAndTagId($tagableId, $tagId);
 
         if (!$tagable) {
             return false;
@@ -143,6 +129,19 @@ class TagService
 
         $tagable->body = $body;
         return $tagable->save();
+    }
+
+    /**
+     * Get tags by content type with filtering.
+     * Filters tags that are associated with active contents of the specified type.
+     *
+     * @param ContentType $contentType
+     * @param int $limit
+     * @return Collection
+     */
+    public function getTagsByContentType(ContentType $contentType, int $limit = 20): Collection
+    {
+        return $this->repository->getTagsByContentType($contentType, $limit);
     }
 }
 

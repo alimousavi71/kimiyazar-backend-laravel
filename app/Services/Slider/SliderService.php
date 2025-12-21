@@ -5,6 +5,7 @@ namespace App\Services\Slider;
 use App\Models\Slider;
 use App\Repositories\Slider\SliderRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Spatie\QueryBuilder\AllowedFilter;
 
@@ -124,9 +125,9 @@ class SliderService
      * Get active sliders ordered by sort_order.
      *
      * @param int|null $limit
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
-    public function getActiveSliders(?int $limit = null): \Illuminate\Database\Eloquent\Collection
+    public function getActiveSliders(?int $limit = null): Collection
     {
         $query = Slider::where('is_active', true)
             ->orderBy('sort_order');

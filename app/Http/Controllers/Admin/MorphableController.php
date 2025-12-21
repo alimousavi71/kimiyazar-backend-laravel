@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\ApiResponseTrait;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -39,7 +40,7 @@ class MorphableController extends Controller
         $modelClass = $type;
 
         // Validate that the class exists and is a valid model
-        if (!class_exists($modelClass) || !is_subclass_of($modelClass, \Illuminate\Database\Eloquent\Model::class)) {
+        if (!class_exists($modelClass) || !is_subclass_of($modelClass, Model::class)) {
             return $this->errorResponse(__('morphable.invalid_type'), 400);
         }
 

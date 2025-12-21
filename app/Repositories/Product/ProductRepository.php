@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Product;
 
+use App\Enums\Database\ProductStatus;
 use App\Models\Product;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
@@ -129,5 +130,124 @@ class ProductRepository implements ProductRepositoryInterface
         $product = $this->findByIdOrFail($id);
 
         return $product->delete();
+    }
+
+    /**
+     * Get active published products.
+     *
+     * @param int|null $limit
+     * @return Collection
+     */
+    public function getActivePublishedProducts(?int $limit = null): Collection
+    {
+        $query = Product::where('is_published', true)
+            ->where('status', ProductStatus::ACTIVE)
+            ->with(['category', 'photos', 'prices'])
+            ->orderBy('created_at', 'desc');
+
+        if ($limit !== null) {
+            $query->limit($limit);
+        }
+
+        return $query->get();
+    }
+
+    /**
+     * Get paginated active published products with filters.
+     *
+     * @param int $perPage
+     * @param int|null $categoryId
+     * @param string|null $search
+     * @param string|null $sort
+     * @param array|null $categoryIds
+     * @return LengthAwarePaginator
+     */
+    public function getPaginatedActivePublishedProducts(
+        int $perPage = 50,
+        ?int $categoryId = null,
+        ?string $search = null,
+        ?string $sort = null,
+        ?array $categoryIds = null
+    ): LengthAwarePaginator {
+        $query = Product::where('is_published', true)
+            ->where('status', ProductStatus::ACTIVE)
+            ->with(['category', 'photos']);
+
+        // Filter by category - use categoryIds if provided, otherwise use categoryId
+        if ($categoryIds !== null && !empty($categoryIds)) {
+            $query->whereIn('category_id', $categoryIds);
+        } elseif ($categoryId !== null) {
+            $query->where('category_id', $categoryId);
+        }
+
+        // Search filter
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('slug', 'like', "%{$search}%")
+                    ->orWhere('sale_description', 'like', "%{$search}%");
+            });
+        }
+
+        // Sort
+        if ($sort === 'product_price') {
+            $query->orderBy('current_price', 'asc');
+        } elseif ($sort === 'price_date') {
+            $query->orderBy('price_updated_at', 'desc');
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        return $query->paginate($perPage);
+    }
+
+    /**
+     * Get latest price update date from active published products.
+     *
+     * @return string|null
+     */
+    public function getLatestPriceUpdateDate(): ?string
+    {
+        return Product::where('is_published', true)
+            ->where('status', ProductStatus::ACTIVE)
+            ->whereNotNull('price_updated_at')
+            ->max('price_updated_at');
+    }
+
+    /**
+     * Get all products.
+     *
+     * @return Collection
+     */
+    public function all(): Collection
+    {
+        return Product::all();
+    }
+
+    /**
+     * Get products with search and category filters for price management.
+     *
+     * @param string|null $search
+     * @param array|null $categoryIds
+     * @param int $perPage
+     * @return LengthAwarePaginator
+     */
+    public function getProductsForPriceManagement(?string $search = null, ?array $categoryIds = null, int $perPage = 15): LengthAwarePaginator
+    {
+        $query = Product::query();
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('slug', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter by category (including all subcategories)
+        if ($categoryIds !== null && !empty($categoryIds)) {
+            $query->whereIn('category_id', $categoryIds);
+        }
+
+        return $query->orderBy('sort_order')->orderBy('name')->paginate($perPage);
     }
 }

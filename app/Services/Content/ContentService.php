@@ -147,15 +147,7 @@ class ContentService
      */
     public function getActiveContentByType(ContentType $type, ?int $limit = null): \Illuminate\Database\Eloquent\Collection
     {
-        $query = Content::where('type', $type)
-            ->where('is_active', true)
-            ->orderBy('created_at', 'desc');
-
-        if ($limit !== null) {
-            $query->limit($limit);
-        }
-
-        return $query->get();
+        return $this->repository->getActiveContentByType($type, $limit);
     }
 
     /**
@@ -187,20 +179,7 @@ class ContentService
      */
     public function getPaginatedActiveContentByType(ContentType $type, int $perPage = 10, ?string $search = null): LengthAwarePaginator
     {
-        $query = Content::where('type', $type)
-            ->where('is_active', true)
-            ->with(['photos', 'tags'])
-            ->orderBy('created_at', 'desc');
-
-        if ($search) {
-            $query->where(function ($q) use ($search) {
-                $q->where('title', 'like', "%{$search}%")
-                    ->orWhere('body', 'like', "%{$search}%")
-                    ->orWhere('slug', 'like', "%{$search}%");
-            });
-        }
-
-        return $query->paginate($perPage);
+        return $this->repository->getPaginatedActiveContentByType($type, $perPage, $search);
     }
 }
 

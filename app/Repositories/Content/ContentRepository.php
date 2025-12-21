@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Content;
 
+use App\Enums\Database\ContentType;
 use App\Models\Content;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -109,16 +110,62 @@ class ContentRepository implements ContentRepositoryInterface
     /**
      * Find active content by type and slug.
      *
-     * @param \App\Enums\Database\ContentType $type
+     * @param ContentType $type
      * @param string $slug
      * @return Content|null
      */
-    public function findActiveByTypeAndSlug(\App\Enums\Database\ContentType $type, string $slug): ?Content
+    public function findActiveByTypeAndSlug(ContentType $type, string $slug): ?Content
     {
         return Content::where('type', $type)
             ->where('slug', $slug)
             ->where('is_active', true)
             ->first();
+    }
+
+    /**
+     * Get active content by type.
+     *
+     * @param ContentType $type
+     * @param int|null $limit
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getActiveContentByType(ContentType $type, ?int $limit = null): \Illuminate\Database\Eloquent\Collection
+    {
+        $query = Content::where('type', $type)
+            ->where('is_active', true)
+            ->orderBy('created_at', 'desc');
+
+        if ($limit !== null) {
+            $query->limit($limit);
+        }
+
+        return $query->get();
+    }
+
+    /**
+     * Get paginated active content by type with optional search.
+     *
+     * @param ContentType $type
+     * @param int $perPage
+     * @param string|null $search
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getPaginatedActiveContentByType(ContentType $type, int $perPage = 10, ?string $search = null): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    {
+        $query = Content::where('type', $type)
+            ->where('is_active', true)
+            ->with(['photos', 'tags'])
+            ->orderBy('created_at', 'desc');
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('body', 'like', "%{$search}%")
+                    ->orWhere('slug', 'like', "%{$search}%");
+            });
+        }
+
+        return $query->paginate($perPage);
     }
 }
 

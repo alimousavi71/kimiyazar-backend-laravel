@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ForgotPasswordRequest extends FormRequest
@@ -26,7 +27,7 @@ class ForgotPasswordRequest extends FormRequest
                     }
 
                     // Check if user exists
-                    $userExists = \App\Models\User::where('email', $value)
+                    $userExists = User::where('email', $value)
                         ->orWhere('phone_number', $value)
                         ->exists();
 

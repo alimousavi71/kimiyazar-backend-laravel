@@ -8,6 +8,7 @@ use App\Http\Requests\Auth\ResendOtpRequest;
 use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Http\Requests\Auth\VerifyResetOtpRequest;
 use App\Http\Traits\ApiResponseTrait;
+use App\Models\Otp;
 use App\Services\Auth\AuthService;
 use App\Services\Otp\OtpService;
 use Exception;
@@ -232,7 +233,7 @@ class ForgotPasswordController extends Controller
         try {
             $otpId = $request->input('otp_id');
 
-            $otp = \App\Models\Otp::find($otpId);
+            $otp = Otp::find($otpId);
 
             if (!$otp) {
                 return $this->errorResponse(

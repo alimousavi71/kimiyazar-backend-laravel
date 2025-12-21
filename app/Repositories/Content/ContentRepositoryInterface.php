@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Content;
 
+use App\Enums\Database\ContentType;
 use App\Models\Content;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -72,10 +73,29 @@ interface ContentRepositoryInterface
     /**
      * Find active content by type and slug.
      *
-     * @param \App\Enums\Database\ContentType $type
+     * @param ContentType $type
      * @param string $slug
      * @return Content|null
      */
-    public function findActiveByTypeAndSlug(\App\Enums\Database\ContentType $type, string $slug): ?Content;
+    public function findActiveByTypeAndSlug(ContentType $type, string $slug): ?Content;
+
+    /**
+     * Get active content by type.
+     *
+     * @param ContentType $type
+     * @param int|null $limit
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getActiveContentByType(ContentType $type, ?int $limit = null): \Illuminate\Database\Eloquent\Collection;
+
+    /**
+     * Get paginated active content by type with optional search.
+     *
+     * @param ContentType $type
+     * @param int $perPage
+     * @param string|null $search
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getPaginatedActiveContentByType(ContentType $type, int $perPage = 10, ?string $search = null): \Illuminate\Contracts\Pagination\LengthAwarePaginator;
 }
 

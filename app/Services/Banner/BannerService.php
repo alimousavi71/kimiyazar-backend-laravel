@@ -7,6 +7,7 @@ use App\Models\Banner;
 use App\Repositories\Banner\BannerRepositoryInterface;
 use App\Services\ImageService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\UploadedFile;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -211,9 +212,9 @@ class BannerService
      *
      * @param array<BannerPosition> $positions
      * @param int|null $limit
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
-    public function getActiveBannersByPositions(array $positions, ?int $limit = null): \Illuminate\Database\Eloquent\Collection
+    public function getActiveBannersByPositions(array $positions, ?int $limit = null): Collection
     {
         $query = Banner::whereIn('position', array_map(fn($p) => $p->value, $positions))
             ->where('is_active', true)

@@ -33,8 +33,12 @@ use App\Repositories\ProductPrice\ProductPriceRepository;
 use App\Repositories\ProductPrice\ProductPriceRepositoryInterface;
 use App\Repositories\Setting\SettingRepository;
 use App\Repositories\Setting\SettingRepositoryInterface;
+use App\Repositories\Tag\TagRepository;
+use App\Repositories\Tag\TagRepositoryInterface;
 use App\Services\Auth\AuthService;
 use App\Services\Otp\OtpNotificationService;
+use App\Services\Otp\OtpService;
+use App\Services\User\UserService;
 use App\View\Composers\SettingComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -136,11 +140,17 @@ class AppServiceProvider extends ServiceProvider
             ProductPriceRepository::class
         );
 
+        // Bind Tag Repository
+        $this->app->bind(
+            TagRepositoryInterface::class,
+            TagRepository::class
+        );
+
         // Bind Auth Service
         $this->app->singleton(AuthService::class, function ($app) {
             return new AuthService(
-                $app->make(\App\Services\User\UserService::class),
-                $app->make(\App\Services\Otp\OtpService::class),
+                $app->make(UserService::class),
+                $app->make(OtpService::class),
                 $app->make(OtpNotificationService::class)
             );
         });

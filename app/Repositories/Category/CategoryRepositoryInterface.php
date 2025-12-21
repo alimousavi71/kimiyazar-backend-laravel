@@ -85,5 +85,28 @@ interface CategoryRepositoryInterface
      */
     public function delete(int|string $id): bool;
 
+    /**
+     * Get all categories ordered by sort_order.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getAllOrdered(): \Illuminate\Database\Eloquent\Collection;
+
+    /**
+     * Get category IDs by parent ID with active filter.
+     *
+     * @param int $parentId
+     * @param bool $activeOnly
+     * @return array
+     */
+    public function getCategoryIdsByParentId(int $parentId, bool $activeOnly = false): array;
+
+    /**
+     * Get root categories with active filter and children relation.
+     *
+     * @param bool $activeOnly
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getRootCategoriesWithChildren(bool $activeOnly = true): \Illuminate\Database\Eloquent\Collection;
 }
 

@@ -5,6 +5,7 @@ namespace App\Services\Modal;
 use App\Models\Modal;
 use App\Repositories\Modal\ModalRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Spatie\QueryBuilder\AllowedFilter;
 
@@ -131,9 +132,9 @@ class ModalService
     /**
      * Get published modals with proper ordering.
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
-    public function getPublishedModals()
+    public function getPublishedModals(): Collection
     {
         return Modal::published()
             ->withinDateRange()
@@ -146,9 +147,9 @@ class ModalService
      *
      * @param string $modalableType
      * @param int|null $modalableId
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
-    public function getForModalable(string $modalableType, ?int $modalableId = null)
+    public function getForModalable(string $modalableType, ?int $modalableId = null): Collection
     {
         return Modal::forModalable($modalableType, $modalableId)
             ->published()

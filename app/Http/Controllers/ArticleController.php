@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Enums\Database\ContentType;
 use App\Services\Content\ContentService;
 use App\Services\Setting\SettingService;
+use App\Services\Tag\TagService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -12,7 +14,8 @@ class ArticleController extends Controller
 {
     public function __construct(
         private readonly ContentService $contentService,
-        private readonly SettingService $settingService
+        private readonly SettingService $settingService,
+        private readonly TagService $tagService
     ) {
     }
 
@@ -38,10 +41,7 @@ class ArticleController extends Controller
         $recentArticles = $this->contentService->getActiveContentByType(ContentType::ARTICLE, 3);
 
         // Get all tags from articles (for sidebar)
-        $tags = \App\Models\Tag::whereHas('contents', function ($query) {
-            $query->where('type', ContentType::ARTICLE)
-                ->where('is_active', true);
-        })->limit(20)->get();
+        $tags = $this->tagService->getTagsByContentType(ContentType::ARTICLE, 20);
 
         return view('articles.index', compact('articles', 'recentArticles', 'tags', 'settings', 'search'));
     }
@@ -50,9 +50,9 @@ class ArticleController extends Controller
      * Display a single article item.
      *
      * @param string $slug
-     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     * @return View|RedirectResponse
      */
-    public function show(string $slug): \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+    public function show(string $slug): View|RedirectResponse
     {
         $settings = $this->settingService->getAllAsArray();
 
@@ -69,10 +69,7 @@ class ArticleController extends Controller
             ->take(3);
 
         // Get all tags from articles (for sidebar)
-        $tags = \App\Models\Tag::whereHas('contents', function ($query) {
-            $query->where('type', ContentType::ARTICLE)
-                ->where('is_active', true);
-        })->limit(20)->get();
+        $tags = $this->tagService->getTagsByContentType(ContentType::ARTICLE, 20);
 
         return view('articles.show', compact('article', 'recentArticles', 'tags', 'settings'));
     }

@@ -100,4 +100,13 @@ interface ProductPriceRepositoryInterface
      * @return bool
      */
     public function delete(int|string $id): bool;
+
+    /**
+     * Find product price by product ID and date.
+     *
+     * @param int $productId
+     * @param \Carbon\Carbon $date
+     * @return ProductPrice|null
+     */
+    public function findByProductIdAndDate(int $productId, \Carbon\Carbon $date): ?ProductPrice;
 }
