@@ -167,4 +167,20 @@ class ProductPriceRepository implements ProductPriceRepositoryInterface
             ->whereDate('created_at', $date)
             ->first();
     }
+
+    /**
+     * Get price history for a product within a date range.
+     *
+     * @param int $productId
+     * @param \Carbon\Carbon $startDate
+     * @param \Carbon\Carbon $endDate
+     * @return Collection
+     */
+    public function getPriceHistoryByDateRange(int $productId, \Carbon\Carbon $startDate, \Carbon\Carbon $endDate): Collection
+    {
+        return ProductPrice::where('product_id', $productId)
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->orderBy('created_at', 'asc')
+            ->get();
+    }
 }

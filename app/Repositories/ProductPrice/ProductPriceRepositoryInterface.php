@@ -109,4 +109,14 @@ interface ProductPriceRepositoryInterface
      * @return ProductPrice|null
      */
     public function findByProductIdAndDate(int $productId, \Carbon\Carbon $date): ?ProductPrice;
+
+    /**
+     * Get price history for a product within a date range.
+     *
+     * @param int $productId
+     * @param \Carbon\Carbon $startDate
+     * @param \Carbon\Carbon $endDate
+     * @return Collection
+     */
+    public function getPriceHistoryByDateRange(int $productId, \Carbon\Carbon $startDate, \Carbon\Carbon $endDate): Collection;
 }

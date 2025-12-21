@@ -227,4 +227,66 @@ class ProductPriceService
             'total' => $created + $updated,
         ];
     }
+
+    /**
+     * Get price history for a product by date range.
+     *
+     * @param int $productId
+     * @param string $range Range: '1m', '3m', '6m', '1y'
+     * @return array{labels: array, prices: array, stepSize: float|null, suggestedMin: float|null, suggestedMax: float|null}
+     */
+    public function getPriceHistoryForChart(int $productId, string $range = '1m'): array
+    {
+        $now = now();
+        $startDate = match ($range) {
+            '1m' => $now->copy()->subMonth(),
+            '3m' => $now->copy()->subMonths(3),
+            '6m' => $now->copy()->subMonths(6),
+            '1y' => $now->copy()->subYear(),
+            default => $now->copy()->subMonth(),
+        };
+
+        $prices = $this->repository->getPriceHistoryByDateRange($productId, $startDate, $now);
+
+        // Format data for Chart.js
+        $labels = [];
+        $priceValues = [];
+        $allPrices = [];
+
+        foreach ($prices as $price) {
+            $labels[] = $price->created_at->format('Y/m/d');
+            $priceValue = (float) $price->price;
+            $priceValues[] = $priceValue;
+            $allPrices[] = $priceValue;
+        }
+
+        // Calculate step size and min/max for better chart display
+        $stepSize = null;
+        $suggestedMin = null;
+        $suggestedMax = null;
+
+        if (count($allPrices) > 0) {
+            $minPrice = min($allPrices);
+            $maxPrice = max($allPrices);
+            $priceRange = $maxPrice - $minPrice;
+
+            // Calculate step size (approximately 10-12 ticks)
+            if ($priceRange > 0) {
+                $stepSize = ceil($priceRange / 12 / 1000) * 1000; // Round to nearest 1000
+            }
+
+            // Add padding to min/max
+            $padding = $priceRange * 0.1; // 10% padding
+            $suggestedMin = max(0, $minPrice - $padding);
+            $suggestedMax = $maxPrice + $padding;
+        }
+
+        return [
+            'labels' => $labels,
+            'prices' => $priceValues,
+            'stepSize' => $stepSize,
+            'suggestedMin' => $suggestedMin,
+            'suggestedMax' => $suggestedMax,
+        ];
+    }
 }

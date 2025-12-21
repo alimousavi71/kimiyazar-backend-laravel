@@ -9,6 +9,7 @@ export default defineConfig({
                 "resources/css/app.css",
                 "resources/js/app.js",
                 "resources/js/slider.js",
+                "resources/js/product-chart.js",
                 "resources/js/imask-test.js",
                 "resources/js/validation-example.js",
                 "resources/js/admin-form-validation.js",

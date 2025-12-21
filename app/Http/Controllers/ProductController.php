@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Database\BannerPosition;
 use App\Services\Category\CategoryService;
 use App\Services\Product\ProductService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -90,5 +91,32 @@ class ProductController extends Controller
             'breadcrumbPath',
             'categoriesToShow'
         ));
+    }
+
+    /**
+     * Display a single product page.
+     *
+     * @param string $slug
+     * @return View
+     */
+    public function show(string $slug): View
+    {
+        $product = $this->productService->findBySlug($slug);
+
+        if (!$product || !$product->is_published) {
+            abort(404);
+        }
+
+        // Load relationships
+        $product->load(['photos', 'category', 'prices']);
+
+        // Get price history (last 30 days by default, can be extended)
+        $priceHistory = $product->prices()->orderBy('created_at', 'desc')->get();
+
+        // Get banners for position C (top of footer)
+        $banners = app(\App\Services\Banner\BannerService::class)
+            ->getActiveBannersByPositions([BannerPosition::C1, BannerPosition::C2], 1);
+
+        return view('products.show', compact('product', 'priceHistory', 'banners'));
     }
 }

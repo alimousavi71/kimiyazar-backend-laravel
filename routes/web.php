@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Api\ProductPriceController as ApiProductPriceController;
 use App\Http\Controllers\Examples\ApiExampleController;
 use App\Http\Controllers\Examples\FormExampleController;
 use App\Http\Controllers\HomeController;
@@ -37,6 +38,7 @@ Route::get('/articles/{slug}', [ArticleController::class, 'show'])->name('articl
 
 // Products Routes
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
 
 // Tags Routes
 Route::get('/tags/{slug}', [TagController::class, 'index'])->name('tags.index');
@@ -112,6 +114,9 @@ Route::prefix('api')->name('api.')->group(function () {
     // Form Example Routes
     Route::post('/form-example/submit', [FormExampleController::class, 'submit'])->name('form-example.submit');
     Route::get('/users/search', [FormExampleController::class, 'searchUsers'])->name('users.search');
+
+    // Product Price Routes
+    Route::get('/products/{productId}/price-history', [ApiProductPriceController::class, 'getPriceHistory'])->name('products.price-history');
 });
 
 // Legacy route names for compatibility
