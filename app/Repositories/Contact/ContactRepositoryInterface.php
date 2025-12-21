@@ -43,5 +43,13 @@ interface ContactRepositoryInterface
      * @throws ModelNotFoundException
      */
     public function findByIdOrFail(int|string $id): Contact;
+
+    /**
+     * Create a new contact.
+     *
+     * @param array $data
+     * @return Contact
+     */
+    public function create(array $data): Contact;
 }
 

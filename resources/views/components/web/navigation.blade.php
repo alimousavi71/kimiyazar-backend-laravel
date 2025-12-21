@@ -134,7 +134,7 @@
 
                     <li class="nav-item">
                         <a class="nav-link flex items-center gap-2 py-5 px-4 text-slate-700 no-underline text-sm font-medium transition-all duration-300 hover:text-green-500"
-                            href="#">
+                            href="{{ route('contact.index') }}">
                             <i class="fas fa-phone text-green-500 text-base"></i>
                             <span>تماس با ما</span>
                         </a>
@@ -223,7 +223,7 @@
                         </a>
                     </li>
                     <li class="w-full">
-                        <a href="#"
+                        <a href="{{ route('contact.index') }}"
                             class="py-3 px-4 flex items-center gap-2 text-sm text-slate-700 no-underline hover:text-green-500 hover:bg-green-50 transition-colors duration-200 rounded">
                             <i class="fas fa-phone text-green-500"></i>
                             <span>تماس با ما</span>

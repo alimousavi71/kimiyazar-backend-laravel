@@ -66,5 +66,16 @@ class ContactRepository implements ContactRepositoryInterface
     {
         return Contact::findOrFail($id);
     }
+
+    /**
+     * Create a new contact.
+     *
+     * @param array $data
+     * @return Contact
+     */
+    public function create(array $data): Contact
+    {
+        return Contact::create($data);
+    }
 }
 

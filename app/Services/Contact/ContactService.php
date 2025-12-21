@@ -77,5 +77,21 @@ class ContactService
 
         return $contact;
     }
+
+    /**
+     * Create a new contact.
+     *
+     * @param array $data
+     * @return Contact
+     */
+    public function create(array $data): Contact
+    {
+        // Set is_read to false by default
+        if (!isset($data['is_read'])) {
+            $data['is_read'] = false;
+        }
+
+        return $this->repository->create($data);
+    }
 }
 
