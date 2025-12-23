@@ -14,14 +14,39 @@
 
             <div class="flex items-center gap-2">
                 <!-- Notifications Dropdown -->
-                <div x-data="{ open: false }" class="relative">
-                    <x-icon-button icon="bell" size="lg" variant="default" :badge="true" badge-color="red"
-                        @click="open = !open" aria-label="{{ __('admin/components.header.notifications') }}" />
+                <div x-data="{
+                    open: false,
+                    popperInstance: null,
+                    init() {
+                        this.$watch('open', value => {
+                            if (value) {
+                                this.$nextTick(() => {
+                                    if (window.initDropdownPopper && this.$refs.notificationTrigger && this.$refs.notificationDropdown && !this.popperInstance) {
+                                        this.popperInstance = window.initDropdownPopper(
+                                            this.$refs.notificationTrigger,
+                                            this.$refs.notificationDropdown,
+                                            'bottom-end'
+                                        );
+                                    }
+                                });
+                            } else {
+                                if (this.popperInstance) {
+                                    this.popperInstance.destroy();
+                                    this.popperInstance = null;
+                                }
+                            }
+                        });
+                    }
+                }" @click.away="open = false" class="relative">
+                    <div x-ref="notificationTrigger">
+                        <x-icon-button icon="bell" size="lg" variant="default" :badge="true" badge-color="red"
+                            @click="open = !open" aria-label="{{ __('admin/components.header.notifications') }}" />
+                    </div>
 
                     <!-- Notifications Dropdown -->
-                    <div x-show="open" @click.away="open = false" x-transition x-cloak
-                        class="absolute end-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border border-gray-100 z-50 overflow-hidden"
-                        style="display: none;">
+                    <div x-ref="notificationDropdown" x-show="open" x-cloak
+                        class="absolute w-80 bg-white rounded-2xl shadow-xl border border-gray-100 z-50 overflow-hidden transition-opacity duration-100 ease-out"
+                        :class="open ? 'opacity-100' : 'opacity-0'" style="display: none;">
                         <!-- Header -->
                         <div class="px-4 py-3 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
                             <h3 class="text-sm font-semibold text-gray-900">
@@ -65,8 +90,31 @@
                     // Use mb_substr for proper Persian/Arabic character support
                     $adminInitials = $admin ? mb_substr($admin->first_name, 0, 1, 'UTF-8') . mb_substr($admin->last_name, 0, 1, 'UTF-8') : 'A';
                 @endphp
-                <div x-data="{ open: false }" class="relative">
-                    <button @click="open = !open"
+                <div x-data="{
+                    open: false,
+                    popperInstance: null,
+                    init() {
+                        this.$watch('open', value => {
+                            if (value) {
+                                this.$nextTick(() => {
+                                    if (window.initDropdownPopper && this.$refs.profileTrigger && this.$refs.profileDropdown && !this.popperInstance) {
+                                        this.popperInstance = window.initDropdownPopper(
+                                            this.$refs.profileTrigger,
+                                            this.$refs.profileDropdown,
+                                            'bottom-end'
+                                        );
+                                    }
+                                });
+                            } else {
+                                if (this.popperInstance) {
+                                    this.popperInstance.destroy();
+                                    this.popperInstance = null;
+                                }
+                            }
+                        });
+                    }
+                }" @click.away="open = false" class="relative">
+                    <button x-ref="profileTrigger" @click="open = !open"
                         class="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors p-1.5 rounded-xl hover:bg-gray-100"
                         aria-label="{{ __('admin/components.header.user_menu') }}">
                         <div
@@ -76,9 +124,9 @@
                         <x-icon name="chevron-down" size="sm" class="hidden sm:block" />
                     </button>
 
-                    <div x-show="open" @click.away="open = false" x-transition x-cloak
-                        class="absolute end-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 overflow-hidden"
-                        style="display: none;">
+                    <div x-ref="profileDropdown" x-show="open" x-cloak
+                        class="absolute w-64 bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 overflow-hidden transition-opacity duration-100 ease-out"
+                        :class="open ? 'opacity-100' : 'opacity-0'" style="display: none;">
                         <!-- User Info Header -->
                         <div
                             class="px-4 py-3 border-b border-gray-100 bg-linear-to-br from-green-50/50 to-emerald-50/50">

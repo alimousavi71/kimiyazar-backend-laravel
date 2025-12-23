@@ -15,6 +15,7 @@
         "vite": "^7.0.7"
     },
     "dependencies": {
+        "@popperjs/core": "^2.11.8",
         "alpinejs": "^3.15.2",
         "boxicons": "^2.1.4",
         "chart.js": "^2.9.4",

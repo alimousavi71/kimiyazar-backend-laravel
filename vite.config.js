@@ -16,6 +16,8 @@ export default defineConfig({
                 "resources/js/admin-password-validation.js",
                 "resources/js/contact-form-validation.js",
                 "resources/js/price-inquiry-validation.js",
+                "resources/js/category-selector.js",
+                "resources/js/dropdown-menu.js",
             ],
             refresh: true,
         }),

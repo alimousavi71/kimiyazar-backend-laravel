@@ -53,7 +53,7 @@
         <x-filter-badges :filters="$filterBadges" />
 
         <!-- Table -->
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto overflow-y-visible">
             {{ $slot }}
         </div>
 

@@ -67,6 +67,7 @@
         >
             <!-- Selected Value Display -->
             <button 
+                x-ref="select2Trigger"
                 type="button"
                 @click="toggleDropdown()"
                 class="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all duration-200 disabled:bg-gray-50 disabled:cursor-not-allowed bg-white shadow-sm hover:shadow-md focus:shadow-md text-start flex items-center justify-between min-h-[42px]"
@@ -107,14 +108,11 @@
 
             <!-- Dropdown -->
             <div 
+                x-ref="select2Dropdown"
                 x-show="isOpen"
-                x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0 scale-95"
-                x-transition:enter-end="opacity-100 scale-100"
-                x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100 scale-100"
-                x-transition:leave-end="opacity-0 scale-95"
-                class="absolute z-50 w-full mt-1 bg-white rounded-xl shadow-md border border-gray-200 max-h-60 overflow-hidden"
+                x-cloak
+                class="absolute z-50 w-full bg-white rounded-xl shadow-md border border-gray-200 max-h-60 overflow-hidden transition-opacity duration-150 ease-out"
+                :class="isOpen ? 'opacity-100' : 'opacity-0'"
                 style="display: none;"
             >
                 <!-- Search Input (if remote search or tags enabled) -->
@@ -200,6 +198,7 @@ function select2Component(selectId, config) {
         valueKey: config.valueKey || 'id',
         textKey: config.textKey || 'name',
         componentSelectId: selectId, // Store selectId for reference
+        popperInstance: null,
 
         init() {
             // Store reference to component for external access
@@ -212,7 +211,7 @@ function select2Component(selectId, config) {
             if (container) {
                 container._select2Component = this;
             }
-            
+
             // Store globally for easier access by ID
             window._select2Components = window._select2Components || {};
             window._select2Components[selectId] = this;
@@ -241,6 +240,26 @@ function select2Component(selectId, config) {
 
             // Update hidden select
             this.updateHiddenSelect();
+
+            // Watch isOpen to initialize/destroy Popper
+            this.$watch('isOpen', value => {
+                if (value) {
+                    this.$nextTick(() => {
+                        if (window.initDropdownPopper && this.$refs.select2Trigger && this.$refs.select2Dropdown && !this.popperInstance) {
+                            this.popperInstance = window.initDropdownPopper(
+                                this.$refs.select2Trigger,
+                                this.$refs.select2Dropdown,
+                                'bottom-start'
+                            );
+                        }
+                    });
+                } else {
+                    if (this.popperInstance) {
+                        this.popperInstance.destroy();
+                        this.popperInstance = null;
+                    }
+                }
+            });
         },
 
         toggleDropdown() {

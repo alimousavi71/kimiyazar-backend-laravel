@@ -84,7 +84,7 @@
         </th>
     @endif
 @else
-    <td {{ $attributes->merge(['class' => $baseClass]) }}>
+    <td {{ $attributes->merge(['class' => $baseClass]) }} style="position: relative; overflow: visible;">
         {{ $slot }}
     </td>
 @endif

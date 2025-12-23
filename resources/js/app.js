@@ -1,5 +1,6 @@
 import "./bootstrap";
 import "./delete-handler";
+import "./dropdown-menu";
 import Alpine from "alpinejs";
 
 // Initialize Alpine.js
