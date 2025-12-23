@@ -76,6 +76,8 @@ return [
         'categories' => 'Categories',
         'products' => 'Products',
         'product_prices' => 'Product Prices',
+        'contacts' => 'Contacts',
+        'price_inquiries' => 'Price Inquiries',
         'modals' => 'Modals',
         'menus' => 'Menus',
         'settings' => 'Settings',

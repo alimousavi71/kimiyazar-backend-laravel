@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductPriceController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\PriceInquiryController;
 use App\Http\Controllers\Examples\UsersController;
 
 Route::group([
@@ -143,6 +144,14 @@ Route::group([
     Route::prefix('contacts')->name('contacts.')->group(function () {
         Route::get('/', [ContactController::class, 'index'])->name('index');
         Route::get('/{id}', [ContactController::class, 'show'])->name('show');
+    });
+
+    // Price Inquiries Management
+    Route::prefix('price-inquiries')->name('price-inquiries.')->group(function () {
+        Route::get('/', [PriceInquiryController::class, 'index'])->name('index');
+        Route::get('/{id}', [PriceInquiryController::class, 'show'])->name('show');
+        Route::post('/{id}/toggle-review-status', [PriceInquiryController::class, 'toggleReviewStatus'])->name('toggle-review-status');
+        Route::delete('/{id}', [PriceInquiryController::class, 'destroy'])->name('destroy');
     });
 
     // Banners Management

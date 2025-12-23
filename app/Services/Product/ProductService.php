@@ -184,7 +184,7 @@ class ProductService
         ?array $categoryIds = null
     ): LengthAwarePaginator {
         return $this->repository->getPaginatedActivePublishedProducts($perPage, $categoryId, $search, $sort, $categoryIds);
-        }
+    }
 
     /**
      * Get latest price update date from active published products.
@@ -194,5 +194,16 @@ class ProductService
     public function getLatestPriceUpdateDate(): ?string
     {
         return $this->repository->getLatestPriceUpdateDate();
+    }
+
+    /**
+     * Get products by IDs.
+     *
+     * @param array $ids
+     * @return Collection
+     */
+    public function findByIds(array $ids): Collection
+    {
+        return $this->repository->findByIds($ids);
     }
 }

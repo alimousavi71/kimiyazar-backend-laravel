@@ -135,4 +135,12 @@ interface ProductRepositoryInterface
      * @return LengthAwarePaginator
      */
     public function getProductsForPriceManagement(?string $search = null, ?array $categoryIds = null, int $perPage = 15): LengthAwarePaginator;
+
+    /**
+     * Get products by IDs.
+     *
+     * @param array $ids
+     * @return Collection
+     */
+    public function findByIds(array $ids): Collection;
 }

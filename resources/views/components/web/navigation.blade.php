@@ -166,7 +166,7 @@
                     </div>
 
                     <!-- Price Inquiry -->
-                    <a href="#"
+                    <a href="{{ route('price-inquiry.create') }}"
                         class="btn-inquiry inline-flex items-center gap-2 px-4 py-2.5 rounded-full no-underline text-sm font-semibold transition-all duration-300 whitespace-nowrap bg-gradient-to-r from-green-500 to-emerald-400 text-white border-2 border-transparent hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(40,167,69,0.4)]"
                         title="استعلام قیمت">
                         <i class="fas fa-calculator text-sm"></i>
@@ -259,7 +259,7 @@
                             </button>
                         </div>
                     </form>
-                    <a href="#"
+                    <a href="{{ route('price-inquiry.create') }}"
                         class="w-full text-center px-4 py-2.5 text-sm font-semibold rounded-full bg-gradient-to-r from-green-500 to-emerald-400 text-white no-underline transition-all duration-300 hover:shadow-[0_4px_12px_rgba(40,167,69,0.3)]">
                         استعلام قیمت
                     </a>

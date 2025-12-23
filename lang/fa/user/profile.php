@@ -28,6 +28,7 @@ return [
         'panel' => 'پنل کاربری',
         'dashboard' => 'داشبورد',
         'profile' => 'پروفایل',
+        'price_inquiries' => 'استعلامات قیمت',
         'home' => 'خانه',
     ],
 

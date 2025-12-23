@@ -28,6 +28,7 @@ return [
         'panel' => 'User Panel',
         'dashboard' => 'Dashboard',
         'profile' => 'Profile',
+        'price_inquiries' => 'Price Inquiries',
         'home' => 'Home',
     ],
 

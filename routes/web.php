@@ -21,6 +21,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfilePasswordController;
 use App\Http\Controllers\ProfileEmailController;
 use App\Http\Controllers\ProfilePhoneController;
+use App\Http\Controllers\ProfilePriceInquiryController;
+use App\Http\Controllers\PriceInquiryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -49,6 +51,10 @@ Route::get('/tags/{slug}', [TagController::class, 'index'])->name('tags.index');
 
 // FAQ Routes
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
+
+// Price Inquiry Routes
+Route::get('/price-inquiry', [PriceInquiryController::class, 'create'])->name('price-inquiry.create');
+Route::post('/price-inquiry', [PriceInquiryController::class, 'store'])->name('price-inquiry.store');
 
 // Admin Authentication Routes
 Route::prefix(config('admin.prefix'))->name(config('admin.route_name_prefix') . '.')->group(function () {
@@ -136,6 +142,12 @@ Route::middleware('auth:web')->prefix('profile')->name('user.profile.')->group(f
         Route::post('/verify', [ProfilePhoneController::class, 'verify'])->name('verify');
         Route::post('/resend-otp', [ProfilePhoneController::class, 'resendOtp'])->name('resend-otp');
     });
+
+    // Price Inquiries Management
+    Route::prefix('price-inquiries')->name('price-inquiries.')->group(function () {
+        Route::get('/', [ProfilePriceInquiryController::class, 'index'])->name('index');
+        Route::get('/{id}', [ProfilePriceInquiryController::class, 'show'])->name('show');
+    });
 });
 
 // API Routes
@@ -150,6 +162,9 @@ Route::prefix('api')->name('api.')->group(function () {
 
     // Product Price Routes
     Route::get('/products/{productId}/price-history', [ApiProductPriceController::class, 'getPriceHistory'])->name('products.price-history');
+
+    // Product Search Route (for Select2)
+    Route::get('/products/search', [\App\Http\Controllers\Api\ProductController::class, 'search'])->name('products.search');
 });
 
 // Legacy route names for compatibility

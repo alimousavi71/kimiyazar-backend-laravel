@@ -154,6 +154,12 @@ class AppServiceProvider extends ServiceProvider
             MenuRepository::class
         );
 
+        // Bind PriceInquiry Repository
+        $this->app->bind(
+            \App\Repositories\PriceInquiry\PriceInquiryRepositoryInterface::class,
+            \App\Repositories\PriceInquiry\PriceInquiryRepository::class
+        );
+
         // Bind Auth Service
         $this->app->singleton(AuthService::class, function ($app) {
             return new AuthService(

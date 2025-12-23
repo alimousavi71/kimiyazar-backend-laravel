@@ -260,6 +260,21 @@ class ProductRepository implements ProductRepositoryInterface
     }
 
     /**
+     * Get products by IDs.
+     *
+     * @param array $ids
+     * @return Collection
+     */
+    public function findByIds(array $ids): Collection
+    {
+        if (empty($ids)) {
+            return new Collection();
+        }
+
+        return Product::whereIn('id', $ids)->get();
+    }
+
+    /**
      * Get products with search and category filters for price management.
      *
      * @param string|null $search
