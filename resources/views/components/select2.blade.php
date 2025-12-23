@@ -71,7 +71,6 @@
                 @click="toggleDropdown()"
                 class="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all duration-200 disabled:bg-gray-50 disabled:cursor-not-allowed bg-white shadow-sm hover:shadow-md focus:shadow-md text-start flex items-center justify-between min-h-[42px]"
                 :class="{
-                    'border-red-500': error,
                     'ring-2 ring-green-500 border-green-500 shadow-md': isOpen
                 }"
             >

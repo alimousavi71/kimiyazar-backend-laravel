@@ -70,7 +70,5 @@ class PriceInquirySeeder extends Seeder
         foreach ($priceInquiries as $inquiry) {
             PriceInquiry::create($inquiry);
         }
-
-        $this->command->info('Created 3 price inquiries with real data.');
     }
 }

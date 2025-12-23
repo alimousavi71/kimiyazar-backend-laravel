@@ -91,38 +91,8 @@ document.addEventListener("DOMContentLoaded", function () {
         },
     ]);
 
-    // Products validation - create a hidden field for validation
-    const productsValidationInput = document.createElement("input");
-    productsValidationInput.type = "hidden";
-    productsValidationInput.id = "products-validation-field";
-    productsValidationInput.name = "products-validation";
-    priceInquiryForm.appendChild(productsValidationInput);
-
-    // Add validation rule that checks products dynamically
-    validation.addField("#products-validation-field", [
-        {
-            rule: "customRegexp",
-            value: () => {
-                const productInputs = Array.from(
-                    priceInquiryForm.querySelectorAll(
-                        'input[name="products[]"]'
-                    )
-                );
-                const productIds = productInputs
-                    .map((input) => input.value)
-                    .filter((value) => value && value.trim() !== "");
-
-                // Must have at least 1 and at most 5 products
-                return productIds.length >= 1 && productIds.length <= 5;
-            },
-            errorMessage: isPersian
-                ? "حداقل یک محصول و حداکثر 5 محصول باید انتخاب شود"
-                : "You must select at least 1 product and at most 5 products",
-        },
-    ]);
-
-    // Also add a custom error display handler for products
-    const validateProducts = () => {
+    // Validate products on form submission
+    validation.onSuccess((event) => {
         const productInputs = Array.from(
             priceInquiryForm.querySelectorAll('input[name="products[]"]')
         );
@@ -143,12 +113,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 ? "حداقل یک محصول باید انتخاب شود"
                 : "At least one product must be selected";
 
-            const errorContainer = priceInquiryForm.querySelector(
-                "#products-error-container"
-            );
             if (errorContainer) {
                 errorContainer.innerHTML = `<span class="text-sm text-red-600">${errorMessage}</span>`;
             }
+            event.preventDefault();
             return false;
         }
 
@@ -157,24 +125,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 ? "حداکثر 5 محصول می‌توانید انتخاب کنید"
                 : "You can select at most 5 products";
 
-            const errorContainer = priceInquiryForm.querySelector(
-                "#products-error-container"
-            );
             if (errorContainer) {
                 errorContainer.innerHTML = `<span class="text-sm text-red-600">${errorMessage}</span>`;
             }
-            return false;
-        }
-
-        return true;
-    };
-
-    // Validate products on form submission
-    validation.onSuccess((event) => {
-        if (!validateProducts()) {
             event.preventDefault();
             return false;
         }
+
         // Form is valid, allow submission
         return true;
     });
