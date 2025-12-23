@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             ModalSeeder::class,
             SettingSeeder::class,
             MenuSeeder::class,
+            PriceInquirySeeder::class,
         ]);
     }
 }

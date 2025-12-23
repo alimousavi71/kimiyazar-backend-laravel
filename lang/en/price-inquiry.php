@@ -27,7 +27,7 @@ return [
             'product' => 'Product',
             'select_product' => 'Select a product',
             'select_products' => 'Search and select products...',
-            'products_help' => 'Type to search for products. You can select multiple products.',
+            'products_help' => 'Type to search for products. You can add up to 5 products.',
             'add_product' => 'Add Product',
             'submit' => 'Submit Inquiry',
         ],

@@ -27,7 +27,7 @@ class StorePriceInquiryRequest extends FormRequest
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
             'phone_number' => ['required', 'string', 'max:20'],
-            'products' => ['required', 'array', 'min:1'],
+            'products' => ['required', 'array', 'min:1', 'max:5'],
             'products.*' => ['required', 'integer', Rule::exists('products', 'id')->where('is_published', true)],
         ];
     }

@@ -78,9 +78,19 @@ class PriceInquiryService
      */
     public function create(array $data): PriceInquiry
     {
-        // If user is authenticated, set user_id
-        if (auth()->check() && !isset($data['user_id'])) {
-            $data['user_id'] = auth()->id();
+        // If user is authenticated, set user_id and fill contact info from user profile
+        if (auth()->check()) {
+            if (!isset($data['user_id'])) {
+                $data['user_id'] = auth()->id();
+            }
+
+            $authenticatedUser = auth()->user();
+
+            // Fill contact information from authenticated user (overwrites any provided data for security)
+            $data['first_name'] = $authenticatedUser->first_name;
+            $data['last_name'] = $authenticatedUser->last_name;
+            $data['email'] = $authenticatedUser->email;
+            $data['phone_number'] = $authenticatedUser->phone_number ?? '';
         }
 
         // Ensure products is an array of product IDs: [1, 2, 3]

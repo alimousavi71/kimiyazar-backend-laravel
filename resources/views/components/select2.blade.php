@@ -53,7 +53,7 @@
             {{ $multiple ? 'multiple' : '' }}
             x-ref="hiddenSelect"
             class="hidden"
-            {{ $attributes->except(['class', 'options', 'remoteUrl', 'remoteSearch', 'multiple', 'tags', 'allowClear', 'minInputLength', 'searchParam', 'valueKey', 'textKey', 'value']) }}
+            {{ $attributes->merge(['id' => $selectId])->except(['class', 'options', 'remoteUrl', 'remoteSearch', 'multiple', 'tags', 'allowClear', 'minInputLength', 'searchParam', 'valueKey', 'textKey', 'value']) }}
         >
             <template x-for="option in selectedOptions" :key="option.value">
                 <option :value="option.value" :selected="true" x-text="option.text"></option>
@@ -200,8 +200,24 @@ function select2Component(selectId, config) {
         searchParam: config.searchParam || 'search',
         valueKey: config.valueKey || 'id',
         textKey: config.textKey || 'name',
+        componentSelectId: selectId, // Store selectId for reference
 
         init() {
+            // Store reference to component for external access
+            const selectElement = document.getElementById(selectId);
+            if (selectElement) {
+                selectElement._select2Component = this;
+            }
+            // Also store on the container for easier access
+            const container = this.$el;
+            if (container) {
+                container._select2Component = this;
+            }
+            
+            // Store globally for easier access by ID
+            window._select2Components = window._select2Components || {};
+            window._select2Components[selectId] = this;
+
             // Initialize selected options from value
             if (config.value) {
                 if (this.multiple && Array.isArray(config.value)) {
@@ -250,13 +266,31 @@ function select2Component(selectId, config) {
             } else {
                 this.selectedOptions = [option];
                 this.closeDropdown();
+                // Dispatch event for single select
+                window.dispatchEvent(new CustomEvent('select2-selected', {
+                    detail: {
+                        selectId: this.componentSelectId,
+                        value: option.value,
+                        text: option.text
+                    }
+                }));
             }
             this.updateHiddenSelect();
         },
 
         clearSelection() {
+            const wasMultiple = this.multiple;
+            const hadSelection = this.selectedOptions.length > 0;
             this.selectedOptions = [];
             this.updateHiddenSelect();
+            // Dispatch event for single select clear
+            if (!wasMultiple && hadSelection) {
+                window.dispatchEvent(new CustomEvent('select2-cleared', {
+                    detail: {
+                        selectId: this.componentSelectId
+                    }
+                }));
+            }
         },
 
         isSelected(option) {
@@ -335,5 +369,19 @@ function select2Component(selectId, config) {
         }
     }
 }
+
+// Helper function to find and clear a Select2 component by ID
+window.clearSelect2 = function(selectId) {
+    if (window._select2Components && window._select2Components[selectId]) {
+        window._select2Components[selectId].clearSelection();
+        return true;
+    }
+    const selectElement = document.getElementById(selectId);
+    if (selectElement && selectElement._select2Component) {
+        selectElement._select2Component.clearSelection();
+        return true;
+    }
+    return false;
+};
 </script>
 @endpush

@@ -88,6 +88,7 @@ const fieldTranslations = {
         Website: "Website",
         Message: "Message",
         Bio: "Bio",
+        Products: "Products",
     },
     fa: {
         "First name": "نام",
@@ -100,6 +101,7 @@ const fieldTranslations = {
         Website: "وب‌سایت",
         Message: "پیام",
         Bio: "بیوگرافی",
+        Products: "محصولات",
     },
 };
 

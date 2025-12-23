@@ -15,6 +15,7 @@ export default defineConfig({
                 "resources/js/admin-form-validation.js",
                 "resources/js/admin-password-validation.js",
                 "resources/js/contact-form-validation.js",
+                "resources/js/price-inquiry-validation.js",
             ],
             refresh: true,
         }),
