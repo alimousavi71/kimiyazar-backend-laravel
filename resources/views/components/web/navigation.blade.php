@@ -174,12 +174,21 @@
                     </a>
 
                     <!-- User Account -->
-                    <a href="{{ route('auth.login') }}"
-                        class="btn-login inline-flex items-center gap-2 px-4 py-2.5 rounded-full no-underline text-sm font-semibold transition-all duration-300 whitespace-nowrap bg-transparent text-green-500 border-2 border-green-500 hover:bg-green-500 hover:text-white hover:-translate-y-0.5 hover:shadow-[0_4px_15px_rgba(40,167,69,0.3)]"
-                        title="ورود / ثبت نام">
-                        <i class="fas fa-sign-in text-sm"></i>
-                        <span>ورود</span>
-                    </a>
+                    @auth
+                        <a href="{{ route('user.profile.show') }}"
+                            class="btn-login inline-flex items-center gap-2 px-4 py-2.5 rounded-full no-underline text-sm font-semibold transition-all duration-300 whitespace-nowrap bg-transparent text-green-500 border-2 border-green-500 hover:bg-green-500 hover:text-white hover:-translate-y-0.5 hover:shadow-[0_4px_15px_rgba(40,167,69,0.3)]"
+                            title="پروفایل">
+                            <i class="fas fa-user text-sm"></i>
+                            <span>{{ auth()->user()->getFullName() ?: 'پروفایل' }}</span>
+                        </a>
+                    @else
+                        <a href="{{ route('auth.login') }}"
+                            class="btn-login inline-flex items-center gap-2 px-4 py-2.5 rounded-full no-underline text-sm font-semibold transition-all duration-300 whitespace-nowrap bg-transparent text-green-500 border-2 border-green-500 hover:bg-green-500 hover:text-white hover:-translate-y-0.5 hover:shadow-[0_4px_15px_rgba(40,167,69,0.3)]"
+                            title="ورود / ثبت نام">
+                            <i class="fas fa-sign-in text-sm"></i>
+                            <span>ورود</span>
+                        </a>
+                    @endauth
                 </div>
             </div>
 
@@ -254,10 +263,17 @@
                         class="w-full text-center px-4 py-2.5 text-sm font-semibold rounded-full bg-gradient-to-r from-green-500 to-emerald-400 text-white no-underline transition-all duration-300 hover:shadow-[0_4px_12px_rgba(40,167,69,0.3)]">
                         استعلام قیمت
                     </a>
-                    <a href="{{ route('auth.login') }}"
-                        class="w-full text-center px-4 py-2.5 text-sm font-semibold rounded-full bg-transparent text-green-500 border-2 border-green-500 no-underline transition-all duration-300 hover:bg-green-500 hover:text-white">
-                        ورود / ثبت نام
-                    </a>
+                    @auth
+                        <a href="{{ route('user.profile.show') }}"
+                            class="w-full text-center px-4 py-2.5 text-sm font-semibold rounded-full bg-transparent text-green-500 border-2 border-green-500 no-underline transition-all duration-300 hover:bg-green-500 hover:text-white">
+                            {{ auth()->user()->getFullName() ?: 'پروفایل' }}
+                        </a>
+                    @else
+                        <a href="{{ route('auth.login') }}"
+                            class="w-full text-center px-4 py-2.5 text-sm font-semibold rounded-full bg-transparent text-green-500 border-2 border-green-500 no-underline transition-all duration-300 hover:bg-green-500 hover:text-white">
+                            ورود / ثبت نام
+                        </a>
+                    @endauth
                 </div>
             </div>
         </div>

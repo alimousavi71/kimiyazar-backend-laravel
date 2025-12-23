@@ -74,7 +74,7 @@ trait HasPersianSlug
         // Only regenerate when source changed and slug not manually set
         if ($this->isDirty($this->getSlugSourceField()) && !$this->isDirty('slug')) {
             $this->ensureSlugIsSet();
-        }
+            }
         return parent::performUpdate($query);
     }
 

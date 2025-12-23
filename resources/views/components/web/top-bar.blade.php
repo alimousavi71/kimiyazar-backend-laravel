@@ -77,11 +77,19 @@
                     </div>
                 </div>
                 <div class="get-quote">
-                    <a class="px-3 sm:px-4 py-1 sm:py-1.5 text-xs sm:text-sm font-semibold rounded-full border-2 border-green-500 bg-gradient-to-r from-green-500 to-emerald-400 text-white transition-all duration-300 shadow-[0_2px_10px_rgba(40,167,69,0.3)] hover:-translate-y-1 hover:scale-105 hover:shadow-[0_6px_20px_rgba(40,167,69,0.6)] hover:from-emerald-400 hover:to-green-500 whitespace-nowrap"
-                        href="{{ route('auth.login') }}">
-                        <span class="hidden sm:inline">عضویت / ورود</span>
-                        <span class="sm:hidden">ورود</span>
-                    </a>
+                    @auth
+                        <a class="px-3 sm:px-4 py-1 sm:py-1.5 text-xs sm:text-sm font-semibold rounded-full border-2 border-green-500 bg-gradient-to-r from-green-500 to-emerald-400 text-white transition-all duration-300 shadow-[0_2px_10px_rgba(40,167,69,0.3)] hover:-translate-y-1 hover:scale-105 hover:shadow-[0_6px_20px_rgba(40,167,69,0.6)] hover:from-emerald-400 hover:to-green-500 whitespace-nowrap"
+                            href="{{ route('user.profile.show') }}">
+                            <span class="hidden sm:inline">{{ auth()->user()->getFullName() ?: 'پروفایل' }}</span>
+                            <span class="sm:hidden">پروفایل</span>
+                        </a>
+                    @else
+                        <a class="px-3 sm:px-4 py-1 sm:py-1.5 text-xs sm:text-sm font-semibold rounded-full border-2 border-green-500 bg-gradient-to-r from-green-500 to-emerald-400 text-white transition-all duration-300 shadow-[0_2px_10px_rgba(40,167,69,0.3)] hover:-translate-y-1 hover:scale-105 hover:shadow-[0_6px_20px_rgba(40,167,69,0.6)] hover:from-emerald-400 hover:to-green-500 whitespace-nowrap"
+                            href="{{ route('auth.login') }}">
+                            <span class="hidden sm:inline">عضویت / ورود</span>
+                            <span class="sm:hidden">ورود</span>
+                        </a>
+                    @endauth
                 </div>
             </div>
         </div>

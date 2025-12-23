@@ -17,6 +17,10 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfilePasswordController;
+use App\Http\Controllers\ProfileEmailController;
+use App\Http\Controllers\ProfilePhoneController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -102,6 +106,35 @@ Route::prefix('auth')->name('auth.')->group(function () {
 
     Route::middleware('auth:web')->group(function () {
         Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    });
+});
+
+// User Profile Routes (Authenticated Users)
+Route::middleware('auth:web')->prefix('profile')->name('user.profile.')->group(function () {
+    Route::get('/', [ProfileController::class, 'show'])->name('show');
+    Route::get('/edit', [ProfileController::class, 'edit'])->name('edit');
+    Route::match(['put', 'patch'], '/', [ProfileController::class, 'update'])->name('update');
+
+    // Password Management
+    Route::get('/password/edit', [ProfilePasswordController::class, 'edit'])->name('password.edit');
+    Route::match(['put', 'patch'], '/password', [ProfilePasswordController::class, 'update'])->name('password.update');
+
+    // Email Management (with OTP verification)
+    Route::prefix('email')->name('email.')->group(function () {
+        Route::get('/edit', [ProfileEmailController::class, 'edit'])->name('edit');
+        Route::post('/send-otp', [ProfileEmailController::class, 'sendOtp'])->name('send-otp');
+        Route::get('/verify', [ProfileEmailController::class, 'showVerifyForm'])->name('verify');
+        Route::post('/verify', [ProfileEmailController::class, 'verify'])->name('verify');
+        Route::post('/resend-otp', [ProfileEmailController::class, 'resendOtp'])->name('resend-otp');
+    });
+
+    // Phone Management (with OTP verification)
+    Route::prefix('phone')->name('phone.')->group(function () {
+        Route::get('/edit', [ProfilePhoneController::class, 'edit'])->name('edit');
+        Route::post('/send-otp', [ProfilePhoneController::class, 'sendOtp'])->name('send-otp');
+        Route::get('/verify', [ProfilePhoneController::class, 'showVerifyForm'])->name('verify');
+        Route::post('/verify', [ProfilePhoneController::class, 'verify'])->name('verify');
+        Route::post('/resend-otp', [ProfilePhoneController::class, 'resendOtp'])->name('resend-otp');
     });
 });
 

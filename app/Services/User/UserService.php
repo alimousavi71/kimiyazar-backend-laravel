@@ -73,6 +73,7 @@ class UserService
     public function update(int|string $id, array $data): User
     {
         // Don't update password through this method
+        // Email, phone_number, and country_code can be updated through dedicated controllers with OTP verification
         unset($data['password']);
 
         if (isset($data['is_active']) && is_bool($data['is_active'])) {
