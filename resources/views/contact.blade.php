@@ -5,17 +5,6 @@
 <x-layouts.app title="تماس با ما - {{ $siteTitle }}" dir="rtl">
     <x-web.page-banner title="تماس با ما" />
 
-    <!-- Map Section -->
-    <section class="modern-map-section w-full">
-        <div class="map-wrapper w-full">
-            <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3677.6962663570607!2d89.56355961427838!3d22.813715829827952!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ff901efac79b59%3A0x5be01a1bc0dc7eba!2sAnd+IT!5e0!3m2!1sen!2sbd!4v1557901943656!5m2!1sen!2sbd"
-                width="100%" height="450" frameborder="0" style="border:0" allowfullscreen="" loading="lazy"
-                class="w-full">
-            </iframe>
-        </div>
-    </section>
-
     <!-- Contact Content Section -->
     <section class="modern-contact-section py-12 bg-gray-50">
         <div class="container mx-auto px-4">
@@ -130,12 +119,13 @@
                         </div>
 
                         <div class="modern-contact-form">
-                            <form action="{{ route('contact.store') }}" method="post" class="contact-form">
+                            <form id="contact-form" action="{{ route('contact.store') }}" method="post"
+                                class="contact-form space-y-6">
                                 @csrf
 
                                 <!-- Success Message -->
                                 @if(session('success'))
-                                    <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-700">
+                                    <div class="p-4 bg-green-50 border border-green-200 rounded-lg text-green-700">
                                         <i class="fa fa-check-circle mr-2"></i>
                                         {{ session('success') }}
                                     </div>
@@ -143,7 +133,7 @@
 
                                 <!-- Error Messages -->
                                 @if($errors->any())
-                                    <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
+                                    <div class="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
                                         <ul class="list-disc list-inside space-y-1">
                                             @foreach($errors->all() as $error)
                                                 <li>{{ $error }}</li>
@@ -153,56 +143,30 @@
                                 @endif
 
                                 <!-- Title Field -->
-                                <div class="form-group-modern mb-5">
-                                    <label for="title"
-                                        class="form-label-modern block text-sm font-semibold text-slate-700 mb-2">عنوان</label>
-                                    <input type="text" name="title" value="{{ old('title') }}"
-                                        class="form-input-modern w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-300 outline-none @error('title') border-red-500 @enderror"
-                                        id="title" placeholder="عنوان تماس را وارد کنید" />
-                                    @error('title')
-                                        <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
-                                    @enderror
-                                </div>
+                                <x-form-group label="عنوان" required :error="$errors->first('title')">
+                                    <x-input type="text" name="title" id="title" :value="old('title')"
+                                        placeholder="عنوان تماس را وارد کنید" class="w-full" />
+                                </x-form-group>
 
                                 <!-- Mobile & Email Row -->
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
-                                    <div class="form-group-modern">
-                                        <label for="mobile"
-                                            class="form-label-modern block text-sm font-semibold text-slate-700 mb-2">شماره
-                                            موبایل</label>
-                                        <input type="text" name="mobile" value="{{ old('mobile') }}"
-                                            class="form-input-modern w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-300 outline-none @error('mobile') border-red-500 @enderror"
-                                            maxlength="11" id="mobile" placeholder="09121234567" />
-                                        @error('mobile')
-                                            <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group-modern">
-                                        <label for="email"
-                                            class="form-label-modern block text-sm font-semibold text-slate-700 mb-2">پست
-                                            الکترونیکی</label>
-                                        <input type="email" name="email" value="{{ old('email') }}"
-                                            class="form-input-modern w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-300 outline-none @error('email') border-red-500 @enderror"
-                                            id="email" placeholder="example@email.com" />
-                                        @error('email')
-                                            <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
-                                        @enderror
-                                    </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <x-form-group label="شماره موبایل" required :error="$errors->first('mobile')">
+                                        <x-input type="text" name="mobile" id="mobile" :value="old('mobile')"
+                                            maxlength="11" placeholder="09121234567" class="w-full" />
+                                    </x-form-group>
+
+                                    <x-form-group label="پست الکترونیکی" required :error="$errors->first('email')">
+                                        <x-input type="email" name="email" id="email" :value="old('email')"
+                                            placeholder="example@email.com" class="w-full" />
+                                    </x-form-group>
                                 </div>
 
                                 <!-- Message Field -->
-                                <div class="form-group-modern mb-6">
-                                    <label for="text"
-                                        class="form-label-modern block text-sm font-semibold text-slate-700 mb-2">متن
-                                        پیام</label>
-                                    <textarea name="text" rows="5"
-                                        class="form-textarea-modern w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-300 outline-none resize-none @error('text') border-red-500 @enderror"
-                                        id="text"
-                                        placeholder="متن پیام خود را اینجا بنویسید...">{{ old('text') }}</textarea>
-                                    @error('text')
-                                        <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
-                                    @enderror
-                                </div>
+                                <x-form-group label="متن پیام" required :error="$errors->first('text')">
+                                    <x-textarea name="text" id="text" rows="5"
+                                        placeholder="متن پیام خود را اینجا بنویسید..."
+                                        class="w-full">{{ old('text') }}</x-textarea>
+                                </x-form-group>
 
                                 <!-- Submit Button -->
                                 <div class="form-submit-wrapper">

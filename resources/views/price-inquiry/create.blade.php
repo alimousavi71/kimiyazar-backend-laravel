@@ -2,8 +2,6 @@
     $siteTitle = $settings['title'] ?? config('app.name');
 @endphp
 
-@vite('resources/js/price-inquiry-validation.js')
-
 <x-layouts.app title="{{ __('price-inquiry.forms.create.title') }} - {{ $siteTitle }}" dir="rtl">
     <x-web.page-banner :title="__('price-inquiry.forms.create.title')" />
 
@@ -40,7 +38,7 @@
 
                     <!-- Form Card -->
                     <div class="bg-white rounded-xl shadow-md overflow-visible">
-                        <form action="{{ route('price-inquiry.store') }}" method="POST" id="price-inquiry-form"
+                        <form id="price-inquiry-form" action="{{ route('price-inquiry.store') }}" method="POST"
                             class="p-6 space-y-6" x-data="productSelector()">
                             @csrf
 
@@ -51,31 +49,35 @@
                                 </h3>
 
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <x-input type="text" name="first_name" id="first_name"
-                                        :label="__('price-inquiry.fields.first_name')"
-                                        :value="old('first_name', $user->first_name ?? '')"
-                                        :required="true"
-                                        :disabled="(bool) $user" />
+                                    <x-form-group :label="__('price-inquiry.fields.first_name')" required
+                                        :error="$errors->first('first_name')">
+                                        <x-input type="text" name="first_name" id="first_name"
+                                            :value="old('first_name', $user->first_name ?? '')"
+                                            :disabled="(bool) $user" class="w-full" />
+                                    </x-form-group>
 
-                                    <x-input type="text" name="last_name" id="last_name"
-                                        :label="__('price-inquiry.fields.last_name')"
-                                        :value="old('last_name', $user->last_name ?? '')"
-                                        :required="true"
-                                        :disabled="(bool) $user" />
+                                    <x-form-group :label="__('price-inquiry.fields.last_name')" required
+                                        :error="$errors->first('last_name')">
+                                        <x-input type="text" name="last_name" id="last_name"
+                                            :value="old('last_name', $user->last_name ?? '')"
+                                            :disabled="(bool) $user" class="w-full" />
+                                    </x-form-group>
                                 </div>
 
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                                    <x-input type="email" name="email" id="email"
-                                        :label="__('price-inquiry.fields.email')"
-                                        :value="old('email', $user->email ?? '')"
-                                        :required="true"
-                                        :disabled="(bool) $user" />
+                                    <x-form-group :label="__('price-inquiry.fields.email')" required
+                                        :error="$errors->first('email')">
+                                        <x-input type="email" name="email" id="email"
+                                            :value="old('email', $user->email ?? '')"
+                                            :disabled="(bool) $user" class="w-full" />
+                                    </x-form-group>
 
-                                    <x-input type="text" name="phone_number" id="phone_number"
-                                        :label="__('price-inquiry.fields.phone_number')"
-                                        :value="old('phone_number', $user->phone_number ?? '')"
-                                        :required="true"
-                                        :disabled="(bool) $user" />
+                                    <x-form-group :label="__('price-inquiry.fields.phone_number')" required
+                                        :error="$errors->first('phone_number')">
+                                        <x-input type="text" name="phone_number" id="phone_number"
+                                            :value="old('phone_number', $user->phone_number ?? '')"
+                                            :disabled="(bool) $user" class="w-full" />
+                                    </x-form-group>
                                 </div>
 
                                 @if($user)
@@ -164,6 +166,8 @@
     </main>
 
     @push('scripts')
+        @vite('resources/js/price-inquiry-validation.js')
+
         <script>
             function productSelector() {
                 return {

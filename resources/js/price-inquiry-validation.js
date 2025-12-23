@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
         errorFieldCssClass: "border-red-500",
         errorLabelCssClass: "text-red-600 text-xs mt-1",
         successFieldCssClass: "border-green-500",
+        validateBeforeSubmitting: true,
     });
 
     // First Name validation
@@ -91,6 +92,17 @@ document.addEventListener("DOMContentLoaded", function () {
         },
     ]);
 
+    // Enable live validation on blur
+    const fields = ["#first_name", "#last_name", "#email", "#phone_number"];
+    fields.forEach((fieldSelector) => {
+        const field = priceInquiryForm.querySelector(fieldSelector);
+        if (field) {
+            field.addEventListener("blur", () => {
+                validation.revalidateField(fieldSelector);
+            });
+        }
+    });
+
     // Validate products on form submission
     validation.onSuccess((event) => {
         const productInputs = Array.from(
@@ -133,6 +145,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // Form is valid, allow submission
-        return true;
+        event.target.submit();
     });
 });
