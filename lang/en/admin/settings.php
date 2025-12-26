@@ -39,4 +39,24 @@ return [
             'value' => 'Enter value...',
         ],
     ],
+
+    'modules' => [
+        'title' => 'Module Management',
+        'description' => 'Manage application modules and settings',
+        'countries' => [
+            'title' => 'Countries',
+            'description' => 'Total countries',
+            'manage' => 'Manage Countries',
+        ],
+        'banks' => [
+            'title' => 'Banks',
+            'description' => 'Total banks',
+            'manage' => 'Manage Banks',
+        ],
+        'states' => [
+            'title' => 'States',
+            'description' => 'Total states/provinces',
+            'manage' => 'Manage States',
+        ],
+    ],
 ];

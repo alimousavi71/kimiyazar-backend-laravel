@@ -61,6 +61,65 @@
                 </form>
             </x-card>
 
+            <!-- Module Management -->
+            <x-card :title="__('admin/settings.modules.title')">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Countries Module -->
+                    <div class="p-6 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold text-gray-900">{{ __('admin/settings.modules.countries.title') }}</h3>
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                <i class="bx bxs-flag text-blue-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <p class="text-3xl font-bold text-gray-900">{{ \App\Models\Country::count() }}</p>
+                            <p class="text-sm text-gray-600 mt-1">{{ __('admin/settings.modules.countries.description') }}</p>
+                        </div>
+                        <a href="{{ route('admin.countries.index') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
+                            <i class="bx bx-chevron-right text-lg"></i>
+                            {{ __('admin/settings.modules.countries.manage') }}
+                        </a>
+                    </div>
+
+                    <!-- Banks Module -->
+                    <div class="p-6 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold text-gray-900">{{ __('admin/settings.modules.banks.title') }}</h3>
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                                <i class="bx bxs-bank text-green-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <p class="text-3xl font-bold text-gray-900">{{ \App\Models\Bank::count() }}</p>
+                            <p class="text-sm text-gray-600 mt-1">{{ __('admin/settings.modules.banks.description') }}</p>
+                        </div>
+                        <a href="{{ route('admin.banks.index') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors">
+                            <i class="bx bx-chevron-right text-lg"></i>
+                            {{ __('admin/settings.modules.banks.manage') }}
+                        </a>
+                    </div>
+
+                    <!-- States Module -->
+                    <div class="p-6 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold text-gray-900">{{ __('admin/settings.modules.states.title') }}</h3>
+                            <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                                <i class="bx bxs-map text-purple-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <p class="text-3xl font-bold text-gray-900">{{ \App\Models\State::count() }}</p>
+                            <p class="text-sm text-gray-600 mt-1">{{ __('admin/settings.modules.states.description') }}</p>
+                        </div>
+                        <a href="{{ route('admin.states.index') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors">
+                            <i class="bx bx-chevron-right text-lg"></i>
+                            {{ __('admin/settings.modules.states.manage') }}
+                        </a>
+                    </div>
+                </div>
+            </x-card>
+
             <!-- Danger Zone -->
             <x-card title="Danger Zone">
                 <div class="space-y-4">
