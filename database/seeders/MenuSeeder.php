@@ -12,16 +12,100 @@ class MenuSeeder extends Seeder
      */
     public function run(): void
     {
-        // Service Menu
+        // Quick Access Menu
         Menu::create([
-            'name' => 'service_menu',
-            'links' => [],
+            'name' => 'Quick Access',
+            'type' => 'quick_access',
+            'links' => [
+                [
+                    'id' => 'link_1',
+                    'title' => 'خانه',
+                    'url' => '/',
+                    'type' => 'custom',
+                    'content_id' => null,
+                    'order' => 1,
+                ],
+                [
+                    'id' => 'link_2',
+                    'title' => 'محصولات',
+                    'url' => '/products',
+                    'type' => 'custom',
+                    'content_id' => null,
+                    'order' => 2,
+                ],
+                [
+                    'id' => 'link_3',
+                    'title' => 'سوالات متداول',
+                    'url' => '/faq',
+                    'type' => 'custom',
+                    'content_id' => null,
+                    'order' => 3,
+                ],
+                [
+                    'id' => 'link_4',
+                    'title' => 'اخبار',
+                    'url' => '/news',
+                    'type' => 'custom',
+                    'content_id' => null,
+                    'order' => 4,
+                ],
+                [
+                    'id' => 'link_5',
+                    'title' => 'مقالات',
+                    'url' => '/articles',
+                    'type' => 'custom',
+                    'content_id' => null,
+                    'order' => 5,
+                ],
+            ],
         ]);
 
-        // Useful Links Menu
+        // Services Menu
         Menu::create([
-            'name' => 'useful_links',
-            'links' => [],
+            'name' => 'Our Services',
+            'type' => 'services',
+            'links' => [
+                [
+                    'id' => 'link_1',
+                    'title' => 'صادرات',
+                    'url' => '#',
+                    'type' => 'custom',
+                    'content_id' => null,
+                    'order' => 1,
+                ],
+                [
+                    'id' => 'link_2',
+                    'title' => 'واردات',
+                    'url' => '#',
+                    'type' => 'custom',
+                    'content_id' => null,
+                    'order' => 2,
+                ],
+                [
+                    'id' => 'link_3',
+                    'title' => 'ترخیص کالا',
+                    'url' => '#',
+                    'type' => 'custom',
+                    'content_id' => null,
+                    'order' => 3,
+                ],
+                [
+                    'id' => 'link_4',
+                    'title' => 'قوانین',
+                    'url' => '#',
+                    'type' => 'custom',
+                    'content_id' => null,
+                    'order' => 4,
+                ],
+                [
+                    'id' => 'link_5',
+                    'title' => 'درباره ما',
+                    'url' => '/about',
+                    'type' => 'custom',
+                    'content_id' => null,
+                    'order' => 5,
+                ],
+            ],
         ]);
     }
 }

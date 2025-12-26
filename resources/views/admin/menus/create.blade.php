@@ -15,10 +15,34 @@
         <form id="menu-create-form" action="{{ route('admin.menus.store') }}" method="POST" class="space-y-6">
             @csrf
 
-            <x-form-group :label="__('admin/menus.fields.name')" required :error="$errors->first('name')">
-                <x-input type="text" name="name" id="name" :placeholder="__('admin/menus.forms.placeholders.name')"
-                    value="{{ old('name') }}" required class="w-full" />
-            </x-form-group>
+            <x-input
+                name="name"
+                :label="__('admin/menus.fields.name')"
+                :placeholder="__('admin/menus.forms.placeholders.name')"
+                :value="old('name')"
+                required
+                :error="$errors->first('name')"
+                class="w-full"
+            />
+
+            <x-select
+                name="type"
+                :label="__('admin/menus.fields.type')"
+                required
+                :error="$errors->first('type')"
+                class="w-full"
+            >
+                <option value="">{{ __('admin/components.form.select_option') }}</option>
+                <option value="quick_access" @selected(old('type') === 'quick_access')>
+                    {{ __('admin/menus.types.quick_access') }}
+                </option>
+                <option value="services" @selected(old('type') === 'services')>
+                    {{ __('admin/menus.types.services') }}
+                </option>
+                <option value="custom" @selected(old('type') === 'custom')>
+                    {{ __('admin/menus.types.custom') }}
+                </option>
+            </x-select>
 
             <!-- Links will be managed after creation in edit page -->
 

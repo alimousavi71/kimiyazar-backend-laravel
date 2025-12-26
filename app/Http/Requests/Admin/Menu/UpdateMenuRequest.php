@@ -31,6 +31,7 @@ class UpdateMenuRequest extends FormRequest
                 'max:255',
                 Rule::unique('menus', 'name')->ignore($menuId),
             ],
+            'type' => ['required', 'in:quick_access,services,custom'],
             'links' => ['nullable', 'array'],
             'links.*.id' => ['required', 'string'],
             'links.*.title' => ['required', 'string', 'max:255'],

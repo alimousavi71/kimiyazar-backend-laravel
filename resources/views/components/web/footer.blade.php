@@ -5,6 +5,10 @@
 
     // Fetch popular tags (limit 10)
     $tags = \App\Models\Tag::orderBy('created_at', 'desc')->limit(10)->get();
+
+    // Fetch menus by type
+    $quickAccessMenu = \App\Models\Menu::findByType('quick_access');
+    $servicesMenu = \App\Models\Menu::findByType('services');
 @endphp
 
 <footer class="modern-footer bg-gradient-to-b from-slate-800 to-slate-900 text-gray-200 relative overflow-hidden">
@@ -64,43 +68,58 @@
                             <span class="absolute bottom-[-2px] right-0 w-2/5 h-0.5 bg-emerald-400"></span>
                             دسترسی سریع
                         </h4>
-                        <ul class="footer-links list-none p-0 m-0">
-                            <li class="mb-3">
-                                <a href="{{ route('home') }}"
-                                    class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
-                                    <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
-                                    <span>خانه</span>
-                                </a>
-                            </li>
-                            <li class="mb-3">
-                                <a href="{{ route('products.index') }}"
-                                    class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
-                                    <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
-                                    <span>محصولات</span>
-                                </a>
-                            </li>
-                            <li class="mb-3">
-                                <a href="{{ route('faq.index') }}"
-                                    class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
-                                    <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
-                                    <span>سوالات متداول</span>
-                                </a>
-                            </li>
-                            <li class="mb-3">
-                                <a href="{{ route('news.index') }}"
-                                    class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
-                                    <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
-                                    <span>اخبار</span>
-                                </a>
-                            </li>
-                            <li class="mb-3">
-                                <a href="{{ route('articles.index') }}"
-                                    class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
-                                    <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
-                                    <span>مقالات</span>
-                                </a>
-                            </li>
-                        </ul>
+                        @if($quickAccessMenu && count($quickAccessMenu->getOrderedLinks()) > 0)
+                            <ul class="footer-links list-none p-0 m-0">
+                                @foreach($quickAccessMenu->getOrderedLinks() as $link)
+                                    <li class="mb-3">
+                                        <a href="{{ $link['url'] ?? '#' }}"
+                                            class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25"
+                                            @if(str_contains($link['url'] ?? '', 'http')) target="_blank" rel="noopener noreferrer" @endif>
+                                            <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
+                                            <span>{{ $link['title'] ?? '' }}</span>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <ul class="footer-links list-none p-0 m-0">
+                                <li class="mb-3">
+                                    <a href="{{ route('home') }}"
+                                        class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
+                                        <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
+                                        <span>خانه</span>
+                                    </a>
+                                </li>
+                                <li class="mb-3">
+                                    <a href="{{ route('products.index') }}"
+                                        class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
+                                        <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
+                                        <span>محصولات</span>
+                                    </a>
+                                </li>
+                                <li class="mb-3">
+                                    <a href="{{ route('faq.index') }}"
+                                        class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
+                                        <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
+                                        <span>سوالات متداول</span>
+                                    </a>
+                                </li>
+                                <li class="mb-3">
+                                    <a href="{{ route('news.index') }}"
+                                        class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
+                                        <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
+                                        <span>اخبار</span>
+                                    </a>
+                                </li>
+                                <li class="mb-3">
+                                    <a href="{{ route('articles.index') }}"
+                                        class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
+                                        <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
+                                        <span>مقالات</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        @endif
                     </div>
                 </div>
 
@@ -112,43 +131,58 @@
                             <span class="absolute bottom-[-2px] right-0 w-2/5 h-0.5 bg-emerald-400"></span>
                             خدمات ما
                         </h4>
-                        <ul class="footer-links list-none p-0 m-0">
-                            <li class="mb-3">
-                                <a href="#"
-                                    class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
-                                    <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
-                                    <span>صادرات</span>
-                                </a>
-                            </li>
-                            <li class="mb-3">
-                                <a href="#"
-                                    class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
-                                    <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
-                                    <span>واردات</span>
-                                </a>
-                            </li>
-                            <li class="mb-3">
-                                <a href="#"
-                                    class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
-                                    <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
-                                    <span>ترخیص کالا</span>
-                                </a>
-                            </li>
-                            <li class="mb-3">
-                                <a href="#"
-                                    class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
-                                    <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
-                                    <span>قوانین</span>
-                                </a>
-                            </li>
-                            <li class="mb-3">
-                                <a href="{{ route('about.index') }}"
-                                    class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
-                                    <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
-                                    <span>درباره ما</span>
-                                </a>
-                            </li>
-                        </ul>
+                        @if($servicesMenu && count($servicesMenu->getOrderedLinks()) > 0)
+                            <ul class="footer-links list-none p-0 m-0">
+                                @foreach($servicesMenu->getOrderedLinks() as $link)
+                                    <li class="mb-3">
+                                        <a href="{{ $link['url'] ?? '#' }}"
+                                            class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25"
+                                            @if(str_contains($link['url'] ?? '', 'http')) target="_blank" rel="noopener noreferrer" @endif>
+                                            <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
+                                            <span>{{ $link['title'] ?? '' }}</span>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <ul class="footer-links list-none p-0 m-0">
+                                <li class="mb-3">
+                                    <a href="#"
+                                        class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
+                                        <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
+                                        <span>صادرات</span>
+                                    </a>
+                                </li>
+                                <li class="mb-3">
+                                    <a href="#"
+                                        class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
+                                        <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
+                                        <span>واردات</span>
+                                    </a>
+                                </li>
+                                <li class="mb-3">
+                                    <a href="#"
+                                        class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
+                                        <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
+                                        <span>ترخیص کالا</span>
+                                    </a>
+                                </li>
+                                <li class="mb-3">
+                                    <a href="#"
+                                        class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
+                                        <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
+                                        <span>قوانین</span>
+                                    </a>
+                                </li>
+                                <li class="mb-3">
+                                    <a href="{{ route('about.index') }}"
+                                        class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
+                                        <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
+                                        <span>درباره ما</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        @endif
                     </div>
                 </div>
 

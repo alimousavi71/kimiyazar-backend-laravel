@@ -11,6 +11,7 @@ use Illuminate\Support\Carbon;
  *
  * @property int $id
  * @property string $name
+ * @property string $type
  * @property array|null $links
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -26,6 +27,7 @@ class Menu extends Model
      */
     protected $fillable = [
         'name',
+        'type',
         'links',
     ];
 
@@ -50,6 +52,28 @@ class Menu extends Model
     public static function findByName(string $name): ?Menu
     {
         return self::where('name', $name)->first();
+    }
+
+    /**
+     * Find menu by type.
+     *
+     * @param string $type
+     * @return Menu|null
+     */
+    public static function findByType(string $type): ?Menu
+    {
+        return self::where('type', $type)->first();
+    }
+
+    /**
+     * Get all menus by type.
+     *
+     * @param string $type
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public static function getByType(string $type)
+    {
+        return self::where('type', $type)->get();
     }
 
     /**

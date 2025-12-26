@@ -9,6 +9,7 @@ return [
 
     'fields' => [
         'name' => 'نام منو',
+        'type' => 'نوع منو',
         'links' => 'لینک‌ها',
         'links_count' => 'تعداد لینک‌ها',
         'link_type' => 'نوع لینک',
@@ -18,6 +19,12 @@ return [
         'order' => 'ترتیب',
         'created_at' => 'تاریخ ایجاد',
         'updated_at' => 'تاریخ بروزرسانی',
+    ],
+
+    'types' => [
+        'quick_access' => 'دسترسی سریع',
+        'services' => 'خدمات ما',
+        'custom' => 'منوی سفارشی',
     ],
 
     'link_types' => [

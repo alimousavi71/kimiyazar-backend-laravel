@@ -19,10 +19,34 @@
                 @csrf
                 @method('PATCH')
 
-                <x-form-group :label="__('admin/menus.fields.name')" required :error="$errors->first('name')">
-                    <x-input type="text" name="name" id="name" :placeholder="__('admin/menus.forms.placeholders.name')"
-                        value="{{ old('name', $menu->name) }}" required class="w-full" />
-                </x-form-group>
+                <x-input
+                    name="name"
+                    :label="__('admin/menus.fields.name')"
+                    :placeholder="__('admin/menus.forms.placeholders.name')"
+                    :value="old('name', $menu->name)"
+                    required
+                    :error="$errors->first('name')"
+                    class="w-full"
+                />
+
+                <x-select
+                    name="type"
+                    :label="__('admin/menus.fields.type')"
+                    required
+                    :error="$errors->first('type')"
+                    class="w-full"
+                >
+                    <option value="">{{ __('admin/components.form.select_option') }}</option>
+                    <option value="quick_access" @selected(old('type', $menu->type) === 'quick_access')>
+                        {{ __('admin/menus.types.quick_access') }}
+                    </option>
+                    <option value="services" @selected(old('type', $menu->type) === 'services')>
+                        {{ __('admin/menus.types.services') }}
+                    </option>
+                    <option value="custom" @selected(old('type', $menu->type) === 'custom')>
+                        {{ __('admin/menus.types.custom') }}
+                    </option>
+                </x-select>
 
                 <div class="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
                     <a href="{{ route('admin.menus.index') }}">

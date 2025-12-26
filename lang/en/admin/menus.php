@@ -9,6 +9,7 @@ return [
 
     'fields' => [
         'name' => 'Menu Name',
+        'type' => 'Menu Type',
         'links' => 'Links',
         'links_count' => 'Links Count',
         'link_type' => 'Link Type',
@@ -18,6 +19,12 @@ return [
         'order' => 'Order',
         'created_at' => 'Created At',
         'updated_at' => 'Updated At',
+    ],
+
+    'types' => [
+        'quick_access' => 'Quick Access',
+        'services' => 'Our Services',
+        'custom' => 'Custom Menu',
     ],
 
     'link_types' => [

@@ -23,6 +23,7 @@ class StoreMenuRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255', 'unique:menus,name'],
+            'type' => ['required', 'in:quick_access,services,custom'],
         ];
     }
 }
