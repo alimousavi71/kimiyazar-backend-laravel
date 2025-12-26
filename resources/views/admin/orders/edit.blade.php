@@ -12,14 +12,12 @@
                 <x-select
                     name="customer_type"
                     :label="__('admin/orders.fields.customer_type')"
-                    :options="[
-                        'real' => __('admin/orders.customer_types.real'),
-                        'legal' => __('admin/orders.customer_types.legal')
-                    ]"
-                    :value="$order->customer_type"
                     required
                     :error="$errors->first('customer_type')"
-                />
+                >
+                    <option value="real" @selected($order->customer_type === 'real')>{{ __('admin/orders.customer_types.real') }}</option>
+                    <option value="legal" @selected($order->customer_type === 'legal')>{{ __('admin/orders.customer_types.legal') }}</option>
+                </x-select>
 
                 <x-input
                     name="member_id"
@@ -153,19 +151,17 @@
                     <x-select
                         name="unit"
                         :label="__('admin/orders.fields.unit')"
-                        :options="[
-                            'piece' => __('admin/orders.units.piece'),
-                            'kg' => __('admin/orders.units.kg'),
-                            'gram' => __('admin/orders.units.gram'),
-                            'liter' => __('admin/orders.units.liter'),
-                            'meter' => __('admin/orders.units.meter'),
-                            'box' => __('admin/orders.units.box'),
-                            'set' => __('admin/orders.units.set'),
-                            'pair' => __('admin/orders.units.pair'),
-                        ]"
-                        :value="$order->unit"
                         :error="$errors->first('unit')"
-                    />
+                    >
+                        <option value="piece" @selected($order->unit === 'piece')>{{ __('admin/orders.units.piece') }}</option>
+                        <option value="kg" @selected($order->unit === 'kg')>{{ __('admin/orders.units.kg') }}</option>
+                        <option value="gram" @selected($order->unit === 'gram')>{{ __('admin/orders.units.gram') }}</option>
+                        <option value="liter" @selected($order->unit === 'liter')>{{ __('admin/orders.units.liter') }}</option>
+                        <option value="meter" @selected($order->unit === 'meter')>{{ __('admin/orders.units.meter') }}</option>
+                        <option value="box" @selected($order->unit === 'box')>{{ __('admin/orders.units.box') }}</option>
+                        <option value="set" @selected($order->unit === 'set')>{{ __('admin/orders.units.set') }}</option>
+                        <option value="pair" @selected($order->unit === 'pair')>{{ __('admin/orders.units.pair') }}</option>
+                    </x-select>
                     <x-input
                         name="unit_price"
                         :label="__('admin/orders.fields.unit_price')"
@@ -191,17 +187,15 @@
                     <x-select
                         name="payment_type"
                         :label="__('admin/orders.fields.payment_type')"
-                        :options="[
-                            'online_gateway' => __('admin/orders.payment_types.online_gateway'),
-                            'bank_deposit' => __('admin/orders.payment_types.bank_deposit'),
-                            'wallet' => __('admin/orders.payment_types.wallet'),
-                            'pos' => __('admin/orders.payment_types.pos'),
-                            'cash_on_delivery' => __('admin/orders.payment_types.cash_on_delivery'),
-                        ]"
-                        :value="$order->payment_type->value"
                         required
                         :error="$errors->first('payment_type')"
-                    />
+                    >
+                        <option value="online_gateway" @selected($order->payment_type->value === 'online_gateway')>{{ __('admin/orders.payment_types.online_gateway') }}</option>
+                        <option value="bank_deposit" @selected($order->payment_type->value === 'bank_deposit')>{{ __('admin/orders.payment_types.bank_deposit') }}</option>
+                        <option value="wallet" @selected($order->payment_type->value === 'wallet')>{{ __('admin/orders.payment_types.wallet') }}</option>
+                        <option value="pos" @selected($order->payment_type->value === 'pos')>{{ __('admin/orders.payment_types.pos') }}</option>
+                        <option value="cash_on_delivery" @selected($order->payment_type->value === 'cash_on_delivery')>{{ __('admin/orders.payment_types.cash_on_delivery') }}</option>
+                    </x-select>
                     <x-input
                         name="payment_bank_id"
                         :label="__('admin/orders.fields.payment_bank_id')"
@@ -239,19 +233,17 @@
                     <x-select
                         name="status"
                         :label="__('admin/orders.fields.status')"
-                        :options="[
-                            'pending_payment' => __('admin/orders.statuses.pending_payment'),
-                            'paid' => __('admin/orders.statuses.paid'),
-                            'processing' => __('admin/orders.statuses.processing'),
-                            'shipped' => __('admin/orders.statuses.shipped'),
-                            'delivered' => __('admin/orders.statuses.delivered'),
-                            'cancelled' => __('admin/orders.statuses.cancelled'),
-                            'returned' => __('admin/orders.statuses.returned'),
-                        ]"
-                        :value="$order->status->value"
                         required
                         :error="$errors->first('status')"
-                    />
+                    >
+                        <option value="pending_payment" @selected($order->status->value === 'pending_payment')>{{ __('admin/orders.statuses.pending_payment') }}</option>
+                        <option value="paid" @selected($order->status->value === 'paid')>{{ __('admin/orders.statuses.paid') }}</option>
+                        <option value="processing" @selected($order->status->value === 'processing')>{{ __('admin/orders.statuses.processing') }}</option>
+                        <option value="shipped" @selected($order->status->value === 'shipped')>{{ __('admin/orders.statuses.shipped') }}</option>
+                        <option value="delivered" @selected($order->status->value === 'delivered')>{{ __('admin/orders.statuses.delivered') }}</option>
+                        <option value="cancelled" @selected($order->status->value === 'cancelled')>{{ __('admin/orders.statuses.cancelled') }}</option>
+                        <option value="returned" @selected($order->status->value === 'returned')>{{ __('admin/orders.statuses.returned') }}</option>
+                    </x-select>
                 </div>
                 <div class="mt-6">
                     <x-textarea

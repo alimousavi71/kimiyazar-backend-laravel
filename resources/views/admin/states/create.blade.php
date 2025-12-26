@@ -9,10 +9,13 @@
             <x-select
                 name="country_id"
                 :label="__('admin/states.fields.country_id')"
-                :options="$countries->pluck('name', 'id')->toArray()"
                 required
                 :error="$errors->first('country_id')"
-            />
+            >
+                @foreach($countries as $country)
+                    <option value="{{ $country->id }}">{{ $country->name }}</option>
+                @endforeach
+            </x-select>
 
             <x-input
                 name="name"
