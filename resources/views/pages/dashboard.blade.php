@@ -1,10 +1,10 @@
-<x-layouts.admin header-title="Dashboard">
+<x-layouts.admin :header-title="__('dashboard.header')">
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-6">
         <!-- Stat Card 1 -->
         <x-card>
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600">Total Users</p>
+                    <p class="text-sm text-gray-600">{{ __('dashboard.stats.total_users') }}</p>
                     <p class="text-2xl font-bold text-gray-900">{{ number_format($totalUsers) }}</p>
                 </div>
                 <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -21,7 +21,7 @@
         <x-card>
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600">Total Products</p>
+                    <p class="text-sm text-gray-600">{{ __('dashboard.stats.total_products') }}</p>
                     <p class="text-2xl font-bold text-gray-900">{{ number_format($totalProducts) }}</p>
                 </div>
                 <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
@@ -38,7 +38,7 @@
         <x-card>
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600">Total Orders</p>
+                    <p class="text-sm text-gray-600">{{ __('dashboard.stats.total_orders') }}</p>
                     <p class="text-2xl font-bold text-gray-900">{{ number_format($totalOrders) }}</p>
                 </div>
                 <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
@@ -54,7 +54,7 @@
         <x-card>
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600">Categories</p>
+                    <p class="text-sm text-gray-600">{{ __('dashboard.stats.total_categories') }}</p>
                     <p class="text-2xl font-bold text-gray-900">{{ number_format($totalCategories) }}</p>
                 </div>
                 <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
@@ -74,7 +74,7 @@
         <x-card>
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600">Pending Orders</p>
+                    <p class="text-sm text-gray-600">{{ __('dashboard.stats.pending_orders') }}</p>
                     <p class="text-2xl font-bold text-gray-900">{{ number_format($pendingOrders) }}</p>
                 </div>
                 <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
@@ -91,7 +91,7 @@
         <x-card>
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600">Paid Orders</p>
+                    <p class="text-sm text-gray-600">{{ __('dashboard.stats.paid_orders') }}</p>
                     <p class="text-2xl font-bold text-gray-900">{{ number_format($paidOrders) }}</p>
                 </div>
                 <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center">
@@ -107,7 +107,7 @@
 
     <div class="grid gap-6 lg:grid-cols-2">
         <!-- Recent Orders Card -->
-        <x-card title="Recent Orders">
+        <x-card :title="__('dashboard.recent_orders.title')">
             <div class="space-y-4">
                 @forelse($recentOrders as $order)
                     <div class="flex items-start gap-4">
@@ -124,7 +124,7 @@
                         </div>
                         <div class="flex-1">
                             <p class="text-sm font-medium text-gray-900">
-                                <strong>{{ $name }}</strong> ordered <strong>{{ $order->product?->name ?? 'Product' }}</strong>
+                                <strong>{{ $name }}</strong> {{ __('dashboard.recent_orders.ordered') }} <strong>{{ $order->product?->name ?? 'Product' }}</strong>
                             </p>
                             <p class="text-xs text-gray-500">{{ \Carbon\Carbon::createFromTimestamp($order->created_at)->diffForHumans() }}</p>
                         </div>
@@ -137,7 +137,7 @@
                         </div>
                     </div>
                 @empty
-                    <p class="text-center text-gray-500 py-4">No recent orders</p>
+                    <p class="text-center text-gray-500 py-4">{{ __('dashboard.recent_orders.empty') }}</p>
                 @endforelse
             </div>
         </x-card>

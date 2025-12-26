@@ -49,12 +49,12 @@ enum OrderStatus: string
     {
         return match ($this) {
             self::PendingPayment => 'warning',
-            self::Paid => 'info',
-            self::Processing => 'primary',
-            self::Shipped => 'secondary',
+            self::Paid => 'success',
+            self::Processing => 'info',
+            self::Shipped => 'info',
             self::Delivered => 'success',
             self::Cancelled => 'danger',
-            self::Returned => 'secondary',
+            self::Returned => 'warning',
         };
     }
 }
