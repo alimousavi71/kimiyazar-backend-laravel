@@ -8,7 +8,7 @@
 
             <!-- Customer Type -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <x-form.select
+                <x-select
                     name="customer_type"
                     :label="__('admin/orders.fields.customer_type')"
                     :options="[
@@ -19,7 +19,7 @@
                     :error="$errors->first('customer_type')"
                 />
 
-                <x-form.input
+                <x-input
                     name="member_id"
                     :label="__('admin/orders.fields.member_id')"
                     type="number"
@@ -31,22 +31,22 @@
             <div class="border-t pt-6">
                 <h3 class="text-lg font-semibold mb-4">{{ __('admin/orders.sections.individual_info') }}</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <x-form.input
+                    <x-input
                         name="full_name"
                         :label="__('admin/orders.fields.full_name')"
                         :error="$errors->first('full_name')"
                     />
-                    <x-form.input
+                    <x-input
                         name="national_code"
                         :label="__('admin/orders.fields.national_code')"
                         :error="$errors->first('national_code')"
                     />
-                    <x-form.input
+                    <x-input
                         name="phone"
                         :label="__('admin/orders.fields.phone')"
                         :error="$errors->first('phone')"
                     />
-                    <x-form.input
+                    <x-input
                         name="mobile"
                         :label="__('admin/orders.fields.mobile')"
                         :error="$errors->first('mobile')"
@@ -58,17 +58,17 @@
             <div class="border-t pt-6">
                 <h3 class="text-lg font-semibold mb-4">{{ __('admin/orders.sections.company_info') }}</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <x-form.input
+                    <x-input
                         name="company_name"
                         :label="__('admin/orders.fields.company_name')"
                         :error="$errors->first('company_name')"
                     />
-                    <x-form.input
+                    <x-input
                         name="economic_code"
                         :label="__('admin/orders.fields.economic_code')"
                         :error="$errors->first('economic_code')"
                     />
-                    <x-form.input
+                    <x-input
                         name="registration_number"
                         :label="__('admin/orders.fields.registration_number')"
                         type="number"
@@ -81,19 +81,19 @@
             <div class="border-t pt-6">
                 <h3 class="text-lg font-semibold mb-4">{{ __('admin/orders.sections.location_info') }}</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <x-form.input
+                    <x-input
                         name="city"
                         :label="__('admin/orders.fields.city')"
                         :error="$errors->first('city')"
                     />
-                    <x-form.input
+                    <x-input
                         name="postal_code"
                         :label="__('admin/orders.fields.postal_code')"
                         :error="$errors->first('postal_code')"
                     />
                 </div>
                 <div class="mt-6">
-                    <x-form.textarea
+                    <x-textarea
                         name="address"
                         :label="__('admin/orders.fields.address')"
                         :error="$errors->first('address')"
@@ -105,12 +105,12 @@
             <div class="border-t pt-6">
                 <h3 class="text-lg font-semibold mb-4">{{ __('admin/orders.sections.receiver_info') }}</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <x-form.input
+                    <x-input
                         name="receiver_full_name"
                         :label="__('admin/orders.fields.receiver_full_name')"
                         :error="$errors->first('receiver_full_name')"
                     />
-                    <x-form.input
+                    <x-input
                         name="delivery_method"
                         :label="__('admin/orders.fields.delivery_method')"
                         :error="$errors->first('delivery_method')"
@@ -122,19 +122,19 @@
             <div class="border-t pt-6">
                 <h3 class="text-lg font-semibold mb-4">{{ __('admin/orders.sections.product_info') }}</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <x-form.input
+                    <x-input
                         name="product_id"
                         :label="__('admin/orders.fields.product_id')"
                         type="number"
                         :error="$errors->first('product_id')"
                     />
-                    <x-form.input
+                    <x-input
                         name="quantity"
                         :label="__('admin/orders.fields.quantity')"
                         type="number"
                         :error="$errors->first('quantity')"
                     />
-                    <x-form.select
+                    <x-select
                         name="unit"
                         :label="__('admin/orders.fields.unit')"
                         :options="[
@@ -149,7 +149,7 @@
                         ]"
                         :error="$errors->first('unit')"
                     />
-                    <x-form.input
+                    <x-input
                         name="unit_price"
                         :label="__('admin/orders.fields.unit_price')"
                         type="number"
@@ -158,7 +158,7 @@
                     />
                 </div>
                 <div class="mt-6">
-                    <x-form.textarea
+                    <x-textarea
                         name="product_description"
                         :label="__('admin/orders.fields.product_description')"
                         :error="$errors->first('product_description')"
@@ -170,7 +170,7 @@
             <div class="border-t pt-6">
                 <h3 class="text-lg font-semibold mb-4">{{ __('admin/orders.sections.payment_info') }}</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <x-form.select
+                    <x-select
                         name="payment_type"
                         :label="__('admin/orders.fields.payment_type')"
                         :options="[
@@ -183,24 +183,24 @@
                         required
                         :error="$errors->first('payment_type')"
                     />
-                    <x-form.input
+                    <x-input
                         name="payment_bank_id"
                         :label="__('admin/orders.fields.payment_bank_id')"
                         type="number"
                         :error="$errors->first('payment_bank_id')"
                     />
-                    <x-form.input
+                    <x-input
                         name="total_payment_amount"
                         :label="__('admin/orders.fields.total_payment_amount')"
                         :error="$errors->first('total_payment_amount')"
                     />
-                    <x-form.input
+                    <x-input
                         name="payment_date"
                         :label="__('admin/orders.fields.payment_date')"
                         type="date"
                         :error="$errors->first('payment_date')"
                     />
-                    <x-form.input
+                    <x-input
                         name="payment_time"
                         :label="__('admin/orders.fields.payment_time')"
                         type="time"
@@ -213,7 +213,7 @@
             <div class="border-t pt-6">
                 <h3 class="text-lg font-semibold mb-4">{{ __('admin/orders.sections.administration') }}</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <x-form.select
+                    <x-select
                         name="status"
                         :label="__('admin/orders.fields.status')"
                         :options="[
@@ -230,7 +230,7 @@
                     />
                 </div>
                 <div class="mt-6">
-                    <x-form.textarea
+                    <x-textarea
                         name="admin_note"
                         :label="__('admin/orders.fields.admin_note')"
                         :error="$errors->first('admin_note')"
