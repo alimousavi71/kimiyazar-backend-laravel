@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Order\StoreOrderRequest;
 use App\Http\Requests\Admin\Order\UpdateOrderRequest;
 use App\Http\Traits\ApiResponseTrait;
+use App\Models\Country;
+use App\Models\State;
 use App\Services\Order\OrderService;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -35,8 +37,10 @@ class OrderController extends Controller
     public function index(Request $request): View
     {
         $orders = $this->service->search();
+        $countries = Country::orderBy('name')->get();
+        $states = State::orderBy('name')->get();
 
-        return view('admin.orders.index', compact('orders'));
+        return view('admin.orders.index', compact('orders', 'countries', 'states'));
     }
 
     /**
