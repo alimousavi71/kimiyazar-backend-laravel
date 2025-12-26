@@ -37,6 +37,14 @@ use App\Repositories\Tag\TagRepository;
 use App\Repositories\Tag\TagRepositoryInterface;
 use App\Repositories\Menu\MenuRepository;
 use App\Repositories\Menu\MenuRepositoryInterface;
+use App\Repositories\Order\OrderRepository;
+use App\Repositories\Order\OrderRepositoryInterface;
+use App\Repositories\Country\CountryRepository;
+use App\Repositories\Country\CountryRepositoryInterface;
+use App\Repositories\State\StateRepository;
+use App\Repositories\State\StateRepositoryInterface;
+use App\Repositories\Bank\BankRepository;
+use App\Repositories\Bank\BankRepositoryInterface;
 use App\Services\Auth\AuthService;
 use App\Services\Otp\OtpNotificationService;
 use App\Services\Otp\OtpService;
@@ -158,6 +166,30 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             \App\Repositories\PriceInquiry\PriceInquiryRepositoryInterface::class,
             \App\Repositories\PriceInquiry\PriceInquiryRepository::class
+        );
+
+        // Bind Order Repository
+        $this->app->bind(
+            OrderRepositoryInterface::class,
+            OrderRepository::class
+        );
+
+        // Bind Country Repository
+        $this->app->bind(
+            CountryRepositoryInterface::class,
+            CountryRepository::class
+        );
+
+        // Bind State Repository
+        $this->app->bind(
+            StateRepositoryInterface::class,
+            StateRepository::class
+        );
+
+        // Bind Bank Repository
+        $this->app->bind(
+            BankRepositoryInterface::class,
+            BankRepository::class
         );
 
         // Bind Auth Service

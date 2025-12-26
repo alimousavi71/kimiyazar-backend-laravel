@@ -78,6 +78,7 @@ return [
         'product_prices' => 'Product Prices',
         'contacts' => 'Contacts',
         'price_inquiries' => 'Price Inquiries',
+        'orders' => 'Orders',
         'modals' => 'Modals',
         'menus' => 'Menus',
         'settings' => 'Settings',

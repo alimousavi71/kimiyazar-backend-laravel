@@ -79,6 +79,7 @@ return [
         'product_prices' => 'قیمت محصولات',
         'contacts' => 'تماس‌ها',
         'price_inquiries' => 'استعلامات قیمت',
+        'orders' => 'سفارش‌ها',
         'banners' => 'بنرها',
         'contents' => 'محتوا',
         'sliders' => 'اسلایدرها',

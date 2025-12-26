@@ -182,7 +182,7 @@
                                     </div>
                                     <div class="order-buttons space-y-3">
                                         <a class="modern-order-btn personal-order flex items-center gap-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl hover:from-green-100 hover:to-emerald-100 hover:border-green-300 transition-all duration-300 group"
-                                            href="#">
+                                            href="{{ route('orders.create.real', ['productSlug' => $product->slug]) }}">
                                             <div
                                                 class="btn-icon w-12 h-12 rounded-lg bg-gradient-to-r from-green-500 to-emerald-400 flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300">
                                                 <i class="fa fa-user text-lg"></i>
@@ -199,7 +199,7 @@
                                             </div>
                                         </a>
                                         <a class="modern-order-btn legal-order flex items-center gap-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl hover:from-green-100 hover:to-emerald-100 hover:border-green-300 transition-all duration-300 group"
-                                            href="#">
+                                            href="{{ route('orders.create.legal', ['productSlug' => $product->slug]) }}">
                                             <div
                                                 class="btn-icon w-12 h-12 rounded-lg bg-gradient-to-r from-green-500 to-emerald-400 flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300">
                                                 <i class="fa fa-building text-lg"></i>

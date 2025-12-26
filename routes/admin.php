@@ -24,6 +24,10 @@ use App\Http\Controllers\Admin\ProductPriceController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\PriceInquiryController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\CountryController;
+use App\Http\Controllers\Admin\StateController;
+use App\Http\Controllers\Admin\BankController;
 use App\Http\Controllers\Examples\UsersController;
 
 Route::group([
@@ -33,7 +37,21 @@ Route::group([
 ], function () {
     // Dashboard
     Route::get('/', function () {
-        return view('pages.dashboard');
+        $totalUsers = \App\Models\User::count();
+        $totalOrders = \App\Models\Order::count();
+        $totalProducts = \App\Models\Product::count();
+        $totalCategories = \App\Models\Category::count();
+        $pendingOrders = \App\Models\Order::where('status', 'pending_payment')->count();
+        $paidOrders = \App\Models\Order::where('status', 'paid')->count();
+
+        return view('pages.dashboard', compact(
+            'totalUsers',
+            'totalOrders',
+            'totalProducts',
+            'totalCategories',
+            'pendingOrders',
+            'paidOrders'
+        ));
     })->name('dashboard');
 
     // Settings
@@ -249,6 +267,50 @@ Route::group([
         Route::post('/sync-today', [ProductPriceController::class, 'syncTodayPrices'])->name('sync-today');
         Route::post('/{productId}', [ProductPriceController::class, 'updatePrice'])->name('update');
         Route::post('/bulk-update', [ProductPriceController::class, 'bulkUpdate'])->name('bulk-update');
+    });
+
+    // Orders Management
+    Route::prefix('orders')->name('orders.')->group(function () {
+        Route::get('/', [OrderController::class, 'index'])->name('index');
+        Route::get('/create', [OrderController::class, 'create'])->name('create');
+        Route::post('/', [OrderController::class, 'store'])->name('store');
+        Route::get('/{id}', [OrderController::class, 'show'])->name('show');
+        Route::get('/{id}/edit', [OrderController::class, 'edit'])->name('edit');
+        Route::match(['put', 'patch'], '/{id}', [OrderController::class, 'update'])->name('update');
+        Route::delete('/{id}', [OrderController::class, 'destroy'])->name('destroy');
+    });
+
+    // Countries Management
+    Route::prefix('countries')->name('countries.')->group(function () {
+        Route::get('/', [CountryController::class, 'index'])->name('index');
+        Route::get('/create', [CountryController::class, 'create'])->name('create');
+        Route::post('/', [CountryController::class, 'store'])->name('store');
+        Route::get('/{id}', [CountryController::class, 'show'])->name('show');
+        Route::get('/{id}/edit', [CountryController::class, 'edit'])->name('edit');
+        Route::match(['put', 'patch'], '/{id}', [CountryController::class, 'update'])->name('update');
+        Route::delete('/{id}', [CountryController::class, 'destroy'])->name('destroy');
+    });
+
+    // States Management
+    Route::prefix('states')->name('states.')->group(function () {
+        Route::get('/', [StateController::class, 'index'])->name('index');
+        Route::get('/create', [StateController::class, 'create'])->name('create');
+        Route::post('/', [StateController::class, 'store'])->name('store');
+        Route::get('/{id}', [StateController::class, 'show'])->name('show');
+        Route::get('/{id}/edit', [StateController::class, 'edit'])->name('edit');
+        Route::match(['put', 'patch'], '/{id}', [StateController::class, 'update'])->name('update');
+        Route::delete('/{id}', [StateController::class, 'destroy'])->name('destroy');
+    });
+
+    // Banks Management
+    Route::prefix('banks')->name('banks.')->group(function () {
+        Route::get('/', [BankController::class, 'index'])->name('index');
+        Route::get('/create', [BankController::class, 'create'])->name('create');
+        Route::post('/', [BankController::class, 'store'])->name('store');
+        Route::get('/{id}', [BankController::class, 'show'])->name('show');
+        Route::get('/{id}/edit', [BankController::class, 'edit'])->name('edit');
+        Route::match(['put', 'patch'], '/{id}', [BankController::class, 'update'])->name('update');
+        Route::delete('/{id}', [BankController::class, 'destroy'])->name('destroy');
     });
 
     // Settings Management

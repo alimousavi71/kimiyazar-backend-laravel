@@ -3,7 +3,8 @@
     "allow": [
       "Bash(php artisan test:*)",
       "Bash(mkdir:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(php artisan migrate:fresh:*)"
     ]
   }
 }

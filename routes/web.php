@@ -23,6 +23,7 @@ use App\Http\Controllers\ProfileEmailController;
 use App\Http\Controllers\ProfilePhoneController;
 use App\Http\Controllers\ProfilePriceInquiryController;
 use App\Http\Controllers\PriceInquiryController;
+use App\Http\Controllers\OrderFormController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -55,6 +56,17 @@ Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 // Price Inquiry Routes
 Route::get('/price-inquiry', [PriceInquiryController::class, 'create'])->name('price-inquiry.create');
 Route::post('/price-inquiry', [PriceInquiryController::class, 'store'])->name('price-inquiry.store');
+
+// Order Form Routes (Public)
+Route::prefix('orders')->name('orders.')->group(function () {
+    Route::get('/create/real/{productSlug}', [OrderFormController::class, 'createReal'])->name('create.real');
+    Route::post('/create/real/{productSlug}', [OrderFormController::class, 'storeReal'])->name('store.real');
+
+    Route::get('/create/legal/{productSlug}', [OrderFormController::class, 'createLegal'])->name('create.legal');
+    Route::post('/create/legal/{productSlug}', [OrderFormController::class, 'storeLegal'])->name('store.legal');
+
+    Route::get('/confirmation/{orderId}', [OrderFormController::class, 'confirmation'])->name('confirmation');
+});
 
 // Admin Authentication Routes
 Route::prefix(config('admin.prefix'))->name(config('admin.route_name_prefix') . '.')->group(function () {
@@ -165,6 +177,10 @@ Route::prefix('api')->name('api.')->group(function () {
 
     // Product Search Route (for Select2)
     Route::get('/products/search', [\App\Http\Controllers\Api\ProductController::class, 'search'])->name('products.search');
+
+    // Country & State Search Routes (for Order Forms)
+    Route::get('/countries/search', [\App\Http\Controllers\Api\CountryController::class, 'search'])->name('countries.search');
+    Route::get('/states/search', [\App\Http\Controllers\Api\StateController::class, 'search'])->name('states.search');
 });
 
 // Legacy route names for compatibility
