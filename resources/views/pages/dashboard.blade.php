@@ -5,7 +5,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-600">Total Users</p>
-                    <p class="text-2xl font-bold text-gray-900">1,234</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ number_format($totalUsers) }}</p>
                 </div>
                 <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -21,13 +21,13 @@
         <x-card>
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600">Revenue</p>
-                    <p class="text-2xl font-bold text-gray-900">$45,231</p>
+                    <p class="text-sm text-gray-600">Total Products</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ number_format($totalProducts) }}</p>
                 </div>
                 <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
                     <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4">
                         </path>
                     </svg>
                 </div>
@@ -38,8 +38,8 @@
         <x-card>
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600">Orders</p>
-                    <p class="text-2xl font-bold text-gray-900">892</p>
+                    <p class="text-sm text-gray-600">Total Orders</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ number_format($totalOrders) }}</p>
                 </div>
                 <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
                     <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -54,13 +54,51 @@
         <x-card>
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600">Active Sessions</p>
-                    <p class="text-2xl font-bold text-gray-900">342</p>
+                    <p class="text-sm text-gray-600">Categories</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ number_format($totalCategories) }}</p>
                 </div>
                 <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
                     <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z">
+                        </path>
+                    </svg>
+                </div>
+            </div>
+        </x-card>
+    </div>
+
+    <!-- Order Status Cards -->
+    <div class="grid gap-6 sm:grid-cols-2 mb-6">
+        <!-- Pending Orders -->
+        <x-card>
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-600">Pending Orders</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ number_format($pendingOrders) }}</p>
+                </div>
+                <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z">
+                        </path>
+                    </svg>
+                </div>
+            </div>
+        </x-card>
+
+        <!-- Paid Orders -->
+        <x-card>
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-600">Paid Orders</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ number_format($paidOrders) }}</p>
+                </div>
+                <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z">
+                        </path>
                     </svg>
                 </div>
             </div>
@@ -68,80 +106,40 @@
     </div>
 
     <div class="grid gap-6 lg:grid-cols-2">
-        <!-- Recent Activity Card -->
-        <x-card title="Recent Activity">
+        <!-- Recent Orders Card -->
+        <x-card title="Recent Orders">
             <div class="space-y-4">
-                <div class="flex items-start gap-4">
-                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <span class="text-blue-600 font-semibold">JD</span>
+                @forelse($recentOrders as $order)
+                    <div class="flex items-start gap-4">
+                        @php
+                            $name = $order->customer_type === 'real' ? $order->full_name : $order->company_name;
+                            $parts = explode(' ', trim($name));
+                            $initials = strtoupper(substr($parts[0] ?? '', 0, 1) . substr($parts[1] ?? $parts[0] ?? '', 0, 1));
+                            $statusValue = $order->status->value ?? $order->status;
+                            $statusColor = $statusValue === 'pending_payment' ? 'orange' : ($statusValue === 'paid' ? 'emerald' : 'blue');
+                            $badgeVariant = $statusValue === 'pending_payment' ? 'warning' : ($statusValue === 'paid' ? 'success' : 'default');
+                        @endphp
+                        <div class="w-10 h-10 bg-{{ $statusColor }}-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <span class="text-{{ $statusColor }}-600 font-semibold text-xs">{{ $initials }}</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-medium text-gray-900">
+                                <strong>{{ $name }}</strong> ordered <strong>{{ $order->product?->name ?? 'Product' }}</strong>
+                            </p>
+                            <p class="text-xs text-gray-500">{{ \Carbon\Carbon::createFromTimestamp($order->created_at)->diffForHumans() }}</p>
+                        </div>
+                        <div>
+                            <x-badge
+                                variant="{{ $badgeVariant }}"
+                                size="sm">
+                                {{ __('orders.statuses.' . $statusValue) }}
+                            </x-badge>
+                        </div>
                     </div>
-                    <div class="flex-1">
-                        <p class="text-sm font-medium text-gray-900">John Doe created a new user</p>
-                        <p class="text-xs text-gray-500">2 minutes ago</p>
-                    </div>
-                </div>
-                <div class="flex items-start gap-4">
-                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <span class="text-green-600 font-semibold">JS</span>
-                    </div>
-                    <div class="flex-1">
-                        <p class="text-sm font-medium text-gray-900">Jane Smith updated settings</p>
-                        <p class="text-xs text-gray-500">15 minutes ago</p>
-                    </div>
-                </div>
-                <div class="flex items-start gap-4">
-                    <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <span class="text-yellow-600 font-semibold">AB</span>
-                    </div>
-                    <div class="flex-1">
-                        <p class="text-sm font-medium text-gray-900">Alice Brown deleted a record</p>
-                        <p class="text-xs text-gray-500">1 hour ago</p>
-                    </div>
-                </div>
+                @empty
+                    <p class="text-center text-gray-500 py-4">No recent orders</p>
+                @endforelse
             </div>
         </x-card>
-
-        <!-- Quick Actions Card -->
-        <x-card title="Quick Actions">
-            <div class="space-y-3">
-                <x-button variant="primary" size="md" class="w-full justify-center">
-                    Create New User
-                </x-button>
-                <x-button variant="secondary" size="md" class="w-full justify-center">
-                    View Reports
-                </x-button>
-                <x-button variant="outline" size="md" class="w-full justify-center">
-                    Export Data
-                </x-button>
-            </div>
-
-            <div class="mt-6 pt-6 border-t border-gray-200">
-                <h4 class="text-sm font-semibold text-gray-900 mb-3">System Status</h4>
-                <div class="space-y-2">
-                    <div class="flex items-center justify-between">
-                        <span class="text-sm text-gray-600">Server Status</span>
-                        <x-badge variant="success" size="sm">Online</x-badge>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-sm text-gray-600">Database</span>
-                        <x-badge variant="success" size="sm">Connected</x-badge>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-sm text-gray-600">Cache</span>
-                        <x-badge variant="warning" size="sm">Clearing</x-badge>
-                    </div>
-                </div>
-            </div>
-        </x-card>
-    </div>
-
-    <!-- Alerts Example -->
-    <div class="mt-6 space-y-4">
-        <x-alert type="success" dismissible>
-            <strong>Success!</strong> Your changes have been saved.
-        </x-alert>
-        <x-alert type="info">
-            <strong>Info:</strong> System maintenance scheduled for tonight.
-        </x-alert>
     </div>
 </x-layouts.admin>

@@ -28,6 +28,7 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\StateController;
 use App\Http\Controllers\Admin\BankController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Examples\UsersController;
 
 Route::group([
@@ -36,23 +37,7 @@ Route::group([
     'middleware' => ['auth.admin'],
 ], function () {
     // Dashboard
-    Route::get('/', function () {
-        $totalUsers = \App\Models\User::count();
-        $totalOrders = \App\Models\Order::count();
-        $totalProducts = \App\Models\Product::count();
-        $totalCategories = \App\Models\Category::count();
-        $pendingOrders = \App\Models\Order::where('status', 'pending_payment')->count();
-        $paidOrders = \App\Models\Order::where('status', 'paid')->count();
-
-        return view('pages.dashboard', compact(
-            'totalUsers',
-            'totalOrders',
-            'totalProducts',
-            'totalCategories',
-            'pendingOrders',
-            'paidOrders'
-        ));
-    })->name('dashboard');
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     // Settings
     Route::get('/settings', function () {

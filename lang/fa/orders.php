@@ -66,6 +66,16 @@ return [
         'legal' => 'شرکت/سازمان',
     ],
 
+    'statuses' => [
+        'pending_payment' => 'در انتظار پرداخت',
+        'paid' => 'پرداخت شده',
+        'processing' => 'در حال پردازش',
+        'shipped' => 'ارسال شده',
+        'delivered' => 'تحویل شده',
+        'cancelled' => 'لغو شده',
+        'returned' => 'برگشت داده شده',
+    ],
+
     'messages' => [
         'created' => 'سفارش شما با موفقیت ثبت شد!',
     ],

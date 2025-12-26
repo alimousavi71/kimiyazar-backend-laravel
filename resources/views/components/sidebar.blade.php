@@ -187,7 +187,7 @@
                     @endif
                     <div
                         class="relative z-10 p-1.5 rounded-lg {{ request()->routeIs('admin.orders.*') ? 'bg-green-100/50' : 'bg-gray-100/50 group-hover:bg-green-100/50' }} transition-all duration-300">
-                        <x-icon name="shopping-cart" size="md"
+                        <x-icon name="cart" size="md"
                             class="transition-all duration-300 {{ request()->routeIs('admin.orders.*') ? 'text-green-600 scale-110' : 'text-gray-500 group-hover:text-green-600 group-hover:scale-110' }}" />
                     </div>
                     <span class="relative z-10 flex-1">{{ __('admin/components.navigation.orders') }}</span>

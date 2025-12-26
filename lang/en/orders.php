@@ -66,6 +66,16 @@ return [
         'legal' => 'Legal Entity/Company',
     ],
 
+    'statuses' => [
+        'pending_payment' => 'Pending Payment',
+        'paid' => 'Paid',
+        'processing' => 'Processing',
+        'shipped' => 'Shipped',
+        'delivered' => 'Delivered',
+        'cancelled' => 'Cancelled',
+        'returned' => 'Returned',
+    ],
+
     'messages' => [
         'created' => 'Your order has been submitted successfully!',
     ],
