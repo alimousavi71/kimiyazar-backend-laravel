@@ -2,6 +2,9 @@
     // Settings are automatically provided by SettingComposer for frontend views
     $settings = $settings ?? [];
     $siteTitle = $settings['title'] ?? config('app.name', 'Laravel');
+
+    // Fetch services menu from database
+    $servicesMenu = \App\Models\Menu::findByType('services');
 @endphp
 
 <header class="sticky top-0 z-50 bg-white shadow-[0_2px_15px_rgba(0,0,0,0.08)]">
@@ -83,21 +86,32 @@
                         </a>
                         <div class="dropdown-menu modern-dropdown-menu absolute top-full right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg min-w-[200px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 py-2"
                             aria-labelledby="navbarDropdown2">
-                            <a class="dropdown-item flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 no-underline hover:bg-green-50 hover:text-green-500 transition-colors duration-200"
-                                href="#">
-                                <i class="fas fa-plane text-green-500 text-sm"></i>
-                                <span>صادرات</span>
-                            </a>
-                            <a class="dropdown-item flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 no-underline hover:bg-green-50 hover:text-green-500 transition-colors duration-200"
-                                href="#">
-                                <i class="fas fa-ship text-green-500 text-sm"></i>
-                                <span>واردات</span>
-                            </a>
-                            <a class="dropdown-item flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 no-underline hover:bg-green-50 hover:text-green-500 transition-colors duration-200"
-                                href="#">
-                                <i class="fas fa-check-circle text-green-500 text-sm"></i>
-                                <span>ترخیص کالا</span>
-                            </a>
+                            @if($servicesMenu && count($servicesMenu->getOrderedLinks()) > 0)
+                                @foreach($servicesMenu->getOrderedLinks() as $link)
+                                    <a class="dropdown-item flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 no-underline hover:bg-green-50 hover:text-green-500 transition-colors duration-200"
+                                        href="{{ $link['url'] ?? '#' }}"
+                                        @if(str_contains($link['url'] ?? '', 'http')) target="_blank" rel="noopener noreferrer" @endif>
+                                        <i class="fas fa-angle-left text-green-500 text-sm"></i>
+                                        <span>{{ $link['title'] ?? '' }}</span>
+                                    </a>
+                                @endforeach
+                            @else
+                                <a class="dropdown-item flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 no-underline hover:bg-green-50 hover:text-green-500 transition-colors duration-200"
+                                    href="#">
+                                    <i class="fas fa-plane text-green-500 text-sm"></i>
+                                    <span>صادرات</span>
+                                </a>
+                                <a class="dropdown-item flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 no-underline hover:bg-green-50 hover:text-green-500 transition-colors duration-200"
+                                    href="#">
+                                    <i class="fas fa-ship text-green-500 text-sm"></i>
+                                    <span>واردات</span>
+                                </a>
+                                <a class="dropdown-item flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 no-underline hover:bg-green-50 hover:text-green-500 transition-colors duration-200"
+                                    href="#">
+                                    <i class="fas fa-check-circle text-green-500 text-sm"></i>
+                                    <span>ترخیص کالا</span>
+                                </a>
+                            @endif
                         </div>
                     </li>
 
@@ -211,11 +225,38 @@
                         </a>
                     </li>
                     <li class="w-full">
-                        <a href="#"
-                            class="py-3 px-4 flex items-center gap-2 text-sm text-slate-700 no-underline hover:text-green-500 hover:bg-green-50 transition-colors duration-200 rounded">
+                        <button type="button" onclick="toggleMobileServices()"
+                            class="w-full py-3 px-4 flex items-center gap-2 text-sm text-slate-700 no-underline hover:text-green-500 hover:bg-green-50 transition-colors duration-200 rounded text-left"
+                            id="services-toggle">
                             <i class="fas fa-briefcase text-green-500"></i>
                             <span>خدمات</span>
-                        </a>
+                            <i class="fas fa-chevron-down text-xs text-gray-400 ml-auto transition-transform duration-300" id="services-chevron"></i>
+                        </button>
+                        <div id="mobile-services" class="hidden max-h-0 overflow-hidden transition-all duration-300">
+                            @if($servicesMenu && count($servicesMenu->getOrderedLinks()) > 0)
+                                @foreach($servicesMenu->getOrderedLinks() as $link)
+                                    <a href="{{ $link['url'] ?? '#' }}"
+                                        class="py-2 px-8 flex items-center gap-2 text-xs text-slate-600 no-underline hover:text-green-500 hover:bg-green-50 transition-colors duration-200 rounded block"
+                                        @if(str_contains($link['url'] ?? '', 'http')) target="_blank" rel="noopener noreferrer" @endif>
+                                        <i class="fas fa-angle-left text-green-500 text-xs"></i>
+                                        <span>{{ $link['title'] ?? '' }}</span>
+                                    </a>
+                                @endforeach
+                            @else
+                                <a href="#" class="py-2 px-8 flex items-center gap-2 text-xs text-slate-600 no-underline hover:text-green-500 hover:bg-green-50 transition-colors duration-200 rounded block">
+                                    <i class="fas fa-angle-left text-green-500 text-xs"></i>
+                                    <span>صادرات</span>
+                                </a>
+                                <a href="#" class="py-2 px-8 flex items-center gap-2 text-xs text-slate-600 no-underline hover:text-green-500 hover:bg-green-50 transition-colors duration-200 rounded block">
+                                    <i class="fas fa-angle-left text-green-500 text-xs"></i>
+                                    <span>واردات</span>
+                                </a>
+                                <a href="#" class="py-2 px-8 flex items-center gap-2 text-xs text-slate-600 no-underline hover:text-green-500 hover:bg-green-50 transition-colors duration-200 rounded block">
+                                    <i class="fas fa-angle-left text-green-500 text-xs"></i>
+                                    <span>ترخیص کالا</span>
+                                </a>
+                            @endif
+                        </div>
                     </li>
                     <li class="w-full">
                         <a href="{{ route('news.index') }}"
@@ -359,4 +400,22 @@
             });
         }
     });
+
+    // Mobile services toggle
+    function toggleMobileServices() {
+        const servicesDiv = document.getElementById('mobile-services');
+        const chevron = document.getElementById('services-chevron');
+
+        if (servicesDiv) {
+            servicesDiv.classList.toggle('hidden');
+
+            if (servicesDiv.classList.contains('hidden')) {
+                servicesDiv.style.maxHeight = '0';
+                chevron.style.transform = 'rotate(0deg)';
+            } else {
+                servicesDiv.style.maxHeight = servicesDiv.scrollHeight + 'px';
+                chevron.style.transform = 'rotate(180deg)';
+            }
+        }
+    }
 </script>
