@@ -50,6 +50,7 @@ use App\Services\Otp\OtpNotificationService;
 use App\Services\Otp\OtpService;
 use App\Services\User\UserService;
 use App\View\Composers\SettingComposer;
+use App\View\Composers\MenuComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -214,5 +215,8 @@ class AppServiceProvider extends ServiceProvider
 
         // Share settings with frontend views only (not admin)
         View::composer('*', SettingComposer::class);
+
+        // Share menus with frontend views only (not admin)
+        View::composer('*', MenuComposer::class);
     }
 }

@@ -1,10 +1,8 @@
 @php
-    // Settings are automatically provided by SettingComposer for frontend views
+    // Settings and Menus are automatically provided by Composers for frontend views
     $settings = $settings ?? [];
     $siteTitle = $settings['title'] ?? config('app.name', 'Laravel');
-
-    // Fetch services menu from database
-    $servicesMenu = \App\Models\Menu::findByType('services');
+    $servicesMenu = $servicesMenu ?? null;
 @endphp
 
 <header class="sticky top-0 z-50 bg-white shadow-[0_2px_15px_rgba(0,0,0,0.08)]">

@@ -1,14 +1,12 @@
 @php
-    // Settings are automatically provided by SettingComposer for frontend views
+    // Settings and menus are automatically provided by Composers for frontend views
     $settings = $settings ?? [];
     $siteTitle = $settings['title'] ?? config('app.name', 'کیمیا تجارت زر');
 
     // Fetch popular tags (limit 10)
     $tags = \App\Models\Tag::orderBy('created_at', 'desc')->limit(10)->get();
 
-    // Fetch menus by type
-    $quickAccessMenu = \App\Models\Menu::findByType('quick_access');
-    $servicesMenu = \App\Models\Menu::findByType('services');
+    // Menus are provided by MenuComposer: $quickAccessMenu and $servicesMenu
 @endphp
 
 <footer class="modern-footer bg-gradient-to-b from-slate-800 to-slate-900 text-gray-200 relative overflow-hidden">
