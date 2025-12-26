@@ -37,6 +37,10 @@ return [
         'id' => 'شناسه',
     ],
 
+    // No Data
+    'no_data' => 'داده‌ای در دسترس نیست',
+    'confirm_delete' => 'آیا مطمئن هستید که می‌خواهید این مورد را حذف کنید؟',
+
     // Filter Sidebar
     'filter_sidebar' => [
         'title' => 'فیلترها',

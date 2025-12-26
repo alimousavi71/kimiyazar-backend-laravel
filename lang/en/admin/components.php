@@ -37,6 +37,10 @@ return [
         'id' => 'ID',
     ],
 
+    // No Data
+    'no_data' => 'No data available',
+    'confirm_delete' => 'Are you sure you want to delete this item?',
+
     // Filter Sidebar
     'filter_sidebar' => [
         'title' => 'Filters',
