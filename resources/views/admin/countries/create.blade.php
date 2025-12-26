@@ -6,7 +6,7 @@
         <form action="{{ route('admin.countries.store') }}" method="POST" class="space-y-6">
             @csrf
 
-            <x-form.input
+            <x-input
                 name="name"
                 :label="__('admin/countries.fields.name')"
                 required
@@ -14,7 +14,7 @@
                 placeholder="e.g., Iran, Germany"
             />
 
-            <x-form.input
+            <x-input
                 name="code"
                 :label="__('admin/countries.fields.code')"
                 :error="$errors->first('code')"

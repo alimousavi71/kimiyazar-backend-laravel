@@ -7,7 +7,7 @@
             @csrf
             @method('PUT')
 
-            <x-form.input
+            <x-input
                 name="name"
                 :label="__('admin/banks.fields.name')"
                 :value="$bank->name"
@@ -15,7 +15,7 @@
                 :error="$errors->first('name')"
             />
 
-            <x-form.input
+            <x-input
                 name="logo"
                 :label="__('admin/banks.fields.logo')"
                 :value="$bank->logo"

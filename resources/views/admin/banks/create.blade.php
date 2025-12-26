@@ -6,7 +6,7 @@
         <form action="{{ route('admin.banks.store') }}" method="POST" class="space-y-6">
             @csrf
 
-            <x-form.input
+            <x-input
                 name="name"
                 :label="__('admin/banks.fields.name')"
                 required
@@ -14,7 +14,7 @@
                 placeholder="e.g., Melli Bank, Pasargad Bank"
             />
 
-            <x-form.input
+            <x-input
                 name="logo"
                 :label="__('admin/banks.fields.logo')"
                 :error="$errors->first('logo')"

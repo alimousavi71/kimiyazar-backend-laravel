@@ -6,7 +6,7 @@
         <form action="{{ route('admin.states.store') }}" method="POST" class="space-y-6">
             @csrf
 
-            <x-form.select
+            <x-select
                 name="country_id"
                 :label="__('admin/states.fields.country_id')"
                 :options="$countries->pluck('name', 'id')->toArray()"
@@ -14,7 +14,7 @@
                 :error="$errors->first('country_id')"
             />
 
-            <x-form.input
+            <x-input
                 name="name"
                 :label="__('admin/states.fields.name')"
                 required
