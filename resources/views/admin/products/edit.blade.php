@@ -63,15 +63,25 @@
                 </div>
 
                 <x-form-group :label="__('admin/products.fields.sale_description')" :error="$errors->first('sale_description')">
-                    <x-textarea name="sale_description" id="sale_description" rows="3"
+                    <x-editor 
+                        name="sale_description" 
+                        id="sale_description"
+                        :value="old('sale_description', $product->sale_description)"
                         :placeholder="__('admin/products.forms.placeholders.sale_description')"
-                        class="w-full">{{ old('sale_description', $product->sale_description) }}</x-textarea>
+                        :height="200"
+                        toolbar="basic"
+                    />
                 </x-form-group>
 
                 <x-form-group :label="__('admin/products.fields.body')" :error="$errors->first('body')">
-                    <x-textarea name="body" id="body" rows="6"
+                    <x-editor 
+                        name="body" 
+                        id="body"
+                        :value="old('body', $product->body)"
                         :placeholder="__('admin/products.forms.placeholders.body')"
-                        class="w-full">{{ old('body', $product->body) }}</x-textarea>
+                        :height="400"
+                        toolbar="full"
+                    />
                 </x-form-group>
 
                 <x-form-group :label="__('admin/photos.title')" :error="$errors->first('photos')">

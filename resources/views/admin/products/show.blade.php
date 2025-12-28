@@ -94,14 +94,22 @@
                         <div>
                             <label
                                 class="text-sm font-medium text-gray-500">{{ __('admin/products.fields.sale_description') }}</label>
-                            <p class="text-base text-gray-900 mt-1 whitespace-pre-line">{{ $product->sale_description }}</p>
+                            <div class="mt-1 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                                <div class="text-base text-gray-900 prose max-w-none">
+                                    {!! $product->sale_description !!}
+                                </div>
+                            </div>
                         </div>
                     @endif
 
                     @if($product->body)
                         <div>
                             <label class="text-sm font-medium text-gray-500">{{ __('admin/products.fields.body') }}</label>
-                            <p class="text-base text-gray-900 mt-1 whitespace-pre-line">{{ $product->body }}</p>
+                            <div class="mt-1 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                                <div class="text-base text-gray-900 prose max-w-none">
+                                    {!! $product->body !!}
+                                </div>
+                            </div>
                         </div>
                     @endif
 

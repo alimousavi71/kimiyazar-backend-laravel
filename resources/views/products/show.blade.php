@@ -120,30 +120,22 @@
                                         </div>
                                     @endforelse
                                 </div>
-                            </div>
 
-                            <!-- Product Content Section -->
-                            @if($product->body)
-                                <div class="product-content-section bg-white rounded-2xl shadow-md overflow-hidden">
-                                    <div
-                                        class="content-header bg-gradient-to-r from-green-500 to-emerald-400 px-6 py-4 flex items-center gap-3">
-                                        <div
-                                            class="header-icon w-10 h-10 rounded-lg bg-white bg-opacity-20 flex items-center justify-center">
-                                            <i class="fa fa-file-text-o text-white text-lg"></i>
+                                <!-- Product Body Section -->
+                                @if($product->body)
+                                    <div class="border-t border-gray-200">
+                                        <div class="content-body p-6 prose max-w-none text-gray-700 leading-relaxed">
+                                            {!! $product->body !!}
                                         </div>
-                                        <h4 class="text-lg md:text-xl font-bold text-white">توضیحات محصول</h4>
                                     </div>
-                                    <div class="content-body p-6 prose max-w-none">
-                                        {!! nl2br(e($product->body)) !!}
-                                    </div>
-                                </div>
-                            @endif
+                                @endif
+                            </div>
                         </div>
                     </div>
 
                     <!-- Right Column - Sidebar -->
                     <div class="lg:col-span-4">
-                        <div class="space-y-6">
+                        <div class="space-y-6 lg:sticky lg:top-6">
                             <!-- Product Gallery & Order Card -->
                             <div class="modern-product-order-card bg-white rounded-2xl shadow-md overflow-hidden">
                                 <!-- Product Gallery -->
