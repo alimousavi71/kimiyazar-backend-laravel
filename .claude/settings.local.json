@@ -13,7 +13,11 @@
       "Bash(php artisan migrate:*)",
       "Bash(php artisan:*)",
       "Bash(curl:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(find:*)",
+      "Bash(done)",
+      "Bash(php -l:*)",
+      "Bash(php artisan tinker:*)"
     ]
   }
 }

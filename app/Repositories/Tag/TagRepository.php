@@ -5,6 +5,7 @@ namespace App\Repositories\Tag;
 use App\Enums\Database\ContentType;
 use App\Models\Tag;
 use App\Models\Tagable;
+use App\Models\Content;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
@@ -168,10 +169,10 @@ class TagRepository implements TagRepositoryInterface
         $tag = $this->findBySlug($tagSlug);
 
         if (!$tag) {
-            return \App\Models\Content::where('id', 0)->paginate($perPage);
+            return Content::where('id', 0)->paginate($perPage);
         }
 
-        $query = \App\Models\Content::whereHas('tags', function ($q) use ($tag) {
+        $query = Content::whereHas('tags', function ($q) use ($tag) {
             $q->where('tags.id', $tag->id);
         })
             ->where('is_active', true)

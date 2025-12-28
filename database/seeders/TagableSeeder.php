@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use App\Models\Product;
 use App\Models\Content;
+use App\Models\Tag;
 class TagableSeeder extends Seeder
 {
     /**
@@ -43,7 +44,7 @@ class TagableSeeder extends Seeder
             foreach ($tagablesData as $item) {
                 // Check if tag exists
                 $tagId = (int) $item['tag_id'];
-                if (!\App\Models\Tag::find($tagId)) {
+                if (!Tag::find($tagId)) {
                     $skipped++;
                     continue;
                 }

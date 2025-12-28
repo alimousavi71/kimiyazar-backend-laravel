@@ -42,9 +42,9 @@ class FaqSeeder extends Seeder
 
         foreach ($faqs as $faq) {
             // Check if FAQ already exists to avoid duplicates
-            $existingFaq = \App\Models\Faq::where('question', $faq['question'])->first();
+            $existingFaq = Faq::where('question', $faq['question'])->first();
             if (!$existingFaq) {
-                \App\Models\Faq::create($faq);
+                Faq::create($faq);
             }
         }
     }
