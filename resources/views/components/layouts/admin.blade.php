@@ -9,8 +9,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ $title ?? ($settings['title'] ?? config('app.name', 'Laravel')) }}</title>
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
-    
     <script>
         window.adminPrefix = @js(config('admin.prefix'));
     </script>

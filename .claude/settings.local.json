@@ -11,7 +11,8 @@
       "Bash(xargs:*)",
       "Bash(php artisan make:migration:*)",
       "Bash(php artisan migrate:*)",
-      "Bash(php artisan:*)"
+      "Bash(php artisan:*)",
+      "Bash(curl:*)"
     ]
   }
 }
