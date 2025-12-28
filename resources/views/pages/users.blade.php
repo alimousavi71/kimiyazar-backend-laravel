@@ -12,7 +12,7 @@
         </x-button>
     </div>
 
-    <!-- Users Table -->
+    
     <x-card>
         <x-table-wrapper 
             search-placeholder="Search users by name, email..." 
@@ -89,10 +89,10 @@
             </x-table>
         </x-table-wrapper>
 
-        <!-- Filter Sidebar -->
+        
         <x-filter-sidebar id="users-filters" title="Filter Users" method="GET" action="{{ request()->url() }}">
             <div class="space-y-6">
-                <!-- Role Filter -->
+                
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Role</label>
                     <x-select name="role" class="w-full" :value="request()->query('role')">
@@ -103,7 +103,7 @@
                     </x-select>
                 </div>
 
-                <!-- Status Filter -->
+                
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
                     <x-select name="status" class="w-full" :value="request()->query('status')">
@@ -114,7 +114,7 @@
                     </x-select>
                 </div>
 
-                <!-- Date Range -->
+                
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Created Date</label>
                     <div class="space-y-2">
@@ -133,7 +133,7 @@
                     </div>
                 </div>
 
-                <!-- Additional Options -->
+                
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Options</label>
                     <div class="space-y-2">
@@ -163,7 +163,7 @@
         </x-filter-sidebar>
     </x-card>
 
-    <!-- Create User Modal -->
+    
     <x-modal id="create-user-modal" title="Create New User" size="md">
         <form class="space-y-4">
             <x-input label="Full Name" name="name" required />

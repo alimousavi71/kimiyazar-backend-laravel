@@ -2,7 +2,7 @@
 
 <div
     class="category-card-compact bg-white rounded-xl border border-gray-200 transition-all duration-300 h-full overflow-hidden shadow-sm hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(40,167,69,0.12)] hover:border-green-200">
-    <!-- Main Category Header -->
+    
     <a href="{{ route('products.index', ['category' => $category->id]) }}"
         class="category-main-link flex items-center gap-3 p-4 border-b border-gray-100 no-underline text-inherit hover:no-underline group">
         <div
@@ -18,7 +18,7 @@
             class="fa fa-chevron-left category-main-arrow text-green-500 text-xs transition-all duration-300 group-hover:-translate-x-1"></i>
     </a>
 
-    <!-- Subcategories -->
+    
     @if($category->children && $category->children->count() > 0)
         <div class="subcategories-list p-3 flex flex-wrap gap-2">
             @foreach($category->children as $subcategory)

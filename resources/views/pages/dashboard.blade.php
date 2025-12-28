@@ -1,6 +1,6 @@
 <x-layouts.admin :header-title="__('dashboard.header')">
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-6">
-        <!-- Stat Card 1 -->
+        
         <x-card>
             <div class="flex items-center justify-between">
                 <div>
@@ -17,7 +17,7 @@
             </div>
         </x-card>
 
-        <!-- Stat Card 2 -->
+        
         <x-card>
             <div class="flex items-center justify-between">
                 <div>
@@ -34,7 +34,7 @@
             </div>
         </x-card>
 
-        <!-- Stat Card 3 -->
+        
         <x-card>
             <div class="flex items-center justify-between">
                 <div>
@@ -50,7 +50,7 @@
             </div>
         </x-card>
 
-        <!-- Stat Card 4 -->
+        
         <x-card>
             <div class="flex items-center justify-between">
                 <div>
@@ -68,9 +68,9 @@
         </x-card>
     </div>
 
-    <!-- Order Status Cards -->
+    
     <div class="grid gap-6 sm:grid-cols-2 mb-6">
-        <!-- Pending Orders -->
+        
         <x-card>
             <div class="flex items-center justify-between">
                 <div>
@@ -87,7 +87,7 @@
             </div>
         </x-card>
 
-        <!-- Paid Orders -->
+        
         <x-card>
             <div class="flex items-center justify-between">
                 <div>
@@ -106,7 +106,7 @@
     </div>
 
     <div class="grid gap-6 lg:grid-cols-2">
-        <!-- Recent Orders Card -->
+        
         <x-card :title="__('dashboard.recent_orders.title')">
             <div class="space-y-4">
                 @forelse($recentOrders as $order)

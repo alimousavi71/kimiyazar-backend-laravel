@@ -21,10 +21,10 @@
             </div>
         </div>
 
-        <!-- Success/Error Messages -->
+        
         <x-session-messages />
 
-        <!-- Search and Actions -->
+        
         <x-card class="mb-6">
             <form method="GET" action="{{ route('admin.product-prices.index') }}" id="filter-form">
                 @if($perPage)
@@ -32,7 +32,7 @@
                 @endif
                 <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
                     <div class="flex-1 w-full grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <!-- Search Input -->
+                        
                         <div class="flex gap-2">
                             <input type="text" name="search" id="search-input"
                                 value="{{ $search ?? '' }}"
@@ -44,7 +44,7 @@
                             </button>
                         </div>
                         
-                        <!-- Category Filter -->
+                        
                         <div>
                             <x-category-selector 
                                 name="category_id" 
@@ -82,7 +82,7 @@
             </form>
         </x-card>
 
-        <!-- Products Price Table -->
+        
         <x-card>
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
@@ -179,7 +179,7 @@
                 </table>
             </div>
             
-            <!-- Pagination -->
+            
             @if($products->hasPages() || $products->total() > 0)
                 <x-pagination :paginator="$products" />
             @endif

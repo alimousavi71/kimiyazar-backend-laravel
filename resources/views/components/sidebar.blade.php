@@ -10,7 +10,7 @@
     class="w-64 bg-gradient-to-b from-white to-gray-50/50 border-e border-gray-200/60 h-screen flex flex-col fixed start-0 top-0 z-40 transition-all duration-300 lg:relative lg:translate-x-0 shadow-lg backdrop-blur-sm"
     x-bind:class="open ? 'translate-x-0' : (isRtl ? 'translate-x-full lg:translate-x-0' : '-translate-x-full lg:translate-x-0')">
 
-    <!-- Logo/Brand -->
+    
     <div class="flex items-center justify-between mb-8 pt-6 px-4">
         <div class="flex items-center gap-3 group">
             <div
@@ -29,10 +29,10 @@
         </button>
     </div>
 
-    <!-- Navigation -->
+    
     <nav class="flex-1 overflow-y-auto px-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
         <ul class="space-y-1.5">
-            <!-- Dashboard -->
+            
             <li>
                 <a href="{{ route('admin.dashboard') ?? route('dashboard') ?? '#' }}"
                     class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium relative overflow-hidden cursor-pointer {{ request()->routeIs('admin.dashboard') || request()->routeIs('dashboard') ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
@@ -50,7 +50,7 @@
                 </a>
             </li>
 
-            <!-- Users -->
+            
             <li>
                 <a href="{{ route('admin.users.index') ?? '#' }}"
                     class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium relative overflow-hidden cursor-pointer {{ request()->routeIs('admin.users.*') ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
@@ -68,7 +68,7 @@
                 </a>
             </li>
 
-            <!-- Admin -->
+            
             <li>
                 <a href="{{ route('admin.admins.index') ?? '#' }}"
                     class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium relative overflow-hidden cursor-pointer {{ request()->routeIs('admin.admins.*') ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
@@ -86,7 +86,7 @@
                 </a>
             </li>
 
-            <!-- Categories -->
+            
             <li>
                 <a href="{{ route('admin.categories.index') ?? '#' }}"
                     class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium relative overflow-hidden cursor-pointer {{ request()->routeIs('admin.categories.*') ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
@@ -104,7 +104,7 @@
                 </a>
             </li>
 
-            <!-- Products -->
+            
             <li>
                 <a href="{{ route('admin.products.index') ?? '#' }}"
                     class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium relative overflow-hidden cursor-pointer {{ request()->routeIs('admin.products.*') ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
@@ -122,7 +122,7 @@
                 </a>
             </li>
 
-            <!-- Product Prices -->
+            
             <li>
                 <a href="{{ route('admin.product-prices.index') ?? '#' }}"
                     class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium relative overflow-hidden cursor-pointer {{ request()->routeIs('admin.product-prices.*') ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
@@ -140,7 +140,7 @@
                 </a>
             </li>
 
-            <!-- Contacts -->
+            
             <li>
                 <a href="{{ route('admin.contacts.index') ?? '#' }}"
                     class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium relative overflow-hidden cursor-pointer {{ request()->routeIs('admin.contacts.*') ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
@@ -158,7 +158,7 @@
                 </a>
             </li>
 
-            <!-- Price Inquiries -->
+            
             <li>
                 <a href="{{ route('admin.price-inquiries.index') ?? '#' }}"
                     class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium relative overflow-hidden cursor-pointer {{ request()->routeIs('admin.price-inquiries.*') ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
@@ -176,7 +176,7 @@
                 </a>
             </li>
 
-            <!-- Orders -->
+            
             <li>
                 <a href="{{ route('admin.orders.index') ?? '#' }}"
                     class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium relative overflow-hidden cursor-pointer {{ request()->routeIs('admin.orders.*') ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
@@ -194,7 +194,7 @@
                 </a>
             </li>
 
-            <!-- Banners -->
+            
             <li>
                 <a href="{{ route('admin.banners.index') ?? '#' }}"
                     class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium relative overflow-hidden cursor-pointer {{ request()->routeIs('admin.banners.*') ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
@@ -212,7 +212,7 @@
                 </a>
             </li>
 
-            <!-- Contents -->
+            
             <li>
                 <a href="{{ route('admin.contents.index') ?? '#' }}"
                     class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium relative overflow-hidden cursor-pointer {{ request()->routeIs('admin.contents.*') ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
@@ -230,7 +230,7 @@
                 </a>
             </li>
 
-            <!-- Sliders -->
+            
             <li>
                 <a href="{{ route('admin.sliders.index') ?? '#' }}"
                     class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium relative overflow-hidden cursor-pointer {{ request()->routeIs('admin.sliders.*') ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
@@ -248,7 +248,7 @@
                 </a>
             </li>
 
-            <!-- FAQs -->
+            
             <li>
                 <a href="{{ route('admin.faqs.index') ?? '#' }}"
                     class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium relative overflow-hidden cursor-pointer {{ request()->routeIs('admin.faqs.*') ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
@@ -266,7 +266,7 @@
                 </a>
             </li>
 
-            <!-- Modals -->
+            
             <li>
                 <a href="{{ route('admin.modals.index') ?? '#' }}"
                     class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium relative overflow-hidden cursor-pointer {{ request()->routeIs('admin.modals.*') ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
@@ -284,7 +284,7 @@
                 </a>
             </li>
 
-            <!-- Menus -->
+            
             <li>
                 <a href="{{ route('admin.menus.index') ?? '#' }}"
                     class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium relative overflow-hidden cursor-pointer {{ request()->routeIs('admin.menus.*') ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
@@ -302,7 +302,7 @@
                 </a>
             </li>
 
-            <!-- Settings -->
+            
             <li>
                 <a href="{{ route('admin.settings.edit') ?? '#' }}"
                     class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium relative overflow-hidden cursor-pointer {{ request()->routeIs('admin.settings.*') ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
@@ -320,12 +320,12 @@
                 </a>
             </li>
 
-            <!-- Divider -->
+            
             <li class="my-3">
                 <div class="h-px bg-linear-to-br from-transparent via-gray-200 to-transparent"></div>
             </li>
 
-            <!-- Examples Group -->
+            
             <li>
                 <div x-data="{ open: openGroups.examples }">
                     <button @click="open = !open; openGroups.examples = open"
@@ -404,7 +404,7 @@
         </ul>
     </nav>
 
-    <!-- Copyright Footer -->
+    
     <div class="mt-auto pt-4 pb-4 px-4 border-t border-gray-200/60">
         <p class="text-xs text-center text-gray-500">
             &copy; {{ date('Y') }} {{ config('app.name', 'Admin Panel') }}. {{ __('admin/components.copyright') }}

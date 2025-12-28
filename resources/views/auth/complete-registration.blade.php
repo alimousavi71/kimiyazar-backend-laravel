@@ -5,7 +5,7 @@
 <x-layouts.auth :title="$title">
     <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden w-full max-w-md"
         x-data="passwordForm()">
-        <!-- Header -->
+        
         <div class="bg-gradient-to-br from-green-500 to-emerald-400 px-6 py-8 text-center">
             <div
                 class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm mb-4">
@@ -15,11 +15,11 @@
             <p class="text-green-100 text-sm">{{ __('auth.complete_registration.subtitle') }}</p>
         </div>
 
-        <!-- Form -->
+        
         <form method="POST" action="{{ route('auth.register.complete') }}" class="p-6 space-y-5">
             @csrf
 
-            <!-- Verified Contact Display -->
+            
             <div class="bg-green-50 border border-green-200 rounded-xl p-4">
                 <div class="flex items-center gap-3">
                     <div class="shrink-0">
@@ -33,19 +33,19 @@
                 </div>
             </div>
 
-            <!-- First Name -->
+            
             <x-form-group :label="__('auth.fields.first_name')" :error="$errors->first('first_name')">
                 <x-input type="text" name="first_name" :placeholder="__('auth.placeholders.first_name')"
                     value="{{ old('first_name') }}" class="w-full" />
             </x-form-group>
 
-            <!-- Last Name -->
+            
             <x-form-group :label="__('auth.fields.last_name')" :error="$errors->first('last_name')">
                 <x-input type="text" name="last_name" :placeholder="__('auth.placeholders.last_name')"
                     value="{{ old('last_name') }}" class="w-full" />
             </x-form-group>
 
-            <!-- Password -->
+            
             <x-form-group :label="__('auth.fields.password')" required :error="$errors->first('password')">
                 <div x-data="{ showPassword: false }" class="relative">
                     <input x-bind:type="showPassword ? 'text' : 'password'" name="password"
@@ -61,7 +61,7 @@
                 </div>
             </x-form-group>
 
-            <!-- Password Confirmation -->
+            
             <x-form-group :label="__('auth.fields.password_confirmation')" required
                 :error="$errors->first('password_confirmation')">
                 <div x-data="{ showPasswordConfirmation: false }" class="relative">
@@ -78,7 +78,7 @@
                 </div>
             </x-form-group>
 
-            <!-- Password Requirements -->
+            
             <div class="bg-green-50 border border-green-200 rounded-xl p-4">
                 <p class="text-sm font-semibold text-green-900 mb-3">{{ __('auth.password_requirements.title') }}</p>
                 <ul class="space-y-2">
@@ -98,7 +98,7 @@
                 </ul>
             </div>
 
-            <!-- Error Messages -->
+            
             @if($errors->any())
                 <x-alert type="danger" dismissible>
                     <ul class="space-y-1">
@@ -109,7 +109,7 @@
                 </x-alert>
             @endif
 
-            <!-- Submit Button -->
+            
             <x-button type="submit" variant="primary" size="lg" class="w-full">
                 <span class="flex items-center justify-center gap-2">
                     <x-icon name="check" size="md" />

@@ -15,10 +15,10 @@
             </a>
         </div>
 
-        <!-- Success/Error Messages -->
+        
         <x-session-messages />
 
-        <!-- Banners Table -->
+        
         <x-card>
             <x-table-wrapper :search-placeholder="__('admin/components.buttons.search')"
                 filter-sidebar-id="banners-filters" :filter-badges="[
@@ -104,11 +104,11 @@
                 </x-table>
             </x-table-wrapper>
 
-            <!-- Filter Sidebar -->
+            
             <x-filter-sidebar id="banners-filters" :title="__('admin/components.buttons.filter')" method="GET"
                 action="{{ request()->url() }}">
                 <div class="space-y-6">
-                    <!-- Position Filter -->
+                    
                     <div>
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin/banners.fields.position') }}</label>
@@ -122,7 +122,7 @@
                         </x-select>
                     </div>
 
-                    <!-- Status Filter -->
+                    
                     <div>
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin/banners.fields.is_active') }}</label>
@@ -140,7 +140,7 @@
             </x-filter-sidebar>
         </x-card>
 
-        <!-- Delete Confirmation Modal -->
+        
         <x-delete-confirmation-modal id="delete-banner-modal" route-name="admin.banners.destroy"
             row-selector="tr[data-banner-id='__ID__']" />
     </div>

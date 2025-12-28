@@ -4,7 +4,7 @@
 
 <x-layouts.auth :title="$title">
     <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-        <!-- Header -->
+        
         <div class="bg-gradient-to-br from-green-500 to-emerald-400 px-6 py-8 text-center">
             <div
                 class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm mb-4">
@@ -14,18 +14,18 @@
             <p class="text-green-100 text-sm">{{ __('admin/auth.reset_password.subtitle') }}</p>
         </div>
 
-        <!-- Form -->
+        
         <form method="POST" action="{{ route('admin.password.update') }}" class="p-6 space-y-5">
             @csrf
             <input type="hidden" name="token" value="{{ $token }}">
 
-            <!-- Email -->
+            
             <x-form-group :label="__('admin/auth.fields.email')" required :error="$errors->first('email')">
                 <x-input type="email" name="email" value="{{ old('email', request()->email) }}"
                     :placeholder="__('admin/auth.placeholders.email')" required autofocus class="w-full" />
             </x-form-group>
 
-            <!-- Password -->
+            
             <x-form-group :label="__('admin/auth.fields.password')" required :error="$errors->first('password')">
                 <div x-data="{ showPassword: false }" class="relative">
                     <input x-bind:type="showPassword ? 'text' : 'password'" name="password"
@@ -40,7 +40,7 @@
                 </div>
             </x-form-group>
 
-            <!-- Password Confirmation -->
+            
             <x-form-group :label="__('admin/auth.fields.password_confirmation')" required
                 :error="$errors->first('password_confirmation')">
                 <div x-data="{ showPassword: false }" class="relative">
@@ -56,7 +56,7 @@
                 </div>
             </x-form-group>
 
-            <!-- Error Messages -->
+            
             @if($errors->any())
                 <div class="bg-red-50 border border-red-200 rounded-xl p-4">
                     <div class="flex items-start gap-3">
@@ -75,7 +75,7 @@
                 </div>
             @endif
 
-            <!-- Submit Button -->
+            
             <x-button type="submit" variant="primary" size="lg" class="w-full">
                 <span class="flex items-center justify-center gap-2">
                     <x-icon name="check-circle" size="md" />
@@ -83,7 +83,7 @@
                 </span>
             </x-button>
 
-            <!-- Back to Login -->
+            
             <div class="text-center pt-4 border-t border-gray-100">
                 <a href="{{ route('admin.login') }}"
                     class="text-sm font-medium text-green-600 hover:text-green-700 transition-colors inline-flex items-center gap-1">

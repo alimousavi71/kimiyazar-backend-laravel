@@ -15,10 +15,10 @@
             </a>
         </div>
 
-        <!-- Success/Error Messages -->
+        
         <x-session-messages />
 
-        <!-- Orders Table -->
+        
         <x-card>
             <x-table-wrapper :search-placeholder="__('admin/components.buttons.search')"
                 filter-sidebar-id="orders-filters" :filter-badges="[
@@ -105,14 +105,14 @@
                 </x-table>
             </x-table-wrapper>
 
-            <!-- Filter Sidebar -->
+            
             <x-filter-sidebar id="orders-filters"
                 :title="__('admin/components.buttons.filter')"
                 method="GET"
                 action="{{ request()->url() }}">
 
                 <div class="space-y-6">
-                    <!-- Customer Type Filter -->
+                    
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             {{ __('admin/orders.fields.customer_type') }}
@@ -129,7 +129,7 @@
                         </x-select>
                     </div>
 
-                    <!-- Country Filter -->
+                    
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             {{ __('admin/orders.fields.country_id') }}
@@ -145,7 +145,7 @@
                         </x-select>
                     </div>
 
-                    <!-- State Filter -->
+                    
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             {{ __('admin/orders.fields.state_id') }}
@@ -161,7 +161,7 @@
                         </x-select>
                     </div>
 
-                    <!-- Status Filter -->
+                    
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             {{ __('admin/orders.fields.status') }}
@@ -177,7 +177,7 @@
                         </x-select>
                     </div>
 
-                    <!-- Payment Type Filter -->
+                    
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             {{ __('admin/orders.fields.payment_type') }}
@@ -193,7 +193,7 @@
                         </x-select>
                     </div>
 
-                    <!-- Viewed Status Filter -->
+                    
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             {{ __('admin/orders.fields.is_viewed') }}

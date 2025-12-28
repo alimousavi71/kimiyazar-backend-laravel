@@ -5,7 +5,7 @@
         </x-alert>
 
         <div class="grid gap-6">
-            <!-- Phone Number Mask -->
+            
             <x-card title="Phone Number Mask">
                 <form class="space-y-4">
                     <x-input label="Phone Number (US Format)" name="phone" id="phone-input" type="tel"
@@ -14,7 +14,7 @@
                 </form>
             </x-card>
 
-            <!-- Date Mask -->
+            
             <x-card title="Date Mask">
                 <form class="space-y-4">
                     <x-input label="Date (MM/DD/YYYY)" name="date" id="date-input" placeholder="MM/DD/YYYY" />
@@ -22,7 +22,7 @@
                 </form>
             </x-card>
 
-            <!-- Credit Card Mask -->
+            
             <x-card title="Credit Card Mask">
                 <form class="space-y-4">
                     <x-input label="Credit Card Number" name="credit_card" id="credit-card-input"
@@ -31,7 +31,7 @@
                 </form>
             </x-card>
 
-            <!-- Currency Mask -->
+            
             <x-card title="Currency Mask">
                 <form class="space-y-4">
                     <x-input label="Amount (USD)" name="amount" id="currency-input" placeholder="$0.00" />
@@ -39,7 +39,7 @@
                 </form>
             </x-card>
 
-            <!-- IP Address Mask -->
+            
             <x-card title="IP Address Mask">
                 <form class="space-y-4">
                     <x-input label="IP Address" name="ip_address" id="ip-input" placeholder="192.168.1.1" />
@@ -47,7 +47,7 @@
                 </form>
             </x-card>
 
-            <!-- Time Mask -->
+            
             <x-card title="Time Mask">
                 <form class="space-y-4">
                     <x-input label="Time (24-hour format)" name="time" id="time-input" placeholder="23:59" />
@@ -55,7 +55,7 @@
                 </form>
             </x-card>
 
-            <!-- Custom Pattern Mask -->
+            
             <x-card title="Custom Pattern Mask">
                 <form class="space-y-4">
                     <x-input label="License Plate (ABC-1234)" name="license_plate" id="license-plate-input"
@@ -64,7 +64,7 @@
                 </form>
             </x-card>
 
-            <!-- Dynamic Mask -->
+            
             <x-card title="Dynamic Mask (Phone or Email)">
                 <form class="space-y-4">
                     <x-input label="Phone or Email" name="contact" id="dynamic-input"
@@ -74,7 +74,7 @@
             </x-card>
         </div>
 
-        <!-- Test Results -->
+        
         <x-card title="Test Results" class="mt-6">
             <div id="test-results" class="space-y-2">
                 <p class="text-sm text-gray-600">Enter values in the fields above to see the masked output here.</p>

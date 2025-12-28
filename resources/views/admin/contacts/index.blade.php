@@ -10,10 +10,10 @@
             </div>
         </div>
 
-        <!-- Success/Error Messages -->
+        
         <x-session-messages />
 
-        <!-- Contacts Table -->
+        
         <x-card>
             <x-table-wrapper :search-placeholder="__('admin/components.buttons.search')"
                 filter-sidebar-id="contacts-filters" :filter-badges="[
@@ -86,11 +86,11 @@
                 </x-table>
             </x-table-wrapper>
 
-            <!-- Filter Sidebar -->
+            
             <x-filter-sidebar id="contacts-filters" :title="__('admin/components.buttons.filter')" method="GET"
                 action="{{ request()->url() }}">
                 <div class="space-y-6">
-                    <!-- Read Status Filter -->
+                    
                     <div>
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin/contacts.fields.is_read') }}</label>

@@ -15,10 +15,10 @@
             </a>
         </div>
 
-        <!-- Success/Error Messages -->
+        
         <x-session-messages />
 
-        <!-- Sliders Table -->
+        
         <x-card>
             <x-table-wrapper :search-placeholder="__('admin/components.buttons.search')"
                 filter-sidebar-id="sliders-filters" :filter-badges="[
@@ -110,11 +110,11 @@
                 </x-table>
             </x-table-wrapper>
 
-            <!-- Filter Sidebar -->
+            
             <x-filter-sidebar id="sliders-filters" :title="__('admin/components.buttons.filter')" method="GET"
                 action="{{ request()->url() }}">
                 <div class="space-y-6">
-                    <!-- Status Filter -->
+                    
                     <div>
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin/sliders.fields.is_active') }}</label>
@@ -132,7 +132,7 @@
             </x-filter-sidebar>
         </x-card>
 
-        <!-- Delete Confirmation Modal -->
+        
         <x-delete-confirmation-modal id="delete-slider-modal" route-name="admin.sliders.destroy"
             row-selector="tr[data-slider-id='__ID__']" />
     </div>

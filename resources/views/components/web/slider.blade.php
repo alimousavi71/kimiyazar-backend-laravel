@@ -3,7 +3,7 @@
 @if($sliders->count() > 0)
     <section class="relative bg-gray-100 py-8">
         <div class="container mx-auto px-4">
-            <!-- Swiper Container -->
+            
             <div class="swiper hero-slider rounded-xl overflow-hidden shadow-lg">
                 <div class="swiper-wrapper">
                     @foreach($sliders->take(5) as $slider)
@@ -15,11 +15,11 @@
                                          class="absolute inset-0 w-full h-full object-cover opacity-90">
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
                                 @else
-                                    <!-- Placeholder gradient -->
+                                    
                                     <div class="absolute inset-0 bg-gradient-to-br from-green-500 via-emerald-400 to-green-600"></div>
                                 @endif
                                 
-                                <!-- Content Overlay -->
+                                
                                 <div class="absolute inset-0 flex flex-col justify-end p-6 md:p-10 lg:p-12 text-white z-10">
                                     @if($slider->heading)
                                         <div class="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-400 text-white px-4 py-2 rounded-full text-xs md:text-sm font-semibold mb-4 shadow-[0_4px_12px_rgba(40,167,69,0.4)] w-fit">
@@ -50,11 +50,11 @@
                     @endforeach
                 </div>
                 
-                <!-- Navigation Buttons -->
+                
                 <div class="swiper-button-next !text-white !bg-green-500/80 hover:!bg-green-500 !w-12 !h-12 !rounded-full !shadow-lg !transition-all !duration-300 hover:!scale-110 after:!text-lg after:!font-bold"></div>
                 <div class="swiper-button-prev !text-white !bg-green-500/80 hover:!bg-green-500 !w-12 !h-12 !rounded-full !shadow-lg !transition-all !duration-300 hover:!scale-110 after:!text-lg after:!font-bold"></div>
                 
-                <!-- Pagination -->
+                
                 <div class="swiper-pagination !bottom-4"></div>
             </div>
         </div>

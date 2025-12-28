@@ -4,7 +4,7 @@
     class="modern-product-card bg-white rounded-xl border border-gray-200 transition-all duration-300 h-full overflow-hidden shadow-sm hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(40,167,69,0.12)] hover:border-green-200">
     <a href="{{ route('products.show', $product->slug) }}"
         class="product-link-wrapper flex flex-col h-full no-underline text-inherit hover:no-underline">
-        <!-- Header Section -->
+        
         <div class="product-header flex items-center gap-2.5 p-3.5 pb-2.5 border-b border-gray-100">
             <div
                 class="product-icon w-8 h-8 min-w-8 bg-gray-100 rounded-lg flex items-center justify-center transition-all duration-300 hover:bg-gradient-to-br hover:from-green-50 hover:to-emerald-50">
@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <!-- Content Section -->
+        
         <div class="product-content p-3.5 flex-1 min-h-[90px]">
             <h3
                 class="product-title text-15 font-semibold text-slate-800 mb-2 line-clamp-2 transition-colors duration-300 hover:text-green-500">
@@ -30,7 +30,7 @@
             </h3>
         </div>
 
-        <!-- Footer Section -->
+        
         <div class="product-footer flex items-center justify-between p-3.5 bg-gray-50 border-t border-gray-200">
             <div class="price-section flex items-baseline gap-1.25">
                 @if($product->current_price)

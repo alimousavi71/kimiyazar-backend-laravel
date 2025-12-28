@@ -9,7 +9,7 @@
         <p class="text-xs text-gray-600 mt-0.5">{{ __('admin/auth.two_factor.enable_description') }}</p>
     </div>
 
-    <!-- Error Messages -->
+    
     @if($errors->any())
         <x-alert type="danger" dismissible>
             <ul class="list-disc list-inside space-y-1">
@@ -21,7 +21,7 @@
     @endif
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- QR Code Card -->
+        
         <x-card>
             <x-slot name="title">{{ __('admin/auth.two_factor.scan_qr_title') }}</x-slot>
 
@@ -67,7 +67,7 @@
             </div>
         </x-card>
 
-        <!-- Verification Form -->
+        
         <x-card>
             <x-slot name="title">{{ __('admin/auth.two_factor.verify_title') }}</x-slot>
 

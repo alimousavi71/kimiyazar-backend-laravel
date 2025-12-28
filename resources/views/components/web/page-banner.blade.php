@@ -17,7 +17,6 @@
     }
 @endphp
 
-<!-- Page Banner Section -->
 <div class="bg-gradient-to-b from-slate-800 to-slate-900 text-white py-12">
     <div class="container mx-auto px-4">
         <div class="text-center">

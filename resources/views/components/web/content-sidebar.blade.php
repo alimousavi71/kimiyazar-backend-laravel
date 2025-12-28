@@ -11,7 +11,7 @@
 
 <div class="lg:col-span-3">
     <div class="space-y-6">
-        <!-- Search Widget -->
+        
         <div class="bg-white rounded-xl shadow-md p-6">
             <form method="get" action="{{ $searchRoute }}" class="modern-search-box">
                 <div class="flex gap-2">
@@ -26,7 +26,7 @@
             </form>
         </div>
 
-        <!-- Recent Items Widget -->
+        
         <div class="bg-white rounded-xl shadow-md p-6">
             <h3 class="widget-title text-xl font-bold text-slate-800 mb-4 pb-3 border-b border-gray-200">
                 {{ $recentTitle }}
@@ -63,7 +63,7 @@
             </div>
         </div>
 
-        <!-- Tags Widget -->
+        
         @if($tags->count() > 0)
             <div class="bg-white rounded-xl shadow-md p-6">
                 <h3 class="widget-title text-xl font-bold text-slate-800 mb-4 pb-3 border-b border-gray-200">

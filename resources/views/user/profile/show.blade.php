@@ -22,7 +22,7 @@
         </div>
     </div>
 
-    <!-- Success/Error Messages -->
+    
     <x-session-messages />
 
     <div class="space-y-6">

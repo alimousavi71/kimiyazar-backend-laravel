@@ -8,11 +8,11 @@
         <p class="text-xs text-gray-600 mt-0.5">{{ __('admin/auth.two_factor.description') }}</p>
     </div>
 
-    <!-- Success/Error Messages -->
+    
     <x-session-messages :showInfo="true" />
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- Status Card -->
+        
         <x-card>
             <x-slot name="title">{{ __('admin/auth.two_factor.status_title') }}</x-slot>
 
@@ -60,7 +60,7 @@
             </div>
         </x-card>
 
-        <!-- Recovery Codes Card -->
+        
         @if($isEnabled)
             <x-card>
                 <x-slot name="title">{{ __('admin/auth.two_factor.recovery_codes_title') }}</x-slot>

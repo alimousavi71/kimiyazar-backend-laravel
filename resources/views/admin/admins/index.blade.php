@@ -15,10 +15,10 @@
             </a>
         </div>
 
-        <!-- Success/Error Messages -->
+        
         <x-session-messages />
 
-        <!-- Admins Table -->
+        
         <x-card>
             <x-table-wrapper :search-placeholder="__('admin/components.buttons.search')"
                 filter-sidebar-id="admins-filters" :filter-badges="[
@@ -116,11 +116,11 @@
                 </x-table>
             </x-table-wrapper>
 
-            <!-- Filter Sidebar -->
+            
             <x-filter-sidebar id="admins-filters" :title="__('admin/components.buttons.filter')" method="GET"
                 action="{{ request()->url() }}">
                 <div class="space-y-6">
-                    <!-- Status Filter -->
+                    
                     <div>
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin/admins.fields.is_block') }}</label>
@@ -140,7 +140,7 @@
             </x-filter-sidebar>
         </x-card>
 
-        <!-- Delete Confirmation Modal -->
+        
         <x-delete-confirmation-modal id="delete-admin-modal" route-name="admin.admins.destroy"
             row-selector="tr[data-admin-id='__ID__']" />
     </div>

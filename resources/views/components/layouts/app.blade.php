@@ -16,30 +16,30 @@
 
     <title>{{ $title ?? $siteTitle }}</title>
 
-    <!-- Font Awesome -->
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- Styles -->
+    
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
 
 <body class="antialiased">
-    <!-- Top Area -->
+    
     <x-web.top-bar :settings="$settings" />
 
-    <!-- Navigation -->
+    
     <x-web.navigation />
 
-    <!-- Main Content -->
+    
     {{ $slot }}
 
-    <!-- Footer -->
+    
     <x-web.footer />
 
-    <!-- Scroll to Top Button -->
+    
     <div class="fixed bottom-8 left-8 z-[999]">
         <a href="#"
             class="w-12.5 h-12.5 bg-gradient-to-br from-green-500 to-emerald-400 text-white flex items-center justify-center rounded-full no-underline text-lg shadow-[0_4px_15px_rgba(40,167,69,0.4)] border-3 border-white/20 transition-all duration-300 hover:-translate-y-1.25 hover:shadow-[0_6px_20px_rgba(40,167,69,0.6)]">

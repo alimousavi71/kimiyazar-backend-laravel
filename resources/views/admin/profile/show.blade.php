@@ -22,11 +22,11 @@
         </div>
     </div>
 
-    <!-- Success/Error Messages -->
+    
     <x-session-messages />
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Main Information -->
+        
         <div class="lg:col-span-2 space-y-6">
             <x-card>
                 <x-slot name="title">{{ __('admin/profile.show.personal_info') }}</x-slot>
@@ -105,7 +105,7 @@
                 </div>
             </x-card>
 
-            <!-- Two-Factor Authentication -->
+            
             <x-card>
                 <x-slot name="title">{{ __('admin/auth.two_factor.title') }}</x-slot>
 
@@ -141,7 +141,7 @@
             </x-card>
         </div>
 
-        <!-- Avatar Section -->
+        
         <div class="lg:col-span-1">
             <x-card>
                 <x-slot name="title">{{ __('admin/profile.show.avatar_card_title') }}</x-slot>

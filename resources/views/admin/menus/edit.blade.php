@@ -10,7 +10,7 @@
     </div>
 
     <div x-data="menuLinkManager({{ json_encode($menu->links ?? []) }}, {{ $menu->id }})" class="space-y-6">
-        <!-- Menu Name Form -->
+        
         <x-card>
             <x-slot name="title">{{ __('admin/menus.forms.edit.menu_info') }}</x-slot>
 
@@ -61,19 +61,19 @@
             </form>
         </x-card>
 
-        <!-- Menu Links Manager -->
+        
         <x-card>
             <x-slot name="title">{{ __('admin/menus.forms.edit.links_manager') }}</x-slot>
 
             <div class="space-y-6">
-                <!-- Add New Link Button -->
+                
                 <div class="flex justify-end">
                     <x-button variant="primary" size="md" type="button" @click="showAddLinkModal = true">
                         {{ __('admin/menus.buttons.add_link') }}
                     </x-button>
                 </div>
 
-                <!-- Links List (Sortable) -->
+                
                 <div class="space-y-2" x-ref="linksList">
                     <template x-if="links.length === 0">
                         <div class="text-center py-8 text-gray-500">
@@ -86,7 +86,7 @@
                             draggable="true" @dragstart="dragStart($event, index)"
                             @dragover.prevent="dragOver($event, index)" @drop="drop($event, index)"
                             @dragend="dragEnd()">
-                            <!-- Drag Handle -->
+                            
                             <div class="text-gray-400 hover:text-gray-600">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -94,7 +94,7 @@
                                 </svg>
                             </div>
 
-                            <!-- Link Info -->
+                            
                             <div class="flex-1">
                                 <div class="font-medium text-gray-900" x-text="link.title"></div>
                                 <div class="text-sm text-gray-500" x-text="link.url"></div>
@@ -106,7 +106,7 @@
                                 </div>
                             </div>
 
-                            <!-- Actions -->
+                            
                             <div class="flex items-center gap-2">
                                 <x-button variant="secondary" size="sm" type="button" @click="editLink(index)">
                                     {{ __('admin/components.buttons.edit') }}
@@ -119,7 +119,7 @@
                     </template>
                 </div>
 
-                <!-- Save Links Button -->
+                
                 <div class="flex justify-end pt-4 border-t border-gray-200">
                     <x-button variant="primary" size="md" type="button" @click="saveLinks()" x-bind:disabled="saving">
                         <span x-show="!saving">{{ __('admin/components.buttons.save_links') }}</span>
@@ -129,7 +129,7 @@
             </div>
         </x-card>
 
-        <!-- Add/Edit Link Modal -->
+        
         <div x-show="showAddLinkModal" x-cloak
             class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
             @click.self="closeModal()">
@@ -139,7 +139,7 @@
                 </h3>
 
                 <form @submit.prevent="addOrUpdateLink()" class="space-y-4">
-                    <!-- Link Type -->
+                    
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             {{ __('admin/menus.fields.link_type') }}
@@ -151,7 +151,7 @@
                         </select>
                     </div>
 
-                    <!-- Content Selection (if type is content) -->
+                    
                     <div x-show="currentLink.type === 'content'">
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             {{ __('admin/menus.fields.select_content') }}
@@ -168,7 +168,7 @@
                         </select>
                     </div>
 
-                    <!-- Title -->
+                    
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             {{ __('admin/menus.fields.title') }} <span class="text-red-500">*</span>
@@ -178,7 +178,7 @@
                             :placeholder="'{{ __('admin/menus.forms.placeholders.link_title') }}'">
                     </div>
 
-                    <!-- URL (if type is custom) -->
+                    
                     <div x-show="currentLink.type === 'custom'">
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             {{ __('admin/menus.fields.url') }} <span class="text-red-500">*</span>
@@ -187,7 +187,7 @@
                             placeholder="/example-page">
                     </div>
 
-                    <!-- Actions -->
+                    
                     <div class="flex justify-end gap-3 pt-4 border-t border-gray-200">
                         <x-button variant="secondary" size="md" type="button" @click="closeModal()">
                             {{ __('admin/components.buttons.cancel') }}

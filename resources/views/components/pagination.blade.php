@@ -3,7 +3,7 @@
 @if($paginator && ($paginator->hasPages() || $paginator->total() > 0))
     <div
         class="flex flex-col sm:flex-row items-center justify-between gap-4 px-4 py-3 border-t border-gray-200 bg-gray-50 rounded-b-2xl">
-        <!-- Status Information -->
+        
         <div class="flex flex-wrap items-center gap-2 text-sm text-gray-700">
             <span class="font-medium">{{ __('admin/components.pagination.total_records') }}:</span>
             <span class="text-gray-900 font-semibold">{{ number_format($paginator->total()) }}</span>
@@ -23,10 +23,10 @@
             @endif
         </div>
 
-        <!-- Pagination Controls -->
+        
         @if($paginator->hasPages())
             <div class="flex items-center gap-2">
-                <!-- Previous Button -->
+                
                 @if($paginator->onFirstPage())
                     <button type="button" disabled
                         class="inline-flex items-center justify-center px-3 py-2 text-sm font-medium text-gray-400 bg-white border border-gray-300 rounded-xl cursor-not-allowed shadow-sm">
@@ -41,7 +41,7 @@
                     </a>
                 @endif
 
-                <!-- Page Numbers (Limited to 7 pages max for better UX) -->
+                
                 <div class="hidden sm:flex items-center gap-1">
                     @php
                         $currentPage = $paginator->currentPage();
@@ -90,7 +90,7 @@
                     @endif
                 </div>
 
-                <!-- Next Button -->
+                
                 @if($paginator->hasMorePages())
                     <a href="{{ $paginator->nextPageUrl() }}"
                         class="inline-flex items-center justify-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 shadow-sm hover:shadow-md transition-all">

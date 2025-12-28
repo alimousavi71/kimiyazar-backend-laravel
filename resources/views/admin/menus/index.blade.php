@@ -15,10 +15,10 @@
             </a>
         </div>
 
-        <!-- Success/Error Messages -->
+        
         <x-session-messages />
 
-        <!-- Menus Table -->
+        
         <x-card>
             <x-table-wrapper :search-placeholder="__('admin/components.buttons.search')"
                 filter-sidebar-id="menus-filters" :paginator="$menus ?? null">
@@ -85,7 +85,7 @@
             </x-table-wrapper>
         </x-card>
 
-        <!-- Delete Confirmation Modal -->
+        
         <x-delete-confirmation-modal id="delete-menu-modal" route-name="admin.menus.destroy"
             row-selector="tr[data-menu-id='__ID__']" />
     </div>

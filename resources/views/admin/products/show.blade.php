@@ -24,9 +24,9 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Main Information -->
+        
         <div class="lg:col-span-2 space-y-6">
-            <!-- Basic Information -->
+            
             <x-card>
                 <x-slot name="title">{{ __('admin/products.show.basic_info') }}</x-slot>
 
@@ -121,7 +121,7 @@
                 </div>
             </x-card>
 
-            <!-- Photos -->
+            
             @if($product->photos->count() > 0)
                 <x-card>
                     <x-slot name="title">{{ __('admin/photos.title') }}</x-slot>
@@ -132,7 +132,7 @@
                 </x-card>
             @endif
 
-            <!-- Pricing Information -->
+            
             @if($product->current_price || $product->price_label || $product->currency_code)
                 <x-card>
                     <x-slot name="title">{{ __('admin/products.show.pricing_info') }}</x-slot>
@@ -177,7 +177,7 @@
                 </x-card>
             @endif
 
-            <!-- SEO Information -->
+            
             @if($product->meta_title || $product->meta_description || $product->meta_keywords)
                 <x-card>
                     <x-slot name="title">{{ __('admin/products.show.seo_info') }}</x-slot>
@@ -210,7 +210,7 @@
                 </x-card>
             @endif
 
-            <!-- Timestamps -->
+            
             <x-card>
                 <x-slot name="title">{{ __('admin/products.show.timestamps') }}</x-slot>
 
@@ -233,7 +233,7 @@
             </x-card>
         </div>
 
-        <!-- Sidebar -->
+        
         <div class="lg:col-span-1">
             <x-card>
                 <x-slot name="title">{{ __('admin/products.show.quick_actions') }}</x-slot>

@@ -24,7 +24,7 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Main Information -->
+        
         <div class="lg:col-span-2 space-y-6">
             <x-card>
                 <x-slot name="title">{{ __('admin/menus.show.menu_info') }}</x-slot>
@@ -45,7 +45,7 @@
                 </dl>
             </x-card>
 
-            <!-- Links List -->
+            
             <x-card>
                 <x-slot name="title">{{ __('admin/menus.show.links') }} ({{ count($menu->getOrderedLinks()) }})</x-slot>
 

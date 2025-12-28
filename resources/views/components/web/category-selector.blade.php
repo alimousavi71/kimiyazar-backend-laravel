@@ -15,7 +15,7 @@
 
 <div class="category-selector-wrapper" data-selector-id="{{ $uniqueId }}">
     <div class="relative">
-        <!-- Hidden select for form submission -->
+        
         <select name="{{ $name }}" id="{{ $id }}" class="hidden" {{ $required ? 'required' : '' }}>
             <option value="">{{ $placeholder }}</option>
             @foreach($categories as $category)
@@ -25,7 +25,7 @@
             @endforeach
         </select>
 
-        <!-- Custom dropdown button -->
+        
         <button type="button" 
             class="category-selector-button w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all duration-200 bg-white disabled:bg-gray-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md focus:shadow-md text-left flex items-center justify-between {{ $class }}"
             data-target="{{ $uniqueId }}">
@@ -35,10 +35,10 @@
             <x-icon name="chevron-down" size="sm" class="text-gray-400 transition-transform duration-200 category-selector-icon" />
         </button>
 
-        <!-- Dropdown menu -->
+        
         <div class="category-selector-dropdown absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-xl shadow-lg max-h-96 overflow-hidden hidden"
             data-dropdown="{{ $uniqueId }}">
-            <!-- Search input -->
+            
             <div class="p-3 border-b border-gray-200">
                 <div class="relative">
                     <x-icon name="search" size="sm" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-            <!-- Category list -->
+            
             <div class="category-selector-list overflow-y-auto max-h-80" data-list="{{ $uniqueId }}">
                 <div class="category-selector-option p-2 px-3 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer transition-colors"
                     data-value=""

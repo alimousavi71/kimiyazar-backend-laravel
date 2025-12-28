@@ -19,7 +19,7 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Main Information -->
+        
         <div class="lg:col-span-2 space-y-6">
             <x-card>
                 <x-slot name="title">{{ __('user/price-inquiries.show.contact_info') }}</x-slot>
@@ -79,7 +79,7 @@
                 </div>
             </x-card>
 
-            <!-- Products -->
+            
             <x-card>
                 <x-slot name="title">{{ __('user/price-inquiries.show.products') }}</x-slot>
 

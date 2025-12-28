@@ -44,7 +44,7 @@
         </label>
     @endif
 
-    <!-- Search and Add Tag -->
+    
     <div x-show="!readOnly" class="space-y-2">
         <div class="flex gap-2">
             <div class="flex-1 relative">
@@ -57,7 +57,7 @@
                        :placeholder="__('admin/tags.forms.placeholders.search')"
                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
                 
-                <!-- Search Results Dropdown -->
+                
                 <div x-show="searchResults.length > 0"
                      x-transition
                      class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
@@ -83,16 +83,16 @@
         </div>
     </div>
 
-    <!-- Selected Tags -->
+    
     <div x-show="tags.length > 0" class="flex flex-wrap gap-2">
         <template x-for="(tag, index) in tags" :key="tag.id">
             <div class="group relative inline-flex items-center gap-2 px-3 py-1.5 bg-green-50 border border-green-200 rounded-lg">
                 <span x-text="tag.title" class="text-sm font-medium text-green-900"></span>
                 
-                <!-- Body Display (Read-Only) -->
+                
                 <span x-show="readOnly && tag.body" class="text-xs text-gray-600" x-text="'(' + tag.body + ')'"></span>
                 
-                <!-- Body Input (Optional) -->
+                
                 <div x-show="!readOnly" class="hidden group-hover:flex items-center gap-1">
                     <input type="text"
                            :value="tag.body || ''"
@@ -101,7 +101,7 @@
                            class="text-xs px-2 py-1 w-32 border border-green-300 rounded focus:outline-none focus:ring-1 focus:ring-green-500">
                 </div>
                 
-                <!-- Remove Button -->
+                
                 <button type="button"
                         x-show="!readOnly"
                         @click="removeTag(tag.id, tag.tagable_id)"
@@ -112,18 +112,18 @@
         </template>
     </div>
 
-    <!-- Empty State -->
+    
     <div x-show="tags.length === 0" class="text-center py-4 text-gray-500 text-sm">
         <span x-show="!readOnly">{{ __('admin/tags.forms.labels.no_tags') }}</span>
         <span x-show="readOnly">-</span>
     </div>
 
-    <!-- Error Message -->
+    
     @if($error)
         <span class="text-sm text-red-600">{{ $error }}</span>
     @endif
 
-    <!-- Hidden Inputs for Form Submission -->
+    
     <template x-show="!readOnly" x-for="tag in tags" :key="tag.id">
         <input type="hidden" :name="'tags[]'" :value="tag.id">
     </template>

@@ -5,7 +5,7 @@
     @vite('resources/js/validation-example.js')
 
     <div class="space-y-6">
-        <!-- Basic Validation Example -->
+        
         <x-card>
             <x-slot name="title">Basic Form Validation</x-slot>
             <x-slot name="footer">
@@ -25,7 +25,7 @@
             </form>
         </x-card>
 
-        <!-- Advanced Validation Example -->
+        
         <x-card>
             <x-slot name="title">Advanced Form Validation</x-slot>
             <x-slot name="footer">
@@ -68,7 +68,7 @@
             </form>
         </x-card>
 
-        <!-- Real-time Validation Example -->
+        
         <x-card>
             <x-slot name="title">Real-time Validation</x-slot>
             <x-slot name="footer">
@@ -87,7 +87,7 @@
             </form>
         </x-card>
 
-        <!-- Multi-language Validation Example (Persian/English) -->
+        
         <x-card>
             <x-slot name="title">Multi-language Validation (Persian/English)</x-slot>
             <x-slot name="footer">
@@ -141,7 +141,7 @@
             </form>
         </x-card>
 
-        <!-- Validation Rules Reference -->
+        
         <x-card>
             <x-slot name="title">Available Validation Rules</x-slot>
 

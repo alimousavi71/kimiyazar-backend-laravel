@@ -34,7 +34,7 @@
                     x-ref="codeInput" @input="handleCodeInput" />
             </x-form-group>
 
-            <!-- Success/Error Messages -->
+            
             <x-session-messages />
 
             <div class="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
@@ -49,7 +49,7 @@
             </div>
         </form>
 
-        <!-- Resend OTP Section -->
+        
         <div class="mt-6 pt-6 border-t border-gray-200">
             <div class="text-center space-y-3">
                 <div x-show="countdown > 0" class="text-sm text-gray-600">

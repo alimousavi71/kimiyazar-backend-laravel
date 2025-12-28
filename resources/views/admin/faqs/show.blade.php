@@ -24,7 +24,7 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Main Information -->
+        
         <div class="lg:col-span-2 space-y-6">
             <x-card>
                 <x-slot name="title">{{ __('admin/faqs.show.question_info') }}</x-slot>
@@ -77,7 +77,7 @@
             </x-card>
         </div>
 
-        <!-- Sidebar -->
+        
         <div class="lg:col-span-1">
             <x-card>
                 <x-slot name="title">{{ __('admin/faqs.show.quick_actions') }}</x-slot>

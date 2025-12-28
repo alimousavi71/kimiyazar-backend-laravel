@@ -6,6 +6,7 @@ use App\Traits\AppendsRandomStringOnSoftDelete;
 use App\Traits\HasPersianSlug;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
@@ -71,24 +72,13 @@ class Tag extends Model
     }
 
     /**
-     * Get all models that have this tag (polymorphic).
+     * Get all tagables (polymorphic relationships) for this tag.
      *
-     * @param string|null $modelType
-     * @return MorphToMany
+     * @return HasMany
      */
-    public function tagables(?string $modelType = null): MorphToMany
+    public function tagables(): HasMany
     {
-        $relation = $this->morphToMany(
-            $modelType ?? Model::class,
-            'tagable',
-            'tagables'
-        )->withPivot('body')->withTimestamps();
-
-        if ($modelType) {
-            $relation->where('tagables.tagable_type', $modelType);
-        }
-
-        return $relation;
+        return $this->hasMany(Tagable::class, 'tag_id');
     }
 }
 

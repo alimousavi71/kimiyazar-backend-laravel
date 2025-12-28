@@ -5,7 +5,7 @@
 
 <x-layouts.admin :title="$title" :headerTitle="$headerTitle">
     <div class="space-y-6">
-        <!-- Header -->
+        
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <h2 class="text-2xl font-bold text-gray-900 mb-2">Axios Interceptor & Form Examples</h2>
             <p class="text-gray-600">
@@ -13,7 +13,7 @@
             </p>
         </div>
 
-        <!-- Form Example -->
+        
         <x-card>
             <div class="p-6">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4">Form Submission Example</h3>
@@ -57,7 +57,7 @@
                     </div>
                 </form>
 
-                <!-- Response Display -->
+                
                 <div id="response-display" class="mt-6 hidden">
                     <h4 class="font-medium text-gray-900 mb-2">Response:</h4>
                     <pre
@@ -66,7 +66,7 @@
             </div>
         </x-card>
 
-        <!-- API Test Examples -->
+        
         <x-card>
             <div class="p-6">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4">API Test Examples</h3>
@@ -116,7 +116,7 @@
             </div>
         </x-card>
 
-        <!-- Code Examples -->
+        
         <x-card>
             <div class="p-6">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4">Usage Examples</h3>

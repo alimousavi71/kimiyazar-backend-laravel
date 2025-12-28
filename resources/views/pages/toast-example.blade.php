@@ -5,7 +5,7 @@
 
 <x-layouts.admin :title="$title" :headerTitle="$headerTitle">
     <div class="space-y-6">
-        <!-- Header -->
+        
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <h2 class="text-2xl font-bold text-gray-900 mb-2">Toast Notification Examples</h2>
             <p class="text-gray-600">
@@ -13,7 +13,7 @@
             </p>
         </div>
 
-        <!-- Custom Toast Examples -->
+        
         <x-card>
             <div class="p-6">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4">Custom Toast System</h3>
@@ -38,7 +38,7 @@
             </div>
         </x-card>
 
-        <!-- Advanced Toast Examples -->
+        
         <x-card>
             <div class="p-6">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4">Advanced Toast Examples</h3>
@@ -59,7 +59,7 @@
             </div>
         </x-card>
 
-        <!-- Code Examples -->
+        
         <x-card>
             <div class="p-6">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4">Usage Examples</h3>

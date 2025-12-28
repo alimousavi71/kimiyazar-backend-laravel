@@ -5,7 +5,7 @@
 
 <x-layouts.admin :title="$title" :headerTitle="$headerTitle">
     <div class="space-y-6">
-        <!-- Header -->
+        
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <h2 class="text-2xl font-bold text-gray-900 mb-2">Sample Form with File Upload</h2>
             <p class="text-gray-600">
@@ -13,14 +13,14 @@
             </p>
         </div>
 
-        <!-- Form -->
+        
         <x-card>
             <x-slot name="title">User Registration Form</x-slot>
             
             <form id="sample-form" enctype="multipart/form-data" class="space-y-6">
                 @csrf
 
-                <!-- Basic Information -->
+                
                 <div class="space-y-4">
                     <h3 class="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">Basic Information</h3>
                     
@@ -45,11 +45,11 @@
                     </div>
                 </div>
 
-                <!-- Select2 Examples -->
+                
                 <div class="space-y-4">
                     <h3 class="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">Select2 Examples</h3>
                     
-                    <!-- Simple Select2 -->
+                    
                     <x-form-group label="Country (Simple Select)" required>
                         <x-select2 
                             name="country" 
@@ -70,7 +70,7 @@
                         />
                     </x-form-group>
 
-                    <!-- Remote API Select2 -->
+                    
                     <x-form-group label="User (Remote API Select)" help="Type to search users from API">
                         <x-select2 
                             name="user_id" 
@@ -86,7 +86,7 @@
                         />
                     </x-form-group>
 
-                    <!-- Multiple Select -->
+                    
                     <x-form-group label="Skills (Multiple Select)" help="Select multiple skills">
                         <x-select2 
                             name="skills[]" 
@@ -108,7 +108,7 @@
                     </x-form-group>
                 </div>
 
-                <!-- File Upload -->
+                
                 <div class="space-y-4">
                     <h3 class="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">File Upload</h3>
                     
@@ -140,7 +140,7 @@
                     </x-form-group>
                 </div>
 
-                <!-- Additional Fields -->
+                
                 <div class="space-y-4">
                     <h3 class="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">Additional Information</h3>
                     
@@ -178,7 +178,7 @@
                     </div>
                 </div>
 
-                <!-- Form Actions -->
+                
                 <div class="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
                     <x-button variant="secondary" type="reset">Reset</x-button>
                     <x-button variant="primary" type="submit" id="submit-btn">
@@ -189,7 +189,7 @@
             </form>
         </x-card>
 
-        <!-- Response Display -->
+        
         <x-card>
             <x-slot name="title">Form Response</x-slot>
             <div id="form-response" class="hidden">

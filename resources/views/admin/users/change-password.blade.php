@@ -10,7 +10,7 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Main Card -->
+        
         <div class="lg:col-span-2">
             <x-card>
                 <x-slot name="title">{{ __('admin/users.forms.change_password.card_title') }}</x-slot>
@@ -51,7 +51,7 @@
             </x-card>
         </div>
 
-        <!-- Info Sidebar -->
+        
         <div class="lg:col-span-1">
             <x-card>
                 <x-slot name="title">{{ __('admin/users.show.user_info') }}</x-slot>

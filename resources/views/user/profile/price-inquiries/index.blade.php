@@ -18,10 +18,10 @@
             </div>
         </div>
 
-        <!-- Success/Error Messages -->
+        
         <x-session-messages />
 
-        <!-- Price Inquiries Table -->
+        
         <x-card>
             <x-table-wrapper :search-placeholder="__('admin/components.buttons.search')" :paginator="$priceInquiries ?? null">
                 <x-table>

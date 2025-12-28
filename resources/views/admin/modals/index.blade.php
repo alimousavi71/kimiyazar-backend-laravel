@@ -15,10 +15,10 @@
             </a>
         </div>
 
-        <!-- Success/Error Messages -->
+        
         <x-session-messages />
 
-        <!-- Modals Table -->
+        
         <x-card>
             <x-table-wrapper :search-placeholder="__('admin/components.buttons.search')"
                 filter-sidebar-id="modals-filters" :filter-badges="[
@@ -112,11 +112,11 @@
                 </x-table>
             </x-table-wrapper>
 
-            <!-- Filter Sidebar -->
+            
             <x-filter-sidebar id="modals-filters" :title="__('admin/components.buttons.filter')" method="GET"
                 action="{{ request()->url() }}">
                 <div class="space-y-6">
-                    <!-- Status Filter -->
+                    
                     <div>
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin/modals.fields.is_published') }}</label>
@@ -135,7 +135,7 @@
             </x-filter-sidebar>
         </x-card>
 
-        <!-- Delete Confirmation Modal -->
+        
         <x-delete-confirmation-modal id="delete-modal-modal" route-name="admin.modals.destroy"
             row-selector="tr[data-modal-id='__ID__']" />
     </div>

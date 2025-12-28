@@ -5,7 +5,7 @@
 <x-layouts.app title="{{ $content->title }} - {{ $siteTitle }}" dir="rtl">
     <x-web.page-banner :title="$content->title" />
 
-    <!-- Content Section -->
+    
     <section class="py-12 bg-white">
         <div class="container mx-auto px-4">
             <div class="max-w-4xl mx-auto">

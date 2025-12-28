@@ -75,6 +75,12 @@ Route::get('/p/{id}', function ($id) {
     return redirect()->to('/' . (request()->getQueryString() ? '?' . request()->getQueryString() : ''), 301);
 });
 
+// Tag Routes - Redirect legacy tag show route
+Route::get('/t/{id}/{slug}', function ($id, $slug) {
+    $queryString = request()->getQueryString();
+    return redirect()->to('/tags/' . $slug . ($queryString ? '?' . $queryString : ''), 301);
+});
+
 // Auth Routes - Redirect legacy authentication routes
 Route::get('/Auth/LoginPage', function () {
     return redirect()->to('/auth/login' . (request()->getQueryString() ? '?' . request()->getQueryString() : ''), 301);

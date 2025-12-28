@@ -1,19 +1,12 @@
 @php
-    // Settings and menus are automatically provided by Composers for frontend views
-    $settings = $settings ?? [];
     $siteTitle = $settings['title'] ?? config('app.name', 'کیمیا تجارت زر');
-
-    // Fetch popular tags (limit 10)
-    $tags = \App\Models\Tag::orderBy('created_at', 'desc')->limit(10)->get();
-
-    // Menus are provided by MenuComposer: $quickAccessMenu, $servicesMenu, and $usefulLinksMenu
 @endphp
 
 <footer class="modern-footer bg-gradient-to-b from-slate-800 to-slate-900 text-gray-200 relative overflow-hidden">
     <div class="footer-main py-12">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-12 gap-6">
-                <!-- Company Info Section -->
+                
                 <div class="col-span-12 sm:col-span-12 md:col-span-6 lg:col-span-3 mb-4">
                     <div class="footer-section">
                         <div class="footer-logo-section flex items-center gap-4 mb-5">
@@ -58,7 +51,7 @@
                     </div>
                 </div>
 
-                <!-- Quick Links -->
+                
                 <div class="col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-2 mb-4">
                     <div class="footer-section">
                         <h4
@@ -122,7 +115,7 @@
                     </div>
                 </div>
 
-                <!-- Services -->
+                
                 <div class="col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-2 mb-4">
                     <div class="footer-section">
                         <h4
@@ -186,7 +179,7 @@
                     </div>
                 </div>
 
-                <!-- Related Links -->
+                
                 <div class="col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-2 mb-4">
                     <div class="footer-section">
                         <h4
@@ -250,7 +243,7 @@
                     </div>
                 </div>
 
-                <!-- Tags -->
+                
                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-3 mb-4">
                     <div class="footer-section">
                         <h4
@@ -274,7 +267,7 @@
         </div>
     </div>
 
-    <!-- Footer Bottom -->
+    
     <div class="footer-bottom bg-black/30 py-5 border-t border-white/10">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row items-center justify-between gap-4">

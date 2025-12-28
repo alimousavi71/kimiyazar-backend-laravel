@@ -9,7 +9,7 @@
         <section class="py-5 bg-gray-50">
             <div class="container mx-auto px-4">
                 <div class="max-w-2xl mx-auto">
-                    <!-- Success Message -->
+                    
                     <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-6 mb-6">
                         <div class="flex items-start gap-4">
                             <i class="fa fa-check-circle text-emerald-500 text-4xl mt-1"></i>
@@ -20,7 +20,7 @@
                         </div>
                     </div>
                     
-                    <!-- Order Details Card -->
+                    
                     <div class="bg-white rounded-xl shadow-md p-6 mb-6">
                         <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
                             <i class="fa fa-receipt text-emerald-600"></i>
@@ -52,7 +52,7 @@
                             </div>
                         </div>
 
-                        <!-- Product Information -->
+                        
                         <div class="py-4 border-b border-gray-200">
                             <h4 class="font-semibold text-gray-900 mb-3">{{ __('orders.confirmation.product_info') }}</h4>
                             <div class="space-y-2">
@@ -73,7 +73,7 @@
                             </div>
                         </div>
 
-                        <!-- Customer Information -->
+                        
                         <div class="py-4">
                             <h4 class="font-semibold text-gray-900 mb-3">{{ __('orders.confirmation.customer_info') }}</h4>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
@@ -108,7 +108,7 @@
                         </div>
                     </div>
                     
-                    <!-- Next Steps Card -->
+                    
                     <div class="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-6">
                         <h4 class="font-semibold text-blue-900 mb-4 flex items-center gap-2">
                             <i class="fa fa-tasks text-blue-600"></i>
@@ -121,7 +121,7 @@
                         </ol>
                     </div>
 
-                    <!-- Important Note -->
+                    
                     <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6">
                         <p class="text-amber-900 text-sm">
                             <i class="fa fa-info-circle text-amber-600 me-2"></i>
@@ -129,7 +129,7 @@
                         </p>
                     </div>
 
-                    <!-- Action Buttons -->
+                    
                     <div class="flex flex-col md:flex-row gap-3">
                         <a href="{{ route('home') }}" 
                            class="flex-1 text-center px-6 py-3 bg-gray-200 text-gray-700 rounded-xl hover:bg-gray-300 transition-colors font-semibold">

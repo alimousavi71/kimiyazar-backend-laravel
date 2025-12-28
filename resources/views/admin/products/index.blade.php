@@ -15,14 +15,14 @@
             </a>
         </div>
 
-        <!-- Success/Error Messages -->
+        
         <x-session-messages />
 
         @php
             $categories = $categories ?? collect();
         @endphp
 
-        <!-- Products Table -->
+        
         <x-card>
             <x-table-wrapper :search-placeholder="__('admin/components.buttons.search')"
                 filter-sidebar-id="products-filters" :filter-badges="[
@@ -135,11 +135,11 @@
                 </x-table>
             </x-table-wrapper>
 
-            <!-- Filter Sidebar -->
+            
             <x-filter-sidebar id="products-filters" :title="__('admin/components.buttons.filter')" method="GET"
                 action="{{ request()->url() }}">
                 <div class="space-y-6">
-                    <!-- Status Filter -->
+                    
                     <div>
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin/products.fields.status') }}</label>
@@ -153,7 +153,7 @@
                         </x-select>
                     </div>
 
-                    <!-- Published Filter -->
+                    
                     <div>
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin/products.fields.is_published') }}</label>
@@ -168,7 +168,7 @@
                         </x-select>
                     </div>
 
-                    <!-- Category Filter -->
+                    
                     <div>
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin/products.fields.category') }}</label>
@@ -188,7 +188,7 @@
                         </x-select>
                     </div>
 
-                    <!-- Unit Filter -->
+                    
                     <div>
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin/products.fields.unit') }}</label>
@@ -205,7 +205,7 @@
             </x-filter-sidebar>
         </x-card>
 
-        <!-- Delete Confirmation Modal -->
+        
         <x-delete-confirmation-modal id="delete-product-modal" route-name="admin.products.destroy"
             row-selector="tr[data-product-id='__ID__']" />
     </div>

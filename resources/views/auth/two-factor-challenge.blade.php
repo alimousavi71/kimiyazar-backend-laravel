@@ -4,7 +4,7 @@
 
 <x-layouts.auth :title="$title">
     <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-        <!-- Header -->
+        
         <div class="bg-gradient-to-br from-purple-600 to-pink-600 px-6 py-8 text-center">
             <div
                 class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm mb-4">
@@ -14,7 +14,7 @@
             <p class="text-purple-100 text-sm">{{ __('admin/auth.two_factor_challenge.subtitle') }}</p>
         </div>
 
-        <!-- Form -->
+        
         <form method="POST" action="{{ route('admin.two-factor.verify') }}" class="p-6 space-y-5" x-data="{ 
                 code: ['', '', '', '', '', ''],
                 handleInput(index, event) {
@@ -59,7 +59,7 @@
             }">
             @csrf
 
-            <!-- 2FA Code Input -->
+            
             <div>
                 <label class="text-sm font-medium text-gray-700 mb-3 block">
                     {{ __('admin/auth.two_factor_challenge.verification_code') }}
@@ -79,7 +79,7 @@
                 </p>
             </div>
 
-            <!-- Recovery Code Option -->
+            
             <div class="pt-2">
                 <details class="group">
                     <summary
@@ -100,7 +100,7 @@
                 </details>
             </div>
 
-            <!-- Error Messages -->
+            
             @if($errors->any())
                 <div class="bg-red-50 border border-red-200 rounded-xl p-4">
                     <div class="flex items-start gap-3">
@@ -119,10 +119,10 @@
                 </div>
             @endif
 
-            <!-- Hidden input for the full code -->
+            
             <input type="hidden" name="code" id="code-input" x-bind:value="code.join('')" />
 
-            <!-- Submit Button -->
+            
             <x-button type="submit" variant="primary" size="lg" class="w-full">
                 <span class="flex items-center justify-center gap-2">
                     <x-icon name="check-circle" size="md" />
@@ -130,7 +130,7 @@
                 </span>
             </x-button>
 
-            <!-- Help Text -->
+            
             <div class="bg-green-50 border border-green-200 rounded-xl p-4">
                 <div class="flex items-start gap-3">
                     <x-icon name="info-circle" size="md" class="text-green-600 mt-0.5 shrink-0" />
@@ -145,7 +145,7 @@
                 </div>
             </div>
 
-            <!-- Back to Login -->
+            
             <div class="text-center pt-2">
                 <a href="{{ route('admin.login') }}"
                     class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors inline-flex items-center gap-1">

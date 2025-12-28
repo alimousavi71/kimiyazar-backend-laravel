@@ -13,7 +13,7 @@
             </div>
 
             <div class="flex items-center gap-2">
-                <!-- User Menu -->
+                
                 @php
                     $user = auth()->user();
                     $userName = $user ? $user->getFullName() : 'User';
@@ -34,7 +34,7 @@
                     <div x-show="open" @click.away="open = false" x-transition x-cloak
                         class="absolute end-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 overflow-hidden"
                         style="display: none;">
-                        <!-- User Info Header -->
+                        
                         <div
                             class="px-4 py-3 border-b border-gray-100 bg-linear-to-br from-green-50/50 to-emerald-50/50">
                             <div class="flex items-center gap-3">

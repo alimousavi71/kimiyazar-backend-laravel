@@ -24,3 +24,5 @@ Homestead.yaml
 Thumbs.db
 /database/import/products.json
 /database/import/product_prices.json
+/database/import/tags.json
+/database/import/tagable.json

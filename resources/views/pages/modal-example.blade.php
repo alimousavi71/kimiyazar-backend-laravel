@@ -5,7 +5,7 @@
 
 <x-layouts.admin :title="$title" :headerTitle="$headerTitle">
     <div class="space-y-6" x-data>
-        <!-- Header -->
+        
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <h2 class="text-2xl font-bold text-gray-900 mb-2">Modal Component Examples</h2>
             <p class="text-gray-600">
@@ -14,12 +14,12 @@
             </p>
         </div>
 
-        <!-- Basic Modals -->
+        
         <x-card>
             <x-slot name="title">Basic Modals</x-slot>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <!-- Small Modal -->
+                
                 <div>
                     <h4 class="text-sm font-medium text-gray-700 mb-2">Small Modal</h4>
                     <button type="button"
@@ -29,7 +29,7 @@
                     </button>
                 </div>
 
-                <!-- Medium Modal -->
+                
                 <div>
                     <h4 class="text-sm font-medium text-gray-700 mb-2">Medium Modal</h4>
                     <button type="button"
@@ -39,7 +39,7 @@
                     </button>
                 </div>
 
-                <!-- Large Modal -->
+                
                 <div>
                     <h4 class="text-sm font-medium text-gray-700 mb-2">Large Modal</h4>
                     <button type="button"
@@ -49,7 +49,7 @@
                     </button>
                 </div>
 
-                <!-- Extra Large Modal -->
+                
                 <div>
                     <h4 class="text-sm font-medium text-gray-700 mb-2">Extra Large Modal</h4>
                     <button type="button"
@@ -61,7 +61,7 @@
             </div>
         </x-card>
 
-        <!-- Modal with Form -->
+        
         <x-card>
             <x-slot name="title">Modal with Form</x-slot>
 
@@ -75,7 +75,7 @@
             </div>
         </x-card>
 
-        <!-- Confirmation Modal -->
+        
         <x-card>
             <x-slot name="title">Confirmation Modal</x-slot>
 
@@ -89,7 +89,7 @@
             </div>
         </x-card>
 
-        <!-- Modal with Content -->
+        
         <x-card>
             <x-slot name="title">Modal with Rich Content</x-slot>
 
@@ -103,7 +103,7 @@
             </div>
         </x-card>
 
-        <!-- Modal without Title -->
+        
         <x-card>
             <x-slot name="title">Modal without Title</x-slot>
 
@@ -117,7 +117,7 @@
             </div>
         </x-card>
 
-        <!-- JavaScript Example -->
+        
         <x-card>
             <x-slot name="title">JavaScript API</x-slot>
 
@@ -141,7 +141,7 @@ document.dispatchEvent(new CustomEvent('close-modal', {
         </x-card>
     </div>
 
-    <!-- Small Modal -->
+    
     <x-modal id="small-modal" title="Small Modal" size="sm">
         <p class="text-gray-700">This is a small modal (max-w-md). Perfect for simple confirmations or short messages.
         </p>
@@ -152,7 +152,7 @@ document.dispatchEvent(new CustomEvent('close-modal', {
         </div>
     </x-modal>
 
-    <!-- Medium Modal -->
+    
     <x-modal id="medium-modal" title="Medium Modal" size="md">
         <p class="text-gray-700 mb-4">This is a medium modal (max-w-lg). Good for forms and moderate content.</p>
         <div class="bg-gray-50 rounded-lg p-4 mb-4">
@@ -168,7 +168,7 @@ document.dispatchEvent(new CustomEvent('close-modal', {
         </div>
     </x-modal>
 
-    <!-- Large Modal -->
+    
     <x-modal id="large-modal" title="Large Modal" size="lg">
         <div class="space-y-4">
             <p class="text-gray-700">This is a large modal (max-w-2xl). Great for detailed forms or extensive content.
@@ -191,7 +191,7 @@ document.dispatchEvent(new CustomEvent('close-modal', {
         </div>
     </x-modal>
 
-    <!-- Extra Large Modal -->
+    
     <x-modal id="xl-modal" title="Extra Large Modal" size="xl">
         <div class="space-y-4">
             <p class="text-gray-700">This is an extra large modal (max-w-4xl). Perfect for complex forms, tables, or
@@ -218,7 +218,7 @@ document.dispatchEvent(new CustomEvent('close-modal', {
         </div>
     </x-modal>
 
-    <!-- Form Modal -->
+    
     <x-modal id="form-modal" title="Create New Item" size="md">
         <form class="space-y-4" onsubmit="window.handleFormSubmit(event); return false;">
             <x-form-group label="Name" required>
@@ -259,7 +259,7 @@ document.dispatchEvent(new CustomEvent('close-modal', {
         </form>
     </x-modal>
 
-    <!-- Confirmation Modal -->
+    
     <x-modal id="confirm-modal" title="Confirm Delete" size="sm">
         <div class="space-y-4">
             <div class="flex items-start gap-3">
@@ -286,10 +286,10 @@ document.dispatchEvent(new CustomEvent('close-modal', {
         </div>
     </x-modal>
 
-    <!-- Content Modal -->
+    
     <x-modal id="content-modal" title="Item Details" size="lg">
         <div class="space-y-6">
-            <!-- Header Info -->
+            
             <div class="flex items-center gap-4 pb-4 border-b border-gray-200">
                 <div
                     class="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold text-xl">
@@ -302,7 +302,7 @@ document.dispatchEvent(new CustomEvent('close-modal', {
                 </div>
             </div>
 
-            <!-- Details Grid -->
+            
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="text-xs font-medium text-gray-500 uppercase">Status</label>
@@ -322,7 +322,7 @@ document.dispatchEvent(new CustomEvent('close-modal', {
                 </div>
             </div>
 
-            <!-- Activity -->
+            
             <div>
                 <h5 class="text-sm font-semibold text-gray-900 mb-3">Recent Activity</h5>
                 <div class="space-y-2">
@@ -354,7 +354,7 @@ document.dispatchEvent(new CustomEvent('close-modal', {
         </div>
     </x-modal>
 
-    <!-- No Title Modal -->
+    
     <x-modal id="no-title-modal" size="md">
         <div class="space-y-4">
             <div class="text-center">
@@ -374,7 +374,7 @@ document.dispatchEvent(new CustomEvent('close-modal', {
         </div>
     </x-modal>
 
-    <!-- JavaScript Modal -->
+    
     <x-modal id="js-modal" title="JavaScript Opened Modal" size="md">
         <p class="text-gray-700">This modal was opened using JavaScript instead of Alpine.js directives.</p>
         <div class="flex items-center justify-end gap-3 pt-4 mt-4 border-t border-gray-200">

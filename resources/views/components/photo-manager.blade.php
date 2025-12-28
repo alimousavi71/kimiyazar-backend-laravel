@@ -45,7 +45,7 @@
         </label>
     @endif
 
-    <!-- Upload Area -->
+    
     <div x-show="!readOnly && (!limit || photos.length < limit)" 
          class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-green-400 transition-colors"
          :class="{ 'border-green-500 bg-green-50': isDragging }"
@@ -78,34 +78,34 @@
         </div>
     </div>
 
-    <!-- Loading Indicator -->
+    
     <div x-show="loading" class="flex items-center justify-center py-4">
         <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
         <span class="ml-2 text-sm text-gray-600">{{ __('admin/photos.forms.messages.uploading') }}</span>
     </div>
 
-    <!-- Photos Grid -->
+    
     <div x-show="photos.length > 0" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         <template x-for="(photo, index) in photos" :key="photo.id">
             <div class="relative group border border-gray-200 rounded-lg overflow-hidden bg-gray-50">
-                <!-- Image -->
+                
                 <div class="aspect-square relative">
                     <img :src="photo.url || (photo.file_path ? (photo.file_path.startsWith('http') ? photo.file_path : (photo.file_path.startsWith('storage/') ? '/' + photo.file_path : '/storage/' + photo.file_path)) : '')" 
                          :alt="photo.alt || 'Photo'"
                          class="w-full h-full object-cover"                  
                          loading="lazy">
                     
-                    <!-- Overlay on Hover -->
+                    
                     <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-opacity flex items-center justify-center space-x-2">
-                        <!-- Primary Badge -->
+                        
                         <span x-show="photo.is_primary" 
                               class="absolute top-2 left-2 bg-gradient-to-r from-green-500 to-emerald-400 text-white text-xs px-2 py-1 rounded">
                             Primary
                         </span>
                         
-                        <!-- Actions -->
+                        
                         <div x-show="!readOnly" class="opacity-0 group-hover:opacity-100 transition-opacity flex space-x-2">
-                            <!-- Set Primary -->
+                            
                             <button type="button"
                                     @click="setPrimary(photo.id)"
                                     x-show="!photo.is_primary"
@@ -116,7 +116,7 @@
                                 </svg>
                             </button>
                             
-                            <!-- Move Up -->
+                            
                             <button type="button"
                                     @click="movePhoto(index, 'up')"
                                     x-show="index > 0"
@@ -127,7 +127,7 @@
                                 </svg>
                             </button>
                             
-                            <!-- Move Down -->
+                            
                             <button type="button"
                                     @click="movePhoto(index, 'down')"
                                     x-show="index < photos.length - 1"
@@ -138,7 +138,7 @@
                                 </svg>
                             </button>
                             
-                            <!-- Delete -->
+                            
                             <button type="button"
                                     @click="deletePhoto(photo.id)"
                                     class="bg-red-600 text-white p-2 rounded hover:bg-red-700 transition-colors"
@@ -151,7 +151,7 @@
                     </div>
                 </div>
                 
-                <!-- Alt Text Input -->
+                
                 <div x-show="!readOnly" class="p-2">
                     <input type="text"
                            :value="photo.alt || ''"
@@ -160,7 +160,7 @@
                            class="w-full text-xs px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-green-500">
                 </div>
                 
-                <!-- Alt Text Display (Read-Only) -->
+                
                 <div x-show="readOnly && photo.alt" class="p-2">
                     <p class="text-xs text-gray-600">{{ __('admin/photos.fields.alt') }}: <span x-text="photo.alt"></span></p>
                 </div>
@@ -168,7 +168,7 @@
         </template>
     </div>
 
-    <!-- Empty State -->
+    
     <div x-show="photos.length === 0 && !loading" class="text-center py-8 text-gray-500">
         <svg class="w-16 h-16 text-gray-300 mb-2 mx-auto" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
@@ -176,12 +176,12 @@
         <p class="text-sm">{{ __('admin/photos.forms.messages.no_photos') }}</p>
     </div>
 
-    <!-- Error Message -->
+    
     @if($error)
         <span class="text-sm text-red-600">{{ $error }}</span>
     @endif
 
-    <!-- Hidden Input for Form Submission -->
+    
     <template x-show="!readOnly" x-for="photo in photos" :key="photo.id">
         <input type="hidden" :name="'photos[]'" :value="photo.id">
     </template>

@@ -13,7 +13,7 @@
             </div>
 
             <div class="flex items-center gap-2">
-                <!-- Notifications Dropdown -->
+                
                 <div x-data="{
                     open: false,
                     popperInstance: null,
@@ -43,11 +43,11 @@
                             @click="open = !open" aria-label="{{ __('admin/components.header.notifications') }}" />
                     </div>
 
-                    <!-- Notifications Dropdown -->
+                    
                     <div x-ref="notificationDropdown" x-show="open" x-cloak
                         class="absolute w-80 bg-white rounded-2xl shadow-xl border border-gray-100 z-50 overflow-hidden transition-opacity duration-100 ease-out"
                         :class="open ? 'opacity-100' : 'opacity-0'" style="display: none;">
-                        <!-- Header -->
+                        
                         <div class="px-4 py-3 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
                             <h3 class="text-sm font-semibold text-gray-900">
                                 {{ __('admin/components.header.notifications') }}
@@ -56,9 +56,9 @@
                                 aria-label="{{ __('admin/components.header.close_notifications') }}" />
                         </div>
 
-                        <!-- Notifications List -->
+                        
                         <div class="max-h-96 overflow-y-auto">
-                            <!-- Example Notifications -->
+                            
                             <x-notification-item title="New user registered" description="John Doe just signed up"
                                 time="2 minutes ago" icon="user" icon-color="blue" unread="true" />
 
@@ -72,7 +72,7 @@
                                 time="3 hours ago" icon="message" icon-color="purple" />
                         </div>
 
-                        <!-- Footer -->
+                        
                         <div class="px-4 py-3 border-t border-gray-100 bg-gray-50">
                             <a href="#"
                                 class="text-sm font-medium text-green-600 hover:text-green-700 text-center block">
@@ -82,7 +82,7 @@
                     </div>
                 </div>
 
-                <!-- User Menu -->
+                
                 @php
                     $admin = auth('admin')->user() ?? auth()->user();
                     $adminName = $admin ? $admin->full_name : 'Admin User';
@@ -127,7 +127,7 @@
                     <div x-ref="profileDropdown" x-show="open" x-cloak
                         class="absolute w-64 bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 overflow-hidden transition-opacity duration-100 ease-out"
                         :class="open ? 'opacity-100' : 'opacity-0'" style="display: none;">
-                        <!-- User Info Header -->
+                        
                         <div
                             class="px-4 py-3 border-b border-gray-100 bg-linear-to-br from-green-50/50 to-emerald-50/50">
                             <div class="flex items-center gap-3">

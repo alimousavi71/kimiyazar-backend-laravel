@@ -9,7 +9,7 @@
         <section class="py-5 bg-gray-50">
             <div class="container mx-auto px-4">
                 <div class="max-w-4xl mx-auto">
-                    <!-- Product Info Card (Read-only) -->
+                    
                     <div class="bg-white rounded-xl shadow-md p-6 mb-6">
                         <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('orders.forms.product_info') }}</h3>
                         <div class="flex items-center gap-6">
@@ -41,9 +41,9 @@
                         </div>
                     </div>
 
-                    <!-- Order Form -->
+                    
                     <div class="bg-white rounded-xl shadow-md overflow-visible">
-                        <!-- Error Messages -->
+                        
                         @if($errors->any())
                             <div class="bg-red-50 border-b border-red-200 p-6">
                                 <div class="flex items-start gap-3">
@@ -67,7 +67,7 @@
                               class="p-6 space-y-6">
                             @csrf
 
-                            <!-- Section 1: Contact Information -->
+                            
                             <div class="border-b border-gray-200 pb-6">
                                 <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
                                     <i class="fa fa-user-circle text-emerald-600"></i>
@@ -111,7 +111,7 @@
                                 @endif
                             </div>
 
-                            <!-- Section 2: National ID Information -->
+                            
                             <div class="border-b border-gray-200 pb-6">
                                 <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
                                     <i class="fa fa-id-card text-emerald-600"></i>
@@ -136,7 +136,7 @@
                                 </div>
                             </div>
 
-                            <!-- Section 3: Delivery Address -->
+                            
                             <div class="border-b border-gray-200 pb-6">
                                 <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
                                     <i class="fa fa-map-marker-alt text-emerald-600"></i>
@@ -202,7 +202,7 @@
                                 </div>
                             </div>
 
-                            <!-- Section 4: Product Details -->
+                            
                             <div class="border-b border-gray-200 pb-6">
                                 <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
                                     <i class="fa fa-box text-emerald-600"></i>
@@ -236,7 +236,7 @@
                                 </div>
                             </div>
 
-                            <!-- Submit Button -->
+                            
                             <div class="flex justify-between items-center pt-4 border-t border-gray-200">
                                 <a href="{{ route('products.show', $product->slug) }}" 
                                    class="px-6 py-3 bg-gray-200 text-gray-700 rounded-xl hover:bg-gray-300 transition-colors font-semibold">

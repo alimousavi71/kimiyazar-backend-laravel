@@ -9,7 +9,7 @@
         <p class="text-xs text-gray-600 mt-0.5">{{ __('admin/settings.forms.edit.description') }}</p>
     </div>
 
-    <!-- Success/Error Messages -->
+    
     <x-session-messages />
 
     <x-card>
@@ -49,10 +49,10 @@
         </form>
     </x-card>
 
-    <!-- Module Management -->
+    
     <x-card :title="__('admin/settings.modules.title')" class="mt-6">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Countries Module -->
+            
             <div class="p-6 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-lg font-semibold text-gray-900">{{ __('admin/settings.modules.countries.title') }}</h3>
@@ -70,7 +70,7 @@
                 </a>
             </div>
 
-            <!-- Banks Module -->
+            
             <div class="p-6 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-lg font-semibold text-gray-900">{{ __('admin/settings.modules.banks.title') }}</h3>
@@ -88,7 +88,7 @@
                 </a>
             </div>
 
-            <!-- States Module -->
+            
             <div class="p-6 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-lg font-semibold text-gray-900">{{ __('admin/settings.modules.states.title') }}</h3>

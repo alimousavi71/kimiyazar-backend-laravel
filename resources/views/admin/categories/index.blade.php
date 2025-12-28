@@ -15,14 +15,14 @@
             </a>
         </div>
 
-        <!-- Success/Error Messages -->
+        
         <x-session-messages />
 
         @php
             $rootCategories = $rootCategories ?? collect();
         @endphp
 
-        <!-- Categories Table -->
+        
         <x-card>
             <x-table-wrapper :search-placeholder="__('admin/components.buttons.search')"
                 filter-sidebar-id="categories-filters" :filter-badges="[
@@ -113,11 +113,11 @@
                 </x-table>
             </x-table-wrapper>
 
-            <!-- Filter Sidebar -->
+            
             <x-filter-sidebar id="categories-filters" :title="__('admin/components.buttons.filter')" method="GET"
                 action="{{ request()->url() }}">
                 <div class="space-y-6">
-                    <!-- Status Filter -->
+                    
                     <div>
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin/categories.fields.is_active') }}</label>
@@ -132,7 +132,7 @@
                         </x-select>
                     </div>
 
-                    <!-- Parent Filter -->
+                    
                     <div>
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin/categories.fields.parent') }}</label>
@@ -155,7 +155,7 @@
             </x-filter-sidebar>
         </x-card>
 
-        <!-- Delete Confirmation Modal -->
+        
         <x-delete-confirmation-modal id="delete-category-modal" route-name="admin.categories.destroy"
             row-selector="tr[data-category-id='__ID__']" />
     </div>

@@ -9,7 +9,7 @@
         <section class="py-5 bg-gray-50">
             <div class="container mx-auto px-4">
                 <div class="max-w-3xl mx-auto">
-                    <!-- Header -->
+                    
                     <div class="text-center mb-6">
                         <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-2">
                             {{ __('price-inquiry.forms.create.title') }}
@@ -19,7 +19,7 @@
                         </p>
                     </div>
 
-                    <!-- Success/Error Messages -->
+                    
                     @if(session('success'))
                         <div class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-xl mb-6">
                             {{ session('success') }}
@@ -36,13 +36,13 @@
                         </div>
                     @endif
 
-                    <!-- Form Card -->
+                    
                     <div class="bg-white rounded-xl shadow-md overflow-visible">
                         <form id="price-inquiry-form" action="{{ route('price-inquiry.store') }}" method="POST"
                             class="p-6 space-y-6" x-data="productSelector()">
                             @csrf
 
-                            <!-- Personal Information -->
+                            
                             <div class="border-b border-gray-200 pb-6">
                                 <h3 class="text-lg font-semibold text-gray-900 mb-4">
                                     {{ __('price-inquiry.forms.create.personal_info') }}
@@ -81,7 +81,7 @@
                                 </div>
 
                                 @if($user)
-                                    <!-- Hidden inputs to ensure disabled fields are submitted -->
+                                    
                                     <input type="hidden" name="first_name"
                                         value="{{ old('first_name', $user->first_name ?? '') }}">
                                     <input type="hidden" name="last_name"
@@ -92,17 +92,17 @@
                                 @endif
                             </div>
 
-                            <!-- Products Selection -->
+                            
                             <div id="products-section">
                                 <h3 class="text-lg font-semibold text-gray-900 mb-4">
                                     {{ __('price-inquiry.forms.create.products_section') }}
                                 </h3>
 
-                                <!-- Products Error Container -->
+                                
                                 <div id="products-error-container" class="mb-4"></div>
 
                                 <div class="space-y-4">
-                                    <!-- Product Selection Input with Add Button -->
+                                    
                                     <div class="flex gap-2">
                                         <div class="flex-1">
                                             <x-select2 id="product-select-single"
@@ -129,7 +129,7 @@
                                             class="font-medium text-gray-700"></span>
                                     </p>
 
-                                    <!-- Selected Products List -->
+                                    
                                     <div x-show="selectedProducts.length > 0" class="space-y-2">
                                         <template x-for="(product, index) in selectedProducts" :key="product.id">
                                             <div
@@ -143,7 +143,7 @@
                                                     class="text-red-500 hover:text-red-700 p-1 transition-colors">
                                                     <i class="fa fa-trash"></i>
                                                 </button>
-                                                <!-- Hidden input for form submission -->
+                                                
                                                 <input type="hidden" :name="`products[]`" :value="product.id" />
                                             </div>
                                         </template>
@@ -151,7 +151,7 @@
                                 </div>
                             </div>
 
-                            <!-- Submit Button -->
+                            
                             <div class="flex justify-end pt-4 border-t border-gray-200">
                                 <button type="submit" x-bind:disabled="selectedProducts.length === 0"
                                     class="px-6 py-3 bg-green-500 text-white rounded-xl hover:bg-green-600 transition-colors font-semibold disabled:bg-gray-300 disabled:cursor-not-allowed">

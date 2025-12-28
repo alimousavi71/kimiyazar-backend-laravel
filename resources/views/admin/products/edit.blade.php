@@ -14,7 +14,7 @@
         @csrf
         @method('PUT')
 
-        <!-- Basic Information -->
+        
         <x-card>
             <x-slot name="title">{{ __('admin/products.forms.labels.basic_info') }}</x-slot>
 
@@ -105,7 +105,7 @@
             </div>
         </x-card>
 
-        <!-- Pricing Information -->
+        
         <x-card>
             <x-slot name="title">{{ __('admin/products.forms.labels.pricing_info') }}</x-slot>
 
@@ -144,7 +144,7 @@
             </div>
         </x-card>
 
-        <!-- SEO Information -->
+        
         <x-card>
             <x-slot name="title">{{ __('admin/products.forms.labels.seo_info') }}</x-slot>
 

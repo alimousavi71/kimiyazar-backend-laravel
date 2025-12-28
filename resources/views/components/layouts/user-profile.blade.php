@@ -10,7 +10,7 @@
 
     <title>{{ $title ?? __('user/profile.title') }} - {{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Styles -->
+    
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -34,7 +34,7 @@
         </main>
     </div>
 
-    <!-- Toast Container (Custom) -->
+    
     <div id="toast-container" class="fixed bottom-4 end-4 z-50 space-y-2"></div>
 
     @stack('scripts')

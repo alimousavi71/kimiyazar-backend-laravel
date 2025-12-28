@@ -3,7 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Tag;
+use App\Services\SlugService;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class TagSeeder extends Seeder
 {
@@ -12,61 +15,34 @@ class TagSeeder extends Seeder
      */
     public function run(): void
     {
-        $tags = [
-            'تکنولوژی',
-            'فناوری اطلاعات',
-            'برنامه‌نویسی',
-            'هوش مصنوعی',
-            'یادگیری ماشین',
-            'اینترنت اشیا',
-            'امنیت سایبری',
-            'برنامه‌نویسی وب',
-            'موبایل',
-            'اپلیکیشن',
-            'طراحی رابط کاربری',
-            'تجربه کاربری',
-            'دیجیتال مارکتینگ',
-            'سئو',
-            'بازاریابی محتوا',
-            'شبکه‌های اجتماعی',
-            'تجارت الکترونیک',
-            'استارتاپ',
-            'کارآفرینی',
-            'مدیریت کسب و کار',
-            'اقتصاد',
-            'سرمایه‌گذاری',
-            'مالی',
-            'سرمایه',
-            'بازار سرمایه',
-            'کسب و کار آنلاین',
-            'آموزش',
-            'دانشگاه',
-            'تحصیل',
-            'مهارت',
-            'توسعه فردی',
-            'مدیریت زمان',
-            'رهبری',
-            'کار تیمی',
-            'ارتباطات',
-            'سلامت',
-            'سلامتی',
-            'ورزش',
-            'تغذیه',
-            'روانشناسی',
-            'سبک زندگی',
-            'فرهنگ',
-            'هنر',
-            'ادبیات',
-            'سینما',
-            'موسیقی',
-            'سفر',
-            'گردشگری',
-            'عکاسی',
-            'محیط زیست',
-        ];
+        $tagsData = json_decode(File::get(database_path('import/tags.json')), true);
 
-        foreach ($tags as $tag) {
-            Tag::create(['title' => $tag]);
-        }
+        $this->command->info("Importing " . count($tagsData) . " tags...");
+
+        $usedSlugs = [];
+
+        DB::transaction(function () use ($tagsData, &$usedSlugs) {
+            Tag::unguard();
+
+            foreach ($tagsData as $item) {
+                // Generate unique slug
+                $slug = SlugService::makeUnique(
+                    SlugService::makeSlug($item['title']),
+                    fn(string $s) => isset($usedSlugs[$s])
+                );
+                $usedSlugs[$slug] = true;
+
+                // Insert exactly as provided
+                Tag::create([
+                    'id' => (int) $item['id'],
+                    'title' => $item['title'],
+                    'slug' => $slug,
+                ]);
+            }
+
+            Tag::reguard();
+        });
+
+        $this->command->info("Successfully imported " . count($tagsData) . " tags!");
     }
 }

@@ -6,7 +6,7 @@
         <form action="{{ route('admin.orders.store') }}" method="POST" class="space-y-6">
             @csrf
 
-            <!-- Customer Type -->
+            
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <x-select
                     name="customer_type"
@@ -26,7 +26,7 @@
                 />
             </div>
 
-            <!-- Individual Information -->
+            
             <div class="border-t pt-6">
                 <h3 class="text-lg font-semibold mb-4">{{ __('admin/orders.sections.individual_info') }}</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -53,7 +53,7 @@
                 </div>
             </div>
 
-            <!-- Company Information -->
+            
             <div class="border-t pt-6">
                 <h3 class="text-lg font-semibold mb-4">{{ __('admin/orders.sections.company_info') }}</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -76,7 +76,7 @@
                 </div>
             </div>
 
-            <!-- Location Information -->
+            
             <div class="border-t pt-6">
                 <h3 class="text-lg font-semibold mb-4">{{ __('admin/orders.sections.location_info') }}</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -100,7 +100,7 @@
                 </div>
             </div>
 
-            <!-- Receiver Details -->
+            
             <div class="border-t pt-6">
                 <h3 class="text-lg font-semibold mb-4">{{ __('admin/orders.sections.receiver_info') }}</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -117,7 +117,7 @@
                 </div>
             </div>
 
-            <!-- Product Information -->
+            
             <div class="border-t pt-6">
                 <h3 class="text-lg font-semibold mb-4">{{ __('admin/orders.sections.product_info') }}</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -164,7 +164,7 @@
                 </div>
             </div>
 
-            <!-- Payment Information -->
+            
             <div class="border-t pt-6">
                 <h3 class="text-lg font-semibold mb-4">{{ __('admin/orders.sections.payment_info') }}</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -206,7 +206,7 @@
                 </div>
             </div>
 
-            <!-- Status & Administration -->
+            
             <div class="border-t pt-6">
                 <h3 class="text-lg font-semibold mb-4">{{ __('admin/orders.sections.administration') }}</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -234,7 +234,7 @@
                 </div>
             </div>
 
-            <!-- Form Actions -->
+            
             <div class="border-t pt-6 flex gap-3">
                 <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg">
                     {{ __('admin/components.buttons.save') }}

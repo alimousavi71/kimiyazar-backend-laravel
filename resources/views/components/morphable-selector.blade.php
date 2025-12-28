@@ -21,7 +21,7 @@
 @endphp
 
 <div x-data="morphableSelector(@js($typeFieldName), @js($idFieldName), @js($selectedType), @js($selectedId))" class="space-y-4">
-    <!-- Type Selector -->
+    
     <x-form-group :label="$label ?? __('morphable.select_type')" :required="$required" :error="$typeError">
         <select 
             x-model="selectedType" 
@@ -36,7 +36,7 @@
         </select>
     </x-form-group>
 
-    <!-- Item Selector (shown when type is selected) -->
+    
     <template x-if="selectedType">
         <div>
             <x-form-group :label="__('morphable.select_item')" :required="$required" :error="$idError">

@@ -46,7 +46,7 @@
     @endif
 
     <div class="relative" x-ref="selectContainer">
-        <!-- Hidden select for form submission -->
+        
         <select 
             name="{{ $selectName }}{{ $multiple ? '[]' : '' }}" 
             id="{{ $selectId }}"
@@ -60,12 +60,12 @@
             </template>
         </select>
 
-        <!-- Custom Select2 Dropdown -->
+        
         <div 
             class="relative"
             @click.away="closeDropdown()"
         >
-            <!-- Selected Value Display -->
+            
             <button 
                 x-ref="select2Trigger"
                 type="button"
@@ -106,7 +106,7 @@
                 </div>
             </button>
 
-            <!-- Dropdown -->
+            
             <div 
                 x-ref="select2Dropdown"
                 x-show="isOpen"
@@ -115,7 +115,7 @@
                 :class="isOpen ? 'opacity-100' : 'opacity-0'"
                 style="display: none;"
             >
-                <!-- Search Input (if remote search or tags enabled) -->
+                
                 <div x-show="remoteSearch || tags" class="p-2 border-b border-gray-200">
                     <input 
                         type="text"
@@ -127,7 +127,7 @@
                     />
                 </div>
 
-                <!-- Loading State -->
+                
                 <div x-show="isLoading" class="p-4 text-center text-gray-500 text-sm">
                     <div class="inline-flex items-center gap-2">
                         <div class="w-4 h-4 border-2 border-green-500 border-t-transparent rounded-full animate-spin"></div>
@@ -135,7 +135,7 @@
                     </div>
                 </div>
 
-                <!-- Options List -->
+                
                 <div 
                     x-show="!isLoading"
                     class="max-h-48 overflow-y-auto"

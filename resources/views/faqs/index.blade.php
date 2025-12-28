@@ -18,7 +18,7 @@
                                         class="faq-question w-full flex items-start gap-4 p-6 md:p-7 text-right cursor-pointer bg-transparent border-none outline-none transition-all duration-300 hover:bg-gradient-to-l hover:from-green-50 hover:to-transparent group/button"
                                         type="button" onclick="toggleFaq({{ $index }})" aria-expanded="false"
                                         aria-controls="faq-answer-{{ $index }}">
-                                        <!-- Question Icon -->
+                                        
                                         <div class="faq-icon-wrapper flex-shrink-0 mt-1">
                                             <div
                                                 class="faq-icon w-12 h-12 min-w-12 bg-gradient-to-br from-green-500 via-emerald-500 to-green-600 rounded-xl flex items-center justify-center text-white font-bold text-base shadow-[0_4px_15px_rgba(40,167,69,0.25)] transition-all duration-300 group-hover/button:scale-110 group-hover/button:shadow-[0_6px_20px_rgba(40,167,69,0.35)]">
@@ -26,7 +26,7 @@
                                             </div>
                                         </div>
 
-                                        <!-- Question Content -->
+                                        
                                         <div class="flex-1 min-w-0">
                                             <h3
                                                 class="faq-question-text text-lg md:text-xl font-bold text-slate-800 mb-0 leading-relaxed group-hover/button:text-green-600 transition-colors duration-300">
@@ -34,7 +34,7 @@
                                             </h3>
                                         </div>
 
-                                        <!-- Expand Icon -->
+                                        
                                         <div class="flex-shrink-0 mt-1">
                                             <div
                                                 class="faq-arrow-wrapper w-10 h-10 min-w-10 rounded-full bg-gray-100 flex items-center justify-center transition-all duration-300 group-hover/button:bg-green-100">
@@ -44,7 +44,7 @@
                                         </div>
                                     </button>
 
-                                    <!-- Answer Section -->
+                                    
                                     <div class="faq-answer hidden overflow-hidden transition-all duration-300"
                                         id="faq-answer-{{ $index }}">
                                         <div class="px-6 md:px-7 pb-6 md:pb-7 pt-0">

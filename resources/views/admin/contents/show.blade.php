@@ -24,7 +24,7 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Main Information -->
+        
         <div class="lg:col-span-2 space-y-6">
             <x-card>
                 <x-slot name="title">{{ __('admin/contents.show.content_info') }}</x-slot>
@@ -91,9 +91,9 @@
             </x-card>
         </div>
 
-        <!-- Sidebar -->
+        
         <div class="space-y-6">
-            <!-- Status Card -->
+            
             <x-card>
                 <x-slot name="title">{{ __('admin/contents.show.status') }}</x-slot>
 
@@ -132,7 +132,7 @@
                 </div>
             </x-card>
 
-            <!-- Timestamps Card -->
+            
             <x-card>
                 <x-slot name="title">{{ __('admin/contents.show.timestamps') }}</x-slot>
 

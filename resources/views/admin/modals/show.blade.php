@@ -22,18 +22,18 @@
         </div>
     </div>
 
-    <!-- Success/Error Messages -->
+    
     <x-session-messages />
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Main Content -->
+        
         <div class="lg:col-span-2 space-y-6">
-            <!-- Modal Information -->
+            
             <x-card>
                 <x-slot name="title">{{ __('admin/modals.show.information') }}</x-slot>
 
                 <div class="space-y-6">
-                    <!-- Title -->
+                    
                     <div class="grid grid-cols-3 gap-4 pb-4 border-b border-gray-200">
                         <div>
                             <label class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.title') }}</label>
@@ -59,7 +59,7 @@
                         </div>
                     </div>
 
-                    <!-- Content -->
+                    
                     <div class="pb-4 border-b border-gray-200">
                         <label class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.content') }}</label>
                         <div class="mt-2 prose prose-sm max-w-none text-gray-900">
@@ -67,7 +67,7 @@
                         </div>
                     </div>
 
-                    <!-- Button Information -->
+                    
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4 border-b border-gray-200">
                         <div>
                             <label class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.button_text') }}</label>
@@ -87,13 +87,13 @@
                         </div>
                     </div>
 
-                    <!-- Close Button Text -->
+                    
                     <div class="pb-4 border-b border-gray-200">
                         <label class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.close_text') }}</label>
                         <p class="mt-1 text-sm text-gray-900">{{ $modal->close_text }}</p>
                     </div>
 
-                    <!-- Rememberable Checkbox -->
+                    
                     <div>
                         <label class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.is_rememberable') }}</label>
                         <p class="mt-1 text-sm">
@@ -111,7 +111,7 @@
                 </div>
             </x-card>
 
-            <!-- Scheduling -->
+            
             <x-card>
                 <x-slot name="title">{{ __('admin/modals.show.scheduling') }}</x-slot>
 
@@ -131,7 +131,7 @@
                 </div>
             </x-card>
 
-            <!-- Polymorphic Relationship -->
+            
             @if($modal->modalable_type || $modal->modalable_id)
                 <x-card>
                     <x-slot name="title">{{ __('admin/modals.show.association') }}</x-slot>
@@ -154,9 +154,9 @@
             @endif
         </div>
 
-        <!-- Sidebar -->
+        
         <div class="space-y-6">
-            <!-- Metadata Card -->
+            
             <x-card>
                 <x-slot name="title">{{ __('admin/modals.show.metadata') }}</x-slot>
 
@@ -180,7 +180,7 @@
                 </div>
             </x-card>
 
-            <!-- Actions -->
+            
             <x-card>
                 <x-slot name="title">{{ __('admin/components.table.actions') }}</x-slot>
 
@@ -200,7 +200,7 @@
         </div>
     </div>
 
-    <!-- Delete Confirmation Modal -->
+    
     <x-delete-confirmation-modal id="delete-modal-modal" route-name="admin.modals.destroy"
         :item-id="$modal->id" />
 

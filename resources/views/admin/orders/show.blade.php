@@ -3,7 +3,7 @@
     ['label' => __('admin/orders.show_title')]
 ]">
     <div class="space-y-4">
-        <!-- Basic Information -->
+        
         <x-card>
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-lg font-semibold">{{ __('admin/orders.sections.order_info') }}</h3>
@@ -35,7 +35,7 @@
             </div>
         </x-card>
 
-        <!-- Customer Information -->
+        
         <x-card>
             <h3 class="text-lg font-semibold mb-6">{{ __('admin/orders.sections.customer_info') }}</h3>
             @if ($order->customer_type === 'real')
@@ -75,7 +75,7 @@
             @endif
         </x-card>
 
-        <!-- Location & Receiver Information -->
+        
         <x-card>
             <h3 class="text-lg font-semibold mb-6">{{ __('admin/orders.sections.location_receiver_info') }}</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -102,7 +102,7 @@
             </div>
         </x-card>
 
-        <!-- Product Information -->
+        
         <x-card>
             <h3 class="text-lg font-semibold mb-6">{{ __('admin/orders.sections.product_info') }}</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -131,7 +131,7 @@
             @endif
         </x-card>
 
-        <!-- Payment Information -->
+        
         <x-card>
             <h3 class="text-lg font-semibold mb-6">{{ __('admin/orders.sections.payment_info') }}</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -154,7 +154,7 @@
             </div>
         </x-card>
 
-        <!-- Admin Notes -->
+        
         @if ($order->admin_note)
             <x-card>
                 <h3 class="text-lg font-semibold mb-6">{{ __('admin/orders.fields.admin_note') }}</h3>
@@ -162,7 +162,7 @@
             </x-card>
         @endif
 
-        <!-- Action Buttons -->
+        
         <div class="flex gap-3">
             <a href="{{ route('admin.orders.edit', $order->id) }}" class="bg-amber-600 hover:bg-amber-700 text-white px-6 py-2 rounded-lg">
                 {{ __('admin/components.buttons.edit') }}

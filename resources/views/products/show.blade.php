@@ -3,15 +3,15 @@
         <section class="py-8 md:py-12">
             <div class="container mx-auto px-4">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    <!-- Left Column - Main Content -->
+                    
                     <div class="lg:col-span-8">
                         <div class="space-y-6">
-                            <!-- Product Title -->
+                            
                             <div class="single-blog-title">
                                 <h1 class="text-2xl md:text-3xl font-bold text-gray-900">{{ $product->name }}</h1>
                             </div>
 
-                            <!-- Price Chart Section -->
+                            
                             <div class="price-chart-section mb-6 bg-white rounded-2xl shadow-md p-6">
                                 <div
                                     class="chart-header flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
@@ -46,7 +46,7 @@
                                 </div>
                             </div>
 
-                            <!-- Price History Card -->
+                            
                             <div class="modern-price-history-card bg-white rounded-2xl shadow-md overflow-hidden">
                                 <div
                                     class="price-history-header bg-gradient-to-r from-green-500 to-emerald-400 px-6 py-4 flex items-center gap-3">
@@ -121,7 +121,7 @@
                                     @endforelse
                                 </div>
 
-                                <!-- Product Body Section -->
+                                
                                 @if($product->body)
                                     <div class="border-t border-gray-200">
                                         <div class="content-body p-6 prose max-w-none text-gray-700 leading-relaxed">
@@ -133,12 +133,12 @@
                         </div>
                     </div>
 
-                    <!-- Right Column - Sidebar -->
+                    
                     <div class="lg:col-span-4">
                         <div class="space-y-6 lg:sticky lg:top-6">
-                            <!-- Product Gallery & Order Card -->
+                            
                             <div class="modern-product-order-card bg-white rounded-2xl shadow-md overflow-hidden">
-                                <!-- Product Gallery -->
+                                
                                 @if($product->photos->count() > 0)
                                     <div class="product-gallery-wrapper p-4">
                                         <div class="swiper product-gallery-swiper">
@@ -159,7 +159,7 @@
                                     </div>
                                 @endif
 
-                                <!-- Order Section -->
+                                
                                 <div class="order-section p-6 border-t border-gray-100">
                                     <div class="order-header flex items-center gap-3 mb-4">
                                         <i class="fa fa-shopping-cart text-green-500 text-xl"></i>
@@ -211,7 +211,7 @@
                                 </div>
                             </div>
 
-                            <!-- Dynamic Banners -->
+                            
                             @if($banners->count() > 0)
                                 <x-web.banner :banners="$banners" position="C" />
                             @endif
@@ -227,9 +227,9 @@
     @endpush
 
     @push('scripts')
-        <!-- Swiper.js -->
+        
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-        <!-- Product Chart (via Vite) -->
+        
         @vite('resources/js/product-chart.js')
         <script>
             // Initialize product gallery swiper

@@ -5,7 +5,7 @@
 <x-layouts.auth :title="$title">
     <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden w-full max-w-md"
         x-data="otpVerification()" x-init="startCountdown()">
-        <!-- Header -->
+        
         <div class="bg-gradient-to-br from-green-500 to-emerald-400 px-6 py-8 text-center">
             <div
                 class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm mb-4">
@@ -21,11 +21,11 @@
             </p>
         </div>
 
-        <!-- Form -->
+        
         <form method="POST" action="{{ route('auth.password.verify-otp') }}" class="p-6 space-y-5">
             @csrf
 
-            <!-- Contact Display -->
+            
             <div class="bg-green-50 border border-green-200 rounded-xl p-4">
                 <div class="flex items-center justify-between">
                     <div class="text-sm text-gray-600">
@@ -35,7 +35,7 @@
                 </div>
             </div>
 
-            <!-- OTP Code Input -->
+            
             <div>
                 <label for="code" class="block text-sm font-medium text-gray-700 mb-2">
                     {{ __('auth.verify_otp.code_label') }}
@@ -51,7 +51,7 @@
                 @enderror
             </div>
 
-            <!-- Error Messages -->
+            
             @if($errors->any() && !$errors->first('code'))
                 <x-alert type="danger" dismissible>
                     <ul class="space-y-1">
@@ -64,7 +64,7 @@
                 </x-alert>
             @endif
 
-            <!-- Submit Button -->
+            
             <x-button type="submit" variant="primary" size="lg" class="w-full">
                 <span class="flex items-center justify-center gap-2">
                     <x-icon name="check" size="md" />
@@ -73,7 +73,7 @@
             </x-button>
         </form>
 
-        <!-- Resend OTP Section -->
+        
         <div class="px-6 pb-6">
             <div class="text-center space-y-3">
                 <div x-show="countdown > 0" class="text-sm text-gray-600">

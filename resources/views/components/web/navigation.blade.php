@@ -9,11 +9,11 @@
     <div class="sticky-wrapper" style="height: auto;"></div>
     <nav class="navbar navbar-expand-lg">
         <div class="container mx-auto px-4">
-            <!-- Mobile Logo & Toggle (only visible on mobile) -->
+            
             <div class="lg:hidden flex items-center justify-between w-full py-3">
                 <div class="mobile-logo">
                     <a href="{{ route('home') }}" title="{{ $siteTitle }}">
-                        <!-- Simple White/Green Logo SVG -->
+                        
                         <svg class="h-8 w-auto" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="50" cy="50" r="45" fill="#FFFFFF" stroke="#22C55E" stroke-width="4" />
                             <circle cx="50" cy="50" r="30" fill="#22C55E" />
@@ -55,7 +55,7 @@
                 </div>
             </div>
 
-            <!-- Navigation Menu (Desktop) -->
+            
             <div class="hidden lg:flex lg:items-center lg:justify-between w-full py-2" id="navbarSupportedContent">
                 <ul class="navbar-nav modern-nav-menu flex items-center gap-1 m-0 p-0 list-none flex-1">
                     <li class="nav-item">
@@ -153,9 +153,9 @@
                     </li>
                 </ul>
 
-                <!-- Action Buttons -->
+                
                 <div class="navbar-actions flex items-center gap-3 ml-5">
-                    <!-- Search -->
+                    
                     <div class="search-wrapper relative">
                         <button
                             class="search-toggle-btn w-10 h-10 bg-transparent border-2 border-gray-200 rounded-full flex items-center justify-center text-slate-700 cursor-pointer transition-all duration-300 hover:bg-green-500 hover:border-green-500 hover:text-white hover:rotate-90"
@@ -177,7 +177,7 @@
                         </div>
                     </div>
 
-                    <!-- Price Inquiry -->
+                    
                     <a href="{{ route('price-inquiry.create') }}"
                         class="btn-inquiry inline-flex items-center gap-2 px-4 py-2.5 rounded-full no-underline text-sm font-semibold transition-all duration-300 whitespace-nowrap bg-gradient-to-r from-green-500 to-emerald-400 text-white border-2 border-transparent hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(40,167,69,0.4)]"
                         title="استعلام قیمت">
@@ -185,7 +185,7 @@
                         <span>استعلام قیمت</span>
                     </a>
 
-                    <!-- User Account -->
+                    
                     @auth
                         <a href="{{ route('user.profile.show') }}"
                             class="btn-login inline-flex items-center gap-2 px-4 py-2.5 rounded-full no-underline text-sm font-semibold transition-all duration-300 whitespace-nowrap bg-transparent text-green-500 border-2 border-green-500 hover:bg-green-500 hover:text-white hover:-translate-y-0.5 hover:shadow-[0_4px_15px_rgba(40,167,69,0.3)]"
@@ -204,7 +204,7 @@
                 </div>
             </div>
 
-            <!-- Mobile Menu (Collapsible) -->
+            
             <div class="lg:hidden w-full mt-2 bg-white rounded-lg p-3 shadow-[0_2px_8px_rgba(0,0,0,0.08)] hidden"
                 id="mobile-menu">
                 <ul class="flex flex-col w-full gap-0">

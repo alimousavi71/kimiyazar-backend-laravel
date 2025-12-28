@@ -10,10 +10,10 @@
         <section class="py-5 bg-gray-50">
             <div class="container mx-auto px-4">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    <!-- Main Content -->
+                    
                     <div class="lg:col-span-9">
                         <article class="bg-white rounded-xl shadow-md overflow-hidden">
-                            <!-- Article Image -->
+                            
                             @if($article->photos->first())
                                 <div class="w-full h-64 md:h-96 overflow-hidden bg-gray-100">
                                     <img src="{{ $article->photos->first()->url }}" alt="{{ $article->title }}"
@@ -21,9 +21,9 @@
                                 </div>
                             @endif
 
-                            <!-- Article Content -->
+                            
                             <div class="p-6 md:p-8">
-                                <!-- Meta Information -->
+                                
                                 <div class="flex flex-wrap items-center gap-4 mb-6 pb-6 border-b border-gray-200">
                                     <span class="inline-flex items-center gap-2 text-gray-500 text-sm">
                                         <i class="fa fa-calendar text-green-500"></i>
@@ -46,12 +46,12 @@
                                     @endif
                                 </div>
 
-                                <!-- Title -->
+                                
                                 <h1 class="text-2xl md:text-3xl font-bold text-slate-800 mb-6">
                                     {{ $article->title }}
                                 </h1>
 
-                                <!-- Body Content -->
+                                
                                 @if($article->body)
                                     <div class="content-body prose prose-lg max-w-none text-slate-700 leading-relaxed">
                                         {!! nl2br(e($article->body)) !!}
@@ -62,7 +62,7 @@
                                     </div>
                                 @endif
 
-                                <!-- Additional Photos -->
+                                
                                 @if($article->photos->count() > 1)
                                     <div class="mt-8 pt-8 border-t border-gray-200">
                                         <h3 class="text-xl font-bold text-slate-800 mb-4">تصاویر بیشتر</h3>
@@ -80,7 +80,7 @@
                         </article>
                     </div>
 
-                    <!-- Sidebar -->
+                    
                     <x-web.content-sidebar :searchRoute="route('articles.index')" searchPlaceholder="جستجو در مقالات..."
                         searchValue="" :recentItems="$recentArticles" recentTitle="آخرین مقالات"
                         emptyMessage="هیچ مقاله‌ای وجود ندارد." :tags="$tags" icon="fas fa-file-alt" />

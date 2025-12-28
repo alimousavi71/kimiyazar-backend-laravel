@@ -11,9 +11,9 @@
 @endphp
 
 <div class="space-y-4">
-    <!-- Main Form - Wraps Search, Filters, and Table -->
+    
     <form method="GET" action="{{ request()->url() }}" class="space-y-3">
-        <!-- Search and Filter Button -->
+        
         <div class="flex items-center gap-3">
             <div class="flex-1 relative">
                 <x-icon name="search" size="md" class="absolute start-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -38,7 +38,7 @@
             </x-button>
         </div>
 
-        <!-- Preserve all filter parameters as hidden inputs (including sort) -->
+        
         @foreach(request()->except(['filter', 'page', '_token', '_method']) as $key => $value)
             @if(is_array($value))
                 @foreach($value as $subValue)
@@ -49,15 +49,15 @@
             @endif
         @endforeach
 
-        <!-- Filter Badges -->
+        
         <x-filter-badges :filters="$filterBadges" />
 
-        <!-- Table -->
+        
         <div class="overflow-x-auto overflow-y-visible">
             {{ $slot }}
         </div>
 
-        <!-- Pagination -->
+        
         @if($paginator)
             <x-pagination :paginator="$paginator" />
         @endif
