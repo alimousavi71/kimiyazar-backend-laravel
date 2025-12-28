@@ -2,7 +2,17 @@
     $siteTitle = $settings['title'] ?? config('app.name');
 @endphp
 
-<x-layouts.app title="تماس با ما - {{ $siteTitle }}" dir="rtl">
+<x-layouts.app
+    title="تماس با ما - {{ $siteTitle }}"
+    description="صفحه تماس با ما برای سوالات و درخواست های شما. آدرس و تلفن تماس کیمیازر"
+    keywords="تماس با ما، درخواست، پیام، کیمیازر"
+    canonical="{{ route('contact.index') }}"
+    ogTitle="تماس با ما - {{ $siteTitle }}"
+    ogDescription="صفحه تماس با ما برای سوالات و درخواست های شما"
+    :ogImage="asset('images/header_logo.png')"
+    :ogUrl="route('contact.index')"
+    ogType="website"
+    dir="rtl">
     <x-web.page-banner title="تماس با ما" />
 
 

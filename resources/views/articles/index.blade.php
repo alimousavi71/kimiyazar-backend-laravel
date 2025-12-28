@@ -2,7 +2,17 @@
     $siteTitle = $settings['title'] ?? config('app.name');
 @endphp
 
-<x-layouts.app title="مقالات - {{ $siteTitle }}" dir="rtl">
+<x-layouts.app
+    title="مقالات - {{ $siteTitle }}"
+    description="بخش مقالات و نوشتارهای تخصصی در زمینه شیمی و مواد شیمیایی"
+    keywords="مقالات شیمی، مقالات علمی، نوشتار شیمی"
+    canonical="{{ route('articles.index') }}"
+    ogTitle="مقالات - {{ $siteTitle }}"
+    ogDescription="بخش مقالات و نوشتارهای تخصصی در زمینه شیمی و مواد شیمیایی"
+    :ogImage="asset('images/header_logo.png')"
+    :ogUrl="route('articles.index')"
+    ogType="website"
+    dir="rtl">
     <x-web.page-banner title="مقالات" />
 
     <main>

@@ -2,7 +2,17 @@
     $siteTitle = $settings['title'] ?? config('app.name');
 @endphp
 
-<x-layouts.app title="محصولات - {{ $siteTitle }}" dir="rtl">
+<x-layouts.app
+    title="محصولات - {{ $siteTitle }}"
+    description="مرکز فروش و تامین مواد شیمیایی صنعتی و آزمایشگاهی. محصولات باکیفیت با قیمت رقابتی"
+    keywords="مواد شیمیایی، شیمی، فروش شیمی، تامین کننده شیمی"
+    canonical="{{ route('products.index') }}"
+    ogTitle="محصولات - {{ $siteTitle }}"
+    ogDescription="مرکز فروش و تامین مواد شیمیایی صنعتی و آزمایشگاهی"
+    :ogImage="asset('images/header_logo.png')"
+    :ogUrl="route('products.index')"
+    ogType="website"
+    dir="rtl">
     <x-web.page-banner title="محصولات" />
 
     <main>

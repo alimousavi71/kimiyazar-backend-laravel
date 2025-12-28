@@ -2,7 +2,17 @@
     $siteTitle = $settings['title'] ?? config('app.name');
 @endphp
 
-<x-layouts.app title="{{ $article->title }} - {{ $siteTitle }}" dir="rtl">
+<x-layouts.app
+    :title="$article->title . ' - ' . $siteTitle"
+    :description="$article->seo_description ?? Str::limit(strip_tags($article->body), 160)"
+    :keywords="$article->seo_keywords"
+    :canonical="route('articles.show', $article->slug)"
+    :ogTitle="$article->title"
+    :ogDescription="$article->seo_description ?? Str::limit(strip_tags($article->body), 160)"
+    :ogImage="$article->photos->first()?->url ?? asset('images/header_logo.png')"
+    :ogUrl="route('articles.show', $article->slug)"
+    ogType="article"
+    dir="rtl">
     <x-web.page-banner :title="$article->title" :breadcrumb="['مقالات', $article->title]"
         :breadcrumbRoutes="['articles.index', null]" />
 

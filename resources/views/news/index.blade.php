@@ -2,7 +2,17 @@
     $siteTitle = $settings['title'] ?? config('app.name');
 @endphp
 
-<x-layouts.app title="اخبار - {{ $siteTitle }}" dir="rtl">
+<x-layouts.app
+    title="اخبار - {{ $siteTitle }}"
+    description="آخرین اخبار و تحولات در زمینه شیمی و صنعت مواد شیمیایی"
+    keywords="اخبار شیمی، اخبار صنعتی، اطلاعات شیمی"
+    canonical="{{ route('news.index') }}"
+    ogTitle="اخبار - {{ $siteTitle }}"
+    ogDescription="آخرین اخبار و تحولات در زمینه شیمی و صنعت مواد شیمیایی"
+    :ogImage="asset('images/header_logo.png')"
+    :ogUrl="route('news.index')"
+    ogType="website"
+    dir="rtl">
     <x-web.page-banner title="اخبار" />
 
     <main>

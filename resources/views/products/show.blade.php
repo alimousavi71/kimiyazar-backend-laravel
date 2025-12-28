@@ -1,4 +1,14 @@
-<x-layouts.app>
+<x-layouts.app
+    :title="$product->meta_title ?? $product->name"
+    :description="$product->meta_description ?? Str::limit(strip_tags($product->body), 160)"
+    :keywords="$product->meta_keywords"
+    :canonical="route('products.show', $product->slug)"
+    :ogTitle="$product->meta_title ?? $product->name"
+    :ogDescription="$product->meta_description ?? Str::limit(strip_tags($product->body), 160)"
+    :ogImage="$product->photos->first()?->url ?? asset('images/header_logo.png')"
+    :ogUrl="route('products.show', $product->slug)"
+    ogType="product"
+    dir="rtl">
     <main>
         <section class="py-8 md:py-12">
             <div class="container mx-auto px-4">

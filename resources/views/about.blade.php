@@ -2,7 +2,17 @@
     $siteTitle = $settings['title'] ?? config('app.name');
 @endphp
 
-<x-layouts.app title="{{ $content->title }} - {{ $siteTitle }}" dir="rtl">
+<x-layouts.app
+    :title="$content->title . ' - ' . $siteTitle"
+    :description="$content->seo_description ?? Str::limit(strip_tags($content->body), 160)"
+    :keywords="$content->seo_keywords"
+    :canonical="route('about.index')"
+    :ogTitle="$content->title"
+    :ogDescription="$content->seo_description ?? Str::limit(strip_tags($content->body), 160)"
+    :ogImage="$content->photos->first()?->url ?? asset('images/header_logo.png')"
+    :ogUrl="route('about.index')"
+    ogType="website"
+    dir="rtl">
     <x-web.page-banner :title="$content->title" />
 
     

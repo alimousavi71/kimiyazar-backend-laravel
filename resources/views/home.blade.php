@@ -1,4 +1,14 @@
-<x-layouts.app title="{{ $settings['title'] ?? config('app.name') }}" dir="rtl">
+<x-layouts.app
+    title="{{ $settings['title'] ?? config('app.name') }}"
+    description="{{ $settings['description'] ?? 'کیمیازر - مرکز فروش و تامین مواد شیمیایی' }}"
+    keywords="{{ $settings['keywords'] ?? 'شیمی، مواد شیمیایی، فروش شیمی' }}"
+    canonical="{{ route('home') }}"
+    ogTitle="{{ $settings['title'] ?? config('app.name') }}"
+    ogDescription="{{ $settings['description'] ?? 'کیمیازر - مرکز فروش و تامین مواد شیمیایی' }}"
+    :ogImage="asset('images/header_logo.png')"
+    :ogUrl="route('home')"
+    ogType="website"
+    dir="rtl">
     
     <x-web.slider :sliders="$sliders" />
 
