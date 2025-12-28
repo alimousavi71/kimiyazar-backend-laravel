@@ -26,6 +26,7 @@ class StoreContactRequest extends FormRequest
             'mobile' => ['required', 'string', 'max:11', 'regex:/^09\d{9}$/'],
             'email' => ['required', 'email', 'max:255'],
             'text' => ['required', 'string', 'min:10', 'max:2000'],
+            'captcha' => ['required', 'captcha'],
         ];
     }
 
@@ -48,6 +49,8 @@ class StoreContactRequest extends FormRequest
             'text.required' => 'متن پیام الزامی است.',
             'text.min' => 'متن پیام باید حداقل 10 کاراکتر باشد.',
             'text.max' => 'متن پیام نباید بیشتر از 2000 کاراکتر باشد.',
+            'captcha.required' => 'کد امنیتی الزامی است.',
+            'captcha.captcha' => 'کد امنیتی نادرست است. لطفاً دوباره تلاش کنید.',
         ];
     }
 }

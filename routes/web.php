@@ -33,6 +33,11 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
+// CAPTCHA Routes
+Route::get('/captcha/refresh', function () {
+    return response()->json(['captcha' => captcha_img('default')]);
+})->name('captcha.refresh');
+
 // About Route
 Route::get('/about', [AboutController::class, 'index'])->name('about.index');
 

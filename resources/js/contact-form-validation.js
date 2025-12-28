@@ -117,8 +117,32 @@ document.addEventListener("DOMContentLoaded", function () {
         },
     ]);
 
+    // CAPTCHA field (required)
+    validation.addField("#captcha", [
+        {
+            rule: "required",
+            errorMessage: isPersian
+                ? "کد امنیتی الزامی است"
+                : "Security code is required",
+        },
+        {
+            rule: "minLength",
+            value: 4,
+            errorMessage: isPersian
+                ? "کد امنیتی باید حداقل 4 کاراکتر باشد"
+                : "Security code must be at least 4 characters",
+        },
+        {
+            rule: "maxLength",
+            value: 6,
+            errorMessage: isPersian
+                ? "کد امنیتی نباید بیشتر از 6 کاراکتر باشد"
+                : "Security code must not exceed 6 characters",
+        },
+    ]);
+
     // Enable live validation on blur
-    const fields = ["#title", "#mobile", "#email", "#text"];
+    const fields = ["#title", "#mobile", "#email", "#text", "#captcha"];
     fields.forEach((fieldSelector) => {
         const field = contactForm.querySelector(fieldSelector);
         if (field) {

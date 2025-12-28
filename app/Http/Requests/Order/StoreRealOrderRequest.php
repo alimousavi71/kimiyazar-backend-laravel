@@ -45,6 +45,9 @@ class StoreRealOrderRequest extends FormRequest
             'quantity' => ['required', 'integer', 'min:1', 'max:999999'],
             'unit' => ['required', Rule::in(array_column(ProductUnit::cases(), 'value'))],
             'product_description' => ['nullable', 'string', 'max:1000'],
+
+            // Security
+            'captcha' => ['required', 'captcha'],
         ];
         
         // If user is authenticated, contact fields are auto-filled but optional in form
@@ -97,6 +100,8 @@ class StoreRealOrderRequest extends FormRequest
             'delivery_method.required' => __('orders.validation.delivery_method_required'),
             'quantity.required' => __('orders.validation.quantity_required'),
             'unit.required' => __('orders.validation.unit_required'),
+            'captcha.required' => __('orders.validation.captcha_required'),
+            'captcha.captcha' => __('orders.validation.captcha_invalid'),
         ];
     }
 }

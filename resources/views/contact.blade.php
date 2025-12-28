@@ -179,6 +179,29 @@
                                 </x-form-group>
 
 
+                                <x-form-group label="کد امنیتی" required :error="$errors->first('captcha')">
+                                    <div class="flex items-start gap-3">
+                                        <div class="flex-1">
+                                            <x-input type="text" name="captcha" id="captcha"
+                                                placeholder="کد امنیتی را وارد کنید"
+                                                class="w-full" maxlength="6" autocomplete="off" />
+                                        </div>
+                                        <div class="captcha-wrapper shrink-0">
+                                            <div class="captcha-image-container border-2 border-gray-300 rounded-lg overflow-hidden bg-white"
+                                                style="width: 180px; height: 50px;">
+                                                {!! captcha_img('default') !!}
+                                            </div>
+                                            <button type="button" id="refresh-captcha"
+                                                class="mt-2 w-full px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md transition-colors duration-200">
+                                                <i class="fa fa-refresh"></i>
+                                                <span>کد جدید</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-1">کد امنیتی نمایش داده شده در تصویر را وارد کنید</p>
+                                </x-form-group>
+
+
                                 <div class="form-submit-wrapper">
                                     <button type="submit"
                                         class="btn-submit-modern w-full md:w-auto px-8 py-3 bg-gradient-to-r from-green-500 to-emerald-400 text-white rounded-lg font-semibold text-base transition-all duration-300 shadow-[0_2px_10px_rgba(40,167,69,0.3)] hover:-translate-y-1 hover:scale-105 hover:shadow-[0_6px_20px_rgba(40,167,69,0.6)] hover:from-emerald-400 hover:to-green-500">
@@ -195,6 +218,6 @@
     </section>
 
     @push('scripts')
-        @vite(['resources/js/contact-form-validation.js'])
+        @vite(['resources/js/captcha-refresh.js', 'resources/js/contact-form-validation.js'])
     @endpush
 </x-layouts.app>

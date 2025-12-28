@@ -26,6 +26,10 @@ return [
         'select_unit' => '-- واحد را انتخاب کنید --',
         'select_country' => '-- کشور را انتخاب کنید --',
         'select_state' => '-- استان را انتخاب کنید --',
+        'security_verification' => 'تأیید امنیتی',
+        'captcha_placeholder' => 'کد امنیتی',
+        'captcha_help' => 'کد امنیتی نمایش داده شده در تصویر را وارد کنید',
+        'new_code' => 'کد جدید',
     ],
 
     'fields' => [
@@ -123,6 +127,8 @@ return [
         'delivery_method_required' => 'لطفاً یک روش تحویل انتخاب کنید',
         'quantity_required' => 'تعداد ضروری است',
         'unit_required' => 'لطفاً یک واحد انتخاب کنید',
+        'captcha_required' => 'کد امنیتی الزامی است',
+        'captcha_invalid' => 'کد امنیتی نادرست است. لطفاً دوباره تلاش کنید',
     ],
 
     'currency' => 'تومان',
