@@ -12,24 +12,10 @@ class CountrySeeder extends Seeder
      */
     public function run(): void
     {
-        $countries = [
-            ['name' => 'Iran', 'code' => 'IR'],
-            ['name' => 'Germany', 'code' => 'DE'],
-            ['name' => 'United States', 'code' => 'US'],
-            ['name' => 'United Kingdom', 'code' => 'GB'],
-            ['name' => 'France', 'code' => 'FR'],
-            ['name' => 'Italy', 'code' => 'IT'],
-            ['name' => 'Spain', 'code' => 'ES'],
-            ['name' => 'Netherlands', 'code' => 'NL'],
-            ['name' => 'Canada', 'code' => 'CA'],
-            ['name' => 'Australia', 'code' => 'AU'],
-        ];
-
-        foreach ($countries as $country) {
-            Country::firstOrCreate(
-                ['code' => $country['code']],
-                ['name' => $country['name']]
-            );
-        }
+        // Only Iran with Persian name
+        Country::firstOrCreate(
+            ['code' => 'IR'],
+            ['name' => 'ایران']
+        );
     }
 }

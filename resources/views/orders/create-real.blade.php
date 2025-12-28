@@ -61,7 +61,7 @@
                         @endif
 
                         <form id="order-form-real" 
-                              action="{{ route('orders.store.real', ['productId' => $product->id]) }}" 
+                              action="{{ route('orders.store.real', ['productSlug' => $product->slug]) }}" 
                               method="POST" 
                               enctype="multipart/form-data"
                               class="p-6 space-y-6">

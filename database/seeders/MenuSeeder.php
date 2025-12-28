@@ -70,8 +70,8 @@ class MenuSeeder extends Seeder
             'id' => $id,
             'title' => $title,
             'url' => $url,
-            'type' => 'custom',
-            'content_id' => null,
+                    'type' => 'custom',
+                    'content_id' => null,
             'order' => $order,
         ];
     }

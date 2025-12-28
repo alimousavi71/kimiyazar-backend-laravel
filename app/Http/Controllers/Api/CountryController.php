@@ -18,11 +18,11 @@ class CountryController extends Controller
     public function search(Request $request): JsonResponse
     {
         $search = $request->input('q', '');
-        
+
         $countries = Country::query()
             ->when($search, function ($query) use ($search) {
                 return $query->where('name', 'like', "%{$search}%")
-                             ->orWhere('code', 'like', "%{$search}%");
+                    ->orWhere('code', 'like', "%{$search}%");
             })
             ->orderBy('name')
             ->limit(50)
@@ -32,7 +32,7 @@ class CountryController extends Controller
                 'name' => $country->name,
                 'text' => $country->name,
             ]);
-        
+
         return $this->successResponse($countries);
     }
 }
