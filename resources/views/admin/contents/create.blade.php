@@ -33,8 +33,8 @@
             </x-form-group>
 
             <x-form-group :label="__('admin/contents.fields.body')" :error="$errors->first('body')">
-                <x-textarea name="body" id="body" rows="10" :placeholder="__('admin/contents.forms.placeholders.body')"
-                    class="w-full">{{ old('body') }}</x-textarea>
+                <x-editor name="body" id="body" :value="old('body')"
+                    :placeholder="__('admin/contents.forms.placeholders.body')" :height="400" toolbar="full" />
             </x-form-group>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
