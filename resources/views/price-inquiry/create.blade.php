@@ -151,7 +151,36 @@
                                 </div>
                             </div>
 
-                            
+
+                            <div class="border-b border-gray-200 pb-6">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                                    <i class="fa fa-shield text-emerald-600"></i>
+                                    {{ __('price-inquiry.forms.security_verification') }}
+                                </h3>
+                                <x-form-group :label="__('price-inquiry.forms.captcha_placeholder')" required :error="$errors->first('captcha')">
+                                    <div class="flex items-start gap-3">
+                                        <div class="flex-1">
+                                            <x-input type="text" name="captcha" id="captcha"
+                                                :placeholder="__('price-inquiry.forms.captcha_placeholder')"
+                                                class="w-full" maxlength="6" autocomplete="off" />
+                                        </div>
+                                        <div class="captcha-wrapper shrink-0">
+                                            <div class="captcha-image-container border-2 border-gray-300 rounded-lg overflow-hidden bg-white"
+                                                style="width: 180px; height: 50px;">
+                                                {!! captcha_img('default') !!}
+                                            </div>
+                                            <button type="button" id="refresh-captcha"
+                                                class="mt-2 w-full px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md transition-colors duration-200">
+                                                <i class="fa fa-refresh"></i>
+                                                <span>{{ __('price-inquiry.forms.new_code') }}</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-1">{{ __('price-inquiry.forms.captcha_help') }}</p>
+                                </x-form-group>
+                            </div>
+
+
                             <div class="flex justify-end pt-4 border-t border-gray-200">
                                 <button type="submit" x-bind:disabled="selectedProducts.length === 0"
                                     class="px-6 py-3 bg-green-500 text-white rounded-xl hover:bg-green-600 transition-colors font-semibold disabled:bg-gray-300 disabled:cursor-not-allowed">
@@ -166,7 +195,7 @@
     </main>
 
     @push('scripts')
-        @vite('resources/js/price-inquiry-validation.js')
+        @vite(['resources/js/captcha-refresh.js', 'resources/js/price-inquiry-validation.js'])
 
         <script>
             function productSelector() {

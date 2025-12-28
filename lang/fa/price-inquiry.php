@@ -31,5 +31,14 @@ return [
             'add_product' => 'افزودن محصول',
             'submit' => 'ارسال استعلام',
         ],
+        'security_verification' => 'تأیید امنیتی',
+        'captcha_placeholder' => 'کد امنیتی',
+        'captcha_help' => 'کد امنیتی نمایش داده شده در تصویر را وارد کنید',
+        'new_code' => 'کد جدید',
+    ],
+
+    'validation' => [
+        'captcha_required' => 'کد امنیتی الزامی است',
+        'captcha_invalid' => 'کد امنیتی نادرست است. لطفاً دوباره تلاش کنید',
     ],
 ];

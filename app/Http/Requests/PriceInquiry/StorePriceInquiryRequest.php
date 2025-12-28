@@ -29,6 +29,18 @@ class StorePriceInquiryRequest extends FormRequest
             'phone_number' => ['required', 'string', 'max:20'],
             'products' => ['required', 'array', 'min:1', 'max:5'],
             'products.*' => ['required', 'integer', Rule::exists('products', 'id')->where('is_published', true)],
+            'captcha' => ['required', 'captcha'],
+        ];
+    }
+
+    /**
+     * Get custom validation messages.
+     */
+    public function messages(): array
+    {
+        return [
+            'captcha.required' => __('price-inquiry.validation.captcha_required'),
+            'captcha.captcha' => __('price-inquiry.validation.captcha_invalid'),
         ];
     }
 }

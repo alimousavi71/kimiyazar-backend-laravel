@@ -92,8 +92,32 @@ document.addEventListener("DOMContentLoaded", function () {
         },
     ]);
 
+    // CAPTCHA validation
+    validation.addField("#captcha", [
+        {
+            rule: "required",
+            errorMessage: isPersian
+                ? "کد امنیتی الزامی است"
+                : "Security code is required",
+        },
+        {
+            rule: "minLength",
+            value: 4,
+            errorMessage: isPersian
+                ? "کد امنیتی باید حداقل 4 کاراکتر باشد"
+                : "Security code must be at least 4 characters",
+        },
+        {
+            rule: "maxLength",
+            value: 6,
+            errorMessage: isPersian
+                ? "کد امنیتی نباید بیشتر از 6 کاراکتر باشد"
+                : "Security code must not exceed 6 characters",
+        },
+    ]);
+
     // Enable live validation on blur
-    const fields = ["#first_name", "#last_name", "#email", "#phone_number"];
+    const fields = ["#first_name", "#last_name", "#email", "#phone_number", "#captcha"];
     fields.forEach((fieldSelector) => {
         const field = priceInquiryForm.querySelector(fieldSelector);
         if (field) {
