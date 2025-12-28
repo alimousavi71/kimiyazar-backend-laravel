@@ -19,15 +19,12 @@
                                     <div class="absolute inset-0 bg-gradient-to-br from-green-500 via-emerald-400 to-green-600"></div>
                                 @endif
                                 
-                                
+
                                 <div class="absolute inset-0 flex flex-col justify-end p-6 md:p-10 lg:p-12 text-white z-10">
                                     @if($slider->heading)
-                                        <div class="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-400 text-white px-4 py-2 rounded-full text-xs md:text-sm font-semibold mb-4 shadow-[0_4px_12px_rgba(40,167,69,0.4)] w-fit">
-                                            <i class="fas fa-calendar text-xs"></i>
-                                            <span>{{ $slider->heading }}</span>
-                                        </div>
+                                        <p class="text-xs md:text-sm font-semibold mb-2 md:mb-3 text-gray-200">{{ $slider->heading }}</p>
                                     @endif
-                                    
+
                                     <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4 leading-tight drop-shadow-lg">
                                         {{ $slider->title }}
                                     </h2>
@@ -37,13 +34,6 @@
                                             {{ $slider->description }}
                                         </p>
                                     @endif
-                                    
-                                    <div class="flex flex-wrap gap-3">
-                                        <a href="{{ route('products.index') }}" class="inline-flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-3 bg-gradient-to-r from-green-500 to-emerald-400 text-white rounded-full text-sm md:text-base font-semibold transition-all duration-300 hover:shadow-[0_6px_20px_rgba(40,167,69,0.6)] hover:-translate-y-1 hover:scale-105">
-                                            <span>اطلاعات بیشتر</span>
-                                            <i class="fas fa-arrow-left text-xs"></i>
-                                        </a>
-                                    </div>
                                 </div>
                             </div>
                         </div>
