@@ -13,6 +13,11 @@ enum ProductUnit: string
     case CENTIMETER = 'centimeter';
     case BOX = 'box';
     case PACK = 'pack';
+    case TON = 'ton';
+    case CAN = 'can';
+    case PACKET = 'packet';
+    case GALLON = 'gallon';
+    case CAN_AND_PACKET = 'can_and_packet';
 
     /**
      * Get all unit values as array.
@@ -41,6 +46,11 @@ enum ProductUnit: string
             self::CENTIMETER => __('admin/products.units.centimeter'),
             self::BOX => __('admin/products.units.box'),
             self::PACK => __('admin/products.units.pack'),
+            self::TON => __('admin/products.units.ton'),
+            self::CAN => __('admin/products.units.can'),
+            self::PACKET => __('admin/products.units.packet'),
+            self::GALLON => __('admin/products.units.gallon'),
+            self::CAN_AND_PACKET => __('admin/products.units.can_and_packet'),
         };
     }
 }

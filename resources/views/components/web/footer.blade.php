@@ -6,7 +6,7 @@
     // Fetch popular tags (limit 10)
     $tags = \App\Models\Tag::orderBy('created_at', 'desc')->limit(10)->get();
 
-    // Menus are provided by MenuComposer: $quickAccessMenu and $servicesMenu
+    // Menus are provided by MenuComposer: $quickAccessMenu, $servicesMenu, and $usefulLinksMenu
 @endphp
 
 <footer class="modern-footer bg-gradient-to-b from-slate-800 to-slate-900 text-gray-200 relative overflow-hidden">
@@ -72,7 +72,8 @@
                                     <li class="mb-3">
                                         <a href="{{ $link['url'] ?? '#' }}"
                                             class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25"
-                                            @if(str_contains($link['url'] ?? '', 'http')) target="_blank" rel="noopener noreferrer" @endif>
+                                            @if(str_contains($link['url'] ?? '', 'http')) target="_blank"
+                                            rel="noopener noreferrer" @endif>
                                             <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
                                             <span>{{ $link['title'] ?? '' }}</span>
                                         </a>
@@ -135,7 +136,8 @@
                                     <li class="mb-3">
                                         <a href="{{ $link['url'] ?? '#' }}"
                                             class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25"
-                                            @if(str_contains($link['url'] ?? '', 'http')) target="_blank" rel="noopener noreferrer" @endif>
+                                            @if(str_contains($link['url'] ?? '', 'http')) target="_blank"
+                                            rel="noopener noreferrer" @endif>
                                             <i class="fa fa-chevron-left text-xs transition-transform duration-300"></i>
                                             <span>{{ $link['title'] ?? '' }}</span>
                                         </a>
@@ -192,43 +194,59 @@
                             <span class="absolute bottom-[-2px] right-0 w-2/5 h-0.5 bg-emerald-400"></span>
                             لینک های مفید
                         </h4>
-                        <ul class="footer-links list-none p-0 m-0">
-                            <li class="mb-3">
-                                <a href="#" target="_blank"
-                                    class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
-                                    <i class="fa fa-external-link text-xs transition-transform duration-300"></i>
-                                    <span>لیست قیمت روزانه محصولات کیمیا تجارت زرK.T.Z</span>
-                                </a>
-                            </li>
-                            <li class="mb-3">
-                                <a href="#" target="_blank"
-                                    class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
-                                    <i class="fa fa-external-link text-xs transition-transform duration-300"></i>
-                                    <span>سامانه پیامکی غلات</span>
-                                </a>
-                            </li>
-                            <li class="mb-3">
-                                <a href="#" target="_blank"
-                                    class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
-                                    <i class="fa fa-external-link text-xs transition-transform duration-300"></i>
-                                    <span>سامانه قیمت بذر محصولات کشاورزی</span>
-                                </a>
-                            </li>
-                            <li class="mb-3">
-                                <a href="#" target="_blank"
-                                    class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
-                                    <i class="fa fa-external-link text-xs transition-transform duration-300"></i>
-                                    <span>سامانه قیمت حبوبات</span>
-                                </a>
-                            </li>
-                            <li class="mb-3">
-                                <a href="#" target="_blank"
-                                    class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
-                                    <i class="fa fa-external-link text-xs transition-transform duration-300"></i>
-                                    <span>سامانه قیمت نهاده و غلات</span>
-                                </a>
-                            </li>
-                        </ul>
+                        @if($usefulLinksMenu && count($usefulLinksMenu->getOrderedLinks()) > 0)
+                            <ul class="footer-links list-none p-0 m-0">
+                                @foreach($usefulLinksMenu->getOrderedLinks() as $link)
+                                    <li class="mb-3">
+                                        <a href="{{ $link['url'] ?? '#' }}" target="_blank"
+                                            class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25"
+                                            @if(str_contains($link['url'] ?? '', 'http')) target="_blank"
+                                            rel="noopener noreferrer" @endif>
+                                            <i class="fa fa-external-link text-xs transition-transform duration-300"></i>
+                                            <span>{{ $link['title'] ?? '' }}</span>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <ul class="footer-links list-none p-0 m-0">
+                                <li class="mb-3">
+                                    <a href="https://kimiyazar.com/" target="_blank"
+                                        class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
+                                        <i class="fa fa-external-link text-xs transition-transform duration-300"></i>
+                                        <span>لیست قیمت روزانه محصولات کیمیا تجارت زرK.T.Z</span>
+                                    </a>
+                                </li>
+                                <li class="mb-3">
+                                    <a href="https://kimiyazar.com/InquiryPrice" target="_blank"
+                                        class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
+                                        <i class="fa fa-external-link text-xs transition-transform duration-300"></i>
+                                        <span>سامانه پیامکی غلات</span>
+                                    </a>
+                                </li>
+                                <li class="mb-3">
+                                    <a href="https://kimiyabazr.com/" target="_blank"
+                                        class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
+                                        <i class="fa fa-external-link text-xs transition-transform duration-300"></i>
+                                        <span>سامانه قیمت بذر محصولات کشاورزی</span>
+                                    </a>
+                                </li>
+                                <li class="mb-3">
+                                    <a href="https://kimiyabeans.com/product-category/beans/" target="_blank"
+                                        class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
+                                        <i class="fa fa-external-link text-xs transition-transform duration-300"></i>
+                                        <span>سامانه قیمت حبوبات</span>
+                                    </a>
+                                </li>
+                                <li class="mb-3">
+                                    <a href="https://kimiyazar.com/Products" target="_blank"
+                                        class="text-gray-300 no-underline text-sm transition-all duration-300 inline-flex items-center gap-2 hover:text-green-500 hover:-translate-x-1.25">
+                                        <i class="fa fa-external-link text-xs transition-transform duration-300"></i>
+                                        <span>سامانه قیمت نهاده و غلات</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        @endif
                     </div>
                 </div>
 

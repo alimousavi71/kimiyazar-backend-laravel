@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             CategorySeeder::class,
             ProductSeeder::class,
+            ProductPriceSeeder::class,
             CountrySeeder::class,
             StateSeeder::class,
             BankSeeder::class,
@@ -33,6 +34,7 @@ class DatabaseSeeder extends Seeder
             BannerSeeder::class,
             ModalSeeder::class,
             SettingSeeder::class,
+            ServicePageSeeder::class,
             MenuSeeder::class,
             PriceInquirySeeder::class,
         ]);

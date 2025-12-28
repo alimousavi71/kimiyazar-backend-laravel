@@ -20,6 +20,7 @@ class MenuComposer
         $view->with([
             'quickAccessMenu' => Menu::findByType('quick_access'),
             'servicesMenu' => Menu::findByType('services'),
+            'usefulLinksMenu' => Menu::findByType('useful_links'),
         ]);
     }
 }

@@ -22,3 +22,5 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+/database/import/products.json
+/database/import/product_prices.json

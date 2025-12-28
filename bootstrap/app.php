@@ -12,6 +12,10 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
         then: function () {
+            // SEO Support routes - Legacy URL redirects
+            Route::middleware('web')
+                ->group(base_path('routes/seo.php'));
+
             // Admin routes - auth middleware temporarily disabled
             Route::middleware('web')
                 // ->middleware('auth:admin') // Temporarily disabled

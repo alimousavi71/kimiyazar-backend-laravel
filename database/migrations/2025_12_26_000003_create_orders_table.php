@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Database\ProductUnit;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -45,7 +46,7 @@ return new class extends Migration {
             // Single product details
             $table->unsignedBigInteger('product_id')->nullable();
             $table->unsignedInteger('quantity')->nullable();
-            $table->enum('unit', ['piece', 'kilogram', 'gram', 'liter', 'milliliter', 'meter', 'centimeter', 'box', 'pack'])->default('piece');
+            $table->enum('unit', array_column(ProductUnit::cases(), 'value'))->default(ProductUnit::PIECE->value);
             $table->decimal('unit_price', 15, 0)->nullable();
             $table->string('product_description', 255)->nullable();
 

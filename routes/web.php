@@ -24,6 +24,7 @@ use App\Http\Controllers\ProfilePhoneController;
 use App\Http\Controllers\ProfilePriceInquiryController;
 use App\Http\Controllers\PriceInquiryController;
 use App\Http\Controllers\OrderFormController;
+use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -52,6 +53,9 @@ Route::get('/tags/{slug}', [TagController::class, 'index'])->name('tags.index');
 
 // FAQ Routes
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
+
+// Page Routes
+Route::get('/page/{slug}', [PageController::class, 'show'])->name('page.show');
 
 // Price Inquiry Routes
 Route::get('/price-inquiry', [PriceInquiryController::class, 'create'])->name('price-inquiry.create');
