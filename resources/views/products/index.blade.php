@@ -25,7 +25,7 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
                     
-                    <div class="lg:col-span-3">
+                    <div class="lg:col-span-3 sticky top-6 self-start">
                         <div class="bg-white rounded-xl shadow-md overflow-hidden">
                             
                             <div class="bg-green-500 px-4 py-3 flex items-center gap-2">

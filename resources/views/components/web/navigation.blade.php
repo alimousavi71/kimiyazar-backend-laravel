@@ -13,12 +13,7 @@
             <div class="lg:hidden flex items-center justify-between w-full py-3">
                 <div class="mobile-logo">
                     <a href="{{ route('home') }}" title="{{ $siteTitle }}">
-                        
-                        <svg class="h-8 w-auto" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="50" cy="50" r="45" fill="#FFFFFF" stroke="#22C55E" stroke-width="4" />
-                            <circle cx="50" cy="50" r="30" fill="#22C55E" />
-                            <rect x="35" y="35" width="30" height="30" rx="5" fill="#FFFFFF" />
-                        </svg>
+                        <img src="{{ asset('images/header_logo.png') }}" alt="{{ $siteTitle }}" class="h-8 w-auto">
                     </a>
                 </div>
                 <div class="mobile-actions flex items-center gap-3">
@@ -28,9 +23,7 @@
                             <svg class="w-6 h-4 block" viewBox="0 0 28 20" xmlns="http://www.w3.org/2000/svg">
                                 <rect width="28" height="6.67" fill="#239F40" />
                                 <rect y="6.67" width="28" height="6.67" fill="#FFFFFF" />
-                                <rect y="13.33" width="28" height="6.67" fill="#DA0000" />
-                                <text x="14" y="12" font-size="8" fill="#DA0000" text-anchor="middle"
-                                    font-weight="bold">☪</text>
+                                <rect y="13.33" width="28" height="6.67" fill="#CE1126" />
                             </svg>
                         </a>
                         <a href="{{ route('home') }}?lang=en" title="English"
