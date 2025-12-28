@@ -15,6 +15,7 @@ return [
         'title' => 'عنوان',
         'description' => 'توضیحات',
         'keywords' => 'کلمات کلیدی',
+        'top_bar_quote' => 'جمله نوار بالا',
     ],
 
     'messages' => [

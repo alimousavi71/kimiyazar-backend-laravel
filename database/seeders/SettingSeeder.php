@@ -50,6 +50,10 @@ class SettingSeeder extends Seeder
                 'key' => SettingKey::KEYWORDS->value,
                 'value' => 'کیمیا تجارت زر K.T.Zواردات جو واردات ذرت واردات سویا واردات غلات واردات نهاده فروش جو فروش ذرت فروش سویا فروش ذرت برزیل قیمت ذرت قیمت جو قیمت سویا قیمت کلزا قیمت گندم شکسته قیمت ذرت شکسته',
             ],
+            [
+                'key' => SettingKey::TOP_BAR_QUOTE->value,
+                'value' => 'گنج هر کس عقلش، سرمایه هر کس، جوانی اوست',
+            ],
         ];
 
         foreach ($settings as $setting) {

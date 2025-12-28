@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 
@@ -179,5 +180,17 @@ class Product extends Model
     public function scopeOfCategory($query, int $categoryId)
     {
         return $query->where('category_id', $categoryId);
+    }
+
+    /**
+     * Get all of the tags for the product.
+     *
+     * @return MorphToMany
+     */
+    public function tags(): MorphToMany
+    {
+        return $this->morphToMany(Tag::class, 'tagable', 'tagables')
+            ->withPivot('body')
+            ->withTimestamps();
     }
 }

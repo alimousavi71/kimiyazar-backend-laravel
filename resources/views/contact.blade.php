@@ -5,11 +5,11 @@
 <x-layouts.app title="تماس با ما - {{ $siteTitle }}" dir="rtl">
     <x-web.page-banner title="تماس با ما" />
 
-    
+
     <section class="modern-contact-section py-12 bg-gray-50">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                
+
                 <div class="lg:col-span-5">
                     <div class="contact-info-wrapper bg-white rounded-xl shadow-lg p-6 md:p-8">
                         <div class="contact-info-header mb-8">
@@ -18,9 +18,9 @@
                             <p class="contact-info-subtitle text-gray-600">راه‌های ارتباطی با ما</p>
                         </div>
 
-                        
+
                         <div class="contact-cards space-y-4">
-                            
+
                             <div
                                 class="contact-card flex items-start gap-4 p-4 bg-gray-50 rounded-lg border border-gray-200 transition-all duration-300 hover:shadow-md hover:border-green-200">
                                 <div
@@ -35,7 +35,7 @@
                                 </div>
                             </div>
 
-                            
+
                             <div
                                 class="contact-card flex items-start gap-4 p-4 bg-gray-50 rounded-lg border border-gray-200 transition-all duration-300 hover:shadow-md hover:border-green-200">
                                 <div
@@ -59,7 +59,7 @@
                                 </div>
                             </div>
 
-                            
+
                             <div
                                 class="contact-card flex items-start gap-4 p-4 bg-gray-50 rounded-lg border border-gray-200 transition-all duration-300 hover:shadow-md hover:border-green-200">
                                 <div
@@ -87,7 +87,7 @@
                                             <a href="{{ $settings['instagram'] }}" target="_blank" rel="noopener noreferrer"
                                                 class="contact-social-icon w-10 h-10 bg-white border-2 border-gray-200 rounded-full flex items-center justify-center text-gray-600 transition-all duration-300 hover:bg-green-500 hover:text-white hover:border-green-500 hover:-translate-y-1 hover:shadow-[0_4px_12px_rgba(40,167,69,0.3)]"
                                                 title="اینستاگرام">
-                                                <i class="fa fa-instagram text-sm"></i>
+                                                <i class="fab fa-instagram text-sm"></i>
                                             </a>
                                         @endif
                                         @if($settings['email'] ?? null)
@@ -104,7 +104,7 @@
                     </div>
                 </div>
 
-                
+
                 <div class="lg:col-span-7">
                     <div class="contact-form-wrapper bg-white rounded-xl shadow-lg p-6 md:p-8">
                         <div class="contact-form-header text-center mb-8">
@@ -123,7 +123,7 @@
                                 class="contact-form space-y-6">
                                 @csrf
 
-                                
+
                                 @if(session('success'))
                                     <div class="p-4 bg-green-50 border border-green-200 rounded-lg text-green-700">
                                         <i class="fa fa-check-circle mr-2"></i>
@@ -131,7 +131,7 @@
                                     </div>
                                 @endif
 
-                                
+
                                 @if($errors->any())
                                     <div class="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
                                         <ul class="list-disc list-inside space-y-1">
@@ -142,13 +142,13 @@
                                     </div>
                                 @endif
 
-                                
+
                                 <x-form-group label="عنوان" required :error="$errors->first('title')">
                                     <x-input type="text" name="title" id="title" :value="old('title')"
                                         placeholder="عنوان تماس را وارد کنید" class="w-full" />
                                 </x-form-group>
 
-                                
+
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <x-form-group label="شماره موبایل" required :error="$errors->first('mobile')">
                                         <x-input type="text" name="mobile" id="mobile" :value="old('mobile')"
@@ -161,14 +161,14 @@
                                     </x-form-group>
                                 </div>
 
-                                
+
                                 <x-form-group label="متن پیام" required :error="$errors->first('text')">
                                     <x-textarea name="text" id="text" rows="5"
                                         placeholder="متن پیام خود را اینجا بنویسید..."
                                         class="w-full">{{ old('text') }}</x-textarea>
                                 </x-form-group>
 
-                                
+
                                 <div class="form-submit-wrapper">
                                     <button type="submit"
                                         class="btn-submit-modern w-full md:w-auto px-8 py-3 bg-gradient-to-r from-green-500 to-emerald-400 text-white rounded-lg font-semibold text-base transition-all duration-300 shadow-[0_2px_10px_rgba(40,167,69,0.3)] hover:-translate-y-1 hover:scale-105 hover:shadow-[0_6px_20px_rgba(40,167,69,0.6)] hover:from-emerald-400 hover:to-green-500">

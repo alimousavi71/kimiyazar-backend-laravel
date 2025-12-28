@@ -13,6 +13,7 @@ enum SettingKey: string
     case TITLE = 'title';
     case DESCRIPTION = 'description';
     case KEYWORDS = 'keywords';
+    case TOP_BAR_QUOTE = 'top_bar_quote';
 
     /**
      * Get all key values as array.
@@ -41,6 +42,7 @@ enum SettingKey: string
             self::TITLE => __('admin/settings.keys.title'),
             self::DESCRIPTION => __('admin/settings.keys.description'),
             self::KEYWORDS => __('admin/settings.keys.keywords'),
+            self::TOP_BAR_QUOTE => __('admin/settings.keys.top_bar_quote'),
         };
     }
 
@@ -55,7 +57,7 @@ enum SettingKey: string
             self::EMAIL => 'email',
             self::TELEGRAM, self::INSTAGRAM => 'url',
             self::TEL, self::MOBILE => 'tel',
-            self::ADDRESS, self::DESCRIPTION => 'textarea',
+            self::ADDRESS, self::DESCRIPTION, self::TOP_BAR_QUOTE => 'textarea',
             default => 'text',
         };
     }
@@ -73,7 +75,7 @@ enum SettingKey: string
             self::TEL, self::MOBILE => ['nullable', 'string', 'max:50'],
             self::TITLE => ['nullable', 'string', 'max:255'],
             self::KEYWORDS => ['nullable', 'string', 'max:500'],
-            self::ADDRESS, self::DESCRIPTION => ['nullable', 'string', 'max:1000'],
+            self::ADDRESS, self::DESCRIPTION, self::TOP_BAR_QUOTE => ['nullable', 'string', 'max:1000'],
         };
     }
 
@@ -87,6 +89,7 @@ enum SettingKey: string
         return match ($this) {
             self::ADDRESS => 3,
             self::DESCRIPTION => 5,
+            self::TOP_BAR_QUOTE => 2,
             default => 3,
         };
     }

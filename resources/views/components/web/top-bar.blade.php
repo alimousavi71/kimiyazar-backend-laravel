@@ -9,12 +9,12 @@
     </div>
     <div class="container mx-auto px-3 sm:px-4">
         <div class="flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-4">
-            
+
             <div class="w-full sm:w-auto flex items-center justify-center sm:justify-start order-1 sm:order-1">
                 <div class="top-logo">
                     <a href="{{ route('home') }}" title="{{ $settings['title'] ?? config('app.name') }}"
                         class="transition-all duration-300 hover:scale-105 hover:drop-shadow-[0_0_8px_rgba(40,167,69,0.6)] inline-block">
-                        
+
                         <svg class="h-8 sm:h-10 w-auto" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="50" cy="50" r="45" fill="#FFFFFF" stroke="#22C55E" stroke-width="4" />
                             <circle cx="50" cy="50" r="30" fill="#22C55E" />
@@ -24,8 +24,16 @@
                 </div>
             </div>
 
-            
+
             <div class="w-full sm:w-auto flex flex-wrap items-center justify-center gap-2 sm:gap-3 order-3 sm:order-2">
+                @if($settings['top_bar_quote'] ?? null)
+                    <div class="hidden md:flex items-center">
+                        <p
+                            class="text-gray-300 text-xs sm:text-sm font-medium italic text-center px-2 sm:px-3 py-1 rounded-full border border-white/10 bg-white/5">
+                            {{ $settings['top_bar_quote'] }}
+                        </p>
+                    </div>
+                @endif
                 @if($settings['email'] ?? null)
                     <div class="top-contact">
                         <a href="mailto:{{ $settings['email'] }}"
@@ -47,14 +55,14 @@
                 @endif
             </div>
 
-            
+
             <div
                 class="w-full sm:w-auto flex items-center justify-center sm:justify-end gap-2 sm:gap-3 order-2 sm:order-3">
                 <div class="top-area-language">
                     <div class="lan-text flex gap-2 items-center">
                         <a href="{{ route('home') }}"
                             class="inline-block transition-all duration-300 rounded-md overflow-hidden border-2 border-green-500 shadow-[0_0_12px_rgba(40,167,69,0.6)] opacity-100">
-                            
+
                             <svg class="w-7 h-5 block" viewBox="0 0 28 20" xmlns="http://www.w3.org/2000/svg">
                                 <rect width="28" height="6.67" fill="#239F40" />
                                 <rect y="6.67" width="28" height="6.67" fill="#FFFFFF" />
@@ -65,7 +73,7 @@
                         </a>
                         <a href="{{ route('home') }}?lang=en"
                             class="inline-block transition-all duration-300 rounded-md overflow-hidden border-2 border-white/20 opacity-70 hover:border-green-500 hover:-translate-y-1 hover:scale-110 hover:shadow-[0_4px_12px_rgba(40,167,69,0.5)] hover:opacity-100">
-                            
+
                             <svg class="w-7 h-5 block" viewBox="0 0 28 20" xmlns="http://www.w3.org/2000/svg">
                                 <rect width="28" height="20" fill="#012169" />
                                 <path d="M0,0 L28,20 M28,0 L0,20" stroke="#FFFFFF" stroke-width="2" />

@@ -63,8 +63,7 @@
             </x-form-group>
 
             <x-form-group :label="__('admin/tags.title')" :error="$errors->first('tags')">
-                <x-tag-manager tagable-type="{{ \App\Models\Content::class }}" :tagable-id="null"
-                    label="{{ __('admin/tags.title') }}" />
+                <x-tag-manager tagable-type="{{ \App\Models\Content::class }}" :tagable-id="null" />
             </x-form-group>
 
             <div class="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">

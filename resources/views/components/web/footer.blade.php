@@ -6,7 +6,7 @@
     <div class="footer-main py-12">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-12 gap-6">
-                
+
                 <div class="col-span-12 sm:col-span-12 md:col-span-6 lg:col-span-3 mb-4">
                     <div class="footer-section">
                         <div class="footer-logo-section flex items-center gap-4 mb-5">
@@ -20,17 +20,29 @@
                         </p>
                         <div class="footer-social flex gap-3 flex-wrap">
                             @if($settings['telegram'] ?? null)
-                                <a href="{{ $settings['telegram'] }}" target="_blank"
+                                @php
+                                    $telegramUrl = $settings['telegram'];
+                                    if (!str_starts_with($telegramUrl, 'http://') && !str_starts_with($telegramUrl, 'https://')) {
+                                        $telegramUrl = 'https://' . $telegramUrl;
+                                    }
+                                @endphp
+                                <a href="{{ $telegramUrl }}" target="_blank" rel="noopener noreferrer"
                                     class="social-icon w-10.5 h-10.5 bg-white/10 border-2 border-transparent rounded-full flex items-center justify-center text-gray-300 text-base no-underline transition-all duration-300 hover:bg-green-500 hover:text-white hover:border-emerald-400 hover:-translate-y-1 hover:shadow-[0_4px_12px_rgba(40,167,69,0.3)]"
                                     title="تلگرام">
                                     <i class="fa fa-paper-plane"></i>
                                 </a>
                             @endif
                             @if($settings['instagram'] ?? null)
-                                <a href="{{ $settings['instagram'] }}" target="_blank"
+                                @php
+                                    $instagramUrl = $settings['instagram'];
+                                    if (!str_starts_with($instagramUrl, 'http://') && !str_starts_with($instagramUrl, 'https://')) {
+                                        $instagramUrl = 'https://' . $instagramUrl;
+                                    }
+                                @endphp
+                                <a href="{{ $instagramUrl }}" target="_blank" rel="noopener noreferrer"
                                     class="social-icon w-10.5 h-10.5 bg-white/10 border-2 border-transparent rounded-full flex items-center justify-center text-gray-300 text-base no-underline transition-all duration-300 hover:bg-green-500 hover:text-white hover:border-emerald-400 hover:-translate-y-1 hover:shadow-[0_4px_12px_rgba(40,167,69,0.3)]"
                                     title="اینستاگرام">
-                                    <i class="fa fa-instagram"></i>
+                                    <i class="fab fa-instagram"></i>
                                 </a>
                             @endif
                             @if($settings['tel'] ?? null)
@@ -51,7 +63,7 @@
                     </div>
                 </div>
 
-                
+
                 <div class="col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-2 mb-4">
                     <div class="footer-section">
                         <h4
@@ -115,7 +127,7 @@
                     </div>
                 </div>
 
-                
+
                 <div class="col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-2 mb-4">
                     <div class="footer-section">
                         <h4
@@ -179,7 +191,7 @@
                     </div>
                 </div>
 
-                
+
                 <div class="col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-2 mb-4">
                     <div class="footer-section">
                         <h4
@@ -243,7 +255,7 @@
                     </div>
                 </div>
 
-                
+
                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-3 mb-4">
                     <div class="footer-section">
                         <h4
@@ -267,7 +279,7 @@
         </div>
     </div>
 
-    
+
     <div class="footer-bottom bg-black/30 py-5 border-t border-white/10">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row items-center justify-between gap-4">

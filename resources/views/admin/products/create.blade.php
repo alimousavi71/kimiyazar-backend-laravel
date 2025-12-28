@@ -12,7 +12,7 @@
     <form id="product-create-form" action="{{ route('admin.products.store') }}" method="POST" class="space-y-6">
         @csrf
 
-        
+
         <x-card>
             <x-slot name="title">{{ __('admin/products.forms.labels.basic_info') }}</x-slot>
 
@@ -80,6 +80,10 @@
                     </div>
                 </x-form-group>
 
+                <x-form-group :label="__('admin/tags.title')" :error="$errors->first('tags')">
+                    <x-tag-manager tagable-type="{{ \App\Models\Product::class }}" :tagable-id="null" />
+                </x-form-group>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <x-form-group :label="__('admin/products.fields.sort_order')" :error="$errors->first('sort_order')">
                         <x-input type="number" name="sort_order" id="sort_order"
@@ -95,7 +99,7 @@
             </div>
         </x-card>
 
-        
+
         <x-card>
             <x-slot name="title">{{ __('admin/products.forms.labels.pricing_info') }}</x-slot>
 
@@ -138,7 +142,7 @@
             </div>
         </x-card>
 
-        
+
         <x-card>
             <x-slot name="title">{{ __('admin/products.forms.labels.seo_info') }}</x-slot>
 
@@ -178,7 +182,7 @@
     </form>
 
     @push('scripts')
-        @vite(['resources/js/admin-form-validation.js', 'resources/js/form-with-photos.js', 'resources/js/category-selector.js'])
+        @vite(['resources/js/admin-form-validation.js', 'resources/js/form-with-photos.js', 'resources/js/form-with-tags.js', 'resources/js/category-selector.js'])
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 initFormWithPhotos({
@@ -186,6 +190,16 @@
                     photoManagerSelector: '[id^="photo-manager-"]',
                     photoableType: '{{ \App\Models\Product::class }}',
                     photoableId: null,
+                    redirectUrl: '{{ route('admin.products.index') }}',
+                    successMessage: '{{ __('admin/products.messages.created') }}',
+                    errorMessage: '{{ __('admin/products.messages.create_failed') }}',
+                });
+
+                initFormWithTags({
+                    formId: 'product-create-form',
+                    tagManagerSelector: '[id^="tag-manager-"]',
+                    tagableType: '{{ \App\Models\Product::class }}',
+                    tagableId: null,
                     redirectUrl: '{{ route('admin.products.index') }}',
                     successMessage: '{{ __('admin/products.messages.created') }}',
                     errorMessage: '{{ __('admin/products.messages.create_failed') }}',

@@ -28,7 +28,9 @@ class ProductController extends Controller
         // Get filter parameters
         $categoryId = $request->get('category') ? (int) $request->get('category') : null;
         $search = $request->get('search');
+        $search = $search && trim($search) !== '' ? trim($search) : null;
         $sort = $request->get('sort');
+        $sort = $sort && trim($sort) !== '' ? trim($sort) : null;
 
         // Get current category if selected
         $currentCategory = null;
