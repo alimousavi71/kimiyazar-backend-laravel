@@ -22,7 +22,7 @@
                 <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
                     @if($content->body)
                         <div class="content-body prose prose-lg max-w-none text-slate-700 leading-relaxed">
-                            {!! nl2br(e($content->body)) !!}
+                            {!! $content->body !!}
                         </div>
                     @else
                         <div class="text-center text-gray-500 py-8">

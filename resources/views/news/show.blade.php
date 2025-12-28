@@ -63,7 +63,7 @@
                                 
                                 @if($news->body)
                                     <div class="content-body prose prose-lg max-w-none text-slate-700 leading-relaxed">
-                                        {!! nl2br(e($news->body)) !!}
+                                        {!! $news->body !!}
                                     </div>
                                 @else
                                     <div class="text-center text-gray-500 py-8">
