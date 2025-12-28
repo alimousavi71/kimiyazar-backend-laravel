@@ -18,7 +18,7 @@
                 <span class="text-white font-bold text-base">A</span>
             </div>
             <div>
-                <h1 class="text-lg font-bold text-gray-900 tracking-tight">Admin Panel</h1>
+                <h1 class="text-lg font-bold text-gray-900 tracking-tight">{{ $settings['title'] ?? config('app.name', 'Admin Panel') }}</h1>
                 <p class="text-xs text-gray-500 font-medium">{{ __('admin/components.navigation.dashboard') }}</p>
             </div>
         </div>
