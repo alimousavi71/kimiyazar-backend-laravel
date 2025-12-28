@@ -214,9 +214,37 @@ class AppServiceProvider extends ServiceProvider
         view()->share('isLtr', DirectionHelper::isLtr());
 
         // Share settings with frontend views only (not admin)
-        View::composer('*', SettingComposer::class);
+        View::composer([
+            'components.layouts.app',
+            'layouts.app',
+            'components.web.*',
+            'home',
+            'contact',
+            'price-inquiry.*',
+            'products.*',
+            'articles.*',
+            'news.*',
+            'tags.*',
+            'orders.*',
+            'about',
+            'faqs.*',
+        ], SettingComposer::class);
 
         // Share menus with frontend views only (not admin)
-        View::composer('*', MenuComposer::class);
+        View::composer([
+            'components.layouts.app',
+            'layouts.app',
+            'components.web.*',
+            'home',
+            'contact',
+            'price-inquiry.*',
+            'products.*',
+            'articles.*',
+            'news.*',
+            'tags.*',
+            'orders.*',
+            'about',
+            'faqs.*',
+        ], MenuComposer::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Services\SlugService;
 use Illuminate\Support\Str;
 
 /**
@@ -45,7 +46,12 @@ trait HasPersianSlug
     protected function ensureSlugIsSet(): void
     {
         if (empty($this->slug)) {
-            $this->slug = $this->makePersianSlug($this->getSlugSourceValue());
+            $this->slug = SlugService::makeUnique(
+                SlugService::makeSlug($this->getSlugSourceValue()),
+                fn(string $slug) => static::where('slug', $slug)
+                    ->when($this->exists, fn($q) => $q->where('id', '!=', $this->id))
+                    ->exists()
+            );
         }
     }
 
@@ -74,7 +80,7 @@ trait HasPersianSlug
         // Only regenerate when source changed and slug not manually set
         if ($this->isDirty($this->getSlugSourceField()) && !$this->isDirty('slug')) {
             $this->ensureSlugIsSet();
-            }
+        }
         return parent::performUpdate($query);
     }
 
@@ -100,40 +106,5 @@ trait HasPersianSlug
         return (string) ($this->{$field} ?? '');
     }
 
-    /**
-     * Create a slug while preserving Persian characters and allowing existing slugs.
-     *
-     * Supports formats like:
-     *  - slug-post
-     *  - slug-vast-1
-     *  - slug-vast-2
-     *
-     * @param string $value
-     * @param string $separator
-     * @return string
-     */
-    protected function makePersianSlug(string $value, string $separator = '-'): string
-    {
-        // Normalize common Arabic characters to Persian equivalents
-        $value = str_replace(['ي', 'ك'], ['ی', 'ک'], $value);
-
-        // Lowercase and trim
-        $value = trim(mb_strtolower($value, 'UTF-8'));
-
-        // Replace any whitespace or underscore with the separator
-        $value = preg_replace('/[\s_]+/u', $separator, $value);
-
-        // Allow Persian letters, English letters, digits, and separator; drop others
-        $value = preg_replace('/[^0-9a-zA-Zآ-یءئإأؤۀکگپچژ\s' . preg_quote($separator, '/') . ']+/u', '', $value);
-
-        // Collapse multiple separators
-        $value = preg_replace('/' . preg_quote($separator, '/') . '+/', $separator, $value);
-
-        // Trim separators
-        $value = trim($value, $separator);
-
-        // Fallback if empty
-        return $value !== '' ? $value : Str::random(8);
-    }
 }
 

@@ -15,18 +15,8 @@ class SettingComposer
      */
     public function compose(View $view): void
     {
-        // Only share settings for frontend views (not admin)
-        // Check if view name or path contains 'admin'
-        $viewName = $view->getName();
-        $viewPath = $view->getPath();
-
-        $isAdminView = str_starts_with($viewName, 'admin.')
-            || str_contains($viewName, 'layouts.admin')
-            || str_contains($viewName, 'components.layouts.admin')
-            || (is_string($viewPath) && str_contains($viewPath, '/admin/'));
-
-        if (!$isAdminView) {
-            $view->with('settings', Setting::getAllAsArray());
-        }
+        // Share settings only for frontend views
+        // Composer is only registered for frontend views, so no need to check
+        $view->with('settings', Setting::getAllAsArray());
     }
 }

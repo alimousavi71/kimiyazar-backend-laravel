@@ -15,20 +15,11 @@ class MenuComposer
      */
     public function compose(View $view): void
     {
-        // Only share menus for frontend views (not admin)
-        $viewName = $view->getName();
-        $viewPath = $view->getPath();
-
-        $isAdminView = str_starts_with($viewName, 'admin.')
-            || str_contains($viewName, 'layouts.admin')
-            || str_contains($viewName, 'components.layouts.admin')
-            || (is_string($viewPath) && str_contains($viewPath, '/admin/'));
-
-        if (!$isAdminView) {
-            $view->with([
-                'quickAccessMenu' => Menu::findByType('quick_access'),
-                'servicesMenu' => Menu::findByType('services'),
-            ]);
-        }
+        // Share menus only for frontend views
+        // Composer is only registered for frontend views, so no need to check
+        $view->with([
+            'quickAccessMenu' => Menu::findByType('quick_access'),
+            'servicesMenu' => Menu::findByType('services'),
+        ]);
     }
 }

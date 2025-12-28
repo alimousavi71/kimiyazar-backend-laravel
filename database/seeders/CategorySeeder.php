@@ -3,7 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Services\SlugService;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class CategorySeeder extends Seeder
 {
@@ -12,130 +15,37 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        // Helper function to generate slug from name
-        $generateSlug = function (string $text): string {
-            $text = trim($text);
-            $text = preg_replace('/[^\p{L}\p{N}\s-]/u', '', $text);
-            $text = preg_replace('/[\s-]+/', '-', $text);
-            $text = trim($text, '-');
-            return mb_strtolower($text, 'UTF-8');
-        };
+        $categoriesData = json_decode(File::get(database_path('import/category.json')), true);
 
-        // Create 10 main categories with real data
-        $categories = [
-            [
-                'name' => 'الکترونیک و دیجیتال',
-                'children' => [
-                    'موبایل و تبلت',
-                    'لپ تاپ و کامپیوتر',
-                    'گوشی موبایل',
-                    'هدفون و هندزفری',
-                ],
-            ],
-            [
-                'name' => 'پوشاک و مد',
-                'children' => [
-                    'لباس مردانه',
-                    'لباس زنانه',
-                    'کفش',
-                    'اکسسوری',
-                ],
-            ],
-            [
-                'name' => 'خانه و آشپزخانه',
-                'children' => [
-                    'مبلمان',
-                    'لوازم آشپزخانه',
-                    'دکوراسیون',
-                    'فرش و موکت',
-                ],
-            ],
-            [
-                'name' => 'ورزش و سفر',
-                'children' => [
-                    'لباس ورزشی',
-                    'کفش ورزشی',
-                    'لوازم سفر',
-                    'کوله پشتی',
-                ],
-            ],
-            [
-                'name' => 'زیبایی و سلامت',
-                'children' => [
-                    'لوازم آرایشی',
-                    'عطر و ادکلن',
-                    'محصولات مراقبت پوست',
-                    'لوازم بهداشتی',
-                ],
-            ],
-            [
-                'name' => 'کتاب و لوازم تحریر',
-                'children' => [
-                    'کتاب',
-                    'لوازم تحریر',
-                    'کتاب کودک',
-                    'مجلات',
-                ],
-            ],
-            [
-                'name' => 'اسباب بازی و سرگرمی',
-                'children' => [
-                    'اسباب بازی کودک',
-                    'بازی فکری',
-                    'پازل',
-                    'عروسک',
-                ],
-            ],
-            [
-                'name' => 'خودرو و موتورسیکلت',
-                'children' => [
-                    'قطعات خودرو',
-                    'لوازم یدکی',
-                    'لوازم موتورسیکلت',
-                    'لوازم جانبی',
-                ],
-            ],
-            [
-                'name' => 'غذا و نوشیدنی',
-                'children' => [
-                    'مواد غذایی',
-                    'نوشیدنی',
-                    'میوه و سبزیجات',
-                    'خشکبار',
-                ],
-            ],
-            [
-                'name' => 'ابزار و تجهیزات',
-                'children' => [
-                    'ابزار دستی',
-                    'ابزار برقی',
-                    'تجهیزات ساختمانی',
-                    'لوازم باغبانی',
-                ],
-            ],
-        ];
+        $this->command->info("Importing " . count($categoriesData) . " categories...");
 
-        $sortOrder = 1;
-        foreach ($categories as $categoryData) {
-            $category = Category::create([
-                'name' => $categoryData['name'],
-                'slug' => $generateSlug($categoryData['name']),
-                'is_active' => true,
-                'parent_id' => null,
-                'sort_order' => $sortOrder++,
-            ]);
+        $usedSlugs = [];
 
-            // Create children for this category
-            $childSortOrder = 1;
-            foreach ($categoryData['children'] as $childName) {
+        DB::transaction(function () use ($categoriesData, &$usedSlugs) {
+            Category::unguard();
+
+            foreach ($categoriesData as $item) {
+                // Generate unique slug
+                $slug = SlugService::makeUnique(
+                    SlugService::makeSlug($item['title']),
+                    fn(string $s) => isset($usedSlugs[$s])
+                );
+                $usedSlugs[$slug] = true;
+
+                // Insert exactly as provided
                 Category::create([
-                    'name' => $childName,
-                    'slug' => $generateSlug($childName),
-                    'is_active' => true,
-                    'parent_id' => $category->id,
-                    'sort_order' => $childSortOrder++,
+                    'id' => (int) $item['id'],
+                    'name' => $item['title'],
+                    'slug' => $slug,
+                    'is_active' => (int) $item['active'],
+                    'parent_id' => (int) $item['parent_id'] ?: null,
+                    'sort_order' => (int) $item['position'],
                 ]);
             }
-        }
+
+            Category::reguard();
+        });
+
+        $this->command->info("Successfully imported " . count($categoriesData) . " categories!");
     }
 }
