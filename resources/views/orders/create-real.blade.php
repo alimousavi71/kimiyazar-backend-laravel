@@ -217,8 +217,7 @@
                                     </x-form-group>
                                     
                                     <x-form-group :label="__('orders.fields.unit')" required :error="$errors->first('unit')">
-                                        <x-select name="unit" id="unit">
-                                            <option value="">{{ __('orders.forms.select_unit') }}</option>
+                                        <x-select name="unit" id="unit" :placeholder="__('orders.forms.select_unit')">
                                             @foreach(\App\Enums\Database\ProductUnit::cases() as $unit)
                                                 <option value="{{ $unit->value }}" @selected(old('unit') === $unit->value)>
                                                     {{ $unit->label() }}

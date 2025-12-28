@@ -39,6 +39,11 @@ return [
         'centimeter' => 'سانتی‌متر',
         'box' => 'جعبه',
         'pack' => 'بسته',
+        'ton' => 'تن',
+        'can' => 'قوطی',
+        'packet' => 'بسته',
+        'gallon' => 'گالن',
+        'can_and_packet' => 'قوطی و بسته',
     ],
 
     'statuses' => [

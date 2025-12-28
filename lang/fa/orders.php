@@ -44,6 +44,7 @@ return [
         'city' => 'شهر',
         'postal_code' => 'کد پستی',
         'receiver_name' => 'نام گیرنده',
+        'address' => 'آدرس',
         'delivery_method' => 'روش تحویل',
         'quantity' => 'تعداد',
         'unit' => 'واحد',

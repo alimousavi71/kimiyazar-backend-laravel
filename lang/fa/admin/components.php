@@ -71,6 +71,7 @@ return [
     // Form
     'form' => [
         'select_option' => 'یک گزینه انتخاب کنید',
+        'type_to_search' => 'برای جستجو تایپ کنید...',
     ],
 
     // Navigation
