@@ -16,7 +16,7 @@
 
         
         <x-card>
-            <x-table-wrapper :search-placeholder="__('admin/components.buttons.search')" :paginator="$orders ?? null">
+            <x-table-wrapper :paginator="$orders ?? null">
                 <x-table>
                     <x-table.head>
                         <x-table.row>
