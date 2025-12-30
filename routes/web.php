@@ -22,6 +22,7 @@ use App\Http\Controllers\ProfilePasswordController;
 use App\Http\Controllers\ProfileEmailController;
 use App\Http\Controllers\ProfilePhoneController;
 use App\Http\Controllers\ProfilePriceInquiryController;
+use App\Http\Controllers\ProfileOrderController;
 use App\Http\Controllers\PriceInquiryController;
 use App\Http\Controllers\OrderFormController;
 use App\Http\Controllers\PageController;
@@ -168,6 +169,12 @@ Route::middleware('auth:web')->prefix('profile')->name('user.profile.')->group(f
     Route::prefix('price-inquiries')->name('price-inquiries.')->group(function () {
         Route::get('/', [ProfilePriceInquiryController::class, 'index'])->name('index');
         Route::get('/{id}', [ProfilePriceInquiryController::class, 'show'])->name('show');
+    });
+
+    // Orders Management
+    Route::prefix('orders')->name('orders.')->group(function () {
+        Route::get('/', [ProfileOrderController::class, 'index'])->name('index');
+        Route::get('/{id}', [ProfileOrderController::class, 'show'])->name('show');
     });
 });
 

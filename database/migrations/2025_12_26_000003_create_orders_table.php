@@ -33,8 +33,8 @@ return new class extends Migration {
             $table->string('official_gazette_photo', 255)->default('not_set')->nullable();
 
             // Location information
-            $table->unsignedInteger('country_id')->nullable();
-            $table->unsignedInteger('state_id')->nullable();
+            $table->unsignedBigInteger('country_id')->nullable();
+            $table->unsignedBigInteger('state_id')->nullable();
             $table->string('city', 255)->nullable();
             $table->string('postal_code', 255)->nullable();
 
@@ -51,7 +51,7 @@ return new class extends Migration {
             $table->string('product_description', 255)->nullable();
 
             // Payment information
-            $table->unsignedInteger('payment_bank_id')->nullable();
+            $table->unsignedBigInteger('payment_bank_id')->nullable();
             $table->enum('payment_type', ['online_gateway', 'bank_deposit', 'wallet', 'pos', 'cash_on_delivery'])->default('online_gateway');
             $table->string('total_payment_amount', 255)->default('');
             $table->string('payment_date', 255)->nullable();

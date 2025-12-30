@@ -2,17 +2,11 @@
     $siteTitle = $settings['title'] ?? config('app.name');
 @endphp
 
-<x-layouts.app
-    title="تماس با ما - {{ $siteTitle }}"
+<x-layouts.app title="تماس با ما - {{ $siteTitle }}"
     description="صفحه تماس با ما برای سوالات و درخواست های شما. آدرس و تلفن تماس کیمیازر"
-    keywords="تماس با ما، درخواست، پیام، کیمیازر"
-    canonical="{{ route('contact.index') }}"
-    ogTitle="تماس با ما - {{ $siteTitle }}"
-    ogDescription="صفحه تماس با ما برای سوالات و درخواست های شما"
-    :ogImage="asset('images/header_logo.png')"
-    :ogUrl="route('contact.index')"
-    ogType="website"
-    dir="rtl">
+    keywords="تماس با ما، درخواست، پیام، کیمیازر" canonical="{{ route('contact.index') }}"
+    ogTitle="تماس با ما - {{ $siteTitle }}" ogDescription="صفحه تماس با ما برای سوالات و درخواست های شما"
+    :ogImage="asset('images/header_logo.png')" :ogUrl="route('contact.index')" ogType="website" dir="rtl">
     <x-web.page-banner title="تماس با ما" />
 
 
@@ -183,8 +177,8 @@
                                     <div class="flex items-start gap-3">
                                         <div class="flex-1">
                                             <x-input type="text" name="captcha" id="captcha"
-                                                placeholder="کد امنیتی را وارد کنید"
-                                                class="w-full" maxlength="6" autocomplete="off" />
+                                                placeholder="کد امنیتی را وارد کنید" class="w-full" maxlength="6"
+                                                autocomplete="off" />
                                         </div>
                                         <div class="captcha-wrapper shrink-0">
                                             <div class="captcha-image-container border-2 border-gray-300 rounded-lg overflow-hidden bg-white"
@@ -198,7 +192,8 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <p class="text-xs text-gray-500 mt-1">کد امنیتی نمایش داده شده در تصویر را وارد کنید</p>
+                                    <p class="text-xs text-gray-500 mt-1">کد امنیتی نمایش داده شده در تصویر را وارد کنید
+                                    </p>
                                 </x-form-group>
 
 

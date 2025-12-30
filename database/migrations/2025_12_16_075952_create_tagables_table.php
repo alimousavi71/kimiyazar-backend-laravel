@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('tagables', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('tag_id')->constrained('tags')->onDelete('cascade');
+            $table->unsignedBigInteger('tag_id');
             $table->morphs('tagable'); // tagable_type, tagable_id
             $table->text('body')->nullable();
             $table->timestamps();
@@ -20,6 +20,15 @@ return new class extends Migration {
             // Prevent duplicate tag assignments
             // Note: morphs() already creates an index on tagable_type and tagable_id
             $table->unique(['tag_id', 'tagable_type', 'tagable_id'], 'tagable_unique');
+        });
+
+        // Add foreign key constraint after table creation
+        // This ensures the tags table exists first
+        Schema::table('tagables', function (Blueprint $table) {
+            $table->foreign('tag_id')
+                ->references('id')
+                ->on('tags')
+                ->onDelete('cascade');
         });
     }
 

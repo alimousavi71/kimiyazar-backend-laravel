@@ -29,6 +29,7 @@ return [
         'dashboard' => 'داشبورد',
         'profile' => 'پروفایل',
         'price_inquiries' => 'استعلامات قیمت',
+        'orders' => 'سفارش‌ها',
         'home' => 'خانه',
     ],
 

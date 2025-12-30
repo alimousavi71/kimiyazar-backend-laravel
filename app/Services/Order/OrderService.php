@@ -40,6 +40,7 @@ class OrderService
             AllowedFilter::exact('payment_type'),
             AllowedFilter::exact('country_id'),
             AllowedFilter::exact('state_id'),
+            AllowedFilter::exact('member_id'),
             AllowedFilter::exact('is_viewed'),
             AllowedFilter::callback('search', function ($query, $value) {
                 $query->where(function ($q) use ($value) {
