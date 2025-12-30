@@ -20,9 +20,10 @@ function initializeDropdownMenus() {
     ) {
         if (!triggerElement || !dropdownElement) return null;
 
-        // Use Popper.js directly with standard modifiers
+        // Use Popper.js with fixed strategy to prevent clipping by overflow containers
         return createPopper(triggerElement, dropdownElement, {
             placement: placement,
+            strategy: "fixed", // Use fixed positioning to escape overflow containers
             modifiers: [
                 {
                     name: "offset",

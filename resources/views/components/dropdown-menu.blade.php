@@ -41,8 +41,10 @@
 
     
     <div x-ref="dropdown" x-show="open" x-cloak
-        class="absolute w-48 rounded-xl shadow-lg bg-white border border-gray-200 py-1 z-[100] transition-opacity duration-100 ease-out"
-        :class="open ? 'opacity-100' : 'opacity-0'" style="display: none;" role="menu" aria-orientation="vertical">
+        class="w-48 rounded-xl shadow-lg bg-white border border-gray-200 py-1 z-[9999] transition-opacity duration-100 ease-out"
+        :class="open ? 'opacity-100' : 'opacity-0'" 
+        style="display: none;"
+        role="menu" aria-orientation="vertical">
         {{ $slot }}
     </div>
 </div>
