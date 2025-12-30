@@ -33,6 +33,10 @@ return [
         'not_found' => 'مدیر یافت نشد.',
         'delete_failed' => 'حذف مدیر با خطا مواجه شد.',
         'password_updated' => 'رمز عبور با موفقیت به‌روزرسانی شد.',
+        'avatar_uploaded' => 'آواتار با موفقیت آپلود شد.',
+        'avatar_deleted' => 'آواتار با موفقیت حذف شد.',
+        'avatar_upload_failed' => 'آپلود آواتار با خطا مواجه شد.',
+        'avatar_delete_failed' => 'حذف آواتار با خطا مواجه شد.',
     ],
 
     'forms' => [
@@ -73,6 +77,10 @@ return [
             'delete_avatar' => 'حذف آواتار',
             'uploading' => 'در حال آپلود...',
             'deleting' => 'در حال حذف...',
+        ],
+        'javascript' => [
+            'select_image' => 'لطفاً یک فایل تصویری انتخاب کنید',
+            'delete_avatar_confirm' => 'آیا مطمئن هستید که می‌خواهید آواتار را حذف کنید؟',
         ],
         'breadcrumbs' => [
             'dashboard' => 'داشبورد',

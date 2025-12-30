@@ -27,6 +27,7 @@
             <x-table-wrapper :search-placeholder="__('admin/components.buttons.search')"
                 filter-sidebar-id="categories-filters" :filter-badges="[
                 'is_active' => __('admin/categories.fields.is_active'),
+                'is_root' => __('admin/categories.fields.is_root'),
                 'parent_id' => __('admin/categories.fields.parent'),
             ]" :paginator="$categories ?? null">
                 <x-table>
@@ -78,7 +79,14 @@
                                         @endif
                                     </x-table.cell>
                                     <x-table.cell>
-                                        <span class="text-gray-600">{{ $category->sort_order }}</span>
+                                        <input 
+                                            type="number" 
+                                            min="0"
+                                            value="{{ $category->sort_order }}" 
+                                            data-category-id="{{ $category->id }}"
+                                            class="category-sort-order-input w-20 px-2 py-1 text-sm text-gray-900 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all"
+                                            data-original-value="{{ $category->sort_order }}"
+                                        />
                                     </x-table.cell>
                                     <x-table.cell>{{ $category->created_at->format('Y-m-d') }}</x-table.cell>
                                     <x-table.cell>
@@ -135,12 +143,24 @@
                     
                     <div>
                         <label
+                            class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin/categories.fields.is_root') }}</label>
+                        <x-select name="filter[is_root]" class="w-full" :value="request()->query('filter.is_root')">
+                            <option value="">{{ __('admin/components.status.all') }}</option>
+                            <option value="1" {{ request()->query('filter.is_root') === '1' ? 'selected' : '' }}>
+                                {{ __('admin/categories.status.root') }}
+                            </option>
+                            <option value="0" {{ request()->query('filter.is_root') === '0' ? 'selected' : '' }}>
+                                {{ __('admin/categories.status.has_parent') }}
+                            </option>
+                        </x-select>
+                    </div>
+
+                    
+                    <div>
+                        <label
                             class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin/categories.fields.parent') }}</label>
                         <x-select name="filter[parent_id]" class="w-full" :value="request()->query('filter.parent_id')">
                             <option value="">{{ __('admin/components.status.all') }}</option>
-                            <option value="null" {{ request()->query('filter.parent_id') === 'null' ? 'selected' : '' }}>
-                                {{ __('admin/categories.status.root') }}
-                            </option>
                             @forelse(($rootCategories ?? []) as $rootCategory)
                                 <option value="{{ $rootCategory->id }}"
                                     {{ request()->query('filter.parent_id') == $rootCategory->id ? 'selected' : '' }}>
@@ -159,6 +179,81 @@
         <x-delete-confirmation-modal id="delete-category-modal" route-name="admin.categories.destroy"
             row-selector="tr[data-category-id='__ID__']" />
     </div>
+
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Simple route template approach (like product-price-management.js)
+                const adminPrefix = '{{ config("admin.prefix", "admin") }}';
+                const updateSortOrderRouteTemplate = `/${adminPrefix}/categories/__CATEGORY_ID__/sort-order`;
+                
+                function getUpdateSortOrderRoute(categoryId) {
+                    return updateSortOrderRouteTemplate.replace('__CATEGORY_ID__', categoryId);
+                }
+                
+                const sortOrderInputs = document.querySelectorAll('.category-sort-order-input');
+
+                sortOrderInputs.forEach(input => {
+                    // Handle blur event (when user leaves the input)
+                    input.addEventListener('blur', function () {
+                        const categoryId = this.getAttribute('data-category-id');
+                        const newValue = parseInt(this.value) || 0;
+                        const originalValue = parseInt(this.getAttribute('data-original-value')) || 0;
+
+                        // Only update if value changed and categoryId is valid
+                        if (categoryId && newValue !== originalValue) {
+                            updateSortOrder(categoryId, newValue, this);
+                        } else {
+                            // Reset to original if invalid
+                            this.value = originalValue;
+                        }
+                    });
+
+                    // Handle Enter key
+                    input.addEventListener('keydown', function (e) {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            this.blur();
+                        }
+                    });
+                });
+
+                async function updateSortOrder(categoryId, sortOrder, inputElement) {
+                    // Validate categoryId
+                    if (!categoryId) {
+                        console.error('Category ID is missing');
+                        return;
+                    }
+
+                    // Disable input during update
+                    inputElement.disabled = true;
+                    const originalValue = inputElement.getAttribute('data-original-value');
+
+                    try {
+                        const url = getUpdateSortOrderRoute(categoryId);
+                        const response = await window.axios.post(url, {
+                            sort_order: sortOrder
+                        });
+
+                        if (response.data && response.data.success !== false) {
+                            // Update original value attribute
+                            inputElement.setAttribute('data-original-value', sortOrder);
+                        } else {
+                            // Revert on failure
+                            inputElement.value = originalValue;
+                        }
+                    } catch (error) {
+                        console.error('Update sort order error:', error);
+                        // Revert to original value on error
+                        inputElement.value = originalValue;
+                    } finally {
+                        // Re-enable input
+                        inputElement.disabled = false;
+                    }
+                }
+            });
+        </script>
+    @endpush
 
 </x-layouts.admin>
 

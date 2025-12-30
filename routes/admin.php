@@ -140,6 +140,7 @@ Route::group([
         Route::get('/{id}', [CategoryController::class, 'show'])->name('show');
         Route::get('/{id}/edit', [CategoryController::class, 'edit'])->name('edit');
         Route::match(['put', 'patch'], '/{id}', [CategoryController::class, 'update'])->name('update');
+        Route::post('/{id}/sort-order', [CategoryController::class, 'updateSortOrder'])->name('update-sort-order');
         Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('destroy');
     });
 

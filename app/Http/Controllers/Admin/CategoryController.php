@@ -116,6 +116,37 @@ class CategoryController extends Controller
     }
 
     /**
+     * Update the sort order of the specified category.
+     *
+     * @param Request $request
+     * @param string $id
+     * @return JsonResponse
+     */
+    public function updateSortOrder(Request $request, string $id): JsonResponse
+    {
+        try {
+            $request->validate([
+                'sort_order' => ['required', 'integer', 'min:0'],
+            ]);
+
+            $category = $this->service->findById($id);
+            $category->update(['sort_order' => $request->input('sort_order')]);
+
+            return $this->successResponse(
+                ['category' => $category->fresh()],
+                __('admin/categories.messages.sort_order_updated')
+            );
+        } catch (ModelNotFoundException $e) {
+            return $this->notFoundResponse(__('admin/categories.messages.not_found'));
+        } catch (Exception $e) {
+            return $this->errorResponse(
+                __('admin/categories.messages.sort_order_update_failed') . ': ' . $e->getMessage(),
+                500
+            );
+        }
+    }
+
+    /**
      * Remove the specified category from storage.
      *
      * @param Request $request

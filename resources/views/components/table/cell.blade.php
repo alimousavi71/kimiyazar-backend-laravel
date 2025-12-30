@@ -32,8 +32,14 @@
     // Build sort URL
     $sortUrl = null;
     if ($sortable && $sortField) {
-        $queryParams = request()->except(['sort', 'page']);
+        // Get all query parameters and preserve nested arrays (like filter[])
+        $queryParams = request()->query();
 
+        // Remove sort and page, but keep everything else including nested filter arrays
+        unset($queryParams['sort']);
+        unset($queryParams['page']);
+
+        // Add the new sort parameter
         if ($isActive && $currentDirection === 'asc') {
             // Toggle to descending
             $queryParams['sort'] = '-' . $sortField;
@@ -45,7 +51,8 @@
             $queryParams['sort'] = $sortField; // No prefix for ascending (Spatie Query Builder format)
         }
 
-        $sortUrl = request()->url() . '?' . http_build_query($queryParams);
+        // Build URL with all parameters, preserving nested array structure
+        $sortUrl = request()->url() . (!empty($queryParams) ? '?' . http_build_query($queryParams) : '');
     }
 @endphp
 

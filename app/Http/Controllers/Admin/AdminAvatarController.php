@@ -39,10 +39,10 @@ class AdminAvatarController extends Controller
                     'avatar' => $avatarPath,
                     'avatar_url' => $admin->avatar ? asset('storage/' . $admin->avatar) : null,
                 ],
-                'Avatar uploaded successfully.'
+                __('admin/admins.messages.avatar_uploaded')
             );
         } catch (Exception $e) {
-            return $this->errorResponse('Failed to upload avatar: ' . $e->getMessage(), 500);
+            return $this->errorResponse(__('admin/admins.messages.avatar_upload_failed'), 500);
         }
     }
 
@@ -57,9 +57,9 @@ class AdminAvatarController extends Controller
         try {
             $this->service->delete($id);
 
-            return $this->successResponse(null, 'Avatar deleted successfully.');
+            return $this->successResponse(null, __('admin/admins.messages.avatar_deleted'));
         } catch (Exception $e) {
-            return $this->errorResponse('Failed to delete avatar: ' . $e->getMessage(), 500);
+            return $this->errorResponse(__('admin/admins.messages.avatar_delete_failed'), 500);
         }
     }
 }

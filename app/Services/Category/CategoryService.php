@@ -35,6 +35,13 @@ class CategoryService
             AllowedFilter::partial('name'),
             AllowedFilter::partial('slug'),
             AllowedFilter::exact('is_active'),
+            AllowedFilter::callback('is_root', function ($query, $value) {
+                if ($value === '1' || $value === 1 || $value === true) {
+                    $query->whereNull('parent_id');
+                } elseif ($value === '0' || $value === 0 || $value === false) {
+                    $query->whereNotNull('parent_id');
+                }
+            }),
             AllowedFilter::callback('parent_id', function ($query, $value) {
                 if ($value === null || $value === '' || strtolower((string) $value) === 'null') {
                     $query->whereNull('parent_id');
