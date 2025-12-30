@@ -265,8 +265,10 @@ document.addEventListener("DOMContentLoaded", function () {
      * Get selected product IDs
      */
     function getSelectedProductIds() {
-        const checkboxes = document.querySelectorAll('.product-checkbox:checked');
-        return Array.from(checkboxes).map(cb => parseInt(cb.value));
+        const checkboxes = document.querySelectorAll(
+            ".product-checkbox:checked"
+        );
+        return Array.from(checkboxes).map((cb) => parseInt(cb.value));
     }
 
     /**
@@ -291,7 +293,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const selectedIds = getSelectedProductIds();
         if (selectedIds.length === 0) {
             if (window.Toast) {
-                window.Toast.warning("Please select at least one product to sync");
+                window.Toast.warning(
+                    "Please select at least one product to sync"
+                );
             }
             return;
         }
@@ -301,7 +305,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         try {
             const response = await window.axios.post(routes.syncToday, {
-                product_ids: selectedIds
+                product_ids: selectedIds,
             });
 
             if (response.data && response.data.success !== false) {
@@ -337,9 +341,10 @@ document.addEventListener("DOMContentLoaded", function () {
     // Select all checkbox
     const selectAllCheckbox = document.getElementById("select-all-checkbox");
     if (selectAllCheckbox) {
-        selectAllCheckbox.addEventListener("change", function() {
-            const productCheckboxes = document.querySelectorAll('.product-checkbox');
-            productCheckboxes.forEach(cb => {
+        selectAllCheckbox.addEventListener("change", function () {
+            const productCheckboxes =
+                document.querySelectorAll(".product-checkbox");
+            productCheckboxes.forEach((cb) => {
                 cb.checked = selectAllCheckbox.checked;
             });
             updateSyncButtonState();
@@ -348,17 +353,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Individual product checkboxes
     if (tableBody) {
-        tableBody.addEventListener("change", function(e) {
+        tableBody.addEventListener("change", function (e) {
             if (e.target.classList.contains("product-checkbox")) {
                 updateSyncButtonState();
-                
+
                 // Update select all checkbox state
                 if (selectAllCheckbox) {
-                    const productCheckboxes = document.querySelectorAll('.product-checkbox');
-                    const allChecked = Array.from(productCheckboxes).every(cb => cb.checked);
-                    const someChecked = Array.from(productCheckboxes).some(cb => cb.checked);
+                    const productCheckboxes =
+                        document.querySelectorAll(".product-checkbox");
+                    const allChecked = Array.from(productCheckboxes).every(
+                        (cb) => cb.checked
+                    );
+                    const someChecked = Array.from(productCheckboxes).some(
+                        (cb) => cb.checked
+                    );
                     selectAllCheckbox.checked = allChecked;
-                    selectAllCheckbox.indeterminate = someChecked && !allChecked;
+                    selectAllCheckbox.indeterminate =
+                        someChecked && !allChecked;
                 }
             }
         });

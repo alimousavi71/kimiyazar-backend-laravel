@@ -23,24 +23,14 @@ class UpdateBannerRequest extends FormRequest
      */
     public function rules(): array
     {
-        $position = $this->input('position');
-        $dimensions = $position ? config('banner.positions.' . $position, ['width' => 1200, 'height' => 300]) : ['width' => 1200, 'height' => 300];
-
-        $bannerFileRules = [
-            'sometimes',
-            'image',
-            'mimes:jpeg,png,jpg,webp',
-            'max:5120',
-        ];
-
-        // Add dimensions validation only if banner_file is provided
-        if ($this->hasFile('banner_file')) {
-            $bannerFileRules[] = 'dimensions:width=' . $dimensions['width'] . ',height=' . $dimensions['height'];
-        }
-
         return [
             'name' => ['required', 'string', 'max:255'],
-            'banner_file' => $bannerFileRules,
+            'banner_file' => [
+                'sometimes',
+                'image',
+                'mimes:jpeg,png,jpg,webp',
+                'max:5120',
+            ],
             'link' => ['nullable', 'string', 'max:500', 'url'],
             'position' => ['required', 'string', Rule::enum(BannerPosition::class)],
             'target_type' => ['nullable', 'string', 'max:50'],

@@ -23,9 +23,6 @@ class StoreBannerRequest extends FormRequest
      */
     public function rules(): array
     {
-        $position = $this->input('position');
-        $dimensions = $position ? config('banner.positions.' . $position, ['width' => 1200, 'height' => 300]) : ['width' => 1200, 'height' => 300];
-
         return [
             'name' => ['required', 'string', 'max:255'],
             'banner_file' => [
@@ -33,7 +30,6 @@ class StoreBannerRequest extends FormRequest
                 'image',
                 'mimes:jpeg,png,jpg,webp',
                 'max:5120',
-                'dimensions:width=' . $dimensions['width'] . ',height=' . $dimensions['height']
             ],
             'link' => ['nullable', 'string', 'max:500', 'url'],
             'position' => ['required', 'string', Rule::enum(BannerPosition::class)],
