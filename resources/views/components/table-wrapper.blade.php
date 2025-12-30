@@ -23,7 +23,7 @@
                             type="text" 
                             name="filter[search]"
                             placeholder="{{ $searchPlaceholder }}" 
-                            value="{{ $searchValue ?: request()->query('filter.search') }}"
+                            value="{{ $searchValue ?: request()->input('filter.search', '') }}"
                             class="w-full ps-10 pe-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all duration-200 bg-white shadow-sm hover:shadow-md focus:shadow-md" 
                         />
                     </div>

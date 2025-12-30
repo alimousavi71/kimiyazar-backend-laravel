@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
      */
     async function updateProductPrice(productId, price, currencyCode) {
         if (!price || !currencyCode) {
+            // Show validation error (not an axios call, so interceptor won't handle it)
             if (window.Toast) {
                 window.Toast.error("Price and currency are required");
             }
@@ -49,14 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             if (response.data && response.data.success !== false) {
-                if (window.Toast) {
-                    const message =
-                        response.data?.data?.message ||
-                        response.data?.message ||
-                        "Price updated successfully";
-                    window.Toast.success(message);
-                }
-
+                // Success message is handled by axios interceptor
                 // Update the current price display
                 const row = document.querySelector(
                     `tr[data-product-id="${productId}"]`
@@ -88,13 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         } catch (error) {
             console.error("Update error:", error);
-            if (window.Toast) {
-                const errorMsg =
-                    error.response?.data?.message ||
-                    error.message ||
-                    "Failed to update price";
-                window.Toast.error(errorMsg);
-            }
+            // Error toast is handled by axios interceptor
             return false;
         }
     }
@@ -126,6 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         if (prices.length === 0) {
+            // Show validation warning (not an axios call, so interceptor won't handle it)
             if (window.Toast) {
                 window.Toast.warning("No changes to save");
             }
@@ -141,14 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             if (response.data && response.data.success !== false) {
-                if (window.Toast) {
-                    const message =
-                        response.data?.data?.message ||
-                        response.data?.message ||
-                        "Prices updated successfully";
-                    window.Toast.success(message);
-                }
-
+                // Success message is handled by axios interceptor
                 // Reload page to show updated prices
                 setTimeout(() => {
                     window.location.reload();
@@ -156,13 +138,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         } catch (error) {
             console.error("Bulk update error:", error);
-            if (window.Toast) {
-                const errorMsg =
-                    error.response?.data?.message ||
-                    error.message ||
-                    "Failed to update prices";
-                window.Toast.error(errorMsg);
-            }
+            // Error toast is handled by axios interceptor
         } finally {
             bulkSaveBtn.disabled = false;
             bulkSaveBtn.textContent = "Save All Changes";
@@ -296,14 +272,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const response = await window.axios.post(routes.syncToday);
 
             if (response.data && response.data.success !== false) {
-                if (window.Toast) {
-                    const message =
-                        response.data?.data?.message ||
-                        response.data?.message ||
-                        "Prices synced successfully";
-                    window.Toast.success(message);
-                }
-
+                // Success message is handled by axios interceptor
                 // Reload page to show updated prices
                 setTimeout(() => {
                     window.location.reload();
@@ -311,13 +280,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         } catch (error) {
             console.error("Sync error:", error);
-            if (window.Toast) {
-                const errorMsg =
-                    error.response?.data?.message ||
-                    error.message ||
-                    "Failed to sync prices";
-                window.Toast.error(errorMsg);
-            }
+            // Error toast is handled by axios interceptor
         } finally {
             syncTodayBtn.disabled = false;
             if (syncTodayBtn) {

@@ -108,11 +108,7 @@ function initFormWithPhotos(config) {
                         }
                     }
 
-                    // Show success message
-                    if (window.Toast && successMessage) {
-                        window.Toast.success(successMessage);
-                    }
-
+                    // Success message is handled by axios interceptor
                     // Call custom success callback if provided
                     if (onSuccess && typeof onSuccess === "function") {
                         onSuccess(response, entityId);

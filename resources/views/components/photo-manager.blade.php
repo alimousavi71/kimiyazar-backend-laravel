@@ -312,16 +312,11 @@ function photoManager(config) {
                         url: photoData.url || this.getPhotoUrl(photoData.file_path)
                     };
                     this.photos.push(photo);
-
-                    if (window.Toast) {
-                        window.Toast.success(this.translations.upload_success);
-                    }
+                    // Success message is handled by axios interceptor
                 }
             } catch (error) {
                 console.error('Upload error:', error);
-                if (window.Toast) {
-                    window.Toast.error(error.response?.data?.message || this.translations.upload_error);
-                }
+                // Error toast is handled by axios interceptor
             } finally {
                 this.loading = false;
             }
@@ -338,17 +333,13 @@ function photoManager(config) {
 
                 if (response.data && response.data.success !== false) {
                     this.photos = this.photos.filter(p => String(p.id) !== String(photoId));
-                    if (window.Toast) {
-                        window.Toast.success(this.translations.delete_success);
-                    }
+                    // Success message is handled by axios interceptor
                 } else {
                     throw new Error(response.data?.message || 'Delete failed');
                 }
             } catch (error) {
                 console.error('Delete error:', error);
-                if (window.Toast) {
-                    window.Toast.error(error.response?.data?.message || error.message || this.translations.delete_error);
-                }
+                // Error toast is handled by axios interceptor
             }
         },
 
@@ -363,16 +354,11 @@ function photoManager(config) {
                         ...p,
                         is_primary: p.id === photoId
                     }));
-
-                    if (window.Toast) {
-                        window.Toast.success(this.translations.primary_set);
-                    }
+                    // Success message is handled by axios interceptor
                 }
             } catch (error) {
                 console.error('Set primary error:', error);
-                if (window.Toast) {
-                    window.Toast.error(error.response?.data?.message || this.translations.primary_set_error);
-                }
+                // Error toast is handled by axios interceptor
             }
         },
 
@@ -409,9 +395,7 @@ function photoManager(config) {
                 const temp2 = this.photos[index];
                 this.photos[index] = this.photos[newIndex];
                 this.photos[newIndex] = temp2;
-                if (window.Toast) {
-                    window.Toast.error(this.translations.reorder_error);
-                }
+                // Error toast is handled by axios interceptor
             }
         },
 
@@ -431,9 +415,7 @@ function photoManager(config) {
                 this.photoableId = photoableId;
             } catch (error) {
                 console.error('Attach error:', error);
-                if (window.Toast) {
-                    window.Toast.error(this.translations.attach_error);
-                }
+                // Error toast is handled by axios interceptor
             }
         }
     };

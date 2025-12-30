@@ -10,7 +10,7 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         <div class="lg:col-span-2">
             <x-card>
                 <x-slot name="title">{{ __('admin/profile.forms.edit.card_title') }}</x-slot>
@@ -56,7 +56,7 @@
             </x-card>
         </div>
 
-        
+
         <div class="lg:col-span-1">
             <x-card>
                 <x-slot name="title">{{ __('admin/profile.forms.edit.avatar_card_title') }}</x-slot>
@@ -133,9 +133,7 @@
                             });
 
                             if (response.data.success) {
-                                if (window.Toast) {
-                                    window.Toast.success(response.data.message);
-                                }
+                                // Success message is handled by axios interceptor
                                 setTimeout(() => location.reload(), 1000);
                             }
                         } catch (error) {
@@ -162,9 +160,7 @@
                             const response = await window.axios.delete('{{ route('admin.profile.avatar.delete') }}');
 
                             if (response.data.success) {
-                                if (window.Toast) {
-                                    window.Toast.success(response.data.message);
-                                }
+                                // Success message is handled by axios interceptor
                                 setTimeout(() => location.reload(), 1000);
                             }
                         } catch (error) {

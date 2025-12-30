@@ -307,9 +307,7 @@
                     }
                 } catch (error) {
                     console.error('Create tag error:', error);
-                    if (window.Toast) {
-                        window.Toast.error(error.response?.data?.message || this.translations.create_error);
-                    }
+                    // Error toast is handled by axios interceptor
                 } finally {
                     this.loading = false;
                 }
@@ -356,9 +354,7 @@
                     await this.loadTags();
                 } catch (error) {
                     console.error('Attach error:', error);
-                    if (window.Toast) {
-                        window.Toast.error(error.response?.data?.message || this.translations.attach_error);
-                    }
+                    // Error toast is handled by axios interceptor
                 }
             }
         };
