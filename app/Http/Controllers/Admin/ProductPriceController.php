@@ -91,7 +91,7 @@ class ProductPriceController extends Controller
     }
 
     /**
-     * Sync today's prices - create or update prices for all products.
+     * Sync today's prices - create or update prices for selected products.
      *
      * @param SyncTodayPricesRequest $request
      * @return JsonResponse
@@ -99,7 +99,8 @@ class ProductPriceController extends Controller
     public function syncTodayPrices(SyncTodayPricesRequest $request): JsonResponse
     {
         try {
-            $result = $this->service->syncTodayPrices();
+            $productIds = $request->input('product_ids');
+            $result = $this->service->syncTodayPrices($productIds);
 
             return $this->successResponse([
                 'created' => $result['created'],

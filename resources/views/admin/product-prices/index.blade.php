@@ -11,7 +11,7 @@
             </div>
             <div class="flex gap-2">
                 <button type="button" id="sync-today-btn"
-                    class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium">
+                    class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed">
                     {{ __('admin/product-prices.buttons.sync_today') }}
                 </button>
                 <button type="button" id="bulk-save-btn"
@@ -89,6 +89,11 @@
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col"
+                                class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider w-12">
+                                <input type="checkbox" id="select-all-checkbox"
+                                    class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-2">
+                            </th>
+                            <th scope="col"
                                 class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 {{ __('admin/components.table.id') }}
                             </th>
@@ -117,6 +122,12 @@
                     <tbody class="bg-white divide-y divide-gray-200" id="products-table-body">
                         @forelse($products as $product)
                             <tr data-product-id="{{ $product->id }}" class="hover:bg-gray-50 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <input type="checkbox" 
+                                        name="selected_products[]" 
+                                        value="{{ $product->id }}"
+                                        class="product-checkbox w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-2">
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="text-sm text-gray-600">{{ $product->id }}</span>
                                 </td>
@@ -170,7 +181,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="px-6 py-8 text-center text-gray-500">
+                                <td colspan="7" class="px-6 py-8 text-center text-gray-500">
                                     {{ __('admin/components.table.no_results') }}
                                 </td>
                             </tr>

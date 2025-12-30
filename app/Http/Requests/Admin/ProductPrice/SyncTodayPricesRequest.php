@@ -27,7 +27,8 @@ class SyncTodayPricesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // No validation needed for sync operation
+            'product_ids' => ['required', 'array', 'min:1'],
+            'product_ids.*' => ['required', 'integer', 'exists:products,id'],
         ];
     }
 }

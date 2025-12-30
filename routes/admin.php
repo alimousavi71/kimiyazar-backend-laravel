@@ -244,6 +244,7 @@ Route::group([
         Route::get('/{id}', [ProductController::class, 'show'])->name('show');
         Route::get('/{id}/edit', [ProductController::class, 'edit'])->name('edit');
         Route::match(['put', 'patch'], '/{id}', [ProductController::class, 'update'])->name('update');
+        Route::post('/{id}/sort-order', [ProductController::class, 'updateSortOrder'])->name('update-sort-order');
         Route::delete('/{id}', [ProductController::class, 'destroy'])->name('destroy');
     });
 

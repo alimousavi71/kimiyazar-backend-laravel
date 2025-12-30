@@ -100,7 +100,20 @@
                                         @endif
                                     </x-table.cell>
                                     <x-table.cell>
-                                        <span class="text-gray-600">{{ $product->sort_order }}</span>
+                                        @php
+                                            // Get sort_order directly from attributes to avoid any accessor issues
+                                            $sortOrder = isset($product->attributes['sort_order']) 
+                                                ? (int) $product->attributes['sort_order'] 
+                                                : ($product->sort_order ?? 0);
+                                        @endphp
+                                        <input 
+                                            type="number" 
+                                            min="0"
+                                            value="{{ $sortOrder }}" 
+                                            data-product-id="{{ $product->id }}"
+                                            class="product-sort-order-input w-20 px-2 py-1 text-sm text-gray-900 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all"
+                                            data-original-value="{{ $sortOrder }}"
+                                        />
                                     </x-table.cell>
                                     <x-table.cell>{{ $product->created_at->format('Y-m-d') }}</x-table.cell>
                                     <x-table.cell>
@@ -172,20 +185,64 @@
                     <div>
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin/products.fields.category') }}</label>
-                        <x-select name="filter[category_id]" class="w-full" :value="request()->query('filter.category_id')">
-                            <option value="">{{ __('admin/components.status.all') }}</option>
-                            <option value="null" {{ request()->query('filter.category_id') === 'null' ? 'selected' : '' }}>
-                                {{ __('admin/products.forms.placeholders.no_category') }}
-                            </option>
-                            @forelse(($categories ?? []) as $category)
-                                <option value="{{ $category->id }}"
-                                    {{ request()->query('filter.category_id') == $category->id ? 'selected' : '' }}>
-                                    {{ $category->name }}
-                                </option>
-                            @empty
-                                <option value="" disabled>{{ __('admin/components.status.no_results') }}</option>
-                            @endforelse
-                        </x-select>
+                        <x-category-selector 
+                            name="filter[category_id]" 
+                            id="filter_category_id" 
+                            :value="request()->query('filter.category_id') && request()->query('filter.category_id') !== 'null' ? request()->query('filter.category_id') : ''"
+                            :categories="$categories" 
+                            :placeholder="__('admin/components.status.all')"
+                            class="w-full" />
+                        <div class="mt-2">
+                            <label class="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
+                                <input type="checkbox" 
+                                    id="filter_no_category_checkbox"
+                                    {{ request()->query('filter.category_id') === 'null' ? 'checked' : '' }}
+                                    class="rounded border-gray-300 text-green-600 focus:ring-green-500">
+                                <span>{{ __('admin/products.forms.placeholders.no_category') }}</span>
+                            </label>
+                        </div>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const checkbox = document.getElementById('filter_no_category_checkbox');
+                                const categorySelect = document.getElementById('filter_category_id');
+                                
+                                if (checkbox && categorySelect) {
+                                    checkbox.addEventListener('change', function() {
+                                        const hiddenSelect = categorySelect.closest('.category-selector-wrapper')?.querySelector('select');
+                                        if (hiddenSelect) {
+                                            if (this.checked) {
+                                                hiddenSelect.value = 'null';
+                                                hiddenSelect.name = 'filter[category_id]';
+                                                // Update display
+                                                const button = categorySelect.closest('.category-selector-wrapper')?.querySelector('.category-selector-button .category-selector-text');
+                                                if (button) {
+                                                    button.textContent = '{{ __('admin/products.forms.placeholders.no_category') }}';
+                                                }
+                                            } else {
+                                                hiddenSelect.value = '';
+                                                // Reset display
+                                                const button = categorySelect.closest('.category-selector-wrapper')?.querySelector('.category-selector-button .category-selector-text');
+                                                if (button) {
+                                                    button.textContent = '{{ __('admin/components.status.all') }}';
+                                                }
+                                            }
+                                        }
+                                    });
+                                    
+                                    // Also handle when category is selected from dropdown - uncheck the checkbox
+                                    if (categorySelect) {
+                                        const wrapper = categorySelect.closest('.category-selector-wrapper');
+                                        if (wrapper) {
+                                            wrapper.addEventListener('change', function(e) {
+                                                if (e.target.tagName === 'SELECT' && e.target.value !== 'null') {
+                                                    checkbox.checked = false;
+                                                }
+                                            });
+                                        }
+                                    }
+                                }
+                            });
+                        </script>
                     </div>
 
                     
@@ -209,5 +266,81 @@
         <x-delete-confirmation-modal id="delete-product-modal" route-name="admin.products.destroy"
             row-selector="tr[data-product-id='__ID__']" />
     </div>
+
+    @push('scripts')
+        @vite('resources/js/category-selector.js')
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Simple route template approach (like product-price-management.js)
+                const adminPrefix = '{{ config("admin.prefix", "admin") }}';
+                const updateSortOrderRouteTemplate = `/${adminPrefix}/products/__PRODUCT_ID__/sort-order`;
+                
+                function getUpdateSortOrderRoute(productId) {
+                    return updateSortOrderRouteTemplate.replace('__PRODUCT_ID__', productId);
+                }
+                
+                const sortOrderInputs = document.querySelectorAll('.product-sort-order-input');
+
+                sortOrderInputs.forEach(input => {
+                    // Handle blur event (when user leaves the input)
+                    input.addEventListener('blur', function () {
+                        const productId = this.getAttribute('data-product-id');
+                        const newValue = parseInt(this.value) || 0;
+                        const originalValue = parseInt(this.getAttribute('data-original-value')) || 0;
+
+                        // Only update if value changed and productId is valid
+                        if (productId && newValue !== originalValue) {
+                            updateSortOrder(productId, newValue, this);
+                        } else {
+                            // Reset to original if invalid
+                            this.value = originalValue;
+                        }
+                    });
+
+                    // Handle Enter key
+                    input.addEventListener('keydown', function (e) {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            this.blur();
+                        }
+                    });
+                });
+
+                async function updateSortOrder(productId, sortOrder, inputElement) {
+                    // Validate productId
+                    if (!productId) {
+                        console.error('Product ID is missing');
+                        return;
+                    }
+
+                    // Disable input during update
+                    inputElement.disabled = true;
+                    const originalValue = inputElement.getAttribute('data-original-value');
+
+                    try {
+                        const url = getUpdateSortOrderRoute(productId);
+                        const response = await window.axios.post(url, {
+                            sort_order: sortOrder
+                        });
+
+                        if (response.data && response.data.success !== false) {
+                            // Update original value attribute
+                            inputElement.setAttribute('data-original-value', sortOrder);
+                        } else {
+                            // Revert on failure
+                            inputElement.value = originalValue;
+                        }
+                    } catch (error) {
+                        console.error('Update sort order error:', error);
+                        // Revert to original value on error
+                        inputElement.value = originalValue;
+                    } finally {
+                        // Re-enable input
+                        inputElement.disabled = false;
+                    }
+                }
+            });
+        </script>
+    @endpush
 
 </x-layouts.admin>

@@ -38,7 +38,7 @@ class ProductController extends Controller
     public function index(Request $request): View
     {
         $products = $this->service->search();
-        $categories = $this->categoryService->getRootCategories();
+        $categories = $this->categoryService->getAllCategoriesTree();
 
         return view('admin.products.index', compact('products', 'categories'));
     }
@@ -115,6 +115,37 @@ class ProductController extends Controller
         return redirect()
             ->route('admin.products.index')
             ->with('success', __('admin/products.messages.updated'));
+    }
+
+    /**
+     * Update the sort order of the specified product.
+     *
+     * @param Request $request
+     * @param string $id
+     * @return JsonResponse
+     */
+    public function updateSortOrder(Request $request, string $id): JsonResponse
+    {
+        try {
+            $request->validate([
+                'sort_order' => ['required', 'integer', 'min:0'],
+            ]);
+
+            $product = $this->service->findById($id);
+            $product->update(['sort_order' => $request->input('sort_order')]);
+
+            return $this->successResponse(
+                ['product' => $product->fresh()],
+                __('admin/products.messages.sort_order_updated')
+            );
+        } catch (ModelNotFoundException $e) {
+            return $this->notFoundResponse(__('admin/products.messages.not_found'));
+        } catch (Exception $e) {
+            return $this->errorResponse(
+                __('admin/products.messages.sort_order_update_failed') . ': ' . $e->getMessage(),
+                500
+            );
+        }
     }
 
     /**

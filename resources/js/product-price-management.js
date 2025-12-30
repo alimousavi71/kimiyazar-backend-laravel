@@ -56,8 +56,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     `tr[data-product-id="${productId}"]`
                 );
                 if (row) {
+                    // Current price is in the 3rd column (after checkbox and ID)
                     const currentPriceCell =
-                        row.querySelector("td:nth-child(2)");
+                        row.querySelector("td:nth-child(3)");
                     if (currentPriceCell) {
                         const currencyLabel =
                             Array.from(row.querySelectorAll("option")).find(
@@ -180,7 +181,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // If inputs are empty, pre-fill from current price display
             if (priceInput && !priceInput.value) {
-                const currentPriceCell = row.querySelector("td:nth-child(2)");
+                // Current price is in the 3rd column (after checkbox and ID)
+                const currentPriceCell = row.querySelector("td:nth-child(3)");
                 if (currentPriceCell) {
                     const priceText = currentPriceCell.textContent.trim();
                     const priceMatch = priceText.match(/[\d,]+/);
@@ -260,16 +262,47 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     /**
-     * Sync today's prices
+     * Get selected product IDs
+     */
+    function getSelectedProductIds() {
+        const checkboxes = document.querySelectorAll('.product-checkbox:checked');
+        return Array.from(checkboxes).map(cb => parseInt(cb.value));
+    }
+
+    /**
+     * Update sync button state based on selected products
+     */
+    function updateSyncButtonState() {
+        if (!syncTodayBtn) return;
+        const selectedIds = getSelectedProductIds();
+        if (selectedIds.length === 0) {
+            syncTodayBtn.disabled = true;
+        } else {
+            syncTodayBtn.disabled = false;
+        }
+    }
+
+    /**
+     * Sync today's prices for selected products only
      */
     async function syncTodayPrices() {
         if (!syncTodayBtn) return;
+
+        const selectedIds = getSelectedProductIds();
+        if (selectedIds.length === 0) {
+            if (window.Toast) {
+                window.Toast.warning("Please select at least one product to sync");
+            }
+            return;
+        }
 
         syncTodayBtn.disabled = true;
         syncTodayBtn.textContent = "Syncing...";
 
         try {
-            const response = await window.axios.post(routes.syncToday);
+            const response = await window.axios.post(routes.syncToday, {
+                product_ids: selectedIds
+            });
 
             if (response.data && response.data.success !== false) {
                 // Success message is handled by axios interceptor
@@ -298,6 +331,37 @@ document.addEventListener("DOMContentLoaded", function () {
     // Sync today button
     if (syncTodayBtn) {
         syncTodayBtn.addEventListener("click", syncTodayPrices);
+        updateSyncButtonState(); // Initialize button state
+    }
+
+    // Select all checkbox
+    const selectAllCheckbox = document.getElementById("select-all-checkbox");
+    if (selectAllCheckbox) {
+        selectAllCheckbox.addEventListener("change", function() {
+            const productCheckboxes = document.querySelectorAll('.product-checkbox');
+            productCheckboxes.forEach(cb => {
+                cb.checked = selectAllCheckbox.checked;
+            });
+            updateSyncButtonState();
+        });
+    }
+
+    // Individual product checkboxes
+    if (tableBody) {
+        tableBody.addEventListener("change", function(e) {
+            if (e.target.classList.contains("product-checkbox")) {
+                updateSyncButtonState();
+                
+                // Update select all checkbox state
+                if (selectAllCheckbox) {
+                    const productCheckboxes = document.querySelectorAll('.product-checkbox');
+                    const allChecked = Array.from(productCheckboxes).every(cb => cb.checked);
+                    const someChecked = Array.from(productCheckboxes).some(cb => cb.checked);
+                    selectAllCheckbox.checked = allChecked;
+                    selectAllCheckbox.indeterminate = someChecked && !allChecked;
+                }
+            }
+        });
     }
 
     // Pre-fill latest prices on load

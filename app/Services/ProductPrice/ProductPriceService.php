@@ -179,18 +179,23 @@ class ProductPriceService
     }
 
     /**
-     * Sync today's prices - create or update prices for all products based on their latest prices.
+     * Sync today's prices - create or update prices for selected products based on their latest prices.
      *
-     * @return array ['created' => int, 'updated' => int]
+     * @param array<int>|null $productIds Optional array of product IDs to sync. If null, syncs all products.
+     * @return array ['created' => int, 'updated' => int, 'total' => int]
      */
-    public function syncTodayPrices(): array
+    public function syncTodayPrices(?array $productIds = null): array
     {
         $today = now()->startOfDay();
         $created = 0;
         $updated = 0;
 
-        // Get all products
-        $products = $this->productRepository->all();
+        // Get products - either selected ones or all
+        if ($productIds !== null && count($productIds) > 0) {
+            $products = $this->productRepository->findByIds($productIds);
+        } else {
+            $products = $this->productRepository->all();
+        }
 
         foreach ($products as $product) {
             // Get the latest price for this product
