@@ -7,7 +7,7 @@
     class="w-64 bg-gradient-to-b from-white to-gray-50/50 border-e border-gray-200/60 h-screen flex flex-col fixed start-0 top-0 z-40 transition-all duration-300 lg:relative lg:translate-x-0 shadow-lg backdrop-blur-sm"
     x-bind:class="open ? 'translate-x-0' : (isRtl ? 'translate-x-full lg:translate-x-0' : '-translate-x-full lg:translate-x-0')">
 
-    
+
     <div class="flex items-center justify-between mb-8 pt-6 px-4">
         <div class="flex items-center gap-3 group">
             <div
@@ -27,10 +27,10 @@
         </button>
     </div>
 
-    
+
     <nav class="flex-1 overflow-y-auto px-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
         <ul class="space-y-1.5">
-            
+
             <li>
                 <a href="{{ route('user.profile.show') }}"
                     class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium relative overflow-hidden cursor-pointer {{ request()->routeIs('user.profile.show') || request()->routeIs('user.profile.edit') ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
@@ -48,7 +48,7 @@
                 </a>
             </li>
 
-            
+
             <li>
                 <a href="{{ route('user.profile.price-inquiries.index') }}"
                     class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium relative overflow-hidden cursor-pointer {{ request()->routeIs('user.profile.price-inquiries.*') ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
@@ -66,7 +66,7 @@
                 </a>
             </li>
 
-            
+
             <li>
                 <a href="{{ route('user.profile.orders.index') }}"
                     class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium relative overflow-hidden cursor-pointer {{ request()->routeIs('user.profile.orders.*') ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
@@ -84,7 +84,7 @@
                 </a>
             </li>
 
-            
+
             <li>
                 <a href="{{ route('home') }}"
                     class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium relative overflow-hidden cursor-pointer text-gray-700 hover:bg-gray-50 hover:text-gray-900">
@@ -99,7 +99,7 @@
         </ul>
     </nav>
 
-    
+
     <div class="mt-auto pt-4 pb-4 px-4 border-t border-gray-200/60">
         <p class="text-xs text-center text-gray-500">
             &copy; {{ date('Y') }} {{ config('app.name', 'Laravel') }}. {{ __('admin/components.copyright') }}

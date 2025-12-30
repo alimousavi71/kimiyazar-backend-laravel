@@ -1,5 +1,4 @@
-<x-layouts.user-profile :title="__('user/orders.title')" :header-title="__('user/orders.title')"
-    :breadcrumbs="[
+<x-layouts.user-profile :title="__('user/orders.title')" :header-title="__('user/orders.title')" :breadcrumbs="[
         ['label' => __('user/profile.breadcrumbs.dashboard'), 'url' => route('user.profile.show')],
         ['label' => __('user/orders.title')]
     ]">
@@ -11,10 +10,10 @@
             </div>
         </div>
 
-        
+
         <x-session-messages />
 
-        
+
         <x-card>
             <x-table-wrapper :paginator="$orders ?? null">
                 <x-table>
@@ -42,8 +41,7 @@
                                         <span class="text-gray-600">#{{ $order->id }}</span>
                                     </x-table.cell>
                                     <x-table.cell>
-                                        <x-badge
-                                            :variant="$order->customer_type === 'real' ? 'info' : 'primary'">
+                                        <x-badge :variant="$order->customer_type === 'real' ? 'info' : 'primary'">
                                             {{ __('user/orders.customer_types.' . $order->customer_type) }}
                                         </x-badge>
                                     </x-table.cell>
@@ -53,10 +51,13 @@
                                         </x-badge>
                                     </x-table.cell>
                                     <x-table.cell>
-                                        <span class="text-gray-700">{{ __('user/orders.payment_types.' . $order->payment_type->value) }}</span>
+                                        <span
+                                            class="text-gray-700">{{ __('user/orders.payment_types.' . $order->payment_type->value) }}</span>
                                     </x-table.cell>
                                     <x-table.cell>
-                                        <span class="text-gray-900 font-medium">{{ number_format($order->total_payment_amount) }} {{ __('orders.currency') }}</span>
+                                        <span
+                                            class="text-gray-900 font-medium">{{ number_format($order->total_payment_amount) }}
+                                            {{ __('orders.currency') }}</span>
                                     </x-table.cell>
                                     <x-table.cell>
                                         <span class="text-gray-900">
@@ -70,8 +71,7 @@
                                     <x-table.cell>
                                         <div class="flex items-center justify-end">
                                             <x-dropdown-menu align="end">
-                                                <x-dropdown-item
-                                                    href="{{ route('user.profile.orders.show', $order->id) }}"
+                                                <x-dropdown-item href="{{ route('user.profile.orders.show', $order->id) }}"
                                                     icon="show">
                                                     {{ __('admin/components.buttons.view') }}
                                                 </x-dropdown-item>
@@ -93,4 +93,3 @@
         </x-card>
     </div>
 </x-layouts.user-profile>
-

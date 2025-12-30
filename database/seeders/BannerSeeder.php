@@ -26,7 +26,7 @@ class BannerSeeder extends Seeder
             [
                 'name' => 'بنر پیشنهاد ویژه',
                 'banner_file' => null,
-                'link' => '/offers',
+                'link' => '#',
                 'position' => BannerPosition::A2->value,
                 'target_type' => null,
                 'target_id' => null,
@@ -35,7 +35,7 @@ class BannerSeeder extends Seeder
             [
                 'name' => 'بنر محصولات جدید',
                 'banner_file' => null,
-                'link' => '/new-products',
+                'link' => '/products',
                 'position' => BannerPosition::B1->value,
                 'target_type' => null,
                 'target_id' => null,
@@ -44,7 +44,7 @@ class BannerSeeder extends Seeder
             [
                 'name' => 'بنر تخفیف‌های آخر هفته',
                 'banner_file' => null,
-                'link' => '/weekend-sale',
+                'link' => '#',
                 'position' => BannerPosition::B2->value,
                 'target_type' => null,
                 'target_id' => null,
@@ -53,7 +53,7 @@ class BannerSeeder extends Seeder
             [
                 'name' => 'بنر همکاری با ما',
                 'banner_file' => null,
-                'link' => '/partnership',
+                'link' => '/contact',
                 'position' => BannerPosition::C1->value,
                 'target_type' => null,
                 'target_id' => null,
@@ -62,7 +62,7 @@ class BannerSeeder extends Seeder
             [
                 'name' => 'بنر خبرنامه',
                 'banner_file' => null,
-                'link' => '/newsletter',
+                'link' => '#',
                 'position' => BannerPosition::C2->value,
                 'target_type' => null,
                 'target_id' => null,

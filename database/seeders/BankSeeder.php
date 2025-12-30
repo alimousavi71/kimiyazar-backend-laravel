@@ -13,29 +13,26 @@ class BankSeeder extends Seeder
     public function run(): void
     {
         $banks = [
-            // Iranian Banks
-            ['name' => 'Melli Bank', 'logo' => null],
-            ['name' => 'Pasargad Bank', 'logo' => null],
-            ['name' => 'Sepah Bank', 'logo' => null],
-            ['name' => 'Mellat Bank', 'logo' => null],
-            ['name' => 'Tejarat Bank', 'logo' => null],
-            ['name' => 'Refah Bank', 'logo' => null],
-            ['name' => 'Saderat Bank', 'logo' => null],
-            ['name' => 'Keshavarzi Bank', 'logo' => null],
-            ['name' => 'Bank of Industry and Mines', 'logo' => null],
-            ['name' => 'Bank of Housing', 'logo' => null],
-            ['name' => 'Bank Melli Iran', 'logo' => null],
-            ['name' => 'Karaafarin Bank', 'logo' => null],
-            ['name' => 'Shahr Bank', 'logo' => null],
-            ['name' => 'Kowsar Bank', 'logo' => null],
-            ['name' => 'Sarmayeh Bank', 'logo' => null],
-            
-            // International Banks
-            ['name' => 'Deutsche Bank', 'logo' => null],
-            ['name' => 'HSBC', 'logo' => null],
-            ['name' => 'Bank of America', 'logo' => null],
-            ['name' => 'Chase Bank', 'logo' => null],
-            ['name' => 'Barclays Bank', 'logo' => null],
+            ['name' => 'بانک ملی ایران', 'logo' => null],
+            ['name' => 'بانک پاسارگاد', 'logo' => null],
+            ['name' => 'بانک سپه', 'logo' => null],
+            ['name' => 'بانک ملت', 'logo' => null],
+            ['name' => 'بانک تجارت', 'logo' => null],
+            ['name' => 'بانک رفاه', 'logo' => null],
+            ['name' => 'بانک صادرات', 'logo' => null],
+            ['name' => 'بانک کشاورزی', 'logo' => null],
+            ['name' => 'بانک صنعت و معدن', 'logo' => null],
+            ['name' => 'بانک مسکن', 'logo' => null],
+            ['name' => 'بانک کارآفرین', 'logo' => null],
+            ['name' => 'بانک شهر', 'logo' => null],
+            ['name' => 'بانک کوثر', 'logo' => null],
+            ['name' => 'بانک سرمایه', 'logo' => null],
+            ['name' => 'بانک پارسیان', 'logo' => null],
+            ['name' => 'بانک سامان', 'logo' => null],
+            ['name' => 'بانک اقتصاد نوین', 'logo' => null],
+            ['name' => 'بانک پست بانک', 'logo' => null],
+            ['name' => 'بانک قرض‌الحسنه مهر ایران', 'logo' => null],
+            ['name' => 'بانک قرض‌الحسنه رسالت', 'logo' => null],
         ];
 
         foreach ($banks as $bank) {

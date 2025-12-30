@@ -285,7 +285,8 @@
             <div class="flex flex-col md:flex-row items-center justify-between gap-4">
                 <div class="text-center md:text-right mb-3 md:mb-0">
                     <p class="copyright-text text-sm text-gray-300 m-0">
-                        © {{ date('Y') }} <strong class="text-green-500 font-bold">{{ $siteTitle }}</strong> - تمامی
+                        © {{ date('Y') }} <strong class="text-green-500 font-bold">کیمیازر</strong> -
+                        تمامی
                         حقوق محفوظ است
                     </p>
                 </div>
