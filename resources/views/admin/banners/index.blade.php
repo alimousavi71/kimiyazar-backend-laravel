@@ -15,10 +15,10 @@
             </a>
         </div>
 
-        
+
         <x-session-messages />
 
-        
+
         <x-card>
             <x-table-wrapper :search-placeholder="__('admin/components.buttons.search')"
                 filter-sidebar-id="banners-filters" :filter-badges="[
@@ -71,7 +71,7 @@
                                             <x-badge variant="danger" size="sm">{{ __('admin/banners.status.inactive') }}</x-badge>
                                         @endif
                                     </x-table.cell>
-                                    <x-table.cell>{{ $banner->created_at->format('Y-m-d') }}</x-table.cell>
+                                    <x-table.cell><x-date :date="$banner->created_at" type="date" /></x-table.cell>
                                     <x-table.cell>
                                         <div class="flex items-center justify-end">
                                             <x-dropdown-menu align="end">
@@ -104,11 +104,11 @@
                 </x-table>
             </x-table-wrapper>
 
-            
+
             <x-filter-sidebar id="banners-filters" :title="__('admin/components.buttons.filter')" method="GET"
                 action="{{ request()->url() }}">
                 <div class="space-y-6">
-                    
+
                     <div>
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin/banners.fields.position') }}</label>
@@ -122,7 +122,7 @@
                         </x-select>
                     </div>
 
-                    
+
                     <div>
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin/banners.fields.is_active') }}</label>
@@ -140,7 +140,7 @@
             </x-filter-sidebar>
         </x-card>
 
-        
+
         <x-delete-confirmation-modal id="delete-banner-modal" route-name="admin.banners.destroy"
             row-selector="tr[data-banner-id='__ID__']" />
     </div>

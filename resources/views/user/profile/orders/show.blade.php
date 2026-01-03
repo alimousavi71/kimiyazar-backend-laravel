@@ -49,7 +49,7 @@
                     <label class="text-sm font-medium text-gray-500">{{ __('user/orders.fields.created_at') }}</label>
                     <p class="text-base text-gray-900 mt-1">
                         @if($order->created_at)
-                            {{ \Carbon\Carbon::createFromTimestamp($order->created_at)->format('Y-m-d H:i:s') }}
+                            <x-date :date="\Carbon\Carbon::createFromTimestamp($order->created_at)" type="datetime-full" />
                         @else
                             N/A
                         @endif

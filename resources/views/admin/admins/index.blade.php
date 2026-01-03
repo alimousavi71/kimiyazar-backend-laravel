@@ -15,10 +15,10 @@
             </a>
         </div>
 
-        
+
         <x-session-messages />
 
-        
+
         <x-card>
             <x-table-wrapper :search-placeholder="__('admin/components.buttons.search')"
                 filter-sidebar-id="admins-filters" :filter-badges="[
@@ -74,12 +74,12 @@
                                     </x-table.cell>
                                     <x-table.cell>
                                         @if($admin->last_login)
-                                            {{ $admin->last_login->format('Y-m-d H:i') }}
+                                            <x-date :date="$admin->last_login" type="datetime" />
                                         @else
                                             <span class="text-gray-400">{{ __('admin/admins.status.never') }}</span>
                                         @endif
                                     </x-table.cell>
-                                    <x-table.cell>{{ $admin->created_at->format('Y-m-d') }}</x-table.cell>
+                                    <x-table.cell><x-date :date="$admin->created_at" type="date" /></x-table.cell>
                                     <x-table.cell>
                                         <div class="flex items-center justify-end">
                                             <x-dropdown-menu align="end">
@@ -116,11 +116,11 @@
                 </x-table>
             </x-table-wrapper>
 
-            
+
             <x-filter-sidebar id="admins-filters" :title="__('admin/components.buttons.filter')" method="GET"
                 action="{{ request()->url() }}">
                 <div class="space-y-6">
-                    
+
                     <div>
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin/admins.fields.is_block') }}</label>
@@ -140,7 +140,7 @@
             </x-filter-sidebar>
         </x-card>
 
-        
+
         <x-delete-confirmation-modal id="delete-admin-modal" route-name="admin.admins.destroy"
             row-selector="tr[data-admin-id='__ID__']" />
     </div>

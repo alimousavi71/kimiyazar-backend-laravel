@@ -2,32 +2,25 @@
     $siteTitle = $settings['title'] ?? config('app.name');
 @endphp
 
-<x-layouts.app
-    title="اخبار - {{ $siteTitle }}"
-    description="آخرین اخبار و تحولات در زمینه شیمی و صنعت مواد شیمیایی"
-    keywords="اخبار شیمی، اخبار صنعتی، اطلاعات شیمی"
-    canonical="{{ route('news.index') }}"
-    ogTitle="اخبار - {{ $siteTitle }}"
-    ogDescription="آخرین اخبار و تحولات در زمینه شیمی و صنعت مواد شیمیایی"
-    :ogImage="asset('images/header_logo.png')"
-    :ogUrl="route('news.index')"
-    ogType="website"
-    dir="rtl">
+<x-layouts.app title="اخبار - {{ $siteTitle }}" description="آخرین اخبار و تحولات در زمینه شیمی و صنعت مواد شیمیایی"
+    keywords="اخبار شیمی، اخبار صنعتی، اطلاعات شیمی" canonical="{{ route('news.index') }}"
+    ogTitle="اخبار - {{ $siteTitle }}" ogDescription="آخرین اخبار و تحولات در زمینه شیمی و صنعت مواد شیمیایی"
+    :ogImage="asset('images/header_logo.png')" :ogUrl="route('news.index')" ogType="website" dir="rtl">
     <x-web.page-banner title="اخبار" />
 
     <main>
         <section class="py-5 bg-gray-50">
             <div class="container mx-auto px-4">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    
+
                     <div class="lg:col-span-9">
-                        
+
                         <div class="space-y-6">
                             @forelse($news as $item)
                                 <article
                                     class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg">
                                     <div class="flex flex-col md:flex-row">
-                                        
+
                                         <div
                                             class="news-item-image md:w-80 flex-shrink-0 relative overflow-hidden bg-gray-100">
                                             <a href="{{ route('news.show', $item->slug) }}"
@@ -49,13 +42,13 @@
                                             </a>
                                         </div>
 
-                                        
+
                                         <div class="news-item-details flex-1 p-6">
                                             <div class="news-item-meta mb-3">
                                                 <span
                                                     class="news-item-date inline-flex items-center gap-2 text-gray-500 text-sm">
                                                     <i class="fa fa-calendar text-green-500"></i>
-                                                    {{ $item->created_at->format('Y/m/d') }}
+                                                    <x-date :date="$item->created_at" type="date" />
                                                 </span>
                                             </div>
                                             <h2
@@ -85,7 +78,7 @@
                             @endforelse
                         </div>
 
-                        
+
                         @if($news->hasPages())
                             <div class="mt-8 flex justify-center">
                                 {{ $news->links('pagination::tailwind') }}
@@ -93,7 +86,7 @@
                         @endif
                     </div>
 
-                    
+
                     <x-web.content-sidebar :searchRoute="route('news.index')" searchPlaceholder="جستجو در اخبار..."
                         :searchValue="$search" :recentItems="$recentNews" recentTitle="آخرین اخبار"
                         emptyMessage="هیچ خبری وجود ندارد." :tags="$tags" icon="fas fa-newspaper" />

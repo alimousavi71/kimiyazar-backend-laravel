@@ -15,10 +15,10 @@
             </a>
         </div>
 
-        
+
         <x-session-messages />
 
-        
+
         <x-card>
             <x-table-wrapper :search-placeholder="__('admin/components.buttons.search')"
                 filter-sidebar-id="menus-filters" :paginator="$menus ?? null">
@@ -52,8 +52,8 @@
                                         <span class="text-gray-600">{{ count($menu->links ?? []) }}
                                             {{ __('admin/menus.links') }}</span>
                                     </x-table.cell>
-                                    <x-table.cell>{{ $menu->created_at->format('Y-m-d H:i') }}</x-table.cell>
-                                    <x-table.cell>{{ $menu->updated_at->format('Y-m-d H:i') }}</x-table.cell>
+                                    <x-table.cell><x-date :date="$menu->created_at" type="datetime" /></x-table.cell>
+                                    <x-table.cell><x-date :date="$menu->updated_at" type="datetime" /></x-table.cell>
                                     <x-table.cell>
                                         <div class="flex items-center justify-end">
                                             <x-dropdown-menu align="end">
@@ -85,7 +85,7 @@
             </x-table-wrapper>
         </x-card>
 
-        
+
         <x-delete-confirmation-modal id="delete-menu-modal" route-name="admin.menus.destroy"
             row-selector="tr[data-menu-id='__ID__']" />
     </div>

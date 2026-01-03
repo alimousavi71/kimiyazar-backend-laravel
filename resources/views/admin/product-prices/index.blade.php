@@ -144,7 +144,7 @@
                                             {{ $product->latest_price->currency_code->label() }}
                                         </div>
                                         <div class="text-xs text-gray-500">
-                                            {{ $product->latest_price->created_at->format('Y-m-d') }}
+                                            <x-date :date="$product->latest_price->created_at" type="date" />
                                         </div>
                                     @else
                                         <span class="text-sm text-gray-400">{{ __('admin/product-prices.messages.no_price') }}</span>

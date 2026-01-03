@@ -2,18 +2,18 @@
 
 <section id="homepage-products" class="py-5 bg-white">
     <div class="container mx-auto px-4">
-        
+
         <div class="section-header text-center mb-4">
             <h2 class="section-title text-2xl md:text-3xl font-bold text-slate-800 mb-2">جدیدترین محصولات</h2>
             <p class="section-subtitle text-sm md:text-base text-gray-600">
                 آخرین بروزرسانی قیمت محصولات:
                 <span class="update-date font-semibold text-green-600">
-                    {{ now()->format('Y/m/d H:i') }}
+                    <x-date :date="now()" type="datetime" />
                 </span>
             </p>
         </div>
 
-        
+
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 justify-items-center"
             id="products-container">
             @forelse($products as $product)
@@ -32,7 +32,7 @@
             @endforelse
         </div>
 
-        
+
         <div class="text-center mt-4">
             <a href="{{ route('products.index') }}"
                 class="btn-view-all-products inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-400 text-white rounded-full text-sm md:text-base font-semibold transition-all duration-300 shadow-[0_2px_10px_rgba(40,167,69,0.3)] hover:-translate-y-1 hover:scale-105 hover:shadow-[0_6px_20px_rgba(40,167,69,0.6)] hover:from-emerald-400 hover:to-green-500 no-underline">

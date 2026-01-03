@@ -24,7 +24,7 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         <div class="lg:col-span-2 space-y-6">
             <x-card>
                 <x-slot name="title">{{ __('admin/menus.show.menu_info') }}</x-slot>
@@ -36,16 +36,18 @@
                     </div>
                     <div>
                         <dt class="text-sm font-medium text-gray-500">{{ __('admin/menus.fields.created_at') }}</dt>
-                        <dd class="mt-1 text-sm text-gray-900">{{ $menu->created_at->format('Y-m-d H:i:s') }}</dd>
+                        <dd class="mt-1 text-sm text-gray-900"><x-date :date="$menu->created_at" type="datetime-full" />
+                        </dd>
                     </div>
                     <div>
                         <dt class="text-sm font-medium text-gray-500">{{ __('admin/menus.fields.updated_at') }}</dt>
-                        <dd class="mt-1 text-sm text-gray-900">{{ $menu->updated_at->format('Y-m-d H:i:s') }}</dd>
+                        <dd class="mt-1 text-sm text-gray-900"><x-date :date="$menu->updated_at" type="datetime-full" />
+                        </dd>
                     </div>
                 </dl>
             </x-card>
 
-            
+
             <x-card>
                 <x-slot name="title">{{ __('admin/menus.show.links') }} ({{ count($menu->getOrderedLinks()) }})</x-slot>
 

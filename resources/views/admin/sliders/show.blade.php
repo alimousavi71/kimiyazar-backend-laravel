@@ -97,13 +97,13 @@
                     <div>
                         <label
                             class="text-sm font-medium text-gray-500">{{ __('admin/sliders.fields.created_at') }}</label>
-                        <p class="text-base text-gray-900 mt-1">{{ $slider->created_at->format('Y-m-d H:i:s') }}</p>
+                        <p class="text-base text-gray-900 mt-1"><x-date :date="$slider->created_at" type="datetime-full" /></p>
                     </div>
 
                     <div>
                         <label
                             class="text-sm font-medium text-gray-500">{{ __('admin/sliders.fields.updated_at') }}</label>
-                        <p class="text-base text-gray-900 mt-1">{{ $slider->updated_at->format('Y-m-d H:i:s') }}</p>
+                        <p class="text-base text-gray-900 mt-1"><x-date :date="$slider->updated_at" type="datetime-full" /></p>
                     </div>
                 </div>
             </x-card>

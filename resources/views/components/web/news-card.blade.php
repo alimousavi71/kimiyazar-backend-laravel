@@ -12,7 +12,7 @@
             <div
                 class="absolute top-3 right-3 bg-gradient-to-r from-green-500 to-emerald-400 text-white px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 shadow-[0_2px_8px_rgba(40,167,69,0.4)]">
                 <i class="fas fa-calendar text-xs"></i>
-                <span>{{ $item->created_at->format('Y-m-d') }}</span>
+                <span><x-date :date="$item->created_at" type="date" /></span>
             </div>
         </div>
         <div class="p-5 flex-1 flex flex-col min-h-[120px]">

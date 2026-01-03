@@ -2,30 +2,24 @@
     $siteTitle = $settings['title'] ?? config('app.name');
 @endphp
 
-<x-layouts.app
-    title="محصولات - {{ $siteTitle }}"
+<x-layouts.app title="محصولات - {{ $siteTitle }}"
     description="مرکز فروش و تامین مواد شیمیایی صنعتی و آزمایشگاهی. محصولات باکیفیت با قیمت رقابتی"
-    keywords="مواد شیمیایی، شیمی، فروش شیمی، تامین کننده شیمی"
-    canonical="{{ route('products.index') }}"
-    ogTitle="محصولات - {{ $siteTitle }}"
-    ogDescription="مرکز فروش و تامین مواد شیمیایی صنعتی و آزمایشگاهی"
-    :ogImage="asset('images/header_logo.png')"
-    :ogUrl="route('products.index')"
-    ogType="website"
-    dir="rtl">
+    keywords="مواد شیمیایی، شیمی، فروش شیمی، تامین کننده شیمی" canonical="{{ route('products.index') }}"
+    ogTitle="محصولات - {{ $siteTitle }}" ogDescription="مرکز فروش و تامین مواد شیمیایی صنعتی و آزمایشگاهی"
+    :ogImage="asset('images/header_logo.png')" :ogUrl="route('products.index')" ogType="website" dir="rtl">
     <x-web.page-banner title="محصولات" />
 
     <main>
         <section class="py-5 bg-gray-50">
             <div class="container mx-auto px-4">
-                
+
                 <div class="text-center mb-6">
                     <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-2">محصولات</h2>
                     <p class="text-gray-600 text-sm md:text-base">
                         آخرین بروزرسانی قیمت محصولات:
                         @if($latestPriceUpdate)
                             <span class="text-green-600 font-semibold">
-                                {{ \Carbon\Carbon::parse($latestPriceUpdate)->format('Y/m/d H:i') }}
+                                <x-date :date="\Carbon\Carbon::parse($latestPriceUpdate)" type="datetime" />
                             </span>
                         @else
                             <span class="text-gray-400">اطلاعاتی موجود نیست</span>
@@ -34,19 +28,19 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    
+
                     <div class="lg:col-span-3 sticky top-6 self-start">
                         <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                            
+
                             <div class="bg-green-500 px-4 py-3 flex items-center gap-2">
                                 <i class="fa fa-list text-white"></i>
                                 <h6 class="text-white font-semibold mb-0">دسته‌بندی محصولات</h6>
                             </div>
 
-                            
+
                             <div class="p-0">
                                 <div class="category-filter">
-                                    
+
                                     <div class="category-breadcrumb px-4 py-3 border-b border-gray-200 bg-gray-50">
                                         <div class="flex items-center gap-2 text-sm flex-wrap">
                                             <a href="{{ route('products.index') }}"
@@ -74,7 +68,7 @@
                                         </div>
                                     </div>
 
-                                    
+
                                     <div class="category-list-seo max-h-[600px] overflow-y-auto">
                                         @forelse($categoriesToShow as $category)
                                             <a href="{{ route('products.index', ['category' => $category->id]) }}"
@@ -109,9 +103,9 @@
                         </div>
                     </div>
 
-                    
+
                     <div class="lg:col-span-9">
-                        
+
                         <form method="GET" action="{{ route('products.index') }}" class="mb-6">
                             @if($categoryId)
                                 <input type="hidden" name="category" value="{{ $categoryId }}">
@@ -151,7 +145,7 @@
                             </div>
                         </form>
 
-                        
+
                         @if(!$categoryId && !$search && !$sort)
                             <div
                                 class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 flex items-center gap-2 text-blue-700">
@@ -161,7 +155,7 @@
                             </div>
                         @endif
 
-                        
+
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
                             @forelse($products as $product)
                                 <x-web.product-card :product="$product" />
@@ -173,7 +167,7 @@
                             @endforelse
                         </div>
 
-                        
+
                         @if($products->hasPages())
                             <div class="flex justify-center">
                                 {{ $products->links('pagination::tailwind') }}

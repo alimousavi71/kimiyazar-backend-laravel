@@ -160,8 +160,7 @@
                             <div>
                                 <label
                                     class="text-sm font-medium text-gray-500">{{ __('admin/products.fields.price_effective_date') }}</label>
-                                <p class="text-base text-gray-900 mt-1">{{ $product->price_effective_date->format('Y-m-d') }}
-                                </p>
+                                <p class="text-base text-gray-900 mt-1"><x-date :date="$product->price_effective_date" type="date" /></p>
                             </div>
                         @endif
 
@@ -169,8 +168,7 @@
                             <div>
                                 <label
                                     class="text-sm font-medium text-gray-500">{{ __('admin/products.fields.price_updated_at') }}</label>
-                                <p class="text-base text-gray-900 mt-1">{{ $product->price_updated_at->format('Y-m-d H:i:s') }}
-                                </p>
+                                <p class="text-base text-gray-900 mt-1"><x-date :date="$product->price_updated_at" type="datetime-full" /></p>
                             </div>
                         @endif
                     </div>
@@ -219,14 +217,12 @@
                         <div>
                             <label
                                 class="text-sm font-medium text-gray-500">{{ __('admin/products.fields.created_at') }}</label>
-                            <p class="text-base text-gray-900 mt-1">{{ $product->created_at->format('Y-m-d H:i:s') }}
-                            </p>
+                            <p class="text-base text-gray-900 mt-1"><x-date :date="$product->created_at" type="datetime-full" /></p>
                         </div>
                         <div>
                             <label
                                 class="text-sm font-medium text-gray-500">{{ __('admin/products.fields.updated_at') }}</label>
-                            <p class="text-base text-gray-900 mt-1">{{ $product->updated_at->format('Y-m-d H:i:s') }}
-                            </p>
+                            <p class="text-base text-gray-900 mt-1"><x-date :date="$product->updated_at" type="datetime-full" /></p>
                         </div>
                     </div>
                 </div>

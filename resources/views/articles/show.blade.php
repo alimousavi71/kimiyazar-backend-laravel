@@ -2,17 +2,7 @@
     $siteTitle = $settings['title'] ?? config('app.name');
 @endphp
 
-<x-layouts.app
-    :title="$article->title . ' - ' . $siteTitle"
-    :description="$article->seo_description ?? Str::limit(strip_tags($article->body), 160)"
-    :keywords="$article->seo_keywords"
-    :canonical="route('articles.show', $article->slug)"
-    :ogTitle="$article->title"
-    :ogDescription="$article->seo_description ?? Str::limit(strip_tags($article->body), 160)"
-    :ogImage="$article->photos->first()?->url ?? asset('images/header_logo.png')"
-    :ogUrl="route('articles.show', $article->slug)"
-    ogType="article"
-    dir="rtl">
+<x-layouts.app :title="$article->title . ' - ' . $siteTitle" :description="$article->seo_description ?? Str::limit(strip_tags($article->body), 160)" :keywords="$article->seo_keywords" :canonical="route('articles.show', $article->slug)" :ogTitle="$article->title" :ogDescription="$article->seo_description ?? Str::limit(strip_tags($article->body), 160)" :ogImage="$article->photos->first()?->url ?? asset('images/header_logo.png')" :ogUrl="route('articles.show', $article->slug)" ogType="article" dir="rtl">
     <x-web.page-banner :title="$article->title" :breadcrumb="['مقالات', $article->title]"
         :breadcrumbRoutes="['articles.index', null]" />
 
@@ -20,10 +10,10 @@
         <section class="py-5 bg-gray-50">
             <div class="container mx-auto px-4">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    
+
                     <div class="lg:col-span-9">
                         <article class="bg-white rounded-xl shadow-md overflow-hidden">
-                            
+
                             @if($article->photos->first())
                                 <div class="w-full h-64 md:h-96 overflow-hidden bg-gray-100">
                                     <img src="{{ $article->photos->first()->url }}" alt="{{ $article->title }}"
@@ -31,13 +21,13 @@
                                 </div>
                             @endif
 
-                            
+
                             <div class="p-6 md:p-8">
-                                
+
                                 <div class="flex flex-wrap items-center gap-4 mb-6 pb-6 border-b border-gray-200">
                                     <span class="inline-flex items-center gap-2 text-gray-500 text-sm">
                                         <i class="fa fa-calendar text-green-500"></i>
-                                        {{ $article->created_at->format('Y/m/d') }}
+                                        <x-date :date="$article->created_at" type="date" />
                                     </span>
                                     <span class="inline-flex items-center gap-2 text-gray-500 text-sm">
                                         <i class="fa fa-eye text-green-500"></i>
@@ -56,12 +46,12 @@
                                     @endif
                                 </div>
 
-                                
+
                                 <h1 class="text-2xl md:text-3xl font-bold text-slate-800 mb-6">
                                     {{ $article->title }}
                                 </h1>
 
-                                
+
                                 @if($article->body)
                                     <div class="content-body prose prose-lg max-w-none text-slate-700 leading-relaxed">
                                         {!! $article->body !!}
@@ -72,7 +62,7 @@
                                     </div>
                                 @endif
 
-                                
+
                                 @if($article->photos->count() > 1)
                                     <div class="mt-8 pt-8 border-t border-gray-200">
                                         <h3 class="text-xl font-bold text-slate-800 mb-4">تصاویر بیشتر</h3>
@@ -90,7 +80,7 @@
                         </article>
                     </div>
 
-                    
+
                     <x-web.content-sidebar :searchRoute="route('articles.index')" searchPlaceholder="جستجو در مقالات..."
                         searchValue="" :recentItems="$recentArticles" recentTitle="آخرین مقالات"
                         emptyMessage="هیچ مقاله‌ای وجود ندارد." :tags="$tags" icon="fas fa-file-alt" />

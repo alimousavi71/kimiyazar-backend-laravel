@@ -73,7 +73,7 @@
                     <label class="text-sm font-medium text-gray-500">{{ __('user/profile.fields.last_login') }}</label>
                     <p class="text-base text-gray-900 mt-1">
                         @if($user->last_login)
-                            {{ $user->last_login->format('Y-m-d H:i:s') }}
+                            <x-date :date="$user->last_login" type="datetime-full" />
                         @else
                             <span class="text-gray-400">{{ __('user/profile.show.labels.never_logged_in') }}</span>
                         @endif
@@ -87,7 +87,7 @@
                         @if($user->email_verified_at)
                             <x-badge variant="success" size="sm">{{ __('user/profile.show.labels.verified') }}</x-badge>
                             <span
-                                class="text-sm text-gray-500 ml-2">{{ $user->email_verified_at->format('Y-m-d H:i:s') }}</span>
+                                class="text-sm text-gray-500 ml-2"><x-date :date="$user->email_verified_at" type="datetime-full" /></span>
                         @else
                             <x-badge variant="warning" size="sm">{{ __('user/profile.show.labels.not_verified') }}</x-badge>
                         @endif
@@ -98,12 +98,12 @@
                     <div>
                         <label
                             class="text-sm font-medium text-gray-500">{{ __('user/profile.fields.created_at') }}</label>
-                        <p class="text-base text-gray-900 mt-1">{{ $user->created_at->format('Y-m-d H:i:s') }}</p>
+                        <p class="text-base text-gray-900 mt-1"><x-date :date="$user->created_at" type="datetime-full" /></p>
                     </div>
                     <div>
                         <label
                             class="text-sm font-medium text-gray-500">{{ __('user/profile.fields.updated_at') }}</label>
-                        <p class="text-base text-gray-900 mt-1">{{ $user->updated_at->format('Y-m-d H:i:s') }}</p>
+                        <p class="text-base text-gray-900 mt-1"><x-date :date="$user->updated_at" type="datetime-full" /></p>
                     </div>
                 </div>
             </div>

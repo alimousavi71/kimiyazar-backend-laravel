@@ -19,7 +19,7 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         <div class="lg:col-span-2 space-y-6">
             <x-card>
                 <x-slot name="title">{{ __('user/price-inquiries.show.contact_info') }}</x-slot>
@@ -79,7 +79,7 @@
                 </div>
             </x-card>
 
-            
+
             <x-card>
                 <x-slot name="title">{{ __('user/price-inquiries.show.products') }}</x-slot>
 
@@ -124,14 +124,14 @@
                             <label
                                 class="text-sm font-medium text-gray-500">{{ __('user/price-inquiries.fields.created_at') }}</label>
                             <p class="text-base text-gray-900 mt-1">
-                                {{ $priceInquiry->created_at->format('Y-m-d H:i:s') }}
+                                <x-date :date="$priceInquiry->created_at" type="datetime-full" />
                             </p>
                         </div>
                         <div>
                             <label
                                 class="text-sm font-medium text-gray-500">{{ __('user/price-inquiries.fields.updated_at') }}</label>
                             <p class="text-base text-gray-900 mt-1">
-                                {{ $priceInquiry->updated_at->format('Y-m-d H:i:s') }}
+                                <x-date :date="$priceInquiry->updated_at" type="datetime-full" />
                             </p>
                         </div>
                     </div>

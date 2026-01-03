@@ -9,9 +9,9 @@
         <section class="py-5 bg-gray-50">
             <div class="container mx-auto px-4">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    
+
                     <div class="lg:col-span-9">
-                        
+
                         <form method="GET" action="{{ route('tags.index', $tag->slug) }}" class="mb-6">
                             <div class="bg-white rounded-xl shadow-md p-4">
                                 <div class="flex gap-2">
@@ -33,7 +33,7 @@
                             </div>
                         </form>
 
-                        
+
                         <div class="mb-4 text-sm text-gray-600">
                             <span class="font-semibold text-slate-800">{{ $entities->total() }}</span>
                             <span>مطلب یافت شد</span>
@@ -43,13 +43,13 @@
                             @endif
                         </div>
 
-                        
+
                         <div class="space-y-6">
                             @forelse($entities as $item)
                                 <article
                                     class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg">
                                     <div class="flex flex-col md:flex-row">
-                                        
+
                                         <div
                                             class="entity-item-image md:w-80 flex-shrink-0 relative overflow-hidden bg-gray-100">
                                             @php
@@ -75,7 +75,7 @@
                                             </a>
                                         </div>
 
-                                        
+
                                         <div class="entity-item-details flex-1 p-6">
                                             <div class="entity-item-meta mb-3 flex items-center gap-4 flex-wrap">
                                                 <span
@@ -87,7 +87,7 @@
                                                 <span
                                                     class="entity-item-date inline-flex items-center gap-2 text-gray-500 text-sm">
                                                     <i class="fa fa-calendar text-green-500"></i>
-                                                    {{ $item->created_at->format('Y/m/d') }}
+                                                    <x-date :date="$item->created_at" type="date" />
                                                 </span>
                                                 <span
                                                     class="entity-item-views inline-flex items-center gap-2 text-gray-500 text-sm">
@@ -142,7 +142,7 @@
                             @endforelse
                         </div>
 
-                        
+
                         @if($entities->hasPages())
                             <div class="mt-8 flex justify-center">
                                 {{ $entities->appends(request()->query())->links('pagination::tailwind') }}
@@ -150,7 +150,7 @@
                         @endif
                     </div>
 
-                    
+
                     <div class="lg:col-span-3">
                         <div class="bg-white rounded-xl shadow-md p-6 mb-6">
                             <h3 class="text-xl font-bold text-slate-800 mb-4 pb-3 border-b border-gray-200">
@@ -169,7 +169,7 @@
                             </div>
                         </div>
 
-                        
+
                         @if($relatedTags->count() > 0)
                             <div class="bg-white rounded-xl shadow-md p-6">
                                 <h3 class="text-xl font-bold text-slate-800 mb-4 pb-3 border-b border-gray-200">

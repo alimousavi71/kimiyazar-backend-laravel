@@ -62,7 +62,7 @@
                                     <x-table.cell>
                                         <span class="text-gray-900">
                                             @if($order->created_at)
-                                                {{ \Carbon\Carbon::createFromTimestamp($order->created_at)->format('Y-m-d H:i') }}
+                                                <x-date :date="\Carbon\Carbon::createFromTimestamp($order->created_at)" type="datetime" />
                                             @else
                                                 N/A
                                             @endif

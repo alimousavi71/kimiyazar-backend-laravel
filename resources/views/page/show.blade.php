@@ -2,17 +2,7 @@
     $siteTitle = $settings['title'] ?? config('app.name');
 @endphp
 
-<x-layouts.app
-    :title="$page->title . ' - ' . $siteTitle"
-    :description="$page->seo_description ?? Str::limit(strip_tags($page->body), 160)"
-    :keywords="$page->seo_keywords"
-    :canonical="route('pages.show', $page->slug)"
-    :ogTitle="$page->title"
-    :ogDescription="$page->seo_description ?? Str::limit(strip_tags($page->body), 160)"
-    :ogImage="$page->photos->first()?->url ?? asset('images/header_logo.png')"
-    :ogUrl="route('pages.show', $page->slug)"
-    ogType="website"
-    dir="rtl">
+<x-layouts.app :title="$page->title . ' - ' . $siteTitle" :description="$page->seo_description ?? Str::limit(strip_tags($page->body), 160)" :keywords="$page->seo_keywords" :canonical="route('page.show', $page->slug)" :ogTitle="$page->title" :ogDescription="$page->seo_description ?? Str::limit(strip_tags($page->body), 160)" :ogImage="$page->photos->first()?->url ?? asset('images/header_logo.png')" :ogUrl="route('page.show', $page->slug)" ogType="website" dir="rtl">
     <x-web.page-banner :title="$page->title" :breadcrumb="['صفحه', $page->title]" :breadcrumbRoutes="['home', null]" />
 
     <main>
@@ -20,7 +10,7 @@
             <div class="container mx-auto px-4">
                 <div class="max-w-4xl mx-auto">
                     <article class="bg-white rounded-xl shadow-md overflow-hidden">
-                        
+
                         @if($page->photos->first())
                             <div class="w-full h-64 md:h-96 overflow-hidden bg-gray-100">
                                 <img src="{{ $page->photos->first()->url }}" alt="{{ $page->title }}"
@@ -28,13 +18,13 @@
                             </div>
                         @endif
 
-                        
+
                         <div class="p-6 md:p-8">
-                            
+
                             <div class="flex flex-wrap items-center gap-4 mb-6 pb-6 border-b border-gray-200">
                                 <span class="inline-flex items-center gap-2 text-gray-500 text-sm">
                                     <i class="fa fa-calendar text-green-500"></i>
-                                    {{ $page->created_at->format('Y/m/d') }}
+                                    <x-date :date="$page->created_at" type="date" />
                                 </span>
                                 <span class="inline-flex items-center gap-2 text-gray-500 text-sm">
                                     <i class="fa fa-eye text-green-500"></i>
@@ -42,12 +32,12 @@
                                 </span>
                             </div>
 
-                            
+
                             <h1 class="text-2xl md:text-3xl font-bold text-slate-800 mb-6">
                                 {{ $page->title }}
                             </h1>
 
-                            
+
                             @if($page->body)
                                 <div class="content-body prose prose-lg max-w-none text-slate-700 leading-relaxed">
                                     {!! $page->body !!}
@@ -58,7 +48,7 @@
                                 </div>
                             @endif
 
-                            
+
                             @if($page->photos->count() > 1)
                                 <div class="mt-8 pt-8 border-t border-gray-200">
                                     <h3 class="text-xl font-bold text-slate-800 mb-4">تصاویر بیشتر</h3>

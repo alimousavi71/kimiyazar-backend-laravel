@@ -1,27 +1,17 @@
-<x-layouts.app
-    :title="$product->meta_title ?? $product->name"
-    :description="$product->meta_description ?? Str::limit(strip_tags($product->body), 160)"
-    :keywords="$product->meta_keywords"
-    :canonical="route('products.show', $product->slug)"
-    :ogTitle="$product->meta_title ?? $product->name"
-    :ogDescription="$product->meta_description ?? Str::limit(strip_tags($product->body), 160)"
-    :ogImage="$product->photos->first()?->url ?? asset('images/header_logo.png')"
-    :ogUrl="route('products.show', $product->slug)"
-    ogType="product"
-    dir="rtl">
+<x-layouts.app :title="$product->meta_title ?? $product->name" :description="$product->meta_description ?? Str::limit(strip_tags($product->body), 160)" :keywords="$product->meta_keywords" :canonical="route('products.show', $product->slug)" :ogTitle="$product->meta_title ?? $product->name" :ogDescription="$product->meta_description ?? Str::limit(strip_tags($product->body), 160)" :ogImage="$product->photos->first()?->url ?? asset('images/header_logo.png')" :ogUrl="route('products.show', $product->slug)" ogType="product" dir="rtl">
     <main>
         <section class="py-8 md:py-12">
             <div class="container mx-auto px-4">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    
+
                     <div class="lg:col-span-8">
                         <div class="space-y-6">
-                            
+
                             <div class="single-blog-title">
                                 <h1 class="text-2xl md:text-3xl font-bold text-gray-900">{{ $product->name }}</h1>
                             </div>
 
-                            
+
                             <div class="price-chart-section mb-6 bg-white rounded-2xl shadow-md p-6">
                                 <div
                                     class="chart-header flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
@@ -56,7 +46,7 @@
                                 </div>
                             </div>
 
-                            
+
                             <div class="modern-price-history-card bg-white rounded-2xl shadow-md overflow-hidden">
                                 <div
                                     class="price-history-header bg-gradient-to-r from-green-500 to-emerald-400 px-6 py-4 flex items-center gap-3">
@@ -93,8 +83,8 @@
                                                 class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                                                 <div class="item-date flex items-center gap-2 text-gray-600">
                                                     <i class="fa fa-calendar-o text-green-500"></i>
-                                                    <span
-                                                        class="text-sm md:text-base">{{ $price->created_at->format('Y/m/d') }}</span>
+                                                    <span class="text-sm md:text-base"><x-date :date="$price->created_at"
+                                                            type="date" /></span>
                                                 </div>
                                                 <div class="item-price flex items-center gap-2">
                                                     @if($isUnavailable)
@@ -131,7 +121,7 @@
                                     @endforelse
                                 </div>
 
-                                
+
                                 @if($product->body)
                                     <div class="border-t border-gray-200">
                                         <div class="content-body p-6 prose max-w-none text-gray-700 leading-relaxed">
@@ -143,12 +133,12 @@
                         </div>
                     </div>
 
-                    
+
                     <div class="lg:col-span-4">
                         <div class="space-y-6 lg:sticky lg:top-6">
-                            
+
                             <div class="modern-product-order-card bg-white rounded-2xl shadow-md overflow-hidden">
-                                
+
                                 @if($product->photos->count() > 0)
                                     <div class="product-gallery-wrapper p-4">
                                         <div class="swiper product-gallery-swiper">
@@ -169,7 +159,7 @@
                                     </div>
                                 @endif
 
-                                
+
                                 <div class="order-section p-6 border-t border-gray-100">
                                     <div class="order-header flex items-center gap-3 mb-4">
                                         <i class="fa fa-shopping-cart text-green-500 text-xl"></i>
@@ -221,7 +211,7 @@
                                 </div>
                             </div>
 
-                            
+
                             @if($banners->count() > 0)
                                 <x-web.banner :banners="$banners" position="C" />
                             @endif
@@ -237,9 +227,9 @@
     @endpush
 
     @push('scripts')
-        
+
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-        
+
         @vite('resources/js/product-chart.js')
         <script>
             // Initialize product gallery swiper

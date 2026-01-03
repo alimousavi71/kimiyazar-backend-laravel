@@ -115,7 +115,7 @@
                                             data-original-value="{{ $sortOrder }}"
                                         />
                                     </x-table.cell>
-                                    <x-table.cell>{{ $product->created_at->format('Y-m-d') }}</x-table.cell>
+                                    <x-table.cell><x-date :date="$product->created_at" type="date" /></x-table.cell>
                                     <x-table.cell>
                                         <div class="flex items-center justify-end">
                                             <x-dropdown-menu align="end">

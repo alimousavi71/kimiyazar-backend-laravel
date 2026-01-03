@@ -15,10 +15,10 @@
             </a>
         </div>
 
-        
+
         <x-session-messages />
 
-        
+
         <x-card>
             <x-table-wrapper :search-placeholder="__('admin/components.buttons.search')"
                 filter-sidebar-id="modals-filters" :filter-badges="[
@@ -74,12 +74,14 @@
                                         @endif
                                     </x-table.cell>
                                     <x-table.cell>
-                                        <span class="text-gray-600">{{ $modal->start_at?->format('Y-m-d H:i') ?? '-' }}</span>
+                                        <span class="text-gray-600">@if($modal->start_at)<x-date :date="$modal->start_at"
+                                        type="datetime" />@else-@endif</span>
                                     </x-table.cell>
                                     <x-table.cell>
-                                        <span class="text-gray-600">{{ $modal->end_at?->format('Y-m-d H:i') ?? '-' }}</span>
+                                        <span class="text-gray-600">@if($modal->end_at)<x-date :date="$modal->end_at"
+                                        type="datetime" />@else-@endif</span>
                                     </x-table.cell>
-                                    <x-table.cell>{{ $modal->created_at->format('Y-m-d') }}</x-table.cell>
+                                    <x-table.cell><x-date :date="$modal->created_at" type="date" /></x-table.cell>
                                     <x-table.cell>
                                         <div class="flex items-center justify-end">
                                             <x-dropdown-menu align="end">
@@ -112,11 +114,11 @@
                 </x-table>
             </x-table-wrapper>
 
-            
+
             <x-filter-sidebar id="modals-filters" :title="__('admin/components.buttons.filter')" method="GET"
                 action="{{ request()->url() }}">
                 <div class="space-y-6">
-                    
+
                     <div>
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin/modals.fields.is_published') }}</label>
@@ -135,7 +137,7 @@
             </x-filter-sidebar>
         </x-card>
 
-        
+
         <x-delete-confirmation-modal id="delete-modal-modal" route-name="admin.modals.destroy"
             row-selector="tr[data-modal-id='__ID__']" />
     </div>

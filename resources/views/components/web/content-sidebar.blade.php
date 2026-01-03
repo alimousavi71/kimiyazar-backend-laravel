@@ -53,7 +53,7 @@
                             </h5>
                             <span class="recent-date inline-flex items-center gap-1 text-xs text-gray-500">
                                 <i class="fa fa-clock-o"></i>
-                                {{ $item->created_at->format('Y/m/d') }}
+                                <x-date :date="$item->created_at" type="date" />
                             </span>
                         </div>
                     </a>

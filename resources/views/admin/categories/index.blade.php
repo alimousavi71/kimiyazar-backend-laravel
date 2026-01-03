@@ -88,7 +88,7 @@
                                             data-original-value="{{ $category->sort_order }}"
                                         />
                                     </x-table.cell>
-                                    <x-table.cell>{{ $category->created_at->format('Y-m-d') }}</x-table.cell>
+                                    <x-table.cell><x-date :date="$category->created_at" type="date" /></x-table.cell>
                                     <x-table.cell>
                                         <div class="flex items-center justify-end">
                                             <x-dropdown-menu align="end">

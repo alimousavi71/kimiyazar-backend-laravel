@@ -22,33 +22,37 @@
         </div>
     </div>
 
-    
+
     <x-session-messages />
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         <div class="lg:col-span-2 space-y-6">
-            
+
             <x-card>
                 <x-slot name="title">{{ __('admin/modals.show.information') }}</x-slot>
 
                 <div class="space-y-6">
-                    
+
                     <div class="grid grid-cols-3 gap-4 pb-4 border-b border-gray-200">
                         <div>
-                            <label class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.title') }}</label>
+                            <label
+                                class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.title') }}</label>
                             <p class="mt-1 text-sm text-gray-900">{{ $modal->title }}</p>
                         </div>
                         <div>
-                            <label class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.priority') }}</label>
+                            <label
+                                class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.priority') }}</label>
                             <p class="mt-1 text-sm">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                <span
+                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                                     {{ $modal->priority }}
                                 </span>
                             </p>
                         </div>
                         <div>
-                            <label class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.is_published') }}</label>
+                            <label
+                                class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.is_published') }}</label>
                             <p class="mt-1 text-sm">
                                 @if($modal->is_published)
                                     <x-badge variant="success" size="sm">{{ __('admin/modals.status.active') }}</x-badge>
@@ -59,7 +63,7 @@
                         </div>
                     </div>
 
-                    
+
                     <div class="pb-4 border-b border-gray-200">
                         <label class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.content') }}</label>
                         <div class="mt-2 prose prose-sm max-w-none text-gray-900">
@@ -67,17 +71,20 @@
                         </div>
                     </div>
 
-                    
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4 border-b border-gray-200">
                         <div>
-                            <label class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.button_text') }}</label>
+                            <label
+                                class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.button_text') }}</label>
                             <p class="mt-1 text-sm text-gray-900">{{ $modal->button_text ?? '-' }}</p>
                         </div>
                         <div>
-                            <label class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.button_url') }}</label>
+                            <label
+                                class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.button_url') }}</label>
                             <p class="mt-1 text-sm">
                                 @if($modal->button_url)
-                                    <a href="{{ $modal->button_url }}" target="_blank" class="text-blue-600 hover:text-blue-800 break-all">
+                                    <a href="{{ $modal->button_url }}" target="_blank"
+                                        class="text-blue-600 hover:text-blue-800 break-all">
                                         {{ $modal->button_url }}
                                     </a>
                                 @else
@@ -87,22 +94,26 @@
                         </div>
                     </div>
 
-                    
+
                     <div class="pb-4 border-b border-gray-200">
-                        <label class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.close_text') }}</label>
+                        <label
+                            class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.close_text') }}</label>
                         <p class="mt-1 text-sm text-gray-900">{{ $modal->close_text }}</p>
                     </div>
 
-                    
+
                     <div>
-                        <label class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.is_rememberable') }}</label>
+                        <label
+                            class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.is_rememberable') }}</label>
                         <p class="mt-1 text-sm">
                             @if($modal->is_rememberable)
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                <span
+                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                     {{ __('admin/modals.status.enabled') }}
                                 </span>
                             @else
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                <span
+                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                                     {{ __('admin/modals.status.disabled') }}
                                 </span>
                             @endif
@@ -111,40 +122,51 @@
                 </div>
             </x-card>
 
-            
+
             <x-card>
                 <x-slot name="title">{{ __('admin/modals.show.scheduling') }}</x-slot>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.start_at') }}</label>
+                        <label
+                            class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.start_at') }}</label>
                         <p class="mt-1 text-sm text-gray-900">
-                            {{ $modal->start_at?->format('Y-m-d H:i:s') ?? __('admin/components.status.not_set') }}
+                            @if($modal->start_at)
+                                <x-date :date="$modal->start_at" type="datetime-full" />
+                            @else
+                                {{ __('admin/components.status.not_set') }}
+                            @endif
                         </p>
                     </div>
                     <div>
                         <label class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.end_at') }}</label>
                         <p class="mt-1 text-sm text-gray-900">
-                            {{ $modal->end_at?->format('Y-m-d H:i:s') ?? __('admin/components.status.not_set') }}
+                            @if($modal->end_at)
+                                <x-date :date="$modal->end_at" type="datetime-full" />
+                            @else
+                                {{ __('admin/components.status.not_set') }}
+                            @endif
                         </p>
                     </div>
                 </div>
             </x-card>
 
-            
+
             @if($modal->modalable_type || $modal->modalable_id)
                 <x-card>
                     <x-slot name="title">{{ __('admin/modals.show.association') }}</x-slot>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.modalable_type') }}</label>
+                            <label
+                                class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.modalable_type') }}</label>
                             <p class="mt-1 text-sm text-gray-900 font-mono text-xs bg-gray-50 p-2 rounded">
                                 {{ $modal->modalable_type ?? '-' }}
                             </p>
                         </div>
                         <div>
-                            <label class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.modalable_id') }}</label>
+                            <label
+                                class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.modalable_id') }}</label>
                             <p class="mt-1 text-sm text-gray-900">
                                 {{ $modal->modalable_id ?? '-' }}
                             </p>
@@ -154,9 +176,9 @@
             @endif
         </div>
 
-        
+
         <div class="space-y-6">
-            
+
             <x-card>
                 <x-slot name="title">{{ __('admin/modals.show.metadata') }}</x-slot>
 
@@ -167,20 +189,24 @@
                     </div>
 
                     <div class="border-t border-gray-200 pt-4">
-                        <label class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.created_at') }}</label>
-                        <p class="mt-1 text-sm text-gray-900">{{ $modal->created_at->format('Y-m-d H:i:s') }}</p>
+                        <label
+                            class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.created_at') }}</label>
+                        <p class="mt-1 text-sm text-gray-900"><x-date :date="$modal->created_at" type="datetime-full" />
+                        </p>
                     </div>
 
                     @if($modal->updated_at)
                         <div class="border-t border-gray-200 pt-4">
-                            <label class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.updated_at') }}</label>
-                            <p class="mt-1 text-sm text-gray-900">{{ $modal->updated_at->format('Y-m-d H:i:s') }}</p>
+                            <label
+                                class="text-sm font-medium text-gray-700">{{ __('admin/modals.fields.updated_at') }}</label>
+                            <p class="mt-1 text-sm text-gray-900"><x-date :date="$modal->updated_at" type="datetime-full" />
+                            </p>
                         </div>
                     @endif
                 </div>
             </x-card>
 
-            
+
             <x-card>
                 <x-slot name="title">{{ __('admin/components.table.actions') }}</x-slot>
 
@@ -190,7 +216,9 @@
                             {{ __('admin/components.buttons.edit') }}
                         </x-button>
                     </a>
-                    <button type="button" @click.stop="window.deleteData = { id: {{ $modal->id }}, name: '{{ addslashes($modal->title) }}' }; $dispatch('open-modal', 'delete-modal-modal');" class="w-full">
+                    <button type="button"
+                        @click.stop="window.deleteData = { id: {{ $modal->id }}, name: '{{ addslashes($modal->title) }}' }; $dispatch('open-modal', 'delete-modal-modal');"
+                        class="w-full">
                         <x-button variant="danger" type="button" class="w-full">
                             {{ __('admin/components.buttons.delete') }}
                         </x-button>
@@ -200,8 +228,7 @@
         </div>
     </div>
 
-    
-    <x-delete-confirmation-modal id="delete-modal-modal" route-name="admin.modals.destroy"
-        :item-id="$modal->id" />
+
+    <x-delete-confirmation-modal id="delete-modal-modal" route-name="admin.modals.destroy" :item-id="$modal->id" />
 
 </x-layouts.admin>

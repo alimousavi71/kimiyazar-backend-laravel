@@ -24,7 +24,7 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         <div class="lg:col-span-2 space-y-6">
             <x-card>
                 <x-slot name="title">{{ __('admin/users.show.user_info') }}</x-slot>
@@ -32,11 +32,13 @@
                 <div class="space-y-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="text-sm font-medium text-gray-500">{{ __('admin/users.fields.first_name') }}</label>
+                            <label
+                                class="text-sm font-medium text-gray-500">{{ __('admin/users.fields.first_name') }}</label>
                             <p class="text-base text-gray-900 mt-1">{{ $user->first_name }}</p>
                         </div>
                         <div>
-                            <label class="text-sm font-medium text-gray-500">{{ __('admin/users.fields.last_name') }}</label>
+                            <label
+                                class="text-sm font-medium text-gray-500">{{ __('admin/users.fields.last_name') }}</label>
                             <p class="text-base text-gray-900 mt-1">{{ $user->last_name }}</p>
                         </div>
                     </div>
@@ -44,24 +46,28 @@
                     <div>
                         <label class="text-sm font-medium text-gray-500">{{ __('admin/users.fields.email') }}</label>
                         <p class="text-base text-gray-900 mt-1">
-                            <a href="mailto:{{ $user->email }}" class="text-blue-600 hover:text-blue-700">{{ $user->email }}</a>
+                            <a href="mailto:{{ $user->email }}"
+                                class="text-blue-600 hover:text-blue-700">{{ $user->email }}</a>
                         </p>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="text-sm font-medium text-gray-500">{{ __('admin/users.fields.country_code') }}</label>
+                            <label
+                                class="text-sm font-medium text-gray-500">{{ __('admin/users.fields.country_code') }}</label>
                             <p class="text-base text-gray-900 mt-1">{{ $user->country_code ?: '-' }}</p>
                         </div>
                         <div>
-                            <label class="text-sm font-medium text-gray-500">{{ __('admin/users.fields.phone_number') }}</label>
+                            <label
+                                class="text-sm font-medium text-gray-500">{{ __('admin/users.fields.phone_number') }}</label>
                             <p class="text-base text-gray-900 mt-1">{{ $user->phone_number ?: '-' }}</p>
                         </div>
                     </div>
 
                     @if($user->phone_number && $user->country_code)
                         <div>
-                            <label class="text-sm font-medium text-gray-500">{{ __('admin/users.labels.full_phone') }}</label>
+                            <label
+                                class="text-sm font-medium text-gray-500">{{ __('admin/users.labels.full_phone') }}</label>
                             <p class="text-base text-gray-900 mt-1">
                                 <a href="tel:{{ $user->getFullPhoneNumber() }}" class="text-blue-600 hover:text-blue-700">
                                     {{ $user->getFullPhoneNumber() }}
@@ -71,7 +77,8 @@
                     @endif
 
                     <div>
-                        <label class="text-sm font-medium text-gray-500">{{ __('admin/users.fields.is_active') }}</label>
+                        <label
+                            class="text-sm font-medium text-gray-500">{{ __('admin/users.fields.is_active') }}</label>
                         <div class="mt-1">
                             @if($user->is_active)
                                 <x-badge variant="success" size="md">{{ __('admin/users.status.active') }}</x-badge>
@@ -89,26 +96,32 @@
                 <div class="space-y-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="text-sm font-medium text-gray-500">{{ __('admin/users.fields.created_at') }}</label>
-                            <p class="text-base text-gray-900 mt-1">{{ $user->created_at->format('Y-m-d H:i:s') }}</p>
+                            <label
+                                class="text-sm font-medium text-gray-500">{{ __('admin/users.fields.created_at') }}</label>
+                            <p class="text-base text-gray-900 mt-1"><x-date :date="$user->created_at"
+                                    type="datetime-full" /></p>
                         </div>
                         <div>
-                            <label class="text-sm font-medium text-gray-500">{{ __('admin/users.fields.updated_at') }}</label>
-                            <p class="text-base text-gray-900 mt-1">{{ $user->updated_at->format('Y-m-d H:i:s') }}</p>
+                            <label
+                                class="text-sm font-medium text-gray-500">{{ __('admin/users.fields.updated_at') }}</label>
+                            <p class="text-base text-gray-900 mt-1"><x-date :date="$user->updated_at"
+                                    type="datetime-full" /></p>
                         </div>
                     </div>
 
                     @if($user->last_login)
                         <div>
-                            <label class="text-sm font-medium text-gray-500">{{ __('admin/users.fields.last_login') }}</label>
-                            <p class="text-base text-gray-900 mt-1">{{ $user->last_login->format('Y-m-d H:i:s') }}</p>
+                            <label
+                                class="text-sm font-medium text-gray-500">{{ __('admin/users.fields.last_login') }}</label>
+                            <p class="text-base text-gray-900 mt-1"><x-date :date="$user->last_login"
+                                    type="datetime-full" /></p>
                         </div>
                     @endif
                 </div>
             </x-card>
         </div>
 
-        
+
         <div class="lg:col-span-1">
             <x-card>
                 <x-slot name="title">{{ __('admin/users.show.quick_actions') }}</x-slot>

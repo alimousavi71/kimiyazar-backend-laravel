@@ -15,10 +15,10 @@
             </a>
         </div>
 
-        
+
         <x-session-messages />
 
-        
+
         <x-card>
             <x-table-wrapper :search-placeholder="__('admin/components.buttons.search')"
                 filter-sidebar-id="sliders-filters" :filter-badges="[
@@ -77,7 +77,7 @@
                                             <x-badge variant="danger" size="sm">{{ __('admin/sliders.status.inactive') }}</x-badge>
                                         @endif
                                     </x-table.cell>
-                                    <x-table.cell>{{ $slider->created_at->format('Y-m-d') }}</x-table.cell>
+                                    <x-table.cell><x-date :date="$slider->created_at" type="date" /></x-table.cell>
                                     <x-table.cell>
                                         <div class="flex items-center justify-end">
                                             <x-dropdown-menu align="end">
@@ -110,11 +110,11 @@
                 </x-table>
             </x-table-wrapper>
 
-            
+
             <x-filter-sidebar id="sliders-filters" :title="__('admin/components.buttons.filter')" method="GET"
                 action="{{ request()->url() }}">
                 <div class="space-y-6">
-                    
+
                     <div>
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin/sliders.fields.is_active') }}</label>
@@ -132,7 +132,7 @@
             </x-filter-sidebar>
         </x-card>
 
-        
+
         <x-delete-confirmation-modal id="delete-slider-modal" route-name="admin.sliders.destroy"
             row-selector="tr[data-slider-id='__ID__']" />
     </div>

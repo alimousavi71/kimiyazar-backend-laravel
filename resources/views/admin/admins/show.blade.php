@@ -29,7 +29,7 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         <div class="lg:col-span-2 space-y-6">
             <x-card>
                 <x-slot name="title">{{ __('admin/admins.show.personal_info') }}</x-slot>
@@ -82,7 +82,7 @@
                             class="text-sm font-medium text-gray-500">{{ __('admin/admins.fields.last_login') }}</label>
                         <p class="text-base text-gray-900 mt-1">
                             @if($admin->last_login)
-                                {{ $admin->last_login->format('Y-m-d H:i:s') }}
+                                <x-date :date="$admin->last_login" type="datetime-full" />
                             @else
                                 <span class="text-gray-400">{{ __('admin/admins.show.labels.never_logged_in') }}</span>
                             @endif
@@ -95,8 +95,8 @@
                         <p class="text-base text-gray-900 mt-1">
                             @if($admin->email_verified_at)
                                 <x-badge variant="success" size="sm">{{ __('admin/admins.show.labels.verified') }}</x-badge>
-                                <span
-                                    class="text-sm text-gray-500 ml-2">{{ $admin->email_verified_at->format('Y-m-d H:i:s') }}</span>
+                                <span class="text-sm text-gray-500 ml-2"><x-date :date="$admin->email_verified_at"
+                                        type="datetime-full" /></span>
                             @else
                                 <x-badge variant="warning"
                                     size="sm">{{ __('admin/admins.show.labels.not_verified') }}</x-badge>
@@ -108,19 +108,21 @@
                         <div>
                             <label
                                 class="text-sm font-medium text-gray-500">{{ __('admin/admins.fields.created_at') }}</label>
-                            <p class="text-base text-gray-900 mt-1">{{ $admin->created_at->format('Y-m-d H:i:s') }}</p>
+                            <p class="text-base text-gray-900 mt-1"><x-date :date="$admin->created_at"
+                                    type="datetime-full" /></p>
                         </div>
                         <div>
                             <label
                                 class="text-sm font-medium text-gray-500">{{ __('admin/admins.fields.updated_at') }}</label>
-                            <p class="text-base text-gray-900 mt-1">{{ $admin->updated_at->format('Y-m-d H:i:s') }}</p>
+                            <p class="text-base text-gray-900 mt-1"><x-date :date="$admin->updated_at"
+                                    type="datetime-full" /></p>
                         </div>
                     </div>
                 </div>
             </x-card>
         </div>
 
-        
+
         <div class="lg:col-span-1">
             <x-card>
                 <x-slot name="title">{{ __('admin/admins.show.avatar_card_title') }}</x-slot>

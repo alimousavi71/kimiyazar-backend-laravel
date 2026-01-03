@@ -15,10 +15,10 @@
             </a>
         </div>
 
-        
+
         <x-session-messages />
 
-        
+
         <x-card>
             <x-table-wrapper :search-placeholder="__('admin/components.buttons.search')"
                 filter-sidebar-id="contents-filters" :filter-badges="[
@@ -67,7 +67,7 @@
                                             <x-badge variant="danger" size="sm">{{ __('admin/contents.status.inactive') }}</x-badge>
                                         @endif
                                     </x-table.cell>
-                                    <x-table.cell>{{ $content->created_at->format('Y-m-d') }}</x-table.cell>
+                                    <x-table.cell><x-date :date="$content->created_at" type="date" /></x-table.cell>
                                     <x-table.cell>
                                         <div class="flex items-center justify-end">
                                             <x-dropdown-menu align="end">
@@ -102,11 +102,11 @@
                 </x-table>
             </x-table-wrapper>
 
-            
+
             <x-filter-sidebar id="contents-filters" :title="__('admin/components.buttons.filter')" method="GET"
                 action="{{ request()->url() }}">
                 <div class="space-y-6">
-                    
+
                     <div>
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin/contents.fields.type') }}</label>
@@ -120,7 +120,7 @@
                         </x-select>
                     </div>
 
-                    
+
                     <div>
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin/contents.fields.is_active') }}</label>
@@ -138,7 +138,7 @@
             </x-filter-sidebar>
         </x-card>
 
-        
+
         <x-delete-confirmation-modal id="delete-content-modal" route-name="admin.contents.destroy"
             row-selector="tr[data-content-id='__ID__']" />
     </div>

@@ -11,10 +11,10 @@
             </div>
         </div>
 
-        
+
         <x-session-messages />
 
-        
+
         <x-card>
             <x-table-wrapper :search-placeholder="__('admin/components.buttons.search')"
                 filter-sidebar-id="price-inquiries-filters" :filter-badges="[
@@ -79,7 +79,7 @@
                                                 size="sm">{{ __('admin/price-inquiries.status.pending') }}</x-badge>
                                         @endif
                                     </x-table.cell>
-                                    <x-table.cell>{{ $priceInquiry->created_at->format('Y-m-d H:i') }}</x-table.cell>
+                                    <x-table.cell><x-date :date="$priceInquiry->created_at" type="datetime" /></x-table.cell>
                                     <x-table.cell>
                                         <div class="flex items-center justify-end">
                                             <x-dropdown-menu align="end">
@@ -104,11 +104,11 @@
                 </x-table>
             </x-table-wrapper>
 
-            
+
             <x-filter-sidebar id="price-inquiries-filters" :title="__('admin/components.buttons.filter')" method="GET"
                 action="{{ request()->url() }}">
                 <div class="space-y-6">
-                    
+
                     <div>
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin/price-inquiries.fields.is_reviewed') }}</label>

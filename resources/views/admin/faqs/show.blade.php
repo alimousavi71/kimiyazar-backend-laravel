@@ -1,5 +1,4 @@
-<x-layouts.admin :title="__('admin/faqs.show.title')" :header-title="__('admin/faqs.show.header_title')"
-    :breadcrumbs="[
+<x-layouts.admin :title="__('admin/faqs.show.title')" :header-title="__('admin/faqs.show.header_title')" :breadcrumbs="[
         ['label' => __('admin/faqs.forms.breadcrumbs.dashboard'), 'url' => route('admin.dashboard')],
         ['label' => __('admin/faqs.forms.breadcrumbs.faqs'), 'url' => route('admin.faqs.index')],
         ['label' => __('admin/faqs.show.title')]
@@ -24,7 +23,7 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         <div class="lg:col-span-2 space-y-6">
             <x-card>
                 <x-slot name="title">{{ __('admin/faqs.show.question_info') }}</x-slot>
@@ -36,9 +35,10 @@
                     </div>
 
                     <div>
-                        <label
-                            class="text-sm font-medium text-gray-500">{{ __('admin/faqs.fields.answer') }}</label>
-                        <div class="text-base text-gray-900 mt-1 bg-gray-50 p-4 rounded-lg whitespace-pre-wrap">{{ $faq->answer }}</div>
+                        <label class="text-sm font-medium text-gray-500">{{ __('admin/faqs.fields.answer') }}</label>
+                        <div class="text-base text-gray-900 mt-1 bg-gray-50 p-4 rounded-lg whitespace-pre-wrap">
+                            {{ $faq->answer }}
+                        </div>
                     </div>
 
                     <div>
@@ -63,21 +63,21 @@
                         <div>
                             <label
                                 class="text-sm font-medium text-gray-500">{{ __('admin/faqs.fields.created_at') }}</label>
-                            <p class="text-base text-gray-900 mt-1">{{ $faq->created_at->format('Y-m-d H:i:s') }}
-                            </p>
+                            <p class="text-base text-gray-900 mt-1"><x-date :date="$faq->created_at"
+                                    type="datetime-full" /></p>
                         </div>
                         <div>
                             <label
                                 class="text-sm font-medium text-gray-500">{{ __('admin/faqs.fields.updated_at') }}</label>
-                            <p class="text-base text-gray-900 mt-1">{{ $faq->updated_at->format('Y-m-d H:i:s') }}
-                            </p>
+                            <p class="text-base text-gray-900 mt-1"><x-date :date="$faq->updated_at"
+                                    type="datetime-full" /></p>
                         </div>
                     </div>
                 </div>
             </x-card>
         </div>
 
-        
+
         <div class="lg:col-span-1">
             <x-card>
                 <x-slot name="title">{{ __('admin/faqs.show.quick_actions') }}</x-slot>

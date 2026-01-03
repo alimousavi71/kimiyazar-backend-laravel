@@ -1,6 +1,6 @@
 <x-layouts.admin :header-title="__('dashboard.header')">
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-6">
-        
+
         <x-card>
             <div class="flex items-center justify-between">
                 <div>
@@ -17,7 +17,7 @@
             </div>
         </x-card>
 
-        
+
         <x-card>
             <div class="flex items-center justify-between">
                 <div>
@@ -34,7 +34,7 @@
             </div>
         </x-card>
 
-        
+
         <x-card>
             <div class="flex items-center justify-between">
                 <div>
@@ -50,7 +50,7 @@
             </div>
         </x-card>
 
-        
+
         <x-card>
             <div class="flex items-center justify-between">
                 <div>
@@ -68,9 +68,9 @@
         </x-card>
     </div>
 
-    
+
     <div class="grid gap-6 sm:grid-cols-2 mb-6">
-        
+
         <x-card>
             <div class="flex items-center justify-between">
                 <div>
@@ -87,7 +87,7 @@
             </div>
         </x-card>
 
-        
+
         <x-card>
             <div class="flex items-center justify-between">
                 <div>
@@ -106,7 +106,7 @@
     </div>
 
     <div class="grid gap-6 lg:grid-cols-2">
-        
+
         <x-card :title="__('dashboard.recent_orders.title')">
             <div class="space-y-4">
                 @forelse($recentOrders as $order)
@@ -119,19 +119,20 @@
                             $statusColor = $statusValue === 'pending_payment' ? 'orange' : ($statusValue === 'paid' ? 'emerald' : 'blue');
                             $badgeVariant = $statusValue === 'pending_payment' ? 'warning' : ($statusValue === 'paid' ? 'success' : 'default');
                         @endphp
-                        <div class="w-10 h-10 bg-{{ $statusColor }}-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <div
+                            class="w-10 h-10 bg-{{ $statusColor }}-100 rounded-full flex items-center justify-center flex-shrink-0">
                             <span class="text-{{ $statusColor }}-600 font-semibold text-xs">{{ $initials }}</span>
                         </div>
                         <div class="flex-1">
                             <p class="text-sm font-medium text-gray-900">
-                                <strong>{{ $name }}</strong> {{ __('dashboard.recent_orders.ordered') }} <strong>{{ $order->product?->name ?? 'Product' }}</strong>
+                                <strong>{{ $name }}</strong> {{ __('dashboard.recent_orders.ordered') }}
+                                <strong>{{ $order->product?->name ?? 'Product' }}</strong>
                             </p>
-                            <p class="text-xs text-gray-500">{{ \Carbon\Carbon::createFromTimestamp($order->created_at)->diffForHumans() }}</p>
+                            <p class="text-xs text-gray-500"><x-date
+                                    :date="\Carbon\Carbon::createFromTimestamp($order->created_at)" type="diff" /></p>
                         </div>
                         <div>
-                            <x-badge
-                                variant="{{ $badgeVariant }}"
-                                size="sm">
+                            <x-badge variant="{{ $badgeVariant }}" size="sm">
                                 {{ __('orders.statuses.' . $statusValue) }}
                             </x-badge>
                         </div>

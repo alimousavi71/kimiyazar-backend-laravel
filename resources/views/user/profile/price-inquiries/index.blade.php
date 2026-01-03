@@ -18,10 +18,10 @@
             </div>
         </div>
 
-        
+
         <x-session-messages />
 
-        
+
         <x-card>
             <x-table-wrapper :search-placeholder="__('admin/components.buttons.search')" :paginator="$priceInquiries ?? null">
                 <x-table>
@@ -46,7 +46,8 @@
                                         <span class="text-gray-600">#{{ $priceInquiry->id }}</span>
                                     </x-table.cell>
                                     <x-table.cell>
-                                        <span class="text-gray-900">{{ $priceInquiry->created_at->format('Y-m-d H:i') }}</span>
+                                        <span class="text-gray-900"><x-date :date="$priceInquiry->created_at"
+                                                type="datetime" /></span>
                                     </x-table.cell>
                                     <x-table.cell>
                                         @php

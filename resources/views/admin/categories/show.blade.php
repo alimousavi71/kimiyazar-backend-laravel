@@ -24,7 +24,7 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         <div class="lg:col-span-2 space-y-6">
             <x-card>
                 <x-slot name="title">{{ __('admin/categories.show.basic_info') }}</x-slot>
@@ -110,21 +110,21 @@
                         <div>
                             <label
                                 class="text-sm font-medium text-gray-500">{{ __('admin/categories.fields.created_at') }}</label>
-                            <p class="text-base text-gray-900 mt-1">{{ $category->created_at->format('Y-m-d H:i:s') }}
-                            </p>
+                            <p class="text-base text-gray-900 mt-1"><x-date :date="$category->created_at"
+                                    type="datetime-full" /></p>
                         </div>
                         <div>
                             <label
                                 class="text-sm font-medium text-gray-500">{{ __('admin/categories.fields.updated_at') }}</label>
-                            <p class="text-base text-gray-900 mt-1">{{ $category->updated_at->format('Y-m-d H:i:s') }}
-                            </p>
+                            <p class="text-base text-gray-900 mt-1"><x-date :date="$category->updated_at"
+                                    type="datetime-full" /></p>
                         </div>
                     </div>
                 </div>
             </x-card>
         </div>
 
-        
+
         <div class="lg:col-span-1">
             <x-card>
                 <x-slot name="title">{{ __('admin/categories.show.quick_actions') }}</x-slot>
