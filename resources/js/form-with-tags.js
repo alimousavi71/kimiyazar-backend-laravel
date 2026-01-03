@@ -27,7 +27,8 @@ window.initFormWithTags = function (config) {
         onError = null,
     } = config;
 
-    document.addEventListener("DOMContentLoaded", function () {
+    // Function to initialize the form handler
+    function initializeFormHandler() {
         const form = document.getElementById(formId);
         const tagManagerElement = document.querySelector(tagManagerSelector);
 
@@ -49,12 +50,9 @@ window.initFormWithTags = function (config) {
                 }
 
                 const tagManager = Alpine.$data(tagManagerElement);
-                if (
-                    tagManager &&
-                    tagManager.tags &&
-                    tagManager.tags.length > 0
-                ) {
+                if (tagManager && typeof tagManager.attachTags === "function") {
                     try {
+                        // Always call attachTags to sync tags (even if empty array to clear existing tags)
                         await tagManager.attachTags(tagableType, entityId);
                     } catch (attachError) {
                         console.warn("Failed to attach tags:", attachError);
@@ -68,8 +66,11 @@ window.initFormWithTags = function (config) {
         }
 
         // For edit forms, handle form submission independently
-        form.addEventListener("submit", async function (e) {
+        // Use capture phase to catch the event early
+        const submitHandler = async function (e) {
             e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
 
             const formData = new FormData(form);
             const submitButton = form.querySelector('button[type="submit"]');
@@ -84,12 +85,20 @@ window.initFormWithTags = function (config) {
             }
 
             try {
-                // Submit form via axios (this is an edit form, so use PUT)
-                const response = await window.axios.put(form.action, formData, {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                });
+                // Ensure _method is set in FormData for Laravel method spoofing
+                if (!formData.has("_method")) {
+                    formData.append("_method", "PUT");
+                }
+                // Submit form via axios using POST with _method=PUT (Laravel method spoofing)
+                const response = await window.axios.post(
+                    form.action,
+                    formData,
+                    {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                        },
+                    }
+                );
 
                 if (
                     response.data &&
@@ -106,13 +115,28 @@ window.initFormWithTags = function (config) {
                             ? response.headers.location.split("/").pop()
                             : null);
 
-                    // Attach tags if tag manager exists and has tags
+                    // Attach photos if photo manager exists (for edit forms)
+                    if (
+                        finalEntityId &&
+                        typeof window.attachPhotosToEntity === "function"
+                    ) {
+                        try {
+                            await window.attachPhotosToEntity(finalEntityId);
+                        } catch (attachError) {
+                            console.warn(
+                                "Failed to attach photos:",
+                                attachError
+                            );
+                        }
+                    }
+
+                    // Attach tags if tag manager exists (always sync, even if empty to clear existing tags)
                     if (finalEntityId && tagManagerElement && tagableType) {
                         const tagManager = Alpine.$data(tagManagerElement);
+
                         if (
                             tagManager &&
-                            tagManager.tags &&
-                            tagManager.tags.length > 0
+                            typeof tagManager.attachTags === "function"
                         ) {
                             try {
                                 await tagManager.attachTags(
@@ -120,7 +144,7 @@ window.initFormWithTags = function (config) {
                                     finalEntityId
                                 );
                             } catch (attachError) {
-                                console.warn(
+                                console.error(
                                     "Failed to attach tags:",
                                     attachError
                                 );
@@ -169,6 +193,17 @@ window.initFormWithTags = function (config) {
                     submitButton.innerHTML = originalButtonText;
                 }
             }
-        });
-    });
+        };
+
+        // Add listener with capture to catch it early
+        form.addEventListener("submit", submitHandler, { capture: true });
+    }
+
+    // Check if DOM is already loaded, otherwise wait for DOMContentLoaded
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initializeFormHandler);
+    } else {
+        // DOM is already loaded, run immediately
+        initializeFormHandler();
+    }
 };

@@ -5,7 +5,8 @@ namespace App\Services\Tag;
 use App\Enums\Database\ContentType;
 use App\Models\Tag;
 use App\Repositories\Tag\TagRepositoryInterface;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Support\Collection;
 
 /**
  * Service class for Tag business logic
@@ -40,17 +41,18 @@ class TagService
      */
     public function getByTagable(string $tagableType, int|string $tagableId): Collection
     {
-        return $this->repository->getTagablesByTagable($tagableType, $tagableId)
-            ->map(function ($tagable) {
-                return [
-                    'id' => $tagable->tag->id,
-                    'tag_id' => $tagable->tag_id,
-                    'title' => $tagable->tag->title,
-                    'slug' => $tagable->tag->slug,
-                    'body' => $tagable->body,
-                    'tagable_id' => $tagable->id,
-                ];
-            });
+        $tagables = $this->repository->getTagablesByTagable($tagableType, $tagableId);
+        
+        return $tagables->map(function ($tagable) {
+            return [
+                'id' => $tagable->tag->id,
+                'tag_id' => $tagable->tag_id,
+                'title' => $tagable->tag->title,
+                'slug' => $tagable->tag->slug,
+                'body' => $tagable->body,
+                'tagable_id' => $tagable->id,
+            ];
+        });
     }
 
     /**

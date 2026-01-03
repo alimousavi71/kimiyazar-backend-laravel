@@ -13,7 +13,7 @@
  * </script>
  */
 
-function initFormWithPhotos(config) {
+window.initFormWithPhotos = function (config) {
     const {
         formId,
         photoManagerSelector = '[id^="photo-manager-"]',
@@ -34,6 +34,39 @@ function initFormWithPhotos(config) {
             return;
         }
 
+        // Check if this is an edit form (PUT/PATCH) - if so, let form-with-tags.js handle it
+        const method =
+            form.querySelector('input[name="_method"]')?.value || "POST";
+        const isUpdate = method === "PUT" || method === "PATCH";
+
+        // For edit forms, only handle photos attachment, don't intercept form submission
+        // (form-with-tags.js will handle the form submission)
+        if (isUpdate) {
+            // Just set up the attachPhotosToEntity function for form-with-tags.js to call
+            window.attachPhotosToEntity = async function (entityId) {
+                if (!entityId || !photoManagerElement || !photoableType) {
+                    return;
+                }
+
+                const photoManager = Alpine.$data(photoManagerElement);
+                if (
+                    photoManager &&
+                    photoManager.photos &&
+                    photoManager.photos.length > 0
+                ) {
+                    try {
+                        await photoManager.attachPhotos(
+                            photoableType,
+                            entityId
+                        );
+                    } catch (attachError) {
+                        console.warn("Failed to attach photos:", attachError);
+                    }
+                }
+            };
+            return;
+        }
+
         form.addEventListener("submit", async function (e) {
             e.preventDefault();
 
@@ -50,7 +83,7 @@ function initFormWithPhotos(config) {
             }
 
             try {
-                // Submit form via axios
+                // Submit form via axios (create forms use POST)
                 const response = await window.axios.post(
                     form.action,
                     formData,
@@ -151,4 +184,4 @@ function initFormWithPhotos(config) {
             }
         });
     });
-}
+};
