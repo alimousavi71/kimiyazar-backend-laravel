@@ -20,11 +20,9 @@ class SettingComposer
         // Composer is only registered for frontend views, so no need to check
         $view->with([
             'settings' => Setting::getAllAsArray(),
-            // Fetch tags that have taggables (are actually used), limit 10
-            // Using distinct to avoid duplicates when a tag has multiple tagables
+            // Fetch tags that have taggables (are actually used), randomize and limit 10
             'tags' => Tag::whereHas('tagables')
-                ->distinct()
-                ->orderBy('created_at', 'desc')
+                ->inRandomOrder()
                 ->limit(10)
                 ->get(),
         ]);

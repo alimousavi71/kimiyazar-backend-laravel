@@ -6,7 +6,9 @@ use App\Enums\Database\ContentType;
 use App\Models\Tag;
 use App\Models\Tagable;
 use App\Models\Content;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Repository implementation for Tag model
@@ -84,10 +86,38 @@ class TagRepository implements TagRepositoryInterface
      */
     public function getTagablesByTagable(string $tagableType, int|string $tagableId): Collection
     {
-        return Tagable::where('tagable_type', $tagableType)
+        // Normalize tagable_type: convert AppModelsProduct to App\Models\Product
+        // Handle both formats for backward compatibility
+        $normalizedType = $this->normalizeTagableType($tagableType);
+
+        return Tagable::where('tagable_type', $normalizedType)
             ->where('tagable_id', $tagableId)
             ->with('tag')
             ->get();
+    }
+
+    /**
+     * Normalize tagable type format.
+     * Converts AppModelsProduct to App\Models\Product
+     *
+     * @param string $type
+     * @return string
+     */
+    private function normalizeTagableType(string $type): string
+    {
+        // If it already has backslashes, return as is
+        if (str_contains($type, '\\')) {
+            return $type;
+        }
+
+        // Convert AppModelsProduct to App\Models\Product
+        // Pattern: AppModelsX -> App\Models\X
+        if (preg_match('/^AppModels(.+)$/', $type, $matches)) {
+            return 'App\Models\\' . $matches[1];
+        }
+
+        // If no match, return original
+        return $type;
     }
 
     /**
@@ -99,7 +129,9 @@ class TagRepository implements TagRepositoryInterface
      */
     public function deleteTagablesByTagable(string $tagableType, int|string $tagableId): bool
     {
-        return Tagable::where('tagable_type', $tagableType)
+        $normalizedType = $this->normalizeTagableType($tagableType);
+
+        return Tagable::where('tagable_type', $normalizedType)
             ->where('tagable_id', $tagableId)
             ->delete() > 0;
     }
@@ -125,7 +157,9 @@ class TagRepository implements TagRepositoryInterface
      */
     public function deleteTagableByTagableAndTag(string $tagableType, int|string $tagableId, int|string $tagId): bool
     {
-        return Tagable::where('tagable_type', $tagableType)
+        $normalizedType = $this->normalizeTagableType($tagableType);
+
+        return Tagable::where('tagable_type', $normalizedType)
             ->where('tagable_id', $tagableId)
             ->where('tag_id', $tagId)
             ->delete() > 0;
@@ -157,7 +191,7 @@ class TagRepository implements TagRepositoryInterface
     }
 
     /**
-     * Get paginated entities (contents) by tag slug with search.
+     * Get paginated entities (contents and products) by tag slug with search.
      *
      * @param string $tagSlug
      * @param int $perPage
@@ -169,25 +203,74 @@ class TagRepository implements TagRepositoryInterface
         $tag = $this->findBySlug($tagSlug);
 
         if (!$tag) {
-            return Content::where('id', 0)->paginate($perPage);
+            return new LengthAwarePaginator([], 0, $perPage);
         }
 
-        $query = Content::whereHas('tags', function ($q) use ($tag) {
+        $entities = collect();
+
+        // Fetch Contents
+        $contentQuery = Content::whereHas('tags', function ($q) use ($tag) {
             $q->where('tags.id', $tag->id);
         })
             ->where('is_active', true)
             ->with(['photos', 'tags']);
 
-        // Apply search filter
         if ($search) {
-            $query->where(function ($q) use ($search) {
+            $contentQuery->where(function ($q) use ($search) {
                 $q->where('title', 'like', "%{$search}%")
                     ->orWhere('body', 'like', "%{$search}%")
                     ->orWhere('slug', 'like', "%{$search}%");
             });
         }
 
-        return $query->orderBy('created_at', 'desc')->paginate($perPage);
+        $contents = $contentQuery->get()->map(function ($content) {
+            $content->entity_type = 'content';
+            $content->entity_route = $content->type->value === 'news' ? 'news.show' : 'articles.show';
+            return $content;
+        });
+
+        $entities = $entities->merge($contents);
+
+        // Fetch Products
+        $productQuery = Product::whereHas('tags', function ($q) use ($tag) {
+            $q->where('tags.id', $tag->id);
+        })
+            ->where('is_published', true)
+            ->with(['photos', 'tags']);
+
+        if ($search) {
+            $productQuery->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('body', 'like', "%{$search}%")
+                    ->orWhere('slug', 'like', "%{$search}%");
+            });
+        }
+
+        $products = $productQuery->get()->map(function ($product) {
+            $product->entity_type = 'product';
+            $product->entity_route = 'products.show';
+            // Map product fields to match content structure for view compatibility
+            $product->title = $product->name;
+            $product->type = (object) ['value' => 'product'];
+            return $product;
+        });
+
+        $entities = $entities->merge($products);
+
+        // Sort by created_at desc
+        $entities = $entities->sortByDesc('created_at')->values();
+
+        // Manual pagination
+        $currentPage = request()->get('page', 1);
+        $items = $entities->slice(($currentPage - 1) * $perPage, $perPage)->all();
+
+        return new LengthAwarePaginator(
+            $items,
+            $entities->count(),
+            $perPage,
+            $currentPage,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
     }
 
     /**

@@ -67,7 +67,6 @@ class Tag extends Model
     public function contents(): MorphToMany
     {
         return $this->morphedByMany(Content::class, 'tagable', 'tagables')
-            ->withPivot('body')
             ->withTimestamps();
     }
 

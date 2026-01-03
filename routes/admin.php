@@ -197,7 +197,6 @@ Route::group([
         Route::post('/', [TagController::class, 'store'])->name('store');
         Route::post('/attach', [TagController::class, 'attach'])->name('attach');
         Route::delete('/{id}/detach', [TagController::class, 'detach'])->name('detach');
-        Route::put('/{id}/body', [TagController::class, 'updateBody'])->name('update-body');
     });
 
     // Sliders Management

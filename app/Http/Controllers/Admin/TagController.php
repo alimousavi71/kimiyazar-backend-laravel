@@ -102,7 +102,6 @@ class TagController extends Controller
                 'tagable_id' => ['required', 'integer'],
                 'tags' => ['required', 'array'],
                 'tags.*.tag_id' => ['required', 'integer'],
-                'tags.*.body' => ['nullable', 'string'],
             ]);
 
             $this->service->attachToTagable(
@@ -144,30 +143,4 @@ class TagController extends Controller
         }
     }
 
-    /**
-     * Update tag body.
-     *
-     * @param Request $request
-     * @param string $tagableId
-     * @return JsonResponse
-     */
-    public function updateBody(Request $request, string $tagableId): JsonResponse
-    {
-        try {
-            $request->validate([
-                'tag_id' => ['required', 'integer'],
-                'body' => ['nullable', 'string'],
-            ]);
-
-            $this->service->updateTagBody(
-                $tagableId,
-                $request->input('tag_id'),
-                $request->input('body')
-            );
-
-            return $this->successResponse(null, __('admin/tags.messages.body_updated'));
-        } catch (Exception $e) {
-            return $this->errorResponse(__('admin/tags.messages.update_failed') . ': ' . $e->getMessage(), 500);
-        }
-    }
 }

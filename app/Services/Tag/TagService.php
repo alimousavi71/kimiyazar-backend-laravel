@@ -41,15 +41,15 @@ class TagService
      */
     public function getByTagable(string $tagableType, int|string $tagableId): Collection
     {
-        $tagables = $this->repository->getTagablesByTagable($tagableType, $tagableId);
-        
+        $normalizedType = $this->normalizeTagableType($tagableType);
+        $tagables = $this->repository->getTagablesByTagable($normalizedType, $tagableId);
+
         return $tagables->map(function ($tagable) {
             return [
                 'id' => $tagable->tag->id,
                 'tag_id' => $tagable->tag_id,
                 'title' => $tagable->tag->title,
                 'slug' => $tagable->tag->slug,
-                'body' => $tagable->body,
                 'tagable_id' => $tagable->id,
             ];
         });
@@ -81,23 +81,48 @@ class TagService
      *
      * @param string $tagableType
      * @param int|string $tagableId
-     * @param array $tagData Array of ['tag_id' => id, 'body' => 'optional body']
+     * @param array $tagData Array of ['tag_id' => id]
      * @return void
      */
     public function attachToTagable(string $tagableType, int|string $tagableId, array $tagData): void
     {
+        // Normalize tagable_type to ensure consistency
+        $normalizedType = $this->normalizeTagableType($tagableType);
+
         // First, detach all existing tags
-        $this->repository->deleteTagablesByTagable($tagableType, $tagableId);
+        $this->repository->deleteTagablesByTagable($normalizedType, $tagableId);
 
         // Then attach new tags
         foreach ($tagData as $data) {
             $this->repository->createTagable([
                 'tag_id' => $data['tag_id'],
-                'tagable_type' => $tagableType,
+                'tagable_type' => $normalizedType,
                 'tagable_id' => $tagableId,
-                'body' => $data['body'] ?? null,
             ]);
         }
+    }
+
+    /**
+     * Normalize tagable type format.
+     * Converts AppModelsProduct to App\Models\Product
+     *
+     * @param string $type
+     * @return string
+     */
+    private function normalizeTagableType(string $type): string
+    {
+        // If it already has backslashes, return as is
+        if (str_contains($type, '\\')) {
+            return $type;
+        }
+
+        // Convert AppModelsX to App\Models\X
+        if (preg_match('/^AppModels(.+)$/', $type, $matches)) {
+            return 'App\Models\\' . $matches[1];
+        }
+
+        // If no match, return original
+        return $type;
     }
 
     /**
@@ -110,28 +135,10 @@ class TagService
      */
     public function detachFromTagable(string $tagableType, int|string $tagableId, int|string $tagId): bool
     {
-        return $this->repository->deleteTagableByTagableAndTag($tagableType, $tagableId, $tagId);
+        $normalizedType = $this->normalizeTagableType($tagableType);
+        return $this->repository->deleteTagableByTagableAndTag($normalizedType, $tagableId, $tagId);
     }
 
-    /**
-     * Update tag body for a specific tagable.
-     *
-     * @param int|string $tagableId
-     * @param int|string $tagId
-     * @param string|null $body
-     * @return bool
-     */
-    public function updateTagBody(int|string $tagableId, int|string $tagId, ?string $body): bool
-    {
-        $tagable = $this->repository->findTagableByIdAndTagId($tagableId, $tagId);
-
-        if (!$tagable) {
-            return false;
-        }
-
-        $tagable->body = $body;
-        return $tagable->save();
-    }
 
     /**
      * Get tags by content type with filtering.

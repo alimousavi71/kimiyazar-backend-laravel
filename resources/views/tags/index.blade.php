@@ -53,18 +53,33 @@
                                         <div
                                             class="entity-item-image md:w-80 flex-shrink-0 relative overflow-hidden bg-gray-100">
                                             @php
-                                                $routeName = $item->type->value === 'news' ? 'news.show' : 'articles.show';
+                                                // Determine route based on entity type
+                                                if (isset($item->entity_type) && $item->entity_type === 'product') {
+                                                    $routeName = 'products.show';
+                                                } elseif (isset($item->entity_route)) {
+                                                    $routeName = $item->entity_route;
+                                                } else {
+                                                    $routeName = $item->type->value === 'news' ? 'news.show' : 'articles.show';
+                                                }
+                                                
+                                                // Determine icon and label
+                                                if (isset($item->entity_type) && $item->entity_type === 'product') {
+                                                    $icon = 'fas fa-box';
+                                                    $label = 'محصول';
+                                                } else {
+                                                    $icon = $item->type->value === 'news' ? 'fas fa-newspaper' : 'fas fa-file-alt';
+                                                    $label = $item->type->value === 'news' ? 'خبر' : 'مقاله';
+                                                }
                                             @endphp
                                             <a href="{{ route($routeName, $item->slug) }}"
                                                 class="block relative h-48 md:h-full">
                                                 @if($item->photos->first())
-                                                    <img src="{{ $item->photos->first()->url }}" alt="{{ $item->title }}"
+                                                    <img src="{{ $item->photos->first()->url }}" alt="{{ $item->title ?? $item->name }}"
                                                         class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
                                                 @else
                                                     <div
                                                         class="w-full h-full bg-gradient-to-br from-green-100 to-emerald-100 flex items-center justify-center">
-                                                        <i
-                                                            class="{{ $item->type->value === 'news' ? 'fas fa-newspaper' : 'fas fa-file-alt' }} text-4xl text-green-400"></i>
+                                                        <i class="{{ $icon }} text-4xl text-green-400"></i>
                                                     </div>
                                                 @endif
                                                 <div
@@ -80,31 +95,32 @@
                                             <div class="entity-item-meta mb-3 flex items-center gap-4 flex-wrap">
                                                 <span
                                                     class="entity-item-type inline-flex items-center gap-2 px-3 py-1 bg-green-100 text-green-700 rounded-lg text-xs font-semibold">
-                                                    <i
-                                                        class="{{ $item->type->value === 'news' ? 'fas fa-newspaper' : 'fas fa-file-alt' }}"></i>
-                                                    {{ $item->type->value === 'news' ? 'خبر' : 'مقاله' }}
+                                                    <i class="{{ $icon }}"></i>
+                                                    {{ $label }}
                                                 </span>
                                                 <span
                                                     class="entity-item-date inline-flex items-center gap-2 text-gray-500 text-sm">
                                                     <i class="fa fa-calendar text-green-500"></i>
                                                     <x-date :date="$item->created_at" type="date" />
                                                 </span>
-                                                <span
-                                                    class="entity-item-views inline-flex items-center gap-2 text-gray-500 text-sm">
-                                                    <i class="fa fa-eye text-green-500"></i>
-                                                    {{ number_format($item->visit_count ?? 0) }}
-                                                </span>
+                                                @if(isset($item->visit_count))
+                                                    <span
+                                                        class="entity-item-views inline-flex items-center gap-2 text-gray-500 text-sm">
+                                                        <i class="fa fa-eye text-green-500"></i>
+                                                        {{ number_format($item->visit_count) }}
+                                                    </span>
+                                                @endif
                                             </div>
                                             <h2
                                                 class="entity-item-title text-xl md:text-2xl font-bold text-slate-800 mb-3 hover:text-green-500 transition-colors duration-300">
                                                 <a href="{{ route($routeName, $item->slug) }}"
                                                     class="no-underline text-inherit hover:text-green-500">
-                                                    {{ $item->title }}
+                                                    {{ $item->title ?? $item->name }}
                                                 </a>
                                             </h2>
                                             <p
                                                 class="entity-item-excerpt text-gray-600 text-sm md:text-base leading-relaxed mb-4 line-clamp-3">
-                                                {{ Str::limit(strip_tags($item->body ?? ''), 200) }}
+                                                {{ Str::limit(strip_tags($item->body ?? $item->sale_description ?? ''), 200) }}
                                             </p>
                                             <div class="flex items-center justify-between flex-wrap gap-3">
                                                 <a class="entity-item-read-more inline-flex items-center gap-2 text-green-500 font-semibold text-sm hover:text-emerald-600 transition-colors duration-300 no-underline"

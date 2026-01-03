@@ -165,7 +165,6 @@
                             id: tag.id || tag.tag_id,
                             title: tag.title || tag.name,
                             name: tag.title || tag.name,
-                            body: tag.body || null,
                         }));
                     } else {
                         this.selectedTags = [];
@@ -294,7 +293,6 @@
                             tag_id: tagData.id,
                             title: tagData.title || name.trim(),
                             name: tagData.title || name.trim(),
-                            body: tagData.body || null,
                         };
                         
                         // Prevent duplicate
@@ -347,7 +345,6 @@
                 // Map selected tags to the format expected by the API
                 const tagData = this.selectedTags.map(t => ({
                     tag_id: parseInt(t.id || t.tag_id, 10),
-                    body: t.body || null,
                 }));
 
                 try {

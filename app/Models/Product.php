@@ -190,7 +190,6 @@ class Product extends Model
     public function tags(): MorphToMany
     {
         return $this->morphToMany(Tag::class, 'tagable', 'tagables')
-            ->withPivot('body')
             ->withTimestamps();
     }
 }

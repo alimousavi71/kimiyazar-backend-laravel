@@ -15,7 +15,6 @@ use Illuminate\Support\Carbon;
  * @property int $tag_id
  * @property string $tagable_type
  * @property int $tagable_id
- * @property string|null $body
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read Tag $tag
@@ -48,7 +47,6 @@ class Tagable extends Model
         'tag_id',
         'tagable_type',
         'tagable_id',
-        'body',
     ];
 
     /**
