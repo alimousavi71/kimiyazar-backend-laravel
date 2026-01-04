@@ -38,6 +38,8 @@ class DatabaseSeeder extends Seeder
             ServicePageSeeder::class,
             MenuSeeder::class,
             PriceInquirySeeder::class,
+            ArticleSeeder::class,
+            NewsSeeder::class,
         ]);
     }
 }

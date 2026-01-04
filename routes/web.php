@@ -197,6 +197,9 @@ Route::prefix('api')->name('api.')->group(function () {
     // Country & State Search Routes (for Order Forms)
     Route::get('/countries/search', [\App\Http\Controllers\Api\CountryController::class, 'search'])->name('countries.search');
     Route::get('/states/search', [\App\Http\Controllers\Api\StateController::class, 'search'])->name('states.search');
+
+    // Modal Routes
+    Route::post('/modals/dont-show-again', [\App\Http\Controllers\Api\ModalController::class, 'dontShowAgain'])->name('modals.dont-show-again');
 });
 
 // Legacy route names for compatibility

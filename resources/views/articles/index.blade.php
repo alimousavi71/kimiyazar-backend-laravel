@@ -60,7 +60,7 @@
                                             </h2>
                                             <p
                                                 class="article-item-excerpt text-gray-600 text-sm md:text-base leading-relaxed mb-4 line-clamp-3">
-                                                {{ Str::limit(strip_tags($item->body ?? ''), 200) }}
+                                                {{ Str::limit(strip_tags(html_entity_decode($item->body ?? '', ENT_QUOTES, 'UTF-8')), 200) }}
                                             </p>
                                             <a class="article-item-read-more inline-flex items-center gap-2 text-green-500 font-semibold text-sm hover:text-emerald-600 transition-colors duration-300 no-underline"
                                                 href="{{ route('articles.show', $item->slug) }}">

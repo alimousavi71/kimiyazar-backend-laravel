@@ -51,6 +51,7 @@ use App\Services\Otp\OtpService;
 use App\Services\User\UserService;
 use App\View\Composers\SettingComposer;
 use App\View\Composers\MenuComposer;
+use App\View\Composers\ModalComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -246,5 +247,22 @@ class AppServiceProvider extends ServiceProvider
             'about',
             'faqs.*',
         ], MenuComposer::class);
+
+        // Share active modals with frontend views only (not admin)
+        View::composer([
+            'components.layouts.app',
+            'layouts.app',
+            'components.web.*',
+            'home',
+            'contact',
+            'price-inquiry.*',
+            'products.*',
+            'articles.*',
+            'news.*',
+            'tags.*',
+            'orders.*',
+            'about',
+            'faqs.*',
+        ], ModalComposer::class);
     }
 }

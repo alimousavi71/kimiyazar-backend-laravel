@@ -16,11 +16,11 @@
     <x-web.banner position="A" :banners="$bannersA" />
 
     
-    <x-web.products-section :products="$products" />
-
-    
     <x-web.categories-section :categories="$rootCategories" />
-
+    
+    
+    <x-web.products-section :products="$products" />
+   
     
     <x-web.services-section :services="$services" />
 

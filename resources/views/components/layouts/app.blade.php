@@ -93,6 +93,9 @@
     <x-web.footer />
 
     
+    <x-web.modal-display :modals="$activeModals ?? collect()" />
+
+    
     <div class="fixed bottom-8 left-8 z-[999]">
         <a href="#"
             class="w-12.5 h-12.5 bg-gradient-to-br from-green-500 to-emerald-400 text-white flex items-center justify-center rounded-full no-underline text-lg shadow-[0_4px_15px_rgba(40,167,69,0.4)] border-3 border-white/20 transition-all duration-300 hover:-translate-y-1.25 hover:shadow-[0_6px_20px_rgba(40,167,69,0.6)]">

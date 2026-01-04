@@ -61,7 +61,7 @@
                                                 } else {
                                                     $routeName = $item->type->value === 'news' ? 'news.show' : 'articles.show';
                                                 }
-                                                
+
                                                 // Determine icon and label
                                                 if (isset($item->entity_type) && $item->entity_type === 'product') {
                                                     $icon = 'fas fa-box';
@@ -74,7 +74,8 @@
                                             <a href="{{ route($routeName, $item->slug) }}"
                                                 class="block relative h-48 md:h-full">
                                                 @if($item->photos->first())
-                                                    <img src="{{ $item->photos->first()->url }}" alt="{{ $item->title ?? $item->name }}"
+                                                    <img src="{{ $item->photos->first()->url }}"
+                                                        alt="{{ $item->title ?? $item->name }}"
                                                         class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
                                                 @else
                                                     <div
@@ -120,7 +121,7 @@
                                             </h2>
                                             <p
                                                 class="entity-item-excerpt text-gray-600 text-sm md:text-base leading-relaxed mb-4 line-clamp-3">
-                                                {{ Str::limit(strip_tags($item->body ?? $item->sale_description ?? ''), 200) }}
+                                                {{ Str::limit(strip_tags(html_entity_decode($item->body ?? $item->sale_description ?? '', ENT_QUOTES, 'UTF-8')), 200) }}
                                             </p>
                                             <div class="flex items-center justify-between flex-wrap gap-3">
                                                 <a class="entity-item-read-more inline-flex items-center gap-2 text-green-500 font-semibold text-sm hover:text-emerald-600 transition-colors duration-300 no-underline"

@@ -28,3 +28,5 @@ Thumbs.db
 /database/import/tagable.json
 /database/import/member.json
 /database/import/contact.json
+/database/import/article.json
+/database/import/news.json
