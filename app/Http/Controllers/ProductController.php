@@ -110,7 +110,7 @@ class ProductController extends Controller
         }
 
         // Load relationships
-        $product->load(['photos', 'category', 'prices']);
+        $product->load(['photos', 'category', 'prices', 'tags']);
 
         // Get price history (last 30 days by default, can be extended)
         $priceHistory = $product->prices()->orderBy('created_at', 'desc')->get();

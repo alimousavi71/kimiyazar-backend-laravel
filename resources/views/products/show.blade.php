@@ -212,6 +212,10 @@
                             </div>
 
 
+                            @if($product->tags->count() > 0)
+                                <x-web.tags-widget :tags="$product->tags" title="برچسب‌های محصول" />
+                            @endif
+
                             @if($banners->count() > 0)
                                 <x-web.banner :banners="$banners" position="C" />
                             @endif

@@ -58,6 +58,9 @@ class ArticleController extends Controller
             return redirect()->route('articles.index')->with('error', 'مقاله مورد نظر یافت نشد.');
         }
 
+        // Load tags relationship
+        $article->load('tags');
+
         // Get recent articles for sidebar (latest 3, excluding current)
         $recentArticles = $this->contentService->getActiveContentByType(ContentType::ARTICLE, 4)
             ->filter(fn($item) => $item->id !== $article->id)

@@ -58,6 +58,9 @@ class NewsController extends Controller
             return redirect()->route('news.index')->with('error', 'خبر مورد نظر یافت نشد.');
         }
 
+        // Load tags relationship
+        $news->load('tags');
+
         // Get recent news for sidebar (latest 3, excluding current)
         $recentNews = $this->contentService->getActiveContentByType(ContentType::NEWS, 4)
             ->filter(fn($item) => $item->id !== $news->id)
