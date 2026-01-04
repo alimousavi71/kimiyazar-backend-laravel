@@ -65,6 +65,22 @@ return [
             'quality' => 95,
             'format' => 'jpg',
         ],
+
+        'product' => [
+            'width' => 450,
+            'height' => 450,
+            'fit' => 'cover',
+            'quality' => 90,
+            'format' => 'jpg',
+        ],
+
+        'content' => [
+            'width' => 450,
+            'height' => 450,
+            'fit' => 'cover',
+            'quality' => 90,
+            'format' => 'jpg',
+        ],
     ],
 
     /*

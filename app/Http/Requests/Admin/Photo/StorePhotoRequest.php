@@ -27,6 +27,7 @@ class StorePhotoRequest extends FormRequest
             'photoable_id' => ['nullable', 'integer', 'required_with:photoable_type'],
             'alt' => ['nullable', 'string', 'max:255'],
             'is_primary' => ['sometimes', 'boolean'],
+            'preset' => ['nullable', 'string'],
         ];
     }
 

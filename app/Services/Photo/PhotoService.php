@@ -6,7 +6,6 @@ use App\Models\Photo;
 use App\Repositories\Photo\PhotoRepositoryInterface;
 use App\Services\ImageService;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\UploadedFile;
 
 /**
@@ -43,25 +42,22 @@ class PhotoService
      * @param string|null $photoableType
      * @param int|string|null $photoableId
      * @param array $metadata
+     * @param string|array|null $preset
      * @return Photo
      */
-    public function upload(UploadedFile $file, ?string $photoableType = null, int|string|null $photoableId = null, array $metadata = []): Photo
+    public function upload(UploadedFile $file, ?string $photoableType = null, int|string|null $photoableId = null, array $metadata = [], string|array|null $preset = null): Photo
     {
+        // Determine preset to use
+        $preset = $preset ?? 'large';
+
+        // Upload and process image with the specified preset
+        $filePath = $this->imageService->upload($file, $preset, 'photos');
+
         // Get image dimensions
-        $imageInfo = getimagesize($file->getRealPath());
-        $width = $imageInfo[0] ?? null;
-        $height = $imageInfo[1] ?? null;
+        $dimensions = $this->getImageDimensions($file, $filePath, $preset);
 
-        // Upload image using ImageService
-        $filePath = $this->imageService->upload($file, 'large', 'photos');
-
-        // Get next sort order
-        $sortOrder = 0;
-        if ($photoableType && $photoableId) {
-            $existingPhotos = $this->repository->getByPhotoable($photoableType, $photoableId);
-            $maxSortOrder = $existingPhotos->max('sort_order');
-            $sortOrder = $maxSortOrder !== null ? $maxSortOrder + 1 : 0;
-        }
+        // Get next sort order for this entity
+        $sortOrder = $this->getNextSortOrder($photoableType, $photoableId);
 
         // Prepare photo data
         $data = [
@@ -72,21 +68,112 @@ class PhotoService
             'original_name' => $file->getClientOriginalName(),
             'file_size' => $file->getSize(),
             'mime_type' => $file->getMimeType(),
-            'width' => $width,
-            'height' => $height,
+            'width' => $dimensions['width'],
+            'height' => $dimensions['height'],
             'alt' => $metadata['alt'] ?? null,
             'sort_order' => $sortOrder,
             'is_primary' => $metadata['is_primary'] ?? false,
         ];
 
-        // If setting as primary, unset other primaries
+        // If setting as primary, unset other primaries for this entity
         if ($data['is_primary'] && $photoableType && $photoableId) {
-            Photo::where('photoable_type', $photoableType)
-                ->where('photoable_id', $photoableId)
-                ->update(['is_primary' => false]);
+            $this->unsetOtherPrimaries($photoableType, $photoableId);
         }
 
         return $this->repository->create($data);
+    }
+
+    /**
+     * Get image dimensions from preset config or processed file.
+     *
+     * @param UploadedFile $file
+     * @param string $filePath
+     * @param string|array $preset
+     * @return array{width: int|null, height: int|null}
+     */
+    private function getImageDimensions(UploadedFile $file, string $filePath, string|array $preset): array
+    {
+        // Get preset configuration
+        $presetConfig = is_array($preset) ? $preset : $this->getPresetConfig($preset);
+
+        // If preset specifies dimensions, use them
+        if (isset($presetConfig['width']) && isset($presetConfig['height'])) {
+            return [
+                'width' => $presetConfig['width'],
+                'height' => $presetConfig['height'],
+            ];
+        }
+
+        // Otherwise, read dimensions from the processed file
+        $processedFilePath = storage_path('app/public/' . $filePath);
+        if (file_exists($processedFilePath)) {
+            $imageInfo = getimagesize($processedFilePath);
+            return [
+                'width' => $imageInfo[0] ?? null,
+                'height' => $imageInfo[1] ?? null,
+            ];
+        }
+
+        // Fallback to original file dimensions
+        $imageInfo = getimagesize($file->getRealPath());
+        return [
+            'width' => $imageInfo[0] ?? null,
+            'height' => $imageInfo[1] ?? null,
+        ];
+    }
+
+    /**
+     * Get the next sort order for photos of a given entity.
+     *
+     * @param string|null $photoableType
+     * @param int|string|null $photoableId
+     * @return int
+     */
+    private function getNextSortOrder(?string $photoableType, int|string|null $photoableId): int
+    {
+        if (!$photoableType || !$photoableId) {
+            return 0;
+        }
+
+        $existingPhotos = $this->repository->getByPhotoable($photoableType, $photoableId);
+        $maxSortOrder = $existingPhotos->max('sort_order');
+
+        return $maxSortOrder !== null ? $maxSortOrder + 1 : 0;
+    }
+
+    /**
+     * Unset primary flag for all other photos of the same entity.
+     *
+     * @param string $photoableType
+     * @param int|string $photoableId
+     * @return void
+     */
+    private function unsetOtherPrimaries(string $photoableType, int|string $photoableId): void
+    {
+        Photo::where('photoable_type', $photoableType)
+            ->where('photoable_id', $photoableId)
+            ->update(['is_primary' => false]);
+    }
+
+    /**
+     * Get preset configuration.
+     *
+     * @param string $preset
+     * @return array
+     */
+    private function getPresetConfig(string $preset): array
+    {
+        $presets = config('image.presets', []);
+
+        if (isset($presets[$preset])) {
+            return $presets[$preset];
+        }
+
+        // Return default config
+        return config('image.default', [
+            'quality' => 90,
+            'format' => 'jpg',
+        ]);
     }
 
     /**

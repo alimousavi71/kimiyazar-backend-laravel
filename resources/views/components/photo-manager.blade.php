@@ -7,11 +7,24 @@
     'required' => false,
     'error' => null,
     'readOnly' => false,
+    'preset' => null,
 ])
 
 @php
     $uniqueId = 'photo-manager-' . uniqid();
     $translationKey = str_replace('-', '_', $uniqueId);
+    
+    // Determine preset from photoableType if not provided
+    if ($preset === null && $photoableType) {
+        // Extract entity name from photoableType
+        // Examples: "App\Models\Product" -> "product", "AppModelsProduct" -> "product"
+        $entityName = strtolower(class_basename($photoableType));
+        $preset = $entityName; // Use entity name as preset name
+    }
+    
+    // Default to 'large' if no preset determined
+    $preset = $preset ?? 'large';
+    
     $translations = [
         'upload_success' => __('admin/photos.messages.uploaded'),
         'upload_error' => __('admin/photos.messages.upload_failed'),
@@ -35,6 +48,7 @@
     uniqueId: @js($uniqueId),
     translationKey: @js($translationKey),
     readOnly: @js($readOnly),
+    preset: @js($preset),
 })" class="space-y-4" id="{{ $uniqueId }}">
     @if($label)
         <label class="text-sm font-medium text-gray-700">
@@ -89,22 +103,22 @@
         <template x-for="(photo, index) in photos" :key="photo.id">
             <div class="relative group border border-gray-200 rounded-lg overflow-hidden bg-gray-50">
                 
-                <div class="aspect-square relative">
-                    <img :src="photo.url || (photo.file_path ? (photo.file_path.startsWith('http') ? photo.file_path : (photo.file_path.startsWith('storage/') ? '/' + photo.file_path : '/storage/' + photo.file_path)) : '')" 
+                <div class="aspect-square relative bg-gray-200 overflow-hidden">
+                    <img :src="photo.url || '/storage/' + (photo.file_path || '')" 
                          :alt="photo.alt || 'Photo'"
-                         class="w-full h-full object-cover"                  
+                         class="w-full h-full object-cover relative z-0 opacity-100"                  
                          loading="lazy">
                     
                     
-                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-opacity flex items-center justify-center space-x-2">
+                    <div class="absolute inset-0 group-hover:bg-black group-hover:bg-opacity-50 transition-opacity flex items-center justify-center space-x-2 z-10">
                         
                         <span x-show="photo.is_primary" 
-                              class="absolute top-2 left-2 bg-gradient-to-r from-green-500 to-emerald-400 text-white text-xs px-2 py-1 rounded">
+                              class="absolute top-2 left-2 bg-gradient-to-r from-green-500 to-emerald-400 text-white text-xs px-2 py-1 rounded z-20 pointer-events-auto">
                             Primary
                         </span>
                         
                         
-                        <div x-show="!readOnly" class="opacity-0 group-hover:opacity-100 transition-opacity flex space-x-2">
+                        <div x-show="!readOnly" class="opacity-0 group-hover:opacity-100 transition-opacity flex space-x-2 pointer-events-auto z-20">
                             
                             <button type="button"
                                     @click="setPrimary(photo.id)"
@@ -204,6 +218,22 @@ function photoManager(config) {
         uniqueId: config.uniqueId,
         translationKey: config.translationKey,
         readOnly: config.readOnly || false,
+        
+        get preset() {
+            if (config.preset) {
+                return config.preset;
+            }
+            if (!this.photoableType) {
+                return 'large';
+            }
+            // Extract entity name from photoableType
+            // Examples: "App\Models\Product" -> "product", "AppModelsProduct" -> "product"
+            const type = this.photoableType;
+            const entityName = type.includes('\\') 
+                ? type.split('\\').pop().toLowerCase()
+                : type.replace(/^AppModels?/, '').toLowerCase();
+            return entityName || 'large';
+        },
         get translations() {
             const key = 'photoManagerTranslations_' + this.translationKey;
             return window[key] || {};
@@ -230,7 +260,7 @@ function photoManager(config) {
                     const photosData = response.data.data || [];
                     this.photos = photosData.map(photo => ({
                         ...photo,
-                        url: photo.url || this.getPhotoUrl(photo.file_path)
+                        url: photo.url || (photo.file_path ? '/storage/' + photo.file_path : '')
                     }));
                 }
             } catch (error) {
@@ -238,16 +268,6 @@ function photoManager(config) {
             }
         },
 
-        getPhotoUrl(filePath) {
-            if (!filePath) return '';
-            if (filePath.startsWith('http://') || filePath.startsWith('https://')) {
-                return filePath;
-            }
-            if (filePath.startsWith('storage/')) {
-                return `/${filePath}`;
-            }
-            return `/storage/${filePath}`;
-        },
 
         handleFileSelect(event) {
             const files = Array.from(event.target.files);
@@ -298,6 +318,9 @@ function photoManager(config) {
                 if (this.photoableId) {
                     formData.append('photoable_id', this.photoableId);
                 }
+                if (this.preset) {
+                    formData.append('preset', this.preset);
+                }
 
                 const response = await window.axios.post('{{ route("admin.photos.store") }}', formData, {
                     headers: {
@@ -309,10 +332,9 @@ function photoManager(config) {
                     const photoData = response.data.data || response.data;
                     const photo = {
                         ...photoData,
-                        url: photoData.url || this.getPhotoUrl(photoData.file_path)
+                        url: photoData.url || (photoData.file_path ? '/storage/' + photoData.file_path : '')
                     };
                     this.photos.push(photo);
-                    // Success message is handled by axios interceptor
                 }
             } catch (error) {
                 console.error('Upload error:', error);

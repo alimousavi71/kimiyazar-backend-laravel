@@ -66,7 +66,8 @@ class PhotoController extends Controller
                 [
                     'alt' => $validated['alt'] ?? null,
                     'is_primary' => $validated['is_primary'] ?? false,
-                ]
+                ],
+                $validated['preset'] ?? null
             );
 
             return $this->createdResponse($photo->toArray(), __('admin/photos.messages.uploaded'));

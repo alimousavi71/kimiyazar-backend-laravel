@@ -4,89 +4,87 @@ namespace Database\Seeders;
 
 use App\Models\Contact;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Carbon;
 
 class ContactSeeder extends Seeder
 {
+    /**
+     * Record limit for import (null = no limit, number = limit to that many records).
+     */
+    private ?int $recordLimit = 100;
+
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $contacts = [
-            [
-                'title' => 'سوال درباره محصولات',
-                'text' => 'سلام، می‌خواستم بدانم آیا محصولات شما دارای گواهینامه کیفیت هستند؟',
-                'email' => 'ahmad.rezaei@example.com',
-                'mobile' => '09123456789',
-                'is_read' => true,
-            ],
-            [
-                'title' => 'درخواست همکاری',
-                'text' => 'با سلام، شرکت ما علاقه‌مند به همکاری با شما در زمینه توزیع محصولات است.',
-                'email' => 'info@company.com',
-                'mobile' => '09187654321',
-                'is_read' => true,
-            ],
-            [
-                'title' => 'مشکل در سفارش',
-                'text' => 'سفارش من با شماره 12345 هنوز ارسال نشده است. لطفا پیگیری کنید.',
-                'email' => 'sara.mohammadi@example.com',
-                'mobile' => '09351234567',
-                'is_read' => false,
-            ],
-            [
-                'title' => 'سوال درباره قیمت',
-                'text' => 'آیا امکان دریافت تخفیف برای خرید عمده وجود دارد؟',
-                'email' => 'buyer@example.com',
-                'mobile' => '09121112233',
-                'is_read' => true,
-            ],
-            [
-                'title' => 'نظرسنجی',
-                'text' => 'از خدمات شما بسیار راضی هستم. ممنون از کیفیت عالی محصولات.',
-                'email' => 'customer@example.com',
-                'mobile' => '09234445566',
-                'is_read' => true,
-            ],
-            [
-                'title' => 'درخواست کاتالوگ',
-                'text' => 'لطفا کاتالوگ کامل محصولات را برای من ارسال کنید.',
-                'email' => 'request@example.com',
-                'mobile' => '09135556677',
-                'is_read' => false,
-            ],
-            [
-                'title' => 'مشکل فنی',
-                'text' => 'در هنگام ثبت سفارش آنلاین با خطا مواجه شدم. لطفا بررسی کنید.',
-                'email' => 'tech.support@example.com',
-                'mobile' => '09367778899',
-                'is_read' => false,
-            ],
-            [
-                'title' => 'پیشنهاد بهبود',
-                'text' => 'پیشنهاد می‌کنم امکان پرداخت اقساطی را به سایت اضافه کنید.',
-                'email' => 'suggestion@example.com',
-                'mobile' => '09198889900',
-                'is_read' => true,
-            ],
-            [
-                'title' => 'سوال درباره گارانتی',
-                'text' => 'مدت زمان گارانتی محصولات شما چقدر است؟',
-                'email' => 'warranty@example.com',
-                'mobile' => '09211112233',
-                'is_read' => true,
-            ],
-            [
-                'title' => 'درخواست بازدید',
-                'text' => 'آیا امکان بازدید از کارخانه شما برای تیم ما وجود دارد؟',
-                'email' => 'visit@company.com',
-                'mobile' => '09124445566',
-                'is_read' => false,
-            ],
-        ];
+        $contactsData = json_decode(File::get(database_path('import/contact.json')), true);
 
-        foreach ($contacts as $contact) {
-            Contact::create($contact);
+        if (!$contactsData || !is_array($contactsData)) {
+            $this->command->error('Failed to read or parse contact.json file');
+            return;
+        }
+
+        // Apply record limit if set
+        if ($this->recordLimit !== null) {
+            $contactsData = array_slice($contactsData, 0, $this->recordLimit);
+        }
+
+        $totalRecords = count($contactsData);
+        $this->command->info("Importing {$totalRecords} contacts...");
+
+        $imported = 0;
+        $skipped = 0;
+        $errors = 0;
+
+        Contact::unguard();
+
+        foreach ($contactsData as $item) {
+            try {
+                // Map JSON fields to database fields
+                $contactData = [
+                    'id' => (int) $item['id'],
+                    'title' => $item['title'] ?? null,
+                    'text' => $item['text'] ?? null,
+                    'email' => $item['email'] ?? null,
+                    'mobile' => $item['mobile'] ?? null,
+                    'is_read' => isset($item['seen']) ? (int) $item['seen'] === 1 : false,
+                ];
+
+                // Handle timestamps
+                if (!empty($item['cdate']) && $item['cdate'] !== '0') {
+                    $timestamp = (int) ($item['cdate'] ?? 0);
+                    if ($timestamp > 0) {
+                        $contactData['created_at'] = Carbon::createFromTimestamp($timestamp);
+                        $contactData['updated_at'] = Carbon::createFromTimestamp($timestamp);
+                    } else {
+                        $contactData['created_at'] = Carbon::now();
+                        $contactData['updated_at'] = Carbon::now();
+                    }
+                } else {
+                    $contactData['created_at'] = Carbon::now();
+                    $contactData['updated_at'] = Carbon::now();
+                }
+
+                Contact::create($contactData);
+
+                $imported++;
+            } catch (\Exception $e) {
+                $errors++;
+                $this->command->warn("Failed to import contact (id: {$item['id']}): " . $e->getMessage());
+                continue;
+            }
+        }
+
+        Contact::reguard();
+
+        $this->command->info("Successfully imported {$imported} contacts!");
+        if ($skipped > 0) {
+            $this->command->info("Skipped {$skipped} contacts (already exist or missing data).");
+        }
+        if ($errors > 0) {
+            $this->command->warn("Encountered {$errors} errors during import.");
         }
     }
 }

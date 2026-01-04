@@ -252,55 +252,25 @@ class ProductRepository implements ProductRepositoryInterface
      */
     public function getProductsForPriceManagement(?string $search = null, ?array $categoryIds = null, int $perPage = 15): LengthAwarePaginator
     {
-        $baseQuery = Product::query();
+        $query = Product::query();
 
-        $allowedFilters = [
-            AllowedFilter::callback('search', function ($query, $value) use ($search) {
-                $searchValue = $search ?? $value;
-                if ($searchValue) {
-                    $query->where(function ($q) use ($searchValue) {
-                        $q->where('name', 'like', "%{$searchValue}%")
-                            ->orWhere('slug', 'like', "%{$searchValue}%");
-                    });
-                }
-            }),
-            AllowedFilter::callback('category_id', function ($query, $value) use ($categoryIds) {
-                if ($categoryIds !== null && !empty($categoryIds)) {
-                    $query->whereIn('category_id', $categoryIds);
-                } elseif ($value !== null) {
-                    $query->whereIn('category_id', is_array($value) ? $value : [$value]);
-                }
-            }),
-        ];
-
-        $allowedSorts = [
-            'sort_order',
-            'name',
-        ];
-
-        $queryBuilder = QueryBuilder::for($baseQuery)
-            ->allowedFilters($allowedFilters)
-            ->allowedSorts($allowedSorts)
-            ->defaultSort('sort_order');
-
-        // Apply filters programmatically
-        $originalRequest = request()->all();
-        $filters = [];
-        if ($search !== null) {
-            $filters['search'] = $search;
+        // Apply search filter
+        if ($search !== null && trim($search) !== '') {
+            $searchValue = trim($search);
+            $query->where(function ($q) use ($searchValue) {
+                $q->where('name', 'like', "%{$searchValue}%")
+                    ->orWhere('slug', 'like', "%{$searchValue}%");
+            });
         }
+
+        // Apply category filter (including all children)
         if ($categoryIds !== null && !empty($categoryIds)) {
-            $filters['category_id'] = $categoryIds;
-        }
-        if (!empty($filters)) {
-            request()->merge(['filter' => $filters]);
+            $query->whereIn('category_id', $categoryIds);
         }
 
-        $result = $queryBuilder->paginate($perPage);
+        // Apply sorting
+        $query->orderBy('sort_order');
 
-        // Restore original request
-        request()->merge($originalRequest);
-
-        return $result;
+        return $query->paginate($perPage)->withQueryString();
     }
 }
