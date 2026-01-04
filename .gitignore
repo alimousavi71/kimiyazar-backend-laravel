@@ -26,3 +26,4 @@ Thumbs.db
 /database/import/product_prices.json
 /database/import/tags.json
 /database/import/tagable.json
+/database/import/member.json

@@ -4,13 +4,18 @@ namespace Database\Seeders;
 
 use App\Models\Tagable;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use App\Models\Tag;
 use App\Models\Product;
 use App\Models\Content;
-use App\Models\Tag;
+
 class TagableSeeder extends Seeder
 {
+    /**
+     * Record limit for import (null = no limit, number = limit to that many records).
+     */
+    private ?int $recordLimit = 100;
+
     /**
      * Map tagable_type from JSON to Laravel model class names.
      */
@@ -30,13 +35,22 @@ class TagableSeeder extends Seeder
     {
         $tagablesData = json_decode(File::get(database_path('import/tagable.json')), true);
 
-        $this->command->info("Importing " . count($tagablesData) . " tagables (only those with existing tags)...");
+        if (!$tagablesData || !is_array($tagablesData)) {
+            $this->command->error('Failed to read or parse tagable.json file');
+            return;
+        }
 
-        $tagablesData = array_slice($tagablesData, 0, 8);
+        // Apply record limit if set
+        if ($this->recordLimit !== null) {
+            $tagablesData = array_slice($tagablesData, 0, $this->recordLimit);
+        }
+
+        $totalRecords = count($tagablesData);
+        $this->command->info("Importing {$totalRecords} tagables...");
 
         $imported = 0;
         $skipped = 0;
-        $duplicates = 0;
+        $errors = 0;
 
         Tagable::unguard();
 
@@ -59,7 +73,7 @@ class TagableSeeder extends Seeder
                     ->exists();
 
                 if ($exists) {
-                    $duplicates++;
+                    $skipped++;
                     continue;
                 }
 
@@ -69,11 +83,11 @@ class TagableSeeder extends Seeder
                     'tagable_type' => $tagableType,
                     'tagable_id' => $tagableId,
                 ]);
+
                 $imported++;
             } catch (\Exception $e) {
-                // Skip on any error (duplicate, constraint violation, etc.) and continue
-                $skipped++;
-                $this->command->warn("Skipped tagable (tag_id: {$item['tag_id']}, tagable_type: {$item['tagable_type']}, tagable_id: {$item['tagable_id']}): " . $e->getMessage());
+                $errors++;
+                $this->command->warn("Failed to import tagable (tag_id: {$item['tag_id']}, tagable_type: {$item['tagable_type']}, tagable_id: {$item['tagable_id']}): " . $e->getMessage());
                 continue;
             }
         }
@@ -82,10 +96,10 @@ class TagableSeeder extends Seeder
 
         $this->command->info("Successfully imported {$imported} tagables!");
         if ($skipped > 0) {
-            $this->command->info("Skipped {$skipped} tagables (tag not found or errors).");
+            $this->command->info("Skipped {$skipped} tagables (already exist or missing data).");
         }
-        if ($duplicates > 0) {
-            $this->command->info("Skipped {$duplicates} duplicates (already exist).");
+        if ($errors > 0) {
+            $this->command->warn("Encountered {$errors} errors during import.");
         }
     }
 }

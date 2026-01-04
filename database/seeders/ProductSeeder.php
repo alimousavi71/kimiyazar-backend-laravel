@@ -12,24 +12,40 @@ use Illuminate\Support\Facades\File;
 class ProductSeeder extends Seeder
 {
     /**
+     * Record limit for import (null = no limit, number = limit to that many records).
+     */
+    private ?int $recordLimit = 100;
+
+    /**
      * Run the database seeds.
      */
     public function run(): void
     {
         $productsData = json_decode(File::get(database_path('import/products.json')), true);
 
-        if (empty($productsData)) {
+        if (!$productsData || !is_array($productsData)) {
+            $this->command->error('Failed to read or parse products.json file');
             return;
         }
 
-        $this->command->info("Importing " . count($productsData) . " products...");
+        // Apply record limit if set
+        if ($this->recordLimit !== null) {
+            $productsData = array_slice($productsData, 0, $this->recordLimit);
+        }
+
+        $totalRecords = count($productsData);
+        $this->command->info("Importing {$totalRecords} products...");
+
+        $imported = 0;
+        $skipped = 0;
+        $errors = 0;
 
         $usedSlugs = [];
 
-        DB::transaction(function () use ($productsData, &$usedSlugs) {
-            Product::unguard();
+        Product::unguard();
 
-            foreach ($productsData as $item) {
+        foreach ($productsData as $item) {
+            try {
                 // Ensure slug is unique
                 $baseSlug = $item['slug'];
                 $slug = SlugService::makeUnique(
@@ -94,11 +110,23 @@ class ProductSeeder extends Seeder
                     'price_effective_date' => $item['price_day_date'] ?? null,
                     'created_at' => $createdAt,
                 ]);
+
+                $imported++;
+            } catch (\Exception $e) {
+                $errors++;
+                $this->command->warn("Failed to import product (id: {$item['id']}): " . $e->getMessage());
+                continue;
             }
+        }
 
-            Product::reguard();
-        });
+        Product::reguard();
 
-        $this->command->info("Successfully imported " . count($productsData) . " products!");
+        $this->command->info("Successfully imported {$imported} products!");
+        if ($skipped > 0) {
+            $this->command->info("Skipped {$skipped} products (already exist or missing data).");
+        }
+        if ($errors > 0) {
+            $this->command->warn("Encountered {$errors} errors during import.");
+        }
     }
 }

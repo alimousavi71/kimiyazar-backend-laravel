@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\File;
 class ProductPriceSeeder extends Seeder
 {
     /**
-     * Limit seeding to only 100 records for testing
+     * Record limit for import (null = no limit, number = limit to that many records).
      */
-    private bool $only100Records = true;
+    private ?int $recordLimit = 100;
 
     /**
      * Run the database seeds.
@@ -27,17 +27,22 @@ class ProductPriceSeeder extends Seeder
         $pricesData = json_decode($jsonContent, true);
         unset($jsonContent); // Free memory
 
-        if (empty($pricesData)) {
+        if (!$pricesData || !is_array($pricesData)) {
+            $this->command->error('Failed to read or parse product_prices.json file');
             return;
         }
 
-        // Limit to 100 records if flag is set
-        if ($this->only100Records) {
-            $pricesData = array_slice($pricesData, 0, 100);
+        // Apply record limit if set
+        if ($this->recordLimit !== null) {
+            $pricesData = array_slice($pricesData, 0, $this->recordLimit);
         }
 
-        $totalCount = count($pricesData);
-        $this->command->info("Importing {$totalCount} product prices...");
+        $totalRecords = count($pricesData);
+        $this->command->info("Importing {$totalRecords} product prices...");
+
+        $imported = 0;
+        $skipped = 0;
+        $errors = 0;
 
         ProductPrice::unguard();
 
@@ -48,41 +53,59 @@ class ProductPriceSeeder extends Seeder
         $batches = array_chunk($pricesData, $batchSize);
         unset($pricesData); // Free memory
 
-        $processed = 0;
-
         foreach ($batches as $batch) {
             $insertData = [];
 
             foreach ($batch as $item) {
-                $createdAt = isset($item['price_date']) && $item['price_date']
-                    ? date('Y-m-d H:i:s', (int) $item['price_date'])
-                    : now();
+                try {
+                    $createdAt = isset($item['price_date']) && $item['price_date']
+                        ? date('Y-m-d H:i:s', (int) $item['price_date'])
+                        : now();
 
-                $currencyCode = isset($item['money_sign']) && isset($currencyMap[$item['money_sign']])
-                    ? $currencyMap[$item['money_sign']]
-                    : CurrencyCode::IRR->value;
+                    $currencyCode = isset($item['money_sign']) && isset($currencyMap[$item['money_sign']])
+                        ? $currencyMap[$item['money_sign']]
+                        : CurrencyCode::IRR->value;
 
-                $insertData[] = [
-                    'id' => (int) $item['id'],
-                    'product_id' => (int) $item['product_id'],
-                    'price' => $item['price'],
-                    'currency_code' => $currencyCode,
-                    'created_at' => $createdAt,
-                    'updated_at' => $createdAt,
-                ];
+                    $insertData[] = [
+                        'id' => (int) $item['id'],
+                        'product_id' => (int) $item['product_id'],
+                        'price' => $item['price'],
+                        'currency_code' => $currencyCode,
+                        'created_at' => $createdAt,
+                        'updated_at' => $createdAt,
+                    ];
+                } catch (\Exception $e) {
+                    $errors++;
+                    $this->command->warn("Failed to prepare product price (id: {$item['id']}): " . $e->getMessage());
+                    continue;
+                }
             }
 
-            DB::table('product_prices')->insert($insertData);
-            $processed += count($insertData);
+            try {
+                if (!empty($insertData)) {
+                    DB::table('product_prices')->insert($insertData);
+                    $imported += count($insertData);
+                }
+            } catch (\Exception $e) {
+                $errors += count($insertData);
+                $this->command->warn("Failed to insert batch: " . $e->getMessage());
+            }
+
             unset($insertData); // Free memory
 
-            if ($processed % 5000 === 0) {
-                $this->command->info("Processed {$processed}/{$totalCount} prices...");
+            if ($imported % 5000 === 0) {
+                $this->command->info("Processed {$imported}/{$totalRecords} prices...");
             }
         }
 
         ProductPrice::reguard();
 
-        $this->command->info("Successfully imported {$processed} product prices!");
+        $this->command->info("Successfully imported {$imported} product prices!");
+        if ($skipped > 0) {
+            $this->command->info("Skipped {$skipped} product prices (already exist or missing data).");
+        }
+        if ($errors > 0) {
+            $this->command->warn("Encountered {$errors} errors during import.");
+        }
     }
 }
