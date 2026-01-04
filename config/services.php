@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'smsir' => [
+        'api_key' => env('SMSIR_API_KEY'),
+        'line_number' => env('SMSIR_LINE_NUMBER'),
+        'base_url' => env('SMSIR_BASE_URL', 'https://api.sms.ir/v1'),
+    ],
+
 ];

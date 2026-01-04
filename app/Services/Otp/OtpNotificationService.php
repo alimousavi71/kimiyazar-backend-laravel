@@ -2,10 +2,16 @@
 
 namespace App\Services\Otp;
 
+use App\Services\Sms\SmsIrService;
 use Illuminate\Support\Facades\Log;
 
 class OtpNotificationService
 {
+    public function __construct(
+        private readonly ?SmsIrService $smsService = null
+    ) {
+    }
+
     /**
      * Send OTP via email or SMS
      */
@@ -37,11 +43,20 @@ class OtpNotificationService
      */
     private function sendSms(string $code, string $phone): void
     {
-        // TODO: Implement actual SMS sending
-        // Example: Use Kavenegar, Twilio, or other SMS provider
-        // $client = new \Kavenegar\Laravel\Facade\Kavenegar();
-        // $client->send($phone, "Your OTP code: {$code}");
-        Log::info("SMS OTP sent to {$phone}: {$code}");
+        // Use SMS.ir service if available
+        if ($this->smsService) {
+            $message = "کد تایید شما: {$code}";
+            $result = $this->smsService->send($phone, $message);
+
+            if ($result['success']) {
+                Log::info("SMS OTP sent successfully to {$phone}");
+            } else {
+                Log::error("Failed to send SMS OTP to {$phone}: " . ($result['message'] ?? 'Unknown error'));
+            }
+        } else {
+            // Fallback to logging if service not available
+            Log::info("SMS OTP sent to {$phone}: {$code}");
+        }
     }
 
     /**
