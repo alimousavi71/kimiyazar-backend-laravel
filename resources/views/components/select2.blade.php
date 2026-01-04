@@ -111,7 +111,7 @@
                 x-ref="select2Dropdown"
                 x-show="isOpen"
                 x-cloak
-                class="absolute z-50 w-full bg-white rounded-xl shadow-md border border-gray-200 max-h-60 overflow-hidden transition-opacity duration-150 ease-out"
+                class="absolute z-[9999] w-full bg-white rounded-xl shadow-md border border-gray-200 max-h-60 overflow-hidden transition-opacity duration-150 ease-out"
                 :class="isOpen ? 'opacity-100' : 'opacity-0'"
                 style="display: none;"
             >
@@ -246,6 +246,12 @@ function select2Component(selectId, config) {
                 if (value) {
                     this.$nextTick(() => {
                         if (window.initDropdownPopper && this.$refs.select2Trigger && this.$refs.select2Dropdown && !this.popperInstance) {
+                            // Match dropdown width to trigger width when using fixed positioning
+                            const triggerWidth = this.$refs.select2Trigger.offsetWidth;
+                            if (triggerWidth) {
+                                this.$refs.select2Dropdown.style.width = triggerWidth + 'px';
+                            }
+                            
                             this.popperInstance = window.initDropdownPopper(
                                 this.$refs.select2Trigger,
                                 this.$refs.select2Dropdown,
