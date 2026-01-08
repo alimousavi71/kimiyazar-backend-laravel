@@ -27,8 +27,10 @@ class SyncTodayPricesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'product_ids' => ['required', 'array', 'min:1'],
-            'product_ids.*' => ['required', 'integer', 'exists:products,id'],
+            'prices' => ['required', 'array', 'min:1'],
+            'prices.*.product_id' => ['required', 'integer', 'exists:products,id'],
+            'prices.*.price' => ['required', 'numeric', 'min:0'],
+            'prices.*.currency_code' => ['required', \Illuminate\Validation\Rule::enum(\App\Enums\Database\CurrencyCode::class)],
         ];
     }
 }

@@ -12,7 +12,7 @@ class ContactSeeder extends Seeder
     /**
      * Record limit for import (null = no limit, number = limit to that many records).
      */
-    private ?int $recordLimit = null;
+    private ?int $recordLimit = 100;
 
     /**
      * Run the database seeds.

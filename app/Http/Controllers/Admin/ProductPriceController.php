@@ -91,7 +91,8 @@ class ProductPriceController extends Controller
     }
 
     /**
-     * Sync today's prices - create or update prices for selected products.
+     * Sync today's prices - update if exists for today, create if not.
+     * Uses prices and currencies from form inputs.
      *
      * @param SyncTodayPricesRequest $request
      * @return JsonResponse
@@ -99,8 +100,8 @@ class ProductPriceController extends Controller
     public function syncTodayPrices(SyncTodayPricesRequest $request): JsonResponse
     {
         try {
-            $productIds = $request->input('product_ids');
-            $result = $this->service->syncTodayPrices($productIds);
+            $prices = $request->input('prices');
+            $result = $this->service->syncTodayPrices($prices);
 
             return $this->successResponse([
                 'created' => $result['created'],

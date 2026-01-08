@@ -116,6 +116,7 @@ class ProductPriceService
 
     /**
      * Create or update product price.
+     * Creates a new price record and updates the product's current_price.
      *
      * @param int $productId
      * @param array $data
@@ -125,11 +126,28 @@ class ProductPriceService
     {
         $data['product_id'] = $productId;
 
-        return $this->repository->create($data);
+        // Create new price record (database trigger will update product, but we ensure it's updated)
+        $price = $this->repository->create($data);
+
+        // Manually update product to ensure current_price is updated
+        // (Trigger should handle this, but we ensure it's updated)
+        $product = $this->productRepository->findById($productId);
+        if ($product) {
+            $product->update([
+                'current_price' => $data['price'],
+                'currency_code' => $data['currency_code'],
+                'price_updated_at' => now(),
+                'price_effective_date' => now()->toDateString(),
+            ]);
+        }
+
+        return $price;
     }
 
     /**
      * Bulk update product prices.
+     * Creates new price records and updates each product's current_price.
+     * Uses the same logic as createOrUpdate for consistency.
      *
      * @param array $prices Array of ['product_id' => int, 'price' => string, 'currency_code' => string]
      * @return int Number of prices created
@@ -141,13 +159,37 @@ class ProductPriceService
 
         foreach ($prices as $priceData) {
             if (isset($priceData['product_id']) && isset($priceData['price']) && isset($priceData['currency_code'])) {
+                $productId = (int) $priceData['product_id'];
+                // Ensure price is properly converted - remove any formatting and convert to string
+                $priceValue = $priceData['price'];
+                if (is_string($priceValue)) {
+                    // Remove commas and other formatting
+                    $priceValue = str_replace([',', ' '], '', $priceValue);
+                }
+                $price = is_numeric($priceValue) ? (string) floatval($priceValue) : '0';
+                $currencyCode = $priceData['currency_code'];
+
+                // Create new price record (same as single update)
                 $this->repository->create([
-                    'product_id' => $priceData['product_id'],
-                    'price' => $priceData['price'],
-                    'currency_code' => $priceData['currency_code'],
+                    'product_id' => $productId,
+                    'price' => $price,
+                    'currency_code' => $currencyCode,
                     'created_at' => $now,
                     'updated_at' => $now,
                 ]);
+
+                // Manually update product to ensure current_price is updated
+                // (Trigger should handle this, but we ensure it's updated - same as single update)
+                $product = $this->productRepository->findById($productId);
+                if ($product) {
+                    $product->update([
+                        'current_price' => $price,
+                        'currency_code' => $currencyCode,
+                        'price_updated_at' => $now,
+                        'price_effective_date' => $now->toDateString(),
+                    ]);
+                }
+
                 $created++;
             }
         }
@@ -179,49 +221,61 @@ class ProductPriceService
     }
 
     /**
-     * Sync today's prices - create or update prices for selected products based on their latest prices.
+     * Sync today's prices - update if exists for today, create if not.
+     * Uses the prices and currencies provided in the request (from form inputs).
      *
-     * @param array<int>|null $productIds Optional array of product IDs to sync. If null, syncs all products.
+     * @param array $prices Array of ['product_id' => int, 'price' => string, 'currency_code' => string]
      * @return array ['created' => int, 'updated' => int, 'total' => int]
      */
-    public function syncTodayPrices(?array $productIds = null): array
+    public function syncTodayPrices(array $prices): array
     {
         $today = now()->startOfDay();
         $created = 0;
         $updated = 0;
 
-        // Get products - either selected ones or all
-        if ($productIds !== null && count($productIds) > 0) {
-            $products = $this->productRepository->findByIds($productIds);
-        } else {
-            $products = $this->productRepository->all();
-        }
+        foreach ($prices as $priceData) {
+            if (isset($priceData['product_id']) && isset($priceData['price']) && isset($priceData['currency_code'])) {
+                $productId = (int) $priceData['product_id'];
+                // Ensure price is properly converted - remove any formatting and convert to string
+                $priceValue = $priceData['price'];
+                if (is_string($priceValue)) {
+                    // Remove commas and other formatting
+                    $priceValue = str_replace([',', ' '], '', $priceValue);
+                }
+                $price = is_numeric($priceValue) ? (string) floatval($priceValue) : '0';
+                $currencyCode = $priceData['currency_code'];
 
-        foreach ($products as $product) {
-            // Get the latest price for this product
-            $latestPrice = $this->repository->getLatestByProductId($product->id);
-
-            if ($latestPrice) {
                 // Check if a price already exists for today
-                $todayPrice = $this->repository->findByProductIdAndDate($product->id, $today);
+                $todayPrice = $this->repository->findByProductIdAndDate($productId, $today);
 
                 if ($todayPrice) {
                     // Update existing today's price
                     $todayPrice->update([
-                        'price' => $latestPrice->price,
-                        'currency_code' => $latestPrice->currency_code,
+                        'price' => $price,
+                        'currency_code' => $currencyCode,
                     ]);
                     $updated++;
                 } else {
                     // Create new price for today
                     $this->repository->create([
-                        'product_id' => $product->id,
-                        'price' => $latestPrice->price,
-                        'currency_code' => $latestPrice->currency_code,
+                        'product_id' => $productId,
+                        'price' => $price,
+                        'currency_code' => $currencyCode,
                         'created_at' => now(),
                         'updated_at' => now(),
                     ]);
                     $created++;
+                }
+
+                // Update product's current_price
+                $product = $this->productRepository->findById($productId);
+                if ($product) {
+                    $product->update([
+                        'current_price' => $price,
+                        'currency_code' => $currencyCode,
+                        'price_updated_at' => now(),
+                        'price_effective_date' => now()->toDateString(),
+                    ]);
                 }
             }
         }

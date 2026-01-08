@@ -5,7 +5,6 @@
 
 document.addEventListener("DOMContentLoaded", function () {
     const tableBody = document.getElementById("products-table-body");
-    const bulkSaveBtn = document.getElementById("bulk-save-btn");
     const syncTodayBtn = document.getElementById("sync-today-btn");
 
     // Get routes from window object (set in blade template using route() helpers)
@@ -77,95 +76,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 }
 
-                changedRows.delete(productId);
-                updateBulkSaveButton();
                 return true;
             }
         } catch (error) {
             console.error("Update error:", error);
             // Error toast is handled by axios interceptor
             return false;
-        }
-    }
-
-    /**
-     * Bulk update all changed prices
-     */
-    async function bulkUpdatePrices() {
-        const prices = [];
-        const rows = tableBody.querySelectorAll("tr[data-product-id]");
-
-        rows.forEach((row) => {
-            const productId = row.getAttribute("data-product-id");
-            const priceInput = row.querySelector(".price-input");
-            const currencySelect = row.querySelector(".currency-select");
-
-            if (
-                priceInput &&
-                currencySelect &&
-                priceInput.value &&
-                currencySelect.value
-            ) {
-                prices.push({
-                    product_id: parseInt(productId),
-                    price: parseFloat(priceInput.value),
-                    currency_code: currencySelect.value,
-                });
-            }
-        });
-
-        if (prices.length === 0) {
-            // Show validation warning (not an axios call, so interceptor won't handle it)
-            if (window.Toast) {
-                window.Toast.warning("No changes to save");
-            }
-            return;
-        }
-
-        bulkSaveBtn.disabled = true;
-        bulkSaveBtn.textContent = "Saving...";
-
-        try {
-            const response = await window.axios.post(routes.bulkUpdate, {
-                prices,
-            });
-
-            if (response.data && response.data.success !== false) {
-                // Success message is handled by axios interceptor
-                // Reload page to show updated prices
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000);
-            }
-        } catch (error) {
-            console.error("Bulk update error:", error);
-            // Error toast is handled by axios interceptor
-        } finally {
-            bulkSaveBtn.disabled = false;
-            bulkSaveBtn.textContent = "Save All Changes";
-            changedRows.clear();
-            updateBulkSaveButton();
-        }
-    }
-
-    /**
-     * Mark row as changed
-     */
-    function markRowChanged(productId) {
-        changedRows.add(productId);
-        updateBulkSaveButton();
-    }
-
-    /**
-     * Update bulk save button state
-     */
-    function updateBulkSaveButton() {
-        if (changedRows.size > 0) {
-            bulkSaveBtn.disabled = false;
-            bulkSaveBtn.classList.remove("opacity-50", "cursor-not-allowed");
-        } else {
-            bulkSaveBtn.disabled = true;
-            bulkSaveBtn.classList.add("opacity-50", "cursor-not-allowed");
         }
     }
 
@@ -218,25 +134,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     ).then((success) => {
                         e.target.disabled = false;
                         e.target.textContent = "Save";
-                        if (success) {
-                            changedRows.delete(productId);
-                            updateBulkSaveButton();
-                        }
+                        // Success handled above
                     });
                 }
-            }
-        });
-
-        // Track changes on input fields
-        tableBody.addEventListener("input", function (e) {
-            if (
-                e.target.classList.contains("price-input") ||
-                e.target.classList.contains("currency-select")
-            ) {
-                const productId = parseInt(
-                    e.target.closest("tr").getAttribute("data-product-id")
-                );
-                markRowChanged(productId);
             }
         });
 
@@ -285,7 +185,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     /**
-     * Sync today's prices for selected products only
+     * Sync today's prices for selected products using form input values
      */
     async function syncTodayPrices() {
         if (!syncTodayBtn) return;
@@ -300,12 +200,52 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
+        // Get prices and currencies from form inputs for selected products
+        const prices = [];
+        selectedIds.forEach((productId) => {
+            const row = document.querySelector(
+                `tr[data-product-id="${productId}"]`
+            );
+            if (row) {
+                const priceInput = row.querySelector(".price-input");
+                const currencySelect = row.querySelector(".currency-select");
+
+                if (
+                    priceInput &&
+                    currencySelect &&
+                    priceInput.value &&
+                    currencySelect.value
+                ) {
+                    // Parse price as number, remove any commas or formatting
+                    const priceValue = parseFloat(
+                        priceInput.value.toString().replace(/,/g, "")
+                    );
+                    if (!isNaN(priceValue) && priceValue > 0) {
+                        prices.push({
+                            product_id: productId,
+                            price: priceValue,
+                            currency_code: currencySelect.value,
+                        });
+                    }
+                }
+            }
+        });
+
+        if (prices.length === 0) {
+            if (window.Toast) {
+                window.Toast.warning(
+                    "Please enter price and currency for selected products"
+                );
+            }
+            return;
+        }
+
         syncTodayBtn.disabled = true;
         syncTodayBtn.textContent = "Syncing...";
 
         try {
             const response = await window.axios.post(routes.syncToday, {
-                product_ids: selectedIds,
+                prices: prices,
             });
 
             if (response.data && response.data.success !== false) {
@@ -321,15 +261,9 @@ document.addEventListener("DOMContentLoaded", function () {
         } finally {
             syncTodayBtn.disabled = false;
             if (syncTodayBtn) {
-                syncTodayBtn.textContent = "Sync Today's Prices";
+                syncTodayBtn.textContent = "Sync Prices";
             }
         }
-    }
-
-    // Bulk save button
-    if (bulkSaveBtn) {
-        bulkSaveBtn.addEventListener("click", bulkUpdatePrices);
-        updateBulkSaveButton(); // Initialize button state
     }
 
     // Sync today button
