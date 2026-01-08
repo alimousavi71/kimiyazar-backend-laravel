@@ -43,7 +43,7 @@ class ContentRepository implements ContentRepositoryInterface
             $query->defaultSort($defaultSort);
         }
 
-        return $query->paginate($perPage);
+        return $query->paginate($perPage)->withQueryString();
     }
 
     /**
@@ -187,7 +187,7 @@ class ContentRepository implements ContentRepositoryInterface
             request()->merge(['filter' => ['search' => $search]]);
         }
 
-        $result = $queryBuilder->paginate($perPage);
+        $result = $queryBuilder->paginate($perPage)->withQueryString();
 
         // Restore original request
         request()->merge($originalRequest);

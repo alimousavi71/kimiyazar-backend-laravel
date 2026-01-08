@@ -44,7 +44,7 @@ class ProductRepository implements ProductRepositoryInterface
             $query->defaultSort($defaultSort);
         }
 
-        return $query->paginate($perPage);
+        return $query->paginate($perPage)->withQueryString();
     }
 
     /**
@@ -201,7 +201,7 @@ class ProductRepository implements ProductRepositoryInterface
             $query->orderBy('created_at', 'desc');
         }
 
-        return $query->paginate($perPage);
+        return $query->paginate($perPage)->withQueryString();
     }
 
     /**

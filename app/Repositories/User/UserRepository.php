@@ -29,7 +29,7 @@ class UserRepository implements UserRepositoryInterface
             $query->defaultSort($defaultSort);
         }
 
-        return $query->paginate($perPage);
+        return $query->paginate($perPage)->withQueryString();
     }
 
     public function findById(int|string $id): ?User

@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
     /**
      * Record limit for import (null = no limit, number = limit to that many records).
      */
-    private ?int $recordLimit = 100;
+    private ?int $recordLimit = null;
 
     /**
      * Run the database seeds.

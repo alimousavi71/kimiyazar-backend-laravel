@@ -14,7 +14,7 @@ class TagableSeeder extends Seeder
     /**
      * Record limit for import (null = no limit, number = limit to that many records).
      */
-    private ?int $recordLimit = 100;
+    private ?int $recordLimit = null;
 
     /**
      * Map tagable_type from JSON to Laravel model class names.

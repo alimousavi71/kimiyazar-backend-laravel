@@ -16,7 +16,7 @@ class PriceInquiryRepository implements PriceInquiryRepositoryInterface
             ->allowedSorts($allowedSorts)
             ->defaultSort($defaultSort);
 
-        return $query->paginate($perPage)->appends(request()->query());
+        return $query->paginate($perPage)->withQueryString();
     }
 
     public function findById(int|string $id): ?PriceInquiry

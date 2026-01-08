@@ -41,7 +41,7 @@ class SliderRepository implements SliderRepositoryInterface
             $query->defaultSort($defaultSort);
         }
 
-        return $query->paginate($perPage);
+        return $query->paginate($perPage)->withQueryString();
     }
 
     /**

@@ -116,6 +116,7 @@ class UserService
 
     /**
      * Authenticate user by email or phone number.
+     * Supports both bcrypt (new) and SHA1 (legacy) password hashing.
      *
      * @param string $emailOrPhone
      * @param string $password
@@ -125,10 +126,27 @@ class UserService
     {
         $user = User::findByEmailOrPhone($emailOrPhone);
 
-        if (!$user || !Hash::check($password, $user->password)) {
+        if (!$user) {
             return null;
         }
 
-        return $user;
+        // First, try Laravel's Hash::check (for bcrypt passwords)
+        if (Hash::check($password, $user->password)) {
+            return $user;
+        }
+
+        // If Hash::check fails, check if password is stored as SHA1 (40 characters hex)
+        // SHA1 hashes are exactly 40 characters
+        if (strlen($user->password) === 40 && ctype_xdigit($user->password)) {
+            // Compare SHA1 hash of provided password with stored password
+            if (sha1($password) === $user->password) {
+                // Password matches SHA1, upgrade to bcrypt for future logins
+                $user->update(['password' => Hash::make($password)]);
+                return $user;
+            }
+        }
+
+        // Password doesn't match either bcrypt or SHA1
+        return null;
     }
 }

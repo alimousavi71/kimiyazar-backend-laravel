@@ -38,7 +38,7 @@ class MenuRepository implements MenuRepositoryInterface
             $queryBuilder->defaultSort($defaultSort);
         }
 
-        return $queryBuilder->paginate($perPage);
+        return $queryBuilder->paginate($perPage)->withQueryString();
     }
 
     /**
