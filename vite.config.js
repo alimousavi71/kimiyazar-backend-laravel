@@ -22,6 +22,7 @@ export default defineConfig({
                 "resources/js/form-with-tags.js",
                 "resources/js/product-price-management.js",
                 "resources/js/captcha-refresh.js",
+                "resources/js/modal-date-picker.js",
             ],
             refresh: true,
         }),

@@ -81,6 +81,14 @@ return [
             'quality' => 90,
             'format' => 'jpg',
         ],
+
+        'editor' => [
+            'width' => null,
+            'height' => null,
+            'fit' => 'contain',
+            'quality' => 90,
+            'format' => 'jpg',
+        ],
     ],
 
     /*

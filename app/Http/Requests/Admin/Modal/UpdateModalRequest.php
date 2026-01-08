@@ -2,28 +2,19 @@
 
 namespace App\Http\Requests\Admin\Modal;
 
+use App\Traits\ConvertsPersianNumbers;
 use Illuminate\Foundation\Http\FormRequest;
+use Morilog\Jalali\Jalalian;
 
-/**
- * Request class for updating a modal
- */
 class UpdateModalRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
+    use ConvertsPersianNumbers;
+
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
@@ -37,8 +28,46 @@ class UpdateModalRequest extends FormRequest
             'modalable_id' => ['nullable', 'integer', 'min:1'],
             'is_published' => ['sometimes', 'boolean'],
             'start_at' => ['nullable', 'date_format:Y-m-d H:i:s'],
-            'end_at' => ['nullable', 'date_format:Y-m-d H:i:s', 'after_or_equal:start_at'],
+            'end_at' => ['nullable', 'date_format:Y-m-d H:i:s'],
             'priority' => ['sometimes', 'integer', 'min:0'],
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'start_at' => $this->convertJalaliDate(
+                $this->input('start_at'),
+                '00:00:00'
+            ),
+            'end_at' => $this->convertJalaliDate(
+                $this->input('end_at'),
+                '23:59:59'
+            ),
+        ]);
+    }
+
+    /**
+     * Convert Jalali date (with Persian/Arabic numbers) to Gregorian datetime
+     */
+    protected function convertJalaliDate(?string $value, string $time): ?string
+    {
+        if (empty($value)) {
+            return null;
+        }
+
+        try {
+            // Normalize numbers
+            $value = $this->faToEnNumbers(trim($value));
+
+            // Extract date part only (YYYY/MM/DD)
+            $datePart = explode(' ', $value)[0];
+
+            return Jalalian::fromFormat('Y/m/d', $datePart)
+                ->toCarbon()
+                ->format('Y-m-d') . ' ' . $time;
+        } catch (\Throwable) {
+            return null;
+        }
     }
 }

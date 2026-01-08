@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Content\StoreContentRequest;
 use App\Http\Requests\Admin\Content\UpdateContentRequest;
+use App\Http\Requests\Admin\Content\UploadEditorImageRequest;
 use App\Http\Traits\ApiResponseTrait;
 use App\Services\Content\ContentService;
+use App\Services\ImageService;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
@@ -20,9 +22,11 @@ class ContentController extends Controller
 
     /**
      * @param ContentService $service
+     * @param ImageService $imageService
      */
     public function __construct(
-        private readonly ContentService $service
+        private readonly ContentService $service,
+        private readonly ImageService $imageService
     ) {
     }
 
@@ -147,6 +151,36 @@ class ContentController extends Controller
             return redirect()
                 ->route('admin.contents.index')
                 ->with('error', __('admin/contents.messages.delete_failed'));
+        }
+    }
+
+    /**
+     * Upload an image for the editor.
+     *
+     * @param UploadEditorImageRequest $request
+     * @return JsonResponse
+     */
+    public function uploadEditorImage(UploadEditorImageRequest $request): JsonResponse
+    {
+        try {
+            $file = $request->file('image');
+
+            // Upload image without resizing - preserve original size and format
+            $preset = [
+                'width' => null,
+                'height' => null,
+                'quality' => 90,
+                'format' => strtolower($file->getClientOriginalExtension()) ?: 'jpg',
+            ];
+
+            $filePath = $this->imageService->upload($file, $preset, 'editor');
+
+            // Return the public URL
+            $url = asset('storage/' . $filePath);
+
+            return $this->successResponse(['url' => $url], __('admin/contents.messages.image_uploaded'));
+        } catch (Exception $e) {
+            return $this->errorResponse(__('admin/contents.messages.image_upload_failed') . ': ' . $e->getMessage(), 500);
         }
     }
 }

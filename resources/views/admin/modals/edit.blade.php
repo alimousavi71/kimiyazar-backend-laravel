@@ -58,13 +58,15 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <x-form-group :label="__('admin/modals.fields.start_at')" :error="$errors->first('start_at')">
-                    <x-input type="datetime-local" name="start_at" id="start_at"
-                        value="{{ old('start_at', $modal->start_at?->format('Y-m-d\TH:i')) }}" class="w-full" />
+                    <x-input type="text" name="start_at" id="start_at" data-jdp
+                        value="{{ old('start_at', $modal->start_at ? \App\Services\DateService::formatDate($modal->start_at, 'fa') : '') }}"
+                        class="w-full" placeholder="YYYY/MM/DD" />
                 </x-form-group>
 
                 <x-form-group :label="__('admin/modals.fields.end_at')" :error="$errors->first('end_at')">
-                    <x-input type="datetime-local" name="end_at" id="end_at"
-                        value="{{ old('end_at', $modal->end_at?->format('Y-m-d\TH:i')) }}" class="w-full" />
+                    <x-input type="text" name="end_at" id="end_at" data-jdp
+                        value="{{ old('end_at', $modal->end_at ? \App\Services\DateService::formatDate($modal->end_at, 'fa') : '') }}"
+                        class="w-full" placeholder="YYYY/MM/DD" />
                 </x-form-group>
 
                 <x-form-group>
@@ -102,5 +104,7 @@
             </div>
         </form>
     </x-card>
+
+    @vite(['resources/js/modal-date-picker.js'])
 
 </x-layouts.admin>

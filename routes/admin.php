@@ -174,6 +174,7 @@ Route::group([
         Route::get('/', [ContentController::class, 'index'])->name('index');
         Route::get('/create', [ContentController::class, 'create'])->name('create');
         Route::post('/', [ContentController::class, 'store'])->name('store');
+        Route::post('/upload-editor-image', [ContentController::class, 'uploadEditorImage'])->name('upload-editor-image');
         Route::get('/{id}', [ContentController::class, 'show'])->name('show');
         Route::get('/{id}/edit', [ContentController::class, 'edit'])->name('edit');
         Route::match(['put', 'patch'], '/{id}', [ContentController::class, 'update'])->name('update');

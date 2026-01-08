@@ -103,6 +103,12 @@
                 this.editor.root.innerHTML = this.content;
             }
             
+            // Custom image handler for uploading images
+            const toolbar = this.editor.getModule('toolbar');
+            toolbar.addHandler('image', () => {
+                this.selectLocalImage();
+            });
+            
             // Update hidden textarea on change
             this.editor.on('text-change', () => {
                 const html = this.editor.root.innerHTML;
@@ -117,6 +123,60 @@
         } catch (error) {
             console.error('Error initializing Quill:', error);
         }
+    },
+    selectLocalImage() {
+        const input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
+        input.click();
+        
+        input.onchange = async () => {
+            const file = input.files[0];
+            if (!file) return;
+            
+            // Check file size (5MB max)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('فایل تصویر باید کمتر از 5 مگابایت باشد');
+                return;
+            }
+            
+            // Get current cursor position
+            const range = this.editor.getSelection(true);
+            
+            // Insert placeholder
+            this.editor.insertText(range.index, 'در حال آپلود...', 'user');
+            this.editor.setSelection(range.index + 15);
+            
+            try {
+                const formData = new FormData();
+                formData.append('image', file);
+                
+                const response = await window.axios.post('{{ route("admin.contents.upload-editor-image") }}', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+                
+                if (response.data && response.data.success !== false) {
+                    const imageUrl = response.data.data?.url || response.data.url;
+                    
+                    // Remove placeholder
+                    this.editor.deleteText(range.index, 15);
+                    
+                    // Insert image
+                    this.editor.insertEmbed(range.index, 'image', imageUrl);
+                } else {
+                    // Remove placeholder on error
+                    this.editor.deleteText(range.index, 15);
+                    alert('خطا در آپلود تصویر');
+                }
+            } catch (error) {
+                // Remove placeholder on error
+                this.editor.deleteText(range.index, 15);
+                console.error('Upload error:', error);
+                alert('خطا در آپلود تصویر');
+            }
+        };
     },
     getToolbar() {
         const toolbars = {

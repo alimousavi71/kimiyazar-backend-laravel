@@ -2,28 +2,20 @@
 
 namespace App\Http\Requests\Admin\Modal;
 
+use App\Traits\ConvertsPersianNumbers;
 use Illuminate\Foundation\Http\FormRequest;
+use Morilog\Jalali\Jalalian;
+use Carbon\Carbon;
 
-/**
- * Request class for storing a new modal
- */
 class StoreModalRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
+    use ConvertsPersianNumbers;
+
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
@@ -37,33 +29,70 @@ class StoreModalRequest extends FormRequest
             'modalable_id' => ['nullable', 'integer', 'min:1'],
             'is_published' => ['sometimes', 'boolean'],
             'start_at' => ['nullable', 'date_format:Y-m-d H:i:s'],
-            'end_at' => ['nullable', 'date_format:Y-m-d H:i:s', 'after_or_equal:start_at'],
+            'end_at' => ['nullable', 'date_format:Y-m-d H:i:s'],
             'priority' => ['sometimes', 'integer', 'min:0'],
         ];
     }
 
-    /**
-     * Prepare the data for validation.
-     *
-     * @return void
-     */
     protected function prepareForValidation(): void
     {
-        // Set default values
-        if (!$this->has('close_text')) {
-            $this->merge(['close_text' => 'بستن']);
-        }
+        // Defaults
+        $this->merge([
+            'close_text' => $this->input('close_text', 'بستن'),
+            'is_rememberable' => $this->input('is_rememberable', true),
+            'is_published' => $this->input('is_published', false),
+            'priority' => $this->input('priority', 0),
+            'start_at' => $this->convertJalaliDate($this->input('start_at'), '00:00:00'),
+            'end_at' => $this->convertJalaliDate($this->input('end_at'), '23:59:59'),
+        ]);
+    }
 
-        if (!$this->has('is_rememberable')) {
-            $this->merge(['is_rememberable' => true]);
-        }
+    public function messages(): array
+    {
+        return [
+            'end_at.after_or_equal' => __('validation.after_or_equal', [
+                'attribute' => __('admin/modals.fields.end_at'),
+                'date' => __('admin/modals.fields.start_at'),
+            ]),
+        ];
+    }
 
-        if (!$this->has('is_published')) {
-            $this->merge(['is_published' => false]);
-        }
+    public function withValidator($validator): void
+    {
+        $validator->after(function ($validator) {
+            if (!$this->input('start_at') || !$this->input('end_at')) {
+                return;
+            }
 
-        if (!$this->has('priority')) {
-            $this->merge(['priority' => 0]);
+            if (
+                Carbon::parse($this->input('end_at'))
+                    ->lt(Carbon::parse($this->input('start_at')))
+            ) {
+                $validator->errors()->add(
+                    'end_at',
+                    __('validation.after_or_equal', [
+                        'attribute' => __('admin/modals.fields.end_at'),
+                        'date' => __('admin/modals.fields.start_at'),
+                    ])
+                );
+            }
+        });
+    }
+
+    /**
+     * Convert Jalali date (Persian/Arabic numbers) to Gregorian datetime
+     */
+    protected function convertJalaliDate(?string $value, string $time): ?string
+    {
+        try {
+            $value = $this->faToEnNumbers(trim($value));
+            $datePart = explode(' ', $value)[0];
+
+            return Jalalian::fromFormat('Y/m/d', $datePart)
+                ->toCarbon()
+                ->format('Y-m-d') . ' ' . $time;
+        } catch (\Throwable) {
+            return null;
         }
     }
 }

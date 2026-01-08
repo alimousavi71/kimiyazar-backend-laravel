@@ -30,9 +30,13 @@ class ModalComposer
         $modals = $this->modalService->getPublishedModals();
 
         // Filter out modals that have been dismissed via cookies
+        // and only include modals that have content/data
         $modals = $modals->filter(function ($modal) {
             $cookieName = "modal_{$modal->id}_dismissed";
-            return !$this->request->cookie($cookieName);
+            $isDismissed = $this->request->cookie($cookieName);
+
+            // Only show modals that have content and are not dismissed
+            return !$isDismissed && !empty(trim($modal->content));
         });
 
         $view->with('activeModals', $modals);
