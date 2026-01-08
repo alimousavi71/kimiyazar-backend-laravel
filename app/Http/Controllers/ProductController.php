@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Database\BannerPosition;
+use App\Services\Banner\BannerService;
 use App\Services\Category\CategoryService;
 use App\Services\Product\ProductService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -115,10 +116,30 @@ class ProductController extends Controller
         // Get price history (last 30 days by default, can be extended)
         $priceHistory = $product->prices()->orderBy('created_at', 'desc')->get();
 
+        // Determine price change status
+        $priceStatus = 'stable'; // default
+        $previousPrice = null;
+
+        if ($priceHistory->count() >= 2) {
+            $currentPrice = (float) $product->current_price;
+            $previousPriceRecord = $priceHistory->get(1); // Second item (previous price)
+            $previousPrice = $previousPriceRecord ? (float) $previousPriceRecord->price : null;
+
+            if ($previousPrice !== null) {
+                if ($currentPrice > $previousPrice) {
+                    $priceStatus = 'increase';
+                } elseif ($currentPrice < $previousPrice) {
+                    $priceStatus = 'decrease';
+                } else {
+                    $priceStatus = 'stable';
+                }
+            }
+        }
+
         // Get banners for position C (top of footer)
-        $banners = app(\App\Services\Banner\BannerService::class)
+        $banners = app(BannerService::class)
             ->getActiveBannersByPositions([BannerPosition::C1, BannerPosition::C2], 1);
 
-        return view('products.show', compact('product', 'priceHistory', 'banners'));
+        return view('products.show', compact('product', 'priceHistory', 'banners', 'priceStatus', 'previousPrice'));
     }
 }

@@ -23,8 +23,8 @@ class StoreContactRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:255'],
-            'mobile' => ['required', 'string', 'max:11', 'regex:/^09\d{9}$/'],
-            'email' => ['required', 'email', 'max:255'],
+            'mobile' => ['required', 'string', 'regex:/^(09\d{9}|9\d{9})$/'],
+            'email' => ['nullable', 'email', 'max:255'],
             'text' => ['required', 'string', 'min:10', 'max:2000'],
             'captcha' => ['required', 'captcha'],
         ];
@@ -41,9 +41,7 @@ class StoreContactRequest extends FormRequest
             'title.required' => 'عنوان الزامی است.',
             'title.max' => 'عنوان نباید بیشتر از 255 کاراکتر باشد.',
             'mobile.required' => 'شماره موبایل الزامی است.',
-            'mobile.regex' => 'شماره موبایل باید با 09 شروع شود و 11 رقم باشد.',
-            'mobile.max' => 'شماره موبایل نباید بیشتر از 11 رقم باشد.',
-            'email.required' => 'ایمیل الزامی است.',
+            'mobile.regex' => 'شماره موبایل باید معتبر باشد. (مثال: 09123456789 یا 9123456789)',
             'email.email' => 'فرمت ایمیل نامعتبر است.',
             'email.max' => 'ایمیل نباید بیشتر از 255 کاراکتر باشد.',
             'text.required' => 'متن پیام الزامی است.',

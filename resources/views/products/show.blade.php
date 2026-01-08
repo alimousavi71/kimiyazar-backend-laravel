@@ -91,9 +91,17 @@
                                                         <span class="price-unavailable text-gray-500 text-sm md:text-base">تماس
                                                             با هماهنگی</span>
                                                     @else
-                                                        <span
-                                                            class="price-value text-lg md:text-xl font-bold text-gray-900">{{ number_format($price->price, 0) }}</span>
+                                                        <span class="price-value text-lg md:text-xl font-bold 
+                                                                            @if($changeType === 'decrease') text-green-600
+                                                                            @elseif($changeType === 'increase') text-red-600
+                                                                            @else text-yellow-600
+                                                                            @endif">
+                                                            {{ number_format($price->price, 0) }}
+                                                        </span>
                                                         <span class="price-unit text-sm text-gray-600">تومان</span>
+                                                        @if($changeType === 'stable' && !$isToday)
+                                                            <span class="text-yellow-600 text-lg">⭐</span>
+                                                        @endif
                                                     @endif
                                                 </div>
                                                 <div class="item-change">
@@ -105,10 +113,20 @@
                                                     @elseif($isUnavailable)
                                                         <span
                                                             class="change-badge neutral inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">—</span>
+                                                    @elseif($changeType === 'decrease')
+                                                        <span
+                                                            class="change-badge decrease inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                                                            <i class="fa fa-arrow-down"></i> کاهش
+                                                        </span>
+                                                    @elseif($changeType === 'increase')
+                                                        <span
+                                                            class="change-badge increase inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
+                                                            <i class="fa fa-arrow-up"></i> افزایش
+                                                        </span>
                                                     @else
                                                         <span
-                                                            class="change-badge stable inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
-                                                            <i class="fa fa-minus"></i> ثابت
+                                                            class="change-badge stable inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700">
+                                                            <span class="text-yellow-600">⭐</span> ثابت
                                                         </span>
                                                     @endif
                                                 </div>
@@ -136,6 +154,49 @@
 
                     <div class="lg:col-span-4">
                         <div class="space-y-6 lg:sticky lg:top-6">
+
+                            @if($product->current_price)
+                                <div class="current-price-card bg-white rounded-2xl shadow-md overflow-hidden p-6">
+                                    <div class="price-header mb-4">
+                                        <h4 class="text-lg font-bold text-gray-900 mb-2">قیمت فعلی</h4>
+                                    </div>
+                                    <div class="price-display flex items-center justify-between gap-3">
+                                        <div class="price-value-wrapper flex items-center gap-2">
+                                            <span class="price-amount text-2xl md:text-3xl font-bold 
+                                                        @if($priceStatus === 'decrease') text-green-600
+                                                        @elseif($priceStatus === 'increase') text-red-600
+                                                        @else text-yellow-600
+                                                        @endif">
+                                                {{ number_format($product->current_price, 0) }}
+                                            </span>
+                                            <span class="price-currency text-base text-gray-600">
+                                                {{ $product->currency_code?->label() ?? 'تومان' }}
+                                            </span>
+                                            @if($priceStatus === 'stable')
+                                                <span class="text-yellow-600 text-xl">⭐</span>
+                                            @endif
+                                        </div>
+                                        <div class="price-status-badge">
+                                            @if($priceStatus === 'decrease')
+                                                <span
+                                                    class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                                                    <i class="fa fa-arrow-down"></i> کاهش
+                                                </span>
+                                            @elseif($priceStatus === 'increase')
+                                                <span
+                                                    class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
+                                                    <i class="fa fa-arrow-up"></i> افزایش
+                                                </span>
+                                            @else
+                                                <span
+                                                    class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700">
+                                                    <span class="text-yellow-600">⭐</span> ثابت
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
 
                             <div class="modern-product-order-card bg-white rounded-2xl shadow-md overflow-hidden">
 

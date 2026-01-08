@@ -27,6 +27,7 @@ use App\Http\Controllers\PriceInquiryController;
 use App\Http\Controllers\OrderFormController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -38,6 +39,24 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.stor
 Route::get('/captcha/refresh', function () {
     return response()->json(['captcha' => captcha_img('default')]);
 })->name('captcha.refresh');
+
+// Storage Link Route
+Route::get('/storage/link', function () {
+    try {
+        Artisan::call('storage:link');
+        $output = Artisan::output();
+        return response()->json([
+            'success' => true,
+            'message' => 'Storage link created successfully.',
+            'output' => $output
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Failed to create storage link: ' . $e->getMessage()
+        ], 500);
+    }
+})->name('storage.link');
 
 // About Route
 Route::get('/about', [AboutController::class, 'index'])->name('about.index');

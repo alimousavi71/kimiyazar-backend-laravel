@@ -54,30 +54,25 @@ document.addEventListener("DOMContentLoaded", function () {
         {
             rule: "customRegexp",
             value: (value) => {
-                // Must match Iranian mobile format
-                return /^09\d{9}$/.test(value);
+                // Accept Iranian mobile format with or without leading zero
+                // 09123456789 (11 digits) or 9123456789 (10 digits)
+                return /^(09\d{9}|9\d{9})$/.test(value);
             },
             errorMessage: isPersian
-                ? "شماره موبایل باید با 09 شروع شود و 11 رقم باشد"
-                : "Mobile number must start with 09 and be 11 digits",
+                ? "شماره موبایل باید معتبر باشد. (مثال: 09123456789 یا 9123456789)"
+                : "Mobile number must be valid. (Example: 09123456789 or 9123456789)",
         },
         {
             rule: "maxLength",
             value: 11,
             errorMessage: isPersian
-                ? fieldMaxLength("شماره موبایل", 11, locale)
-                : fieldMaxLength("Mobile", 11, locale),
+                ? "شماره موبایل نباید بیشتر از 11 رقم باشد"
+                : "Mobile number must not exceed 11 digits",
         },
     ]);
 
-    // Email field (required)
+    // Email field (optional)
     validation.addField("#email", [
-        {
-            rule: "required",
-            errorMessage: isPersian
-                ? fieldRequired("ایمیل", locale)
-                : fieldRequired("Email", locale),
-        },
         {
             rule: "email",
             errorMessage: isPersian

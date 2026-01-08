@@ -156,19 +156,23 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <x-form-group label="شماره موبایل" required :error="$errors->first('mobile')">
                                         <x-input type="text" name="mobile" id="mobile" :value="old('mobile')"
-                                            maxlength="11" placeholder="09121234567" class="w-full" />
+                                            inputmode="numeric" maxlength="11" placeholder="09123456789 یا 9123456789"
+                                            class="w-full" />
+                                        <p class="text-xs text-gray-500 mt-1">شماره موبایل را با یا بدون صفر ابتدایی
+                                            وارد کنید</p>
                                     </x-form-group>
 
-                                    <x-form-group label="پست الکترونیکی" required :error="$errors->first('email')">
+                                    <x-form-group label="پست الکترونیکی" :error="$errors->first('email')">
                                         <x-input type="email" name="email" id="email" :value="old('email')"
-                                            placeholder="example@email.com" class="w-full" />
+                                            placeholder="example@email.com (اختیاری)" class="w-full" />
+                                        <p class="text-xs text-gray-500 mt-1">ایمیل اختیاری است</p>
                                     </x-form-group>
                                 </div>
 
 
                                 <x-form-group label="متن پیام" required :error="$errors->first('text')">
                                     <x-textarea name="text" id="text" rows="5"
-                                        placeholder="متن پیام خود را اینجا بنویسید..."
+                                        placeholder="درخواست خود را اینجا بنویسید"
                                         class="w-full">{{ old('text') }}</x-textarea>
                                 </x-form-group>
 
