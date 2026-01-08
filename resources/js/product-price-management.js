@@ -43,8 +43,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         try {
             const url = getUpdateRoute(productId);
+            // Remove commas and send raw numeric value
+            const numericPrice = getNumericValue(price);
             const response = await window.axios.post(url, {
-                price: parseFloat(price),
+                price: numericPrice,
                 currency_code: currencyCode,
             });
 
@@ -63,11 +65,12 @@ document.addEventListener("DOMContentLoaded", function () {
                             Array.from(row.querySelectorAll("option")).find(
                                 (opt) => opt.value === currencyCode
                             )?.textContent || currencyCode;
+                        const numericPrice = getNumericValue(price);
+                        const formattedPrice =
+                            formatNumberWithCommas(numericPrice);
                         currentPriceCell.innerHTML = `
                             <div class="text-sm text-gray-900">
-                                ${parseFloat(
-                                    price
-                                ).toLocaleString()} ${currencyLabel}
+                                ${formattedPrice} ${currencyLabel}
                             </div>
                             <div class="text-xs text-gray-500">
                                 ${new Date().toISOString().split("T")[0]}
@@ -83,6 +86,24 @@ document.addEventListener("DOMContentLoaded", function () {
             // Error toast is handled by axios interceptor
             return false;
         }
+    }
+
+    /**
+     * Format number with thousand separators
+     */
+    function formatNumberWithCommas(value) {
+        // Remove all non-digit characters
+        const numericValue = value.toString().replace(/\D/g, "");
+        if (!numericValue) return "";
+        // Add thousand separators
+        return numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    /**
+     * Get numeric value from formatted string (remove commas)
+     */
+    function getNumericValue(value) {
+        return value.toString().replace(/,/g, "");
     }
 
     /**
@@ -103,7 +124,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     const priceText = currentPriceCell.textContent.trim();
                     const priceMatch = priceText.match(/[\d,]+/);
                     if (priceMatch) {
-                        priceInput.value = priceMatch[0].replace(/,/g, "");
+                        // Keep the formatted value with commas
+                        priceInput.value = priceMatch[0];
                     }
                 }
             }
@@ -216,14 +238,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     priceInput.value &&
                     currencySelect.value
                 ) {
-                    // Parse price as number, remove any commas or formatting
-                    const priceValue = parseFloat(
-                        priceInput.value.toString().replace(/,/g, "")
-                    );
-                    if (!isNaN(priceValue) && priceValue > 0) {
+                    // Remove commas and get raw numeric value
+                    const numericPrice = getNumericValue(priceInput.value);
+                    if (numericPrice && numericPrice.length > 0) {
                         prices.push({
                             product_id: productId,
-                            price: priceValue,
+                            price: numericPrice,
                             currency_code: currencySelect.value,
                         });
                     }
@@ -305,6 +325,38 @@ document.addEventListener("DOMContentLoaded", function () {
                     selectAllCheckbox.indeterminate =
                         someChecked && !allChecked;
                 }
+            }
+        });
+    }
+
+    // Format price inputs with thousand separators as user types
+    if (tableBody) {
+        tableBody.addEventListener("input", function (e) {
+            if (e.target.classList.contains("price-input")) {
+                const cursorPosition = e.target.selectionStart;
+                const oldValue = e.target.value;
+                const numericValue = getNumericValue(oldValue);
+                const formattedValue = formatNumberWithCommas(numericValue);
+
+                e.target.value = formattedValue;
+
+                // Restore cursor position (adjust for added commas)
+                const commaDiff = formattedValue.length - oldValue.length;
+                const newPosition = Math.max(0, cursorPosition + commaDiff);
+                e.target.setSelectionRange(newPosition, newPosition);
+            }
+        });
+
+        // Handle paste events
+        tableBody.addEventListener("paste", function (e) {
+            if (e.target.classList.contains("price-input")) {
+                e.preventDefault();
+                const pastedText = (
+                    e.clipboardData || window.clipboardData
+                ).getData("text");
+                const numericValue = getNumericValue(pastedText);
+                const formattedValue = formatNumberWithCommas(numericValue);
+                e.target.value = formattedValue;
             }
         });
     }

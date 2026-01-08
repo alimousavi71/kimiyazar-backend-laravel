@@ -147,12 +147,13 @@
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <input type="number" step="0.01" min="0"
+                                    <input type="text"
                                         data-product-id="{{ $product->id }}"
                                         data-field="price"
-                                        value="{{ $product->latest_price?->price ?? '' }}"
+                                        value="{{ $product->latest_price?->price ? number_format($product->latest_price->price, 0, '.', ',') : '' }}"
                                         placeholder="{{ __('admin/product-prices.placeholders.price') }}"
-                                        class="price-input w-32 px-3 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200 bg-white shadow-sm hover:shadow-md focus:shadow-md">
+                                        class="price-input w-32 px-3 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200 bg-white shadow-sm hover:shadow-md focus:shadow-md"
+                                        inputmode="numeric">
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <select data-product-id="{{ $product->id }}"

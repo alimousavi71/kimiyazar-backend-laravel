@@ -160,13 +160,9 @@ class ProductPriceService
         foreach ($prices as $priceData) {
             if (isset($priceData['product_id']) && isset($priceData['price']) && isset($priceData['currency_code'])) {
                 $productId = (int) $priceData['product_id'];
-                // Ensure price is properly converted - remove any formatting and convert to string
-                $priceValue = $priceData['price'];
-                if (is_string($priceValue)) {
-                    // Remove commas and other formatting
-                    $priceValue = str_replace([',', ' '], '', $priceValue);
-                }
-                $price = is_numeric($priceValue) ? (string) floatval($priceValue) : '0';
+                // Store price exactly as received (already cleaned of commas in frontend)
+                // Just ensure it's a string for the decimal column
+                $price = (string) $priceData['price'];
                 $currencyCode = $priceData['currency_code'];
 
                 // Create new price record (same as single update)
@@ -236,13 +232,9 @@ class ProductPriceService
         foreach ($prices as $priceData) {
             if (isset($priceData['product_id']) && isset($priceData['price']) && isset($priceData['currency_code'])) {
                 $productId = (int) $priceData['product_id'];
-                // Ensure price is properly converted - remove any formatting and convert to string
-                $priceValue = $priceData['price'];
-                if (is_string($priceValue)) {
-                    // Remove commas and other formatting
-                    $priceValue = str_replace([',', ' '], '', $priceValue);
-                }
-                $price = is_numeric($priceValue) ? (string) floatval($priceValue) : '0';
+                // Store price exactly as received (already cleaned of commas in frontend)
+                // Just ensure it's a string for the decimal column
+                $price = (string) $priceData['price'];
                 $currencyCode = $priceData['currency_code'];
 
                 // Check if a price already exists for today
